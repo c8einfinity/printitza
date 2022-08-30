@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Designnbuy_Vendor::vendor" module="Designnbuy_Vendor" parent="Designnbuy_Base::network" resource="Designnbuy_Vendor::vendor" dependsOnModule="Designnbuy_Vendor" sortOrder="30" title="Manage Vendors"/>
+		<add id="Designnbuy_Vendor::vendor_user" action="designnbuy_vendor/user/index" module="Designnbuy_Vendor" parent="Designnbuy_Vendor::vendor" resource="Designnbuy_Vendor::vendor_user" sortOrder="10" title="Vendors"/>
+		<!--<add id="Designnbuy_Vendor::vendor_transaction" action="designnbuy_vendor/transaction/index" module="Designnbuy_Vendor" parent="Designnbuy_Vendor::vendor" resource="Designnbuy_Vendor::vendor_transaction" sortOrder="30" title="Transactions"/>-->
+		<add id="Designnbuy_Vendor::vendor_config" title="Configuration" module="Designnbuy_Vendor" parent="Designnbuy_Vendor::vendor" sortOrder="60" action="adminhtml/system_config/edit/section/dnbvendor/" resource="Designnbuy_Vendor::vendor_config"/>
+	</menu>
+</config>

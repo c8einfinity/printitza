@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <hotfolder>
+            <configuration>
+                <base_unit>in</base_unit>
+                <output_format>both</output_format>
+                <order_information>xml</order_information>
+                <image_dpi>300</image_dpi>
+            </configuration>
+        </hotfolder>
+    </default>
+</config>

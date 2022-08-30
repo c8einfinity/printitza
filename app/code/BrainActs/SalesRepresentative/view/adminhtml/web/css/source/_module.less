@@ -1,0 +1,133 @@
+/*
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+& when (@media-common = true) {
+  .salesrep-dashboard {
+
+    //-moz-column-count: 2;
+    //-moz-column-gap: 25px;
+    //-webkit-column-count: 2;
+    //-webkit-column-gap: 25px;
+    //column-count: 2;
+    //column-gap: 25px;
+
+    //column-count: 2;
+    //column-gap: 25px;
+
+    .row-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .commissions,
+      .my-sales {
+
+        width: 48%;
+
+        padding: 25px;
+        box-shadow: 0 0.05rem 0.25rem rgba(0, 0, 0, 0.175);
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+
+      }
+    }
+
+    .withdrawal {
+      box-shadow: 0 0.05rem 0.25rem rgba(0, 0, 0, 0.175);
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.25rem;
+      margin-top: 25px;
+
+      h4 {
+        border-bottom: 1px solid #c8c8c8;
+        font-size: 16px;
+        color: #000000;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 15px 20px;
+      }
+    }
+
+    h5 {
+      color: #000000;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .commissions {
+
+      h3 {
+        text-align: center;
+        color: #000000;
+        font-size: 30px;
+        margin-bottom: 0
+      }
+
+      h4 {
+        text-align: center;
+        color: #000000;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-bottom: 80px;
+
+      }
+    }
+
+    /*
+    Rows
+     */
+    .row {
+      display: flex;
+      margin-bottom: 5px;
+
+      .left {
+        flex: 50%;
+      }
+
+      .right {
+        flex: 50%;
+        text-align: right;
+      }
+    }
+
+    .amount-withdrawal {
+      margin: 25px 0;
+    }
+
+    .btn-actions {
+      margin-top: 10px;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-withdrawal {
+      font-size: 16px;
+      color: #fff;
+      background-color: #ef4723;
+      border-color: #ef4723;
+      font-weight: normal;
+    }
+  }
+
+  .salesrep-withrawals-container {
+    padding: 0 25px 25px;
+  }
+
+  @salesrep-icon-font: '@{baseDir}BrainActs_SalesRepresentative/fonts/graph';
+  @salesrep-icon-font-name: 'SalesRepresentative';
+
+  .lib-font-face(
+    @family-name:@salesrep-icon-font-name,
+    @font-path: @salesrep-icon-font,
+    @font-weight: normal,
+    @font-style: normal
+  );
+
+  .admin__menu .item-sales-representative-main-dashboard.level-0 > a:before {
+    font-family: @salesrep-icon-font-name;
+    content: "\0041";
+  }
+
+}

@@ -1,0 +1,224 @@
+
+    <?php $uploadedFiles = $block->getAttachments(); ?>
+    <?php $maxFileSize = $block->getMaxFileSize(); ?>
+    <?php $allowedExtensions = $block->getAllowedExtensions(); ?>
+    <?php $product_params = $block->getRequest()->getParams(); ?>
+    <?php unset($product_params['referer_url']); ?>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="htmt7ortdui7qp1"></script>
+    <div class="heading-box"><h1 class="page-title"><span class="base"><?php echo __('Upload'); ?></span></h1></div>
+    <div class="product-options">
+        <form action="<?php echo $block->getBaseUrl(); ?>checkout/cart/add" method="post">
+        <input type="hidden" name="upload_params" id="product_params" value='<?php echo json_encode($product_params); ?>'>
+        <div class="upload-image-content v2">
+            <div class="upload_area">
+                <div class="box_upload">
+                    <div class="block-head">
+                        <span><?php echo __('Upload Your Artwork'); ?></span>
+                    </div>
+                    <div class="upload-block-body">
+                        <div class="action_area">
+                            <div class="action_buttons">
+                                <button class="action primary" type="button" id="upload_from_storage"><?php echo __('Upload from computer'); ?></button>
+                                <button id="dropbox" class="action primary" type="button"><?php echo __('Choose from dropbox'); ?></button>
+                                <!--button class="action primary" type="button" id="choose-recent-files"><span><?php //echo __('choose from recent files'); ?></span></button-->
+                                <span><?php echo __('Allowed Extensions'); ?>:</span><span class="allowed_extension"> <?php echo str_replace(" ",", ",strtoupper($allowedExtensions)); ?></span>
+                            </div>
+                        </div>
+                        <div class="upload_image_block">
+                            <!-- <h4 class="prodtheading"><?php // echo __('Please choose files from your computer') ?></h4> -->
+                            <div class="field admin__field">
+                                <label class="admin__field-label"
+                                       for="file"><?php /* @escapeNotVerified */ //echo __('Upload File') ?></label>
+                                <div class="upload-wrapper" data-bind="scope: 'uploader'"  data-mage-init='{
+                                    "Magento_Ui/js/core/app": {
+                                        "components": {
+                                            "uploader": {
+                                                "value" : <?php echo $uploadedFiles; ?>,
+                                                "formElement" : "fileUploader",
+                                                "maxFileSize": "<?php echo $maxFileSize ?>",
+                                                "allowedExtensions": "<?php echo $allowedExtensions ?>",
+                                                "componentType" : "fileUploader",
+                                                "component": "Designnbuy_Orderattachment/js/form/element/file-uploader",
+                                                "template": "Designnbuy_Orderattachment/components/file-uploader-v2",
+                                                "inputName": "attachment",
+                                                "name": "attachment",
+                                                "fileInputName": "attachment",
+                                                "isMultipleFiles": true,
+                                                "uploaderConfig": {
+                                                    "url": "<?php echo $block->getUrl('orderattachment/index/upload'); ?>"
+                                                }
+                                            }
+                                        }
+                                        }
+                                    }
+                                '>
+                                    <div class="meter" style="display:none;">
+                                        <label>Uploading... 1 of 1 files</label>
+                                        <span orig-width="0" style="width: 0%"></span>
+                                    </div>
+                                    <!-- ko template: getTemplate() --><!-- /ko -->
+                                </div>
+                                <div generated="true" class="mage-error upload-artwork-error" style="display: none;">Please upload artwork.</div>
+                            </div>
+                            
+                        </div>
+                        <p id="jobthumb_preview"></p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="proof_area">
+                <div class="proofing-flow-block">
+                    <div class="block-head">
+                        <span><?php echo __('Proofing Options'); ?></span>
+                    </div>
+                    <div class="proofarea_block_body">
+                        <div class="proof-content-wrapper" id="no_proof">
+                            <label class="proof-options" for="proof_waived">
+                                <div class="pr-radio-group rdo-wrapper">
+                                    <input type="radio" name="proofing_options" value="proof_waived" id="proof_options" checked />
+                                </div>
+
+                                <div class="content-wrapper">
+                                    <h5 class="proof-option-title"><?php echo __("I don't need a proof"); ?></h5>
+                                    <div class="pr-paragraph proof-content">
+                                        <p><?php echo __("We'll queue your files for print as-is, but will notify you if we find any problems."); ?></p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="proof-content-wrapper" id="pdf_proof">
+                            <label class="proof-options" for="proof_request">
+                                <div class="pr-radio-group rdo-wrapper">
+                                    <input type="radio" name="proofing_options" value="proof_request" id="proof_options" />
+                                </div>
+                                <div class="content-wrapper">
+                                    <h5 class="proof-option-title"><?php echo __("I need a PDF proof"); ?></h5>
+                                    <div class="pr-paragraph proof-content">
+                                        <p><?php echo __("We'll create a PDF proof for you to review. Your files will not be queued for print until you've approved the proof."); ?></p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <button class="action primary" type="submit" id="file-add-to-cart"><span>ADD TO CART</span></button>
+                <br/><br/><br/><br/>
+            </div>
+            
+        </div>
+        </form>
+        <!-- <div class="modal-popup-block" id="choose_recent_files_popup">
+            <div class="content">
+                <p>Popup Content</p>
+            </div>
+        </div> -->
+    </div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+
+            function crossOriginUpload(url) {
+                
+                crossOriginUploadURI = "<?php echo $block->getBaseUrl(); ?>/orderattachment/index/dropboxupload/";
+                var def = jQuery.Deferred();
+                jQuery.post(crossOriginUploadURI, { url: url }).done(function (response) {
+                    response = $.parseJSON(response);
+                    debugger;
+                    if (jQuery(".file-uploader-area").length && response.success == true) {
+                        
+                        var upload_html='<div class="file-uploader-summary"><div class="file-uploader-preview"><a target="_blank" href="'+response.imageUrl+'"><img class="preview-image" tabindex="1" src="'+response.imageUrl+'"></a><div class=""><button type="button" class="action-remove dropbox" title="Remove"><span>Remove</span></button></div></div><div class="file-uploader-filename"><a target="_blank" href="'+response.imageUrl+'">'+response.imageName+'</a></div><input name="attachment[fileName][]" type="hidden" file="fileName" value="'+response.imageName+'"><input name="attachment[fileUrl][]" type="hidden" file="fileUrl" value="'+response.imageName+'"></div>';
+                        jQuery(".file-uploader-area").after(upload_html);
+                    }
+                    //response = $j.parseJSON(response);
+                });
+                return def;
+            }
+            var optionsDrop = {
+		
+                // Required. Called when a user selects an item in the Chooser.
+                success: function(files) {
+                    // alert("Here's the file link: " + files[0].link)
+                    crossOriginUpload(files[0].link).done(function (img) {
+                        debugger;
+                        //Helper.canvasImport(img);           
+                    });	
+                },
+            
+                // Optional. Called when the user closes the dialog without selecting a file
+                // and does not include any parameters.
+                cancel: function() {
+            
+                },
+            
+                // Optional. "preview" (default) is a preview link to the document for sharing,
+                // "direct" is an expiring link to download the contents of the file. For more
+                // information about link types, see Link types below.
+                linkType: "direct", // or "preview"
+            
+                // Optional. A value of false (default) limits selection to a single file, while
+                // true enables multiple file selection.
+                multiselect: false, // or true
+            
+                // Optional. This is a list of file extensions. If specified, the user will
+                // only be able to select files with these extensions. You may also specify
+                // file types, such as "video" or "images" in the list. For more information,
+                // see File types below. By default, all extensions are allowed.
+                extensions: ['.jpg', '.jpeg', '.png'],
+            };
+            $(document).ready(function () {
+                $("#dropbox_window").hide();
+                
+                $("#dropbox").on("click", function () {
+                    Dropbox.choose(optionsDrop);
+                });
+                
+                $("#file-add-to-cart").on("click", function () {
+                   if($('.file-uploader-summary').length == 0){
+                        jQuery(".mage-error.upload-artwork-error").show();
+                        jQuery(".mage-error.upload-artwork-error").delay(5000).fadeOut('slow');
+                        return false;
+                   }
+                });
+                jQuery("body").on("click",".action-remove.dropbox", function(){
+                    jQuery(this).parents(".file-uploader-summary").remove()                    
+                });
+            });
+            /* var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                parentModalClass: 'choose_file_modal_popup',
+                modalClass: 'recent-files-modal-popup',
+                title: 'Your recently uploaded files',
+                buttons: [{
+                    text: $.mage.__('Choose'),
+                    class: 'action',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#choose_recent_files_popup'));
+            $("#choose-recent-files").on('click',function(){ 
+                $("#choose_recent_files_popup").modal("openModal");
+            });
+            */
+            $("#upload_from_storage").click( function () {
+               $(".upload_image_block .file-uploader-button.action").trigger('click');
+            });
+        }
+    );
+    
+</script>

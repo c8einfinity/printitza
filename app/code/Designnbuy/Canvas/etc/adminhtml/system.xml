@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="designnbuy" translate="label" sortOrder="110">
+            <label>Designnbuy Extensions</label>
+        </tab>
+        <section id="canvas" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Print Designer Settings</label>
+            <tab>designnbuy</tab>
+            <resource>Designnbuy_Canvas::config</resource>
+            <group id="configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Configuration</label>
+                <field id="base_unit" type="select" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Unit for Measurement</label>
+                    <source_model>Designnbuy\Canvas\Model\Config\Source\Baseunit</source_model>
+                </field>
+                <field id="output_format" type="select" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Output Format</label>
+                    <source_model>Designnbuy\Canvas\Model\Config\Source\Output</source_model>
+                </field>
+                <field id="order_information" type="select" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Order Information</label>
+                    <source_model>Designnbuy\Canvas\Model\Config\Source\Order</source_model>
+                </field>
+                <field id="image_dpi" type="text" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Acceptable Image Resolution in DPI</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="vdp" type="select" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>VDP Output Generation</label>
+                    <source_model>Designnbuy\Canvas\Model\Config\Source\Vdp</source_model>
+                </field>
+                <field id="top_safe_margin" type="text" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Safe Margin</label>
+                </field>
+                <field id="right_safe_margin" type="text" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Right Safe Margin</label>
+                </field>
+                <field id="bottom_safe_margin" type="text" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bottom Safe Margin</label>
+                </field>
+                <field id="left_safe_margin" type="text" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Left Safe Margin</label>
+                </field>
+                <field id="top_bleed_margin" type="text" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Bleed Margin</label>
+                </field>
+                <field id="right_bleed_margin" type="text" translate="label" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Right Bleed Margin</label>
+                </field>
+                <field id="bottom_bleed_margin" type="text" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bottom Bleed Margin</label>
+                </field>
+                <field id="left_bleed_margin" type="text" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Left Bleed Margin</label>
+                </field>
+                <field id="element_color_picker_type" type="select" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Element Color Options</label>
+                    <source_model>Designnbuy\Canvas\Model\Config\Source\ElementColorPickerType</source_model>
+                </field>
+                <field id="bg_color_picker_type" type="select" translate="label" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Color Options</label>
+                    <source_model>Designnbuy\Canvas\Model\Config\Source\BgColorPickerType</source_model>
+                </field>
+                <field id="tool_help_page" translate="label" type="select" sortOrder="181" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Help Page</label>
+                    <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+                </field>
+            </group>
+            <group id="index_page" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Designtool Page</label>
+                <field id="title" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                </field>
+                <field id="meta_keywords" translate="label comment" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Meta Keywords</label>
+                </field>
+                <field id="meta_description" translate="label comment" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Meta Description</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

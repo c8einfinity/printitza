@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="order_items">
+            <arguments>
+                <argument name="columns" xsi:type="array">
+                    <item name="product" xsi:type="string" translate="true">Product</item>
+                    <item name="status" xsi:type="string" translate="true">Item Status</item>
+                    <item name="price-original" xsi:type="string" translate="true">Original Price</item>
+                    <item name="price" xsi:type="string" translate="true">Price</item>
+                    <item name="ordered-qty" xsi:type="string" translate="true">Qty</item>
+                    <item name="subtotal" xsi:type="string" translate="true">Subtotal</item>
+                    <item name="tax-amount" xsi:type="string" translate="true">Tax Amount</item>
+                    <item name="tax-percent" xsi:type="string" translate="true">Tax Percent</item>
+                    <item name="discont" xsi:type="string" translate="true">Discount Amount</item>
+                    <item name="total" xsi:type="string" translate="true">Row Total</item>
+                    <!-- <item name="workflowstatus" xsi:type="string" translate="true">Workflow Status</item> -->
+                    <item name="image" xsi:type="string" translate="true">Image</item>
+                    <item name="output" xsi:type="string" translate="true">Output</item>
+                </argument>
+            </arguments>
+            <block class="Designnbuy\Base\Block\Adminhtml\Sales\Order\Items\Column\Output" name="column_output" template="Designnbuy_Base::output.phtml" group="column"/>
+            <block class="Designnbuy\Base\Block\Adminhtml\Sales\Order\Items\Column\Image" name="column_image" after="column_product" template="Designnbuy_Base::image.phtml" group="column"/>
+        </referenceBlock>
+    </body>
+</page>

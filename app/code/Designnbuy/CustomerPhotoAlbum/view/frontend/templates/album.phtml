@@ -1,0 +1,70 @@
+<div class="photo-album-listing">
+    <?php 
+        $photoAlbums = $block->getCustomerAlbums();
+     ?>
+     <div class="product-album-listing">
+        <ul>
+            <li>
+                <div class="photo-album-block">
+                    <a class="album-upload-box" href="<?php echo $block->getBaseUrl().'photoalbum/album/create'; ?>">
+                        <img src='<?php echo $this->getViewFileUrl('Designnbuy_CustomerPhotoAlbum::images/create.png'); ?>' alt="Create">
+                    </a>
+                </div>
+            </li>
+            <?php if($photoAlbums->getSize() > 0): ?>
+                <?php foreach($photoAlbums as $album):?>
+                    <li id="photo-album-<?= $album->getAlbumId();?>">
+                        <div class="photo-album-block">
+                            <a class="album-img-box" href="<?php echo $block->getBaseUrl().'photoalbum/album/edit/id/'.$album->getAlbumId(); ?>">
+                                <?php $src=$block->getCustomerAlbumsPhotos($album->getAlbumId()); ?>
+                                <img src='<?php echo $block->getImageUrl($src); ?>' alt="Create">
+                            </a>
+                            <div class="album-caption">
+                                <h6><?php echo $album->getTitle(); ?></h6>
+                                <span class="delete-album" album-id="<?php echo $album->getAlbumId(); ?>" title="<?php echo __('Delete'); ?>"><i class="icn-delete"></i></span>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach;?>
+                <script type="text/javascript">
+                    require(['jquery','Magento_Ui/js/modal/confirm','Magento_Ui/js/modal/alert'],function($,confirmation,alert){
+                        $(".delete-album").click(function(){
+                            var albumId = $(this).attr('album-id');
+                            confirmation({
+                                title: 'Delete Album',
+                                content: 'Are you sure ??',
+                                actions: {
+                                    confirm: function(){
+                                        $.ajax({
+                                            url: "<?php echo $block->getBaseUrl().'photoalbum/album/delete/'; ?>",
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            showLoader:true,
+                                            data: {
+                                                album_id:albumId
+                                            },
+                                            complete: function(response) {
+                                                if(response.responseJSON.delete){
+                                                    $("#photo-album-"+albumId).remove();
+                                                }
+                                            },
+                                            error: function (xhr, status, errorThrown) {
+                                                console.log('Error happens. Try again.');
+                                            }
+                                        });
+                                    },
+                                    cancel: function(){
+                                    return false;
+                                    },
+                                    always: function(){
+                                        return false;
+                                    }
+                                }
+                            });
+                        });
+                    });
+                </script>
+            <?php endif; ?>
+        </ul>
+     </div>
+</div>

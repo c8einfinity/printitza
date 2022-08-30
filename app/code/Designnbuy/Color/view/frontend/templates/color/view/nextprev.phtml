@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Color color next and prev color links
+ *
+ * @var $block \Designnbuy\Color\Block\Color\View\NextPrev
+ */
+?>
+
+<?php if ($block->displayLinks()) { ?>
+    <?php
+        $prevColor = $this->getPrevColor();
+        $nextColor = $this->getNextColor();
+    ?>
+    <?php if ($prevColor || $nextColor) { ?>
+        <div class="color-nextprev-hld clearfix">
+            <?php if ($prevColor) { ?>
+                <?php $title = $block->escapeHtml($prevColor->getTitle()) ?>
+                <a class="nextprev-link prev-link" href="<?php echo $prevColor->getColorUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('&larr; Previous') ?>
+                </a>
+            <?php } ?>
+            <?php if ($nextColor) { ?>
+                <?php $title = $block->escapeHtml($nextColor->getTitle()) ?>
+                <a class="nextprev-link next-link" href="<?php echo $nextColor->getColorUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('Next &rarr;') ?>
+                </a>
+            <?php } ?>
+        </div>
+    <?php } ?>
+<?php } ?>

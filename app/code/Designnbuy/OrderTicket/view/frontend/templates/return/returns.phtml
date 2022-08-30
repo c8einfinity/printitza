@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Designnbuy\OrderTicket\Block\Returns\Returns */
+?>
+<?php $_returns = $block->getReturns(); ?>
+<?php if ($_returns->getSize()): ?>
+<div class="order-details-items orderticket">
+    <?php echo $block->getChildHtml('info');?>
+    <div class="order-title"><strong><?php /* @escapeNotVerified */ echo __('My Order Tickets') ?></strong></div>
+    <div class="toolbar">
+        <?php echo $block->getPagerHtml(); ?>
+    </div>
+    <?php echo $block->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+    <?php echo $block->getChildHtml('info');?>
+    <div class="table-wrapper order-items returns">
+        <table class="data table table-order-items returns" id="my-returns-table">
+            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('My Order Tickets'); ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Order Ticket #') ?></th>
+                    <th scope="col" class="col date"><?php /* @escapeNotVerified */ echo __('Date') ?></th>
+                    <th scope="col" class="col shipping"><?php /* @escapeNotVerified */ echo __('Ship From') ?></th>
+                    <th scope="col" class="col status"><?php /* @escapeNotVerified */ echo __('Status') ?></th>
+                    <th scope="col" class="col actions">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $_odd = ''; ?>
+                <?php foreach ($_returns as $_return): ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order Ticket #')) ?>" class="col id" data-th="<?php echo $block->escapeHtml(__('Order Ticket #')); ?>"><?php /* @escapeNotVerified */ echo $_return->getIncrementId() ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date" data-th="<?php echo $block->escapeHtml(__('Date')); ?>"><?php /* @escapeNotVerified */ echo $this->helper('Designnbuy\OrderTicket\Helper\Data')->getFormatedDate($_return->getDateRequested()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Ship From')) ?>" class="col shipping" data-th="<?php echo $block->escapeHtml(__('Ship From')); ?>"><?php echo $block->escapeHtml($_return->getCustomerName()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order Ticket Status')) ?>" class="col status" data-th="<?php echo $block->escapeHtml(__('Order Ticket Status')); ?>"><?php echo $block->escapeHtml($_return->getStatusLabel()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Actions')); ?>" class="col actions" data-th="<?php echo $block->escapeHtml(__('Actions')); ?>">
+                        <a href="<?php /* @escapeNotVerified */ echo $block->getViewUrl($_return) ?>" class="cation view"><span><?php /* @escapeNotVerified */ echo __('View Order Ticket') ?></span></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="toolbar">
+        <?php echo $block->getPagerHtml(); ?>
+    </div>
+</div>
+<?php else: ?>
+    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You have placed no Order Tickets.'); ?></span></div>
+<?php endif ?>

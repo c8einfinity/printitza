@@ -1,0 +1,103 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/** @var \Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn $block */
+$_order = $block->getOrder();
+$_item = $block->getItem();
+$productOptions = $_item->getProductOptionByCode('info_buyRequest');
+if (isset($productOptions['photoAlbum_FileName']) && isset($productOptions['cart_photo_id'])) {
+    $outputPath = $block->getBaseUrl().'pub/media/designnbuy/output/';
+?>
+    <div class="admin__field-control">
+        
+        <a href="<?php echo $block->getUrl('customerphotoalbum/output/download'); ?>?file=<?php echo $productOptions['photoAlbum_FileName'];?>&fl=<?php echo base64_encode($outputPath);?>&photo_id=<?php echo base64_encode($productOptions['cart_photo_id']); ?>&id=<?php echo $_order->getIncrementId(); ?>"><?php echo __('Download Output'); ?></a><br/>
+        
+    </div>
+<?php
+}
+?>
+<?php /* @escapeNotVerified */  //$block->displayPrices($block->getBaseTotalAmount($_item), $block->getTotalAmount($_item)) ?>
+<div class="admin__field-control">
+    <?php
+        $outputFolderPrefix = $block->hotFolderHelper()->outputFolderPrefix($_item->getProduct());
+        $outputFolderPostfix = $block->hotFolderHelper()->outputFolderPostfix($_item->getProduct());
+        $outputFolderMiddleName = $block->hotFolderHelper()->outputFolderMiddleName($_order->getIncrementId(), $_item->getId(), $_item->getProduct());
+        $zipName = '';
+        if($outputFolderPrefix != '' || $outputFolderPostfix != '' || $outputFolderMiddleName != '') {
+            $naming = false;
+            if($outputFolderPrefix != ''){
+                $zipName .= $outputFolderPrefix.'_';
+            }
+            if($outputFolderMiddleName != ''){
+                $zipName .= $outputFolderMiddleName.'_';
+            }
+            if($outputFolderPostfix != ''){
+                $zipName .= $outputFolderPostfix;
+            }
+            $zipName .= ".zip";
+            //$zipName = $outputFolderPrefix . '_' . $outputFolderMiddleName . '_' . $outputFolderPostfix.".zip";
+        } else {
+            $zipName = "order-".$_order->getIncrementId()."-".$_item->getId().".zip";
+        }
+    ?>
+    <?php
+    $outputFilePath = $_item->getOutputFilePath();
+
+    $outputDetails = json_decode($outputFilePath, true);
+
+    if(!empty($outputDetails) && $outputDetails['folder_path']) {
+        $folderLocation = $outputDetails['folder_path'];
+    } else {
+        $folderLocation = $block->hotFolderHelper()->outputFolderLocation($_order->getIncrementId(), $_item->getProduct(), true);
+    }
+    ?>
+    <?php if(isset($productOptions) && isset($productOptions['svg'])):?>
+        <a href="<?php echo $block->getUrl('base/output/download'); ?>?file=<?php echo $zipName;?>&fl=<?php echo base64_encode($folderLocation);?>&id=<?php echo $_order->getEntityId();?>&order_id=<?php echo $_order->getIncrementId();?>&item_id=<?php echo $_item->getId();?>&product_id=<?php echo $_item->getProductId();?>"><?php echo __('Download Output'); ?></a><br/>
+        <hr/>
+        <a href="<?php echo $block->getUrl('base/output/download'); ?>?file=<?php echo $zipName;?>&fl=<?php echo base64_encode($folderLocation);?>&id=<?php echo $_order->getEntityId();?>&order_id=<?php echo $_order->getIncrementId();?>&item_id=<?php echo $_item->getId();?>&product_id=<?php echo $_item->getProductId();?>&generate_output=1"><?php echo __('Generate Output'); ?></a><br/>
+    <?php endif; ?>
+    <?php $savestr = ''; ?>
+    <?php if(isset($productOptions) && isset($productOptions['svg'])):?>
+        <?php
+        $VDPOutputArea = $block->dnbBaseHelper()->getVDPOutputArea();
+        if($outputFolderPrefix != '' && $outputFolderPostfix != '' && $outputFolderMiddleName != '') {
+            $zipName = "vdp_order-" . $outputFolderPrefix . '_' . $outputFolderMiddleName . '_' . $outputFolderPostfix.".zip";
+        } else {
+            $zipName = "vdp_order-".$_order->getIncrementId()."-".$_item->getId().".zip";
+        }
+        //$vdpFile = $product_option['info_buyRequest']['vdp_file'];
+        //$svgFile = $product_option['info_buyRequest']['svg_file'];
+        ?>
+        <!-- Output Area :- 0 = Automatic, 1 = Manual -->
+        <?php if(isset($productOptions) && isset($productOptions['vdp_file']) & $VDPOutputArea == 1):?>
+            <?php //if($vdpFile !='' && $vdpFile !='undefined' && $VDPOutputArea == 1): ?>
+            <br/>
+            <br/>
+            <a href="<?php echo $block->getUrl('base/vdp/download',array('id' => $_order->getEntityId(), 'order_id' => $_order->getIncrementId(), 'item_id' => $_item->getId(), 'fl' => base64_encode($folderLocation), 'file' => $zipName)); ?>"><?php echo __('VDP Output'); ?></a>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <?php /*if(isset($productOptions) && isset($productOptions['comment'])):*/?><!--
+        <br />
+        <strong><?php /*echo __('Comment'); */?>:</strong>  <?php /*echo $productOptions['comment']; */?>
+    --><?php /*endif; */?>
+    <?php if(isset($productOptions) && isset($productOptions['printingMethod'])):?>
+        <br />
+        <?php
+        $printingMethod = json_decode($productOptions['printingMethod'], true);
+        ?>
+        <?php if(isset($printingMethod) && !empty($printingMethod)) :?>
+            <strong><?php echo __('Printing Method #'); ?>:</strong>  <?php echo $printingMethod['printingMethodId']; ?>
+            <?php if(isset($printingMethod) && isset($printingMethod['name'])):?>
+            <strong><?php echo __('Printing Method Name'); ?>:</strong>  <?php echo $printingMethod['name']; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>

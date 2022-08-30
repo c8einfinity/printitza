@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="template_default"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Template\Block\Template\View" name="template.template" template="template/view.phtml">
+                <block class="Designnbuy\Template\Block\Template\Info" name="template.template.info" template="template/info.phtml" />
+                <action method="setTemplateInfoBlockName">
+                    <argument name="name" xsi:type="string">template.template.info</argument>
+                </action>
+                <block class="Magento\Framework\View\Element\Text\ListText" name="template.template.bottom">
+                    <block class="Designnbuy\Template\Block\Template\View\Gallery" name="template.template.gallery" as="gallery"  template="Designnbuy_Template::template/view/gallery.phtml" />
+                    <block class="Designnbuy\Template\Block\Template\View\NextPrev" name="template.template.nextprev" as="nextprev"  template="Designnbuy_Template::template/view/nextprev.phtml" />
+                    <block class="Designnbuy\Template\Block\Template\View\RelatedTemplates" name="template.template.relatedtemplates" as="relatedtemplates"  template="Designnbuy_Template::template/view/relatedtemplates.phtml" />
+                    <block class="Designnbuy\Template\Block\Template\View\RelatedProducts" name="template.template.relatedproducts" as="relatedproducts"  template="Designnbuy_Template::template/view/relatedproducts.phtml" />
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_submit_all_after">
+        <observer name="salesrep_admihtml_save_order_after_submit" instance="BrainActs\SalesRepresentative\Observer\Adminhtml\CheckoutSubmitAllAfterObserver" />
+    </event>
+
+    <event name="adminhtml_customer_save_after">
+        <observer name="salesrep_adminhtml_customer_save_after" instance="BrainActs\SalesRepresentative\Observer\Adminhtml\CustomerSaveAfter" />
+    </event>
+
+    <event name="order_cancel_after">
+        <observer name="salesrep_order_cancel_after" instance="BrainActs\SalesRepresentative\Observer\Adminhtml\OrderCancelAfter" />
+    </event>
+    <event name="sales_order_creditmemo_refund">
+        <observer name="salesrep_sales_order_creditmemo_refund" instance="BrainActs\SalesRepresentative\Observer\Adminhtml\SalesOrderCreditmemoRefund" />
+    </event>
+
+</config>

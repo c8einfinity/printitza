@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Designnbuy_Base::DNB">
+					<resource id="Designnbuy_Workflow::workflow" title="Workflow" sortOrder="10">
+						<resource id="Designnbuy_Workflow::User" sortOrder="10" title="User">
+							<resource id="Designnbuy_Workflow::User_save" sortOrder="10" title="Save User"/>
+							<resource id="Designnbuy_Workflow::User_delete" sortOrder="20" title="Delete User"/>
+							<resource id="Designnbuy_Workflow::User_update" sortOrder="30" title="Update User"/>
+							<resource id="Designnbuy_Workflow::User_view" sortOrder="40" title="View User"/>
+						</resource>
+						<resource id="Designnbuy_Workflow::Role" sortOrder="10" title="Role">
+							<resource id="Designnbuy_Workflow::Role_save" sortOrder="10" title="Save Role"/>
+							<resource id="Designnbuy_Workflow::Role_delete" sortOrder="20" title="Delete Role"/>
+							<resource id="Designnbuy_Workflow::Role_update" sortOrder="30" title="Update Role"/>
+							<resource id="Designnbuy_Workflow::Role_view" sortOrder="40" title="View Role"/>
+						</resource>
+						<resource id="Designnbuy_Workflow::Group" sortOrder="10" title="Group">
+							<resource id="Designnbuy_Workflow::Group_save" sortOrder="10" title="Save Group"/>
+							<resource id="Designnbuy_Workflow::Group_delete" sortOrder="20" title="Delete Group"/>
+							<resource id="Designnbuy_Workflow::Group_update" sortOrder="30" title="Update Group"/>
+							<resource id="Designnbuy_Workflow::Group_view" sortOrder="40" title="View Group"/>
+						</resource>
+						<resource id="Designnbuy_Workflow::Status" sortOrder="10" title="Status">
+							<resource id="Designnbuy_Workflow::Status_save" sortOrder="10" title="Save Status"/>
+							<resource id="Designnbuy_Workflow::Status_delete" sortOrder="20" title="Delete Status"/>
+							<resource id="Designnbuy_Workflow::Status_update" sortOrder="30" title="Update Status"/>
+							<resource id="Designnbuy_Workflow::Status_view" sortOrder="40" title="View Status"/>
+						</resource>
+					</resource>
+				</resource>
+				<resource id="Magento_Sales::sales">
+					<resource id="Magento_Sales::sales_operation">
+						<resource id="Designnbuy_Workflow::Reports" title="Workflow Report" translate="title" sortOrder="50" />
+					</resource>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

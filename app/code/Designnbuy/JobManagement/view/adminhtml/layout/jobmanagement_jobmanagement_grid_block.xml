@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2019 Design 'N' Buy. All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ * ALWAYS DO BETTER @a
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="jobmanagement.jobmanagement.container">
+            <block class="Magento\Backend\Block\Widget\Grid" name="jobmanagement.jobmanagement.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">subscriberGrid</argument>
+                    <argument name="dataSource" xsi:type="object">Designnbuy\JobManagement\Model\ResourceModel\Jobmanagement\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">update_time</argument>
+                    <argument name="default_dir" xsi:type="string">desc</argument>
+                    <argument name="use_ajax" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="jobmanagement.jobmanagement.grid.columnSet" as="grid.columnSet">
+                    <!-- <arguments>
+                        <argument name="id" xsi:type="string">columnSet</argument>
+                        <argument name="rowUrl" xsi:type="array">
+                            <item name="path" xsi:type="string">*/*/edit</item>
+                            <item name="extraParamsTemplate" xsi:type="array">
+                                <item name="id" xsi:type="string">getId</item>
+                            </item>
+                        </argument>
+                    </arguments> -->
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">ID</argument>
+                            <argument name="index" xsi:type="string">entity_id</argument>
+                            <argument name="header_css_class" xsi:type="string">col-id</argument>
+                            <argument name="column_css_class" xsi:type="string">col-id</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="title">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Job Title</argument>
+                            <argument name="index" xsi:type="string">title</argument>
+                            <argument name="type" xsi:type="string">text</argument>                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="increment_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Order Id</argument>
+                            <argument name="index" xsi:type="string">increment_id</argument>
+                            <argument name="type" xsi:type="string">text</argument>                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="status">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Order Status</argument>
+                            <argument name="index" xsi:type="string">status</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="options" xsi:type="options" model="Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\OrderStatus"/>
+                            <argument name="header_css_class" xsi:type="string">col-store</argument>
+                            <argument name="column_css_class" xsi:type="string">col-store</argument>                      
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="name">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Product Name</argument>
+                            <argument name="index" xsi:type="string">name</argument>
+                            <argument name="type" xsi:type="string">text</argument>                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="workflow_status_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Workflow Status</argument>
+                            <argument name="index" xsi:type="string">workflow_status_id</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="options" xsi:type="options" model="Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\WorkflowStatusOptionArray"/>
+                            <argument name="header_css_class" xsi:type="string">col-store</argument>
+                            <argument name="column_css_class" xsi:type="string">col-store</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="created_date">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Created Date</argument>
+                            <argument name="index" xsi:type="string">created_date</argument>
+                            <argument name="type" xsi:type="string">datetime</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="start_date">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Start Date</argument>
+                            <argument name="index" xsi:type="string">start_date</argument>
+                            <argument name="type" xsi:type="string">datetime</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="due_date">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Due Date</argument>
+                            <argument name="index" xsi:type="string">due_date</argument>
+                            <argument name="type" xsi:type="string">datetime</argument>                            
+                        </arguments>
+                    </block>
+                    <block class="Designnbuy\JobManagement\Block\Adminhtml\Grid\Column\EditAction" as="update_action">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Action</argument>
+                            <argument name="index" xsi:type="string">edit_action</argument>
+                            <argument name="sortable" xsi:type="boolean">false</argument>
+                            <argument name="filter" xsi:type="boolean">false</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

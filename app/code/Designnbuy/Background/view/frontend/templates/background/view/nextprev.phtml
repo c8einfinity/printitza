@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background background next and prev background links
+ *
+ * @var $block \Designnbuy\Background\Block\Background\View\NextPrev
+ */
+?>
+
+<?php if ($block->displayLinks()) { ?>
+    <?php
+        $prevBackground = $this->getPrevBackground();
+        $nextBackground = $this->getNextBackground();
+    ?>
+    <?php if ($prevBackground || $nextBackground) { ?>
+        <div class="background-nextprev-hld clearfix">
+            <?php if ($prevBackground) { ?>
+                <?php $title = $block->escapeHtml($prevBackground->getTitle()) ?>
+                <a class="nextprev-link prev-link" href="<?php echo $prevBackground->getBackgroundUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('&larr; Previous') ?>
+                </a>
+            <?php } ?>
+            <?php if ($nextBackground) { ?>
+                <?php $title = $block->escapeHtml($nextBackground->getTitle()) ?>
+                <a class="nextprev-link next-link" href="<?php echo $nextBackground->getBackgroundUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('Next &rarr;') ?>
+                </a>
+            <?php } ?>
+        </div>
+    <?php } ?>
+<?php } ?>

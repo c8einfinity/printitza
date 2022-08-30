@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>		
+	   <css src="Designnbuy_Orderattachment::css/orderattachment.css"/>
+	</head>
+	<body>
+	    <referenceBlock name="product.info.form.options">
+	      	<block class="Designnbuy\Orderattachment\Block\Attachment" after="product.info.options.wrapper" name="productattach.info" as="productattach" template="Designnbuy_Orderattachment::attachment.phtml" />
+	    </referenceBlock>
+		<referenceContainer name="product.info.form.content">
+			<block class="Designnbuy\Orderattachment\Block\Attachment"
+				   name="productattach.info1"
+				   as="productattach"
+				   template="Designnbuy_Orderattachment::attachment.phtml"
+				   before="product.info.addtocart"></block>
+		</referenceContainer>
+		<referenceContainer name="product-accordion-box1">
+			<block class="Designnbuy\Orderattachment\Block\Attachment"
+				   name="productattach.info2"
+				   template="Designnbuy_Orderattachment::attachment_v2_button.phtml" />
+		</referenceContainer>
+	</body>
+</page>

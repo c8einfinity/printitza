@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/** @var \Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn $block */
+$_order = $block->getOrder();
+$_item = $block->getItem();
+$productOptions = $_item->getProductOptionByCode('info_buyRequest');
+
+?>
+
+<?php /* @escapeNotVerified */ ?>
+<div class="admin__field-control">
+    <span class="product-image-container" data-bind="style: {width: 240 + 'px'}">
+        <span class="product-image-wrapper"  data-bind="style: {'padding-bottom': 298/240*100 + '%'}">
+            <a href="#" onclick="popWin('<?php echo $block->getImage() ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;" title="">
+                <img src="<?php echo $block->getImage() ?>"  data-bind="style: {width: 240 + 'px'}" />
+            </a>
+        </span>
+    </span>
+    <?php if(isset($productOptions) && isset($productOptions['comment'])):?>
+        <br />
+        <strong><?php echo __('Comment'); ?>:</strong>  <?php echo $productOptions['comment']; ?>
+    <?php endif; ?>
+</div>

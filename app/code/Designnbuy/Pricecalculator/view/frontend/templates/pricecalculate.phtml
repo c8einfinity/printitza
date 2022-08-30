@@ -1,0 +1,389 @@
+
+<?php if($block->showCsvCalculation()): ?>
+    <?php $_product = $block->getCurrentProduct(); ?>
+    <?php
+        if ($_product->getBaseUnit() != '') {
+            $unit = $_product->getAttributeText('base_unit');
+        } else {
+            $unit = $block->getConfigProductUnit();
+        }
+    ?>
+    <?php $sizeLimits = $block->getMinMaxSize();?>
+    <?php $widthOptionId = null; ?>
+    <?php $heightOptionId = null; ?>
+    <script type="text/javascript">
+        require(['jquery',
+            'priceBox',
+            'mage/translate',
+            'Magento_Catalog/js/price-utils',
+            'underscore',
+            'mage/template',
+            'mage/validation',
+            'jquery/ui'
+        ], function ($, priceBox, $t, priceUtils, _, mageTemplate) {
+            'use strict';
+
+            //priceBox = new priceBox();
+            //priceOptions = new priceOptions();
+
+            var productFinalPrice = "<?php echo $block->getPriceWithSymbol(); ?>";
+            var squareAreaPrices = $.parseJSON('<?php echo $block->getSquareAreaPrices(); ?>');
+            var fields = new Array();
+            var nof_options = 0;
+            var total_options = "2";
+            var showBasePrice = "1";
+            var showDiscountPrice = "1";
+            var discountTitle = "discount";
+            var areaVolLabel = "Area";
+            var first_load = 0;
+            var current_url = window.location.href;
+            var is_edit = current_url.indexOf('checkout/cart/configure/id');
+            var validWidth = false;
+            var validHeight = false;
+
+            <?php foreach ($_product->getOptions() as $value): ?>
+            <?php if($value->getType() == 'field'): ?>
+            <?php $optionId = $value->getId() ?>
+            var opId = <?php echo $optionId ?>;
+            var opIdName = '#options_<?php echo $optionId ?>_text';
+            var opJid = $('#options_<?php echo $optionId ?>_text');
+
+            //change field title/label for input/output
+            var parent = $("#options_<?php echo $optionId ?>_text").parent().parent();
+            var child = parent.find('label span');
+            //var str = child[0].innerHTML+' ('+"Milli-Meter"+')';
+            //child[0].innerHTML = str;
+
+            if($('#calculations').text() === '') {
+                var calculations = '<div id="calculations">'+areaVolLabel+': <span></span></div>';
+                var discount_price = '<div id="discount_price">'+discountTitle+': <span></span></div>';
+                var base_price = '<div id="base_price">Base Price: '+ productFinalPrice +'</div>';
+                var html_insert = calculations;
+                /*if(showDiscountPrice == 1) {
+                    html_insert = html_insert+discount_price;
+                }*/
+
+                if(showBasePrice == 1) {
+                    html_insert = '<div class="product-calculations">'+ html_insert+base_price +'</div>';
+                }
+                $('#product-options-wrapper').prepend(html_insert+'<br>');
+            }
+
+            if (opId !== "undefined") {
+                fields[opId] = "options[" + opId + "]";
+            }
+
+            <?php if($value->getDesigntoolType() == 'height'): ?>
+            <?php if(isset($sizeLimits) && !empty($sizeLimits)):?>
+            <?php $heightMin = $sizeLimits['Height_min']; ?>
+            <?php $heightMax = $sizeLimits['Height_max']; ?>
+            var min = <?php echo $heightMin?>;
+            var max = <?php echo $heightMax?>;
+
+            $.validator.addMethod('pricecalculator-minmax-height', function (value) {
+                if (value < <?php echo $heightMin?> || value > <?php echo $heightMax?>) {
+                    validWidth = false;
+                    return false;
+                }
+                validWidth = true;
+                return true;
+            }, $.mage.__('Please enter height between ' + min + ' to ' + max));
+
+            var dataId<?php echo $optionId ?> = $("#options_<?php echo $optionId ?>_text").data("validate");
+
+            if (!("pricecalculator-minmax-height" in dataId<?php echo $optionId ?>)) {
+                var newObj = {"pricecalculator-minmax-height": true};
+                $.extend(dataId<?php echo $optionId ?>, newObj);
+                var itemStringify = JSON.stringify(dataId<?php echo $optionId ?>).replace(/&quot;/g, '"');
+                $("#options_<?php echo $optionId ?>_text").attr("data-validate", itemStringify);
+            }
+            <?php endif; ?>
+            <?php endif; ?>
+
+            <?php if($value->getDesigntoolType() == 'width'): ?>
+            <?php if(isset($sizeLimits) && !empty($sizeLimits)):?>
+            <?php $widthMin = $sizeLimits['Width_min']; ?>
+            <?php $widthMax = $sizeLimits['Width_max']; ?>
+            var min = <?php echo $widthMin?>;
+            var max = <?php echo $widthMax?>;
+
+            $.validator.addMethod('pricecalculator-minmax-width', function (value) {
+                if (value < <?php echo $widthMin?> || value > <?php echo $widthMax?>) {
+                    validHeight = false;
+                    return false;
+                }
+                validHeight = true;
+                return true;
+            }, $.mage.__('Please enter width between ' + min + ' to ' + max));
+
+            var dataId<?php echo $optionId ?> = $("#options_<?php echo $optionId ?>_text").data("validate");
+
+            if (!("pricecalculator-minmax-width" in dataId<?php echo $optionId ?>)) {
+                var newObj = {"pricecalculator-minmax-width": true};
+                $.extend(dataId<?php echo $optionId ?>, newObj);
+                var itemStringify = JSON.stringify(dataId<?php echo $optionId ?>) .replace(/&quot;/g, '"');
+                $("#options_<?php echo $optionId ?>_text").attr("data-validate", itemStringify);
+            }
+            <?php endif; ?>
+            <?php endif; ?>
+            //check on change
+            $("#options_<?php echo $optionId ?>_text").change(function () {
+                var value = $(this).val();
+                if (value === '') {
+                    $(this).val(0);
+                    //updatePriceOnChange(0, <?php echo $optionId ?>);
+                    return;
+                }
+
+                if ($.validator.validateElement($("#options_<?php echo $optionId ?>_text"))) {
+                    //disableAddToCartBtn('#product_addtocart_form');
+                    calculatePrice($(this),<?php echo $optionId ?>);
+                    //enableAddToCartBtn('#product_addtocart_form');
+                }
+                //$("div.price-box .price-final_price").trigger("updatePrice");
+            });
+            <?php endif; ?>
+            <?php if($value->getType() == 'drop_down'): ?>
+                <?php $optionId = $value->getId() ?>
+                <?php 
+                    $dropdownOption = $value->getValues(); 
+                    $priceJson = [];
+                    foreach($dropdownOption as $val){
+                        $priceJson[$optionId][$val->getId()]['price'] = $val->getPrice();
+                    }
+                    $priceJsonData = json_encode($priceJson);
+                ?>
+                
+                //check on change
+                $("#select_<?php echo $optionId ?>").change(function () {
+                    var value = $(this).val();
+                    if (value == '') {
+                        return;
+                    }
+                    var pricingJsonData = <?php echo $priceJsonData; ?>;
+                    
+                    if(window.squarePrice !== undefined){
+                        if(jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $optionId ?>][value].type == "percent"){
+                            var optPrice = 1
+                            if(pricingJsonData){
+                                var optPrice = (window.squarePrice * pricingJsonData[<?php echo $optionId ?>][value].price) / 100;
+                            }
+                            jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $optionId ?>][value].prices = {'finalPrice' : {'amount': optPrice},'basePrice' : {'amount': optPrice},'oldPrice' : {'amount': optPrice}};
+                            jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[<?php echo $optionId ?>][value].prices = {'finalPrice' : {'amount': optPrice},'basePrice' : {'amount': optPrice},'oldPrice' : {'amount': optPrice}};
+                        }
+
+                    }
+                        //calculatePrice($(this),<?php //echo $optionId ?>);
+                    
+                });
+            <?php endif; ?>
+            <?php if($value->getType() == 'checkbox'): ?>
+                <?php $optionId = $value->getId() ?>
+                <?php 
+                    $dropdownOption = $value->getValues(); 
+                    $priceJson = [];
+                    foreach($dropdownOption as $val){
+                        $priceJson[$optionId][$val->getId()]['price'] = $val->getPrice();
+                    }
+                    $priceJsonData = json_encode($priceJson);
+                ?>
+                
+                //check on change
+                
+                
+                $('[name="options[<?php echo $optionId ?>][]"]').change(function () {
+                   
+                    var value = $(this).val();
+                    if (value == '') {
+                        return;
+                    }
+                    var pricingJsonData = <?php echo $priceJsonData; ?>;
+                    
+                    if(window.squarePrice !== undefined){
+                        if(jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $optionId ?>][value].type == "percent"){
+                            var optPrice = 1
+                            if(pricingJsonData){
+                                var optPrice = (window.squarePrice * pricingJsonData[<?php echo $optionId ?>][value].price) / 100;
+                            }
+                            jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $optionId ?>][value].prices = {'finalPrice' : {'amount': optPrice},'basePrice' : {'amount': optPrice},'oldPrice' : {'amount': optPrice}};
+                            jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[<?php echo $optionId ?>][value].prices = {'finalPrice' : {'amount': optPrice},'basePrice' : {'amount': optPrice},'oldPrice' : {'amount': optPrice}};
+                        }
+
+                    }
+                        //calculatePrice($(this),<?php //echo $optionId ?>);
+                    
+                });
+            <?php endif; ?>
+            <?php if($value->getType() == 'radio'): ?>
+                <?php $optionId = $value->getId() ?>
+                <?php 
+                    $dropdownOption = $value->getValues(); 
+                    $priceJson = [];
+                    foreach($dropdownOption as $val){
+                        $priceJson[$optionId][$val->getId()]['price'] = $val->getPrice();
+                    }
+                    $priceJsonData = json_encode($priceJson);
+                ?>
+                
+                //check on change
+                
+                
+                $('[name="options[<?php echo $optionId ?>]"]').change(function () {
+                  
+                    var value = $(this).val();
+                    if (value == '') {
+                        return;
+                    }
+                    var pricingJsonData = <?php echo $priceJsonData; ?>;
+                    
+                    if(window.squarePrice !== undefined){
+                        if(jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $optionId ?>][value].type == "percent"){
+                            var optPrice = 1
+                            if(pricingJsonData){
+                                var optPrice = (window.squarePrice * pricingJsonData[<?php echo $optionId ?>][value].price) / 100;
+                            }
+                            jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $optionId ?>][value].prices = {'finalPrice' : {'amount': optPrice},'basePrice' : {'amount': optPrice},'oldPrice' : {'amount': optPrice}};
+                            jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[<?php echo $optionId ?>][value].prices = {'finalPrice' : {'amount': optPrice},'basePrice' : {'amount': optPrice},'oldPrice' : {'amount': optPrice}};
+                        }
+
+                    }
+                        //calculatePrice($(this),<?php //echo $optionId ?>);
+                    
+                });
+            <?php endif; ?>
+            <?php 
+                if($value->getDesigntoolType() && $value->getDesigntoolType() == 'width'){
+                    $widthOptionId = $value->getOptionId();
+                }
+                if($value->getDesigntoolType() && $value->getDesigntoolType() == 'height'){
+                    $heightOptionId = $value->getOptionId();
+                }
+            ?>
+            <?php endforeach; ?>
+
+            function calculatePrice(elemObj, optionId) {
+                var elemName = elemObj.attr('name');
+                //var additionalPriceObj = priceBox.cache.additionalPriceObject || {};
+                var unitPrice = 4;//<?php //echo $_product->getPricingUnit(); ?>; // Unite Price
+                var area = calculateArea(fields); //increment nof_options
+                var discount = 0;//calculateDiscount(area, unitPrice);
+                console.log('squareAreaPrices',squareAreaPrices);
+                var squareAreaPrice = 0;
+                $.each(squareAreaPrices, function(index,value){
+                    console.log('index',index);
+                    console.log('area',area);
+                    if(index <= area){
+                        squareAreaPrice = value;
+                        console.log('squareAreaPrice',squareAreaPrice);
+                    } else {
+                        return;
+                    }
+                });
+                
+                if(validHeight && validWidth){
+                    <?php if($widthOptionId && $heightOptionId) { ?>
+                        jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $widthOptionId ?>].prices = {'finalPrice' : {'amount': 0},'basePrice' : {'amount': 0},'oldPrice' : {'amount': 0}};
+                        jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[<?php echo $heightOptionId ?>].prices = {'finalPrice' : {'amount': 0},'basePrice' : {'amount': 0},'oldPrice' : {'amount': 0}};
+                        jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[<?php echo $widthOptionId ?>].prices = {'finalPrice' : {'amount': 0},'basePrice' : {'amount': 0},'oldPrice' : {'amount': 0}};
+                        jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[<?php echo $heightOptionId ?>].prices = {'finalPrice' : {'amount': 0},'basePrice' : {'amount': 0},'oldPrice' : {'amount': 0}};
+                    <?php } ?>
+                    jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[optionId].prices = {'finalPrice' : {'amount': squareAreaPrice},'basePrice' : {'amount': squareAreaPrice},'oldPrice' : {'amount': squareAreaPrice}};
+                    jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[optionId].prices = {'finalPrice' : {'amount': squareAreaPrice},'basePrice' : {'amount': squareAreaPrice},'oldPrice' : {'amount': squareAreaPrice}};
+                } else {
+                    jQuery('#product_addtocart_form').data('magePriceOptions').options.optionConfig[optionId].prices = {'finalPrice' : {'amount': 0},'basePrice' : {'amount': 0},'oldPrice' : {'amount': 0}};
+                    jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[optionId].prices = {'finalPrice' : {'amount': 0},'basePrice' : {'amount': 0},'oldPrice' : {'amount': 0}};
+                }
+
+                // jQuery('#product_addtocart_form').data('mageworxOptionBase').options.optionConfig[1321].type = 'fixed';
+                //var price = parseFloat(unitPrice * area) - discount;
+                window.squarePrice = parseFloat(squareAreaPrice);
+
+            }
+
+            function calculateArea(fields) {
+                var area = 1;
+                nof_options = 0;
+                var outputUnit = "<?php echo 'Square '.$unit; ?>";
+                $.each(fields, function (key, val) {
+                    if(val !== undefined) {
+                        if(parseFloat($('#options_'+key+'_text').val()) !== 0) {
+                            var option_val = parseFloat($('#options_'+key+'_text').val());
+                            area = area * option_val;
+                            nof_options++;
+                        }
+                    }
+                });
+
+                var unitConv = parseFloat(1);
+                area = area * unitConv;
+                $('#calculations span').text(area+' ('+outputUnit+')');
+                return area;
+            }
+
+            function calculateDiscount(area, unitPrice) {
+                var rules = {"discount":{"min_limit":"2","max_limit":"15"},"size":{"min_limit":"5","max_limit":"50"},"by":"area","type":"fixed"};
+                var discount = 0;
+
+                if(area < parseFloat(rules.size.min_limit)) {
+                    discount =  0;
+                }else
+                if(area >= parseFloat(rules.size.min_limit) && area < parseFloat(rules.size.max_limit) ){
+                    if(rules.type === 'percent') {
+                        discount =  parseFloat( (area*unitPrice) * (parseFloat(rules.discount.min_limit) / 100));
+                    } else {
+                        discount =  parseFloat(rules.discount.min_limit);
+                    }
+
+                }else
+                if(area >= parseFloat(rules.size.max_limit) ) {
+                    if(rules.type === 'percent') {
+                        discount =  parseFloat( (area*unitPrice) * (parseFloat(rules.discount.max_limit) / 100));
+                    } else {
+                        discount =  parseFloat(rules.discount.max_limit);
+                    }
+                }
+
+                var currency_symbol = "<?php echo $block->getStoreCurrencySymbol(); ?>";
+                if(showDiscountPrice == 1) {
+                    $('#discount_price span').text(currency_symbol+discount.toFixed(2));
+                }
+                return discount;
+            }
+
+            function updatePriceOnChange(fp = 0, opid) {
+                /* if(priceBox.cache.additionalPriceObject != 'undefined'){
+                     var additionalPriceObj = priceBox.cache.additionalPriceObject;
+                 } else {
+                     var additionalPriceObj = {};
+                 }
+
+                 var rowOpKey = "options[" + opid + "]";
+                 var rowPriceOp = additionalPriceObj[rowOpKey];
+                 if (!$.isEmptyObject(rowPriceOp)) {
+                     rowPriceOp.basePrice.amount = fp;
+                     rowPriceOp.finalPrice.amount = fp;
+                 }
+                 $("div.price-box .price-final_price").trigger("updatePrice");*/
+            }
+
+
+
+            jQuery(document).ready(function () {
+                jQuery('select.product-custom-option').change(function(){
+                    debugger;
+                    jQuery('option').each(function(){
+                        var selectedOption = jQuery(this).text();
+                    
+                        if (selectedOption.indexOf('+') > -1) {
+                        selectedOption = selectedOption.substring(0, selectedOption.indexOf('+'));
+                            jQuery(this).text(selectedOption);
+                        } else if (selectedOption.indexOf('-') > -1) {
+                            selectedOption = selectedOption.substring(0, selectedOption.indexOf('-'));
+                            jQuery(this).text(selectedOption);
+                        }
+                    });     
+                });     
+            });
+        });
+    </script>
+<?php endif; ?>

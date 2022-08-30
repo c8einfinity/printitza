@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <orderattachment>
+            <attachmentgroup>
+                <enabled>1</enabled>
+                <file_extension>jpg jpeg png pdf ai eps psd ps doc gif tiff tif csv rar zip 7z xls xlsx doc docx cdr ppt svg tgz</file_extension>
+                <max_file_size>2000</max_file_size>
+            </attachmentgroup>
+        </orderattachment>
+
+    </default>
+</config>

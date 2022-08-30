@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="brainacts_salesrep" translate="label" type="text" sortOrder="305" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Sales Representative</label>
+            <tab>brainacts_extensions</tab>
+            <resource>BrainActs_SalesRepresentative::config_representative</resource>
+
+
+            <group id="extension_info" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Extension Info</label>
+                <comment><![CDATA[<p>Have a question or want to report a bug? <a href="mailto:support@brainacts.com">support@brainacts.com</a></p>]]></comment>
+
+                <field id="installed" translate="label" type="text" sortOrder="20" showInDefault="1">
+                    <label>Installed Version</label>
+                    <frontend_model>BrainActs\SalesRepresentative\Block\Adminhtml\System\Config\Field\InstalledRelease</frontend_model>
+                </field>
+
+                <!-- <field id="current" translate="label" type="text" sortOrder="20" showInDefault="1">
+                    <label>Latest Version</label>
+                    <frontend_model>BrainActs\SalesRepresentative\Block\Adminhtml\System\Config\Field\CurrentRelease</frontend_model>
+                </field> -->
+            </group>
+
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Options</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable at Front-End</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="manually_select" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allow to Choose SR at the Front-End</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="brainacts_salesrep/general/enabled">1</field>
+                    </depends>
+                    <comment>Field with the list of sales representatives will be shown at checkout process.</comment>
+                </field>
+
+                <field id="manually_change" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow to Change SR at the Front-End</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="brainacts_salesrep/general/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="admin_approve" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow to Change SR at the Front-End Without an Admin's Approval</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="brainacts_salesrep/general/manually_change">1</field>
+                        <field id="brainacts_salesrep/general/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="admin_email" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Admin's Email</label>
+                    <comment>Client requests will be sent to this email.</comment>
+                    <depends>
+                        <field id="brainacts_salesrep/general/manually_change">1</field>
+                        <field id="brainacts_salesrep/general/admin_approve">0</field>
+                        <field id="brainacts_salesrep/general/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="dashboard" translate="label" type="text" sortOrder="20"  showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Dashboard Options</label>
+                <field id="withdrawal" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Allow Requesting a Withdrawal</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="hold_period" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Commissions Hold Period</label>
+                    <comment>days, starting from the date of the order placing</comment>
+                </field>
+
+
+            </group>
+
+            <group id="admin" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Back-End Options</label>
+                <field id="report_access_role" translate="label" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Role With Full Access</label>
+                    <source_model>BrainActs\SalesRepresentative\Model\Config\Source\Roles</source_model>
+                    <comment>Selected role provides access to restricted area(Orders, Invoices, Reports)</comment>
+                </field>
+                <field id="view_only_owner" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Restrict Access</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If "Yes",  Sales Representative will be restricted in order and invoice grids  </comment>
+                </field>
+
+                <field id="manually_assign" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Manually Assign</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If "Yes", Sales Representative will be allowed to assign SR in order. Not Restricted for role with full access.</comment>
+                </field>
+
+                <field id="auto_assign" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Assign SR To The Order Automatically </label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If the order is created by SR, this SR will be assigned to the order automatically.</comment>
+                </field>
+
+                <field id="email_order_assigned" translate="label" type="select" sortOrder="35" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Send an email to the SR when order is assigned</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="template_notification" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="brainacts_salesrep/admin/email_order_assigned">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="commission" translate="label" type="text" sortOrder="30"  showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Commission Options</label>
+                <field id="use_cost" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use Cost to Calculate Commissions</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="cost_attribute" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Cost Attribute</label>
+                    <depends>
+                        <field id="brainacts_salesrep/commission/use_cost">1</field>
+                    </depends>
+                    <comment>Fill attribute code that is used as a cost.</comment>
+                </field>
+
+
+
+            </group>
+        </section>
+    </system>
+</config>

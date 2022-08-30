@@ -1,0 +1,126 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * BSS Commerce does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BSS Commerce does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   BSS
+ * @package    Bss_FastOrder
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+<?php $_options = $block->decorateArray($block->getOptions()) ?>
+<?php if (count($_options)): ?>
+    <?php foreach ($_options as $_option): ?>
+        <?php echo $block->getOptionHtml($_option) ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+<script>
+    require(["jquery", "jquery/ui", 'Bss_FastOrder/js/price-options'], function ($) {
+        $('#bss-fastorder-form-option').priceOptions({
+            optionConfig: <?php /* @escapeNotVerified */ echo $block->getJsonConfig(); ?>,
+            controlContainer: ".field",
+            priceHolderSelector: "[data-role-fastorder=priceBox]"
+        });
+		
+		$("#upload").click(function(){
+		$("#fileInput").click();
+		});
+
+		$(document).on('drop dragover', function (e) {
+		e.preventDefault();
+		});
+
+		$('input[type=file]').on('change', jobUpload);
+		
+		
+		function jobUpload(event)
+		{
+			//$('body').trigger('processStart');
+			$('.custom-loader').show();
+			var files;
+			files = event.target.files;
+			var data = new FormData();
+			for (var i = 0; i < files.length; i++) {
+				var file = files[i];
+				data.append('jobthumb', file, file.name);
+			}
+			
+			var uploadjob_url = '<?php echo $block->getUrl('jobthumbnail/upload/jobthumb'); ?>';
+			$.ajax({
+				url: uploadjob_url,
+				type: 'POST',
+				data: data,
+				cache: false,
+				dataType: 'json',
+				processData: false, // Don't process the files
+				contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+				success: function(data, textStatus, jqXHR)
+				{
+					//alert(data.name);
+					//alert(data.file_url);
+					//alert(data.jobthumb_url);
+					if(data.error){
+						var thumb_html = '<div class="message-error error message template-error-message" style="" data-ui-id="message-error"><div>Disallowed file type!</div></div>';
+						
+					} else {		
+						var name = data.name;
+						var image_src = data.jobthumb_url;
+						var file_url = data.file_url;
+						
+						if(data.file_url != undefined)
+						{
+							var thumb_html = "<a href='"+file_url+"'><img width='100px' height='auto' src='"+image_src+"' alt='"+name+"'/></a>";
+						}
+						else
+						{
+							var thumb_html = "";
+						}
+						var jobthumb_data = file_url+","+image_src;
+						$("#jobthumb").val(jobthumb_data);
+					}
+					$("#jobthumb_preview").html(thumb_html);
+					//$('body').trigger('processStop');
+					$('.custom-loader').hide();
+					
+				},
+				error: function(jqXHR, textStatus, errorThrown)
+				{			
+					$("#jobthumb_preview").html(thumb_html);
+					//$('body').trigger('processStop');
+					$('.custom-loader').hide();
+				}
+			});
+		}
+	});
+	require('uiRegistry').set('mageworxOptionUpdaters');
+	/* debugger;
+	require('uiRegistry').set('mageworxOptionBase');
+	require('uiRegistry').set('mageworxOptionUpdaters');
+	var basedata = require('uiRegistry').get('mageworxOptionBase');
+	var updaterdata = require('uiRegistry').get('mageworxOptionUpdaters'); */
+</script>
+<?php echo $block->getChildHtml('mageworx.option.swatches');?>
+<?php echo $block->getChildHtml('mageworx.option.inventory');?>
+<?php echo $block->getChildHtml('mageworx_optionfeatures_additional_wrapper');?>
+<?php echo $block->getChildHtml('mageworx.option.features');?>
+<?php echo $block->getChildHtml('mageworx_optionadvancedpricing_config');?>
+<?php echo $block->getChildHtml('mageworx_option_dependency_config');?>
+<?php echo $block->getChildHtml('mageworx.option.base');?>

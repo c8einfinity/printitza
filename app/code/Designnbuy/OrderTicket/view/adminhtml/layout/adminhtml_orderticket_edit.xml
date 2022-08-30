@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" /> <!-- ToDo UI: remove this wrapper with old styles removal. The class name "admin__old" is for tests only, we shouldn't use it in any way -->
+        <referenceContainer name="content">
+            <container name="orderticket.wrapper" htmlTag="div" htmlClass="orderticket-wrapper">
+                <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit" name="designnbuy_orderticket_edit"/>
+                <block class="Magento\Backend\Block\Template" template="Designnbuy_OrderTicket::edit/details.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tabs" name="designnbuy_orderticket_edit_tabs">
+                <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\General" template="edit/general.phtml" name="designnbuy_orderticket_edit_tab_general">
+                    <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\General\Details" template="edit/general/details.phtml" name="request_details"/>
+
+
+                    <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\General\ShippingAddress" template="edit/general/shippingaddress.phtml" name="shipping_address"/>
+                    <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\General\Returnaddress" template="edit/general/returnadress.phtml" name="return_address"/>
+                    <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\General\History" template="edit/general/history.phtml" name="comments_history"/>
+                </block>
+                <!--<block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\Items" template="edit/items.phtml" name="designnbuy_orderticket_edit_tab_items">
+                    <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\Items\Grid" name="items_grid"/>
+                </block>-->
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">general_section</argument>
+                    <argument name="block" xsi:type="string">designnbuy_orderticket_edit_tab_general</argument>
+                </action>
+                <!--<action method="addTab">
+                    <argument name="name" xsi:type="string">items_section</argument>
+                    <argument name="block" xsi:type="string">designnbuy_orderticket_edit_tab_items</argument>
+                </action>-->
+            </block>
+        </referenceContainer>
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Backend\Block\Template" template="Designnbuy_OrderTicket::edit/reason.phtml"/>
+            <block class="Magento\Backend\Block\Template" template="Designnbuy_OrderTicket::edit/mask.phtml"/>
+            <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Js" template="edit/js.phtml" name="designnbuy_orderticket_js_create"/>
+        </referenceContainer>
+    </body>
+</page>

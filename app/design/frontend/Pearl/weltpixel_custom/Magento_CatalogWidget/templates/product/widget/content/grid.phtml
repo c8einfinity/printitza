@@ -1,0 +1,155 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\CatalogWidget\Block\Product\ProductsList $block */
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $block->getViewFileUrl('Magento_CatalogWidget::css/owl.carousel.min.css')?>">
+<?php if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())): ?>
+    <?php
+    $type = 'widget-product-grid';
+
+    $mode = 'grid';
+
+    $image = 'new_products_content_widget_grid';
+    $items = $block->getProductCollection()->getItems();
+
+    $showWishlist = true;
+    $showCompare = true;
+    $showCart = true;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    $description = false;
+    ?>
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="block widget block-products-list <?= /* @noEscape */ $mode ?>">
+                <?php if ($block->getTitle()): ?>
+                    <div class="section-title">
+                        <h2><?= $block->escapeHtml(__($block->getTitle())) ?></h2>
+                    </div>
+                <?php endif ?>
+                <div class="block-content">
+                    <?= /* @noEscape */ '<!-- ' . $image . '-->' ?>
+                    <div class="products-<?= /* @noEscape */ $mode ?> <?= /* @noEscape */ $mode ?>">
+                        <div class="product-items <?= /* @noEscape */ $type ?> owl-carousel">
+                            <?php $iterator = 1; ?>
+                            <?php foreach ($items as $_item): ?>
+                                <?= /* @noEscape */ ($iterator++ == 1) ? '<div class="item product-item">' : '</div><div class="item product-item">' ?>
+                                <div class="product-item-info">
+                                    <div class="product-img-bx">
+                                        <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" class="product photo product-item-photo">
+                                            <?= $block->getImage($_item, $image)->toHtml() ?>
+                                        </a>
+                                        <?php if ($showWishlist || $showCompare || $showCart): ?>
+                                            <div class="product-item-actions">
+                                                
+                                                <?php if ($showWishlist || $showCompare): ?>
+                                                    <div class="actions-secondary" data-role="add-to-links">
+                                                        <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $showWishlist): ?>
+                                                            <a href="#"
+                                                               data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_item) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                                                <span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                        <?php if ($block->getAddToCompareUrl() && $showCompare): ?>
+                                                            <?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');?>
+                                                            <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_item) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                                                <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <?php if ($showCart): ?>
+                                                    <div class="actions-primary">
+                                                        <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+                                                                title="<?= $block->escapeHtml(__('View Details')) ?>"
+                                                                class="action tocart primary">
+                                                            <i class="icon-arrow-right2"></i>
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="product-item-details">
+                                        <strong class="product-item-name">
+                                            <a title="<?= $block->escapeHtml($_item->getName()) ?>"
+                                               href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+                                               class="product-item-link">
+                                                <?= $block->escapeHtml($_item->getName()) ?>
+                                            </a>
+                                        </strong>
+
+                                        <?php /*?><?= $block->getProductPriceHtml($_item, $type) ?><?phpp */?>
+
+                                    </div>
+                                </div>
+                                <?= ($iterator == count($items) + 1) ? '</div>' : '' ?>
+                            <?php endforeach ?>
+                        </div>
+                        <?php 
+                            $pageLink = null;
+                            if (strpos($block->getTitle(), 'FEATURED') !== false) { 
+                                $pageLink = $block->getBaseUrl().'featured-products-listing';
+                            } else if (strpos($block->getTitle(), 'BESTSELLER') !== false) {
+                                $pageLink = $block->getBaseUrl().'bestseller-products-listing';
+                            } else if (strpos($block->getTitle(), 'NEW') !== false) {
+                                $pageLink = $block->getBaseUrl().'new-products-listing';
+                            } else {
+                                $pageLink = $block->getBaseUrl().'javascript:void(0)';
+                            }
+                         ?>
+                        <div class="view-all w-100 text-center">
+                            <a href="<?php echo $pageLink; ?>" class="text-center action primary"><?php echo __('View all'); ?></a>
+                        </div>
+                    </div>
+                    <?= $block->getPagerHtml() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+<script>
+    require(['jquery','owl_carousel', 'owl_config'], function () {
+            jQuery.noConflict();
+            jQuery(document).ready(function() {
+                jQuery(".block-products-list .product-items.owl-carousel").owlCarousel({
+                    items : 4,
+                    loop: false,
+                    autoplay: true, 
+                    margin:30,
+                    autoplayHoverPause: true,
+                    dots:false,
+                    nav: true,
+                    navText:["<i class='i-rounded i-bordered icon-angle-left'></i>", "<i class='i-rounded i-bordered icon-angle-right'></i>"],
+                    responsive:{
+                        0:{
+                            items:1,
+                            dots:true,
+                            nav: false
+                        },
+                        480:{
+                            items:2,
+                            dots:true,
+                            nav: false
+                        },
+                        640:{
+                            items:3,
+                            dots:false,
+                            nav: true
+                        },
+                        990:{
+                            items:4,
+                            dots:false,
+                            nav: true
+                        }
+                    }
+                });
+            });
+    });
+</script>

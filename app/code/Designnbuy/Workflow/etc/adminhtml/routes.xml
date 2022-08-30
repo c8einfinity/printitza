@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+	<router id="admin">
+		<route frontName="user" id="user">
+			<module before="Magento_Backend" name="Designnbuy_Workflow"/>
+		</route>
+		<route frontName="role" id="role">
+			<module before="Magento_Backend" name="Designnbuy_Workflow"/>
+		</route>
+		<route frontName="group" id="group">
+			<module before="Magento_Backend" name="Designnbuy_Workflow"/>
+		</route>
+		<route frontName="status" id="status">
+			<module before="Magento_Backend" name="Designnbuy_Workflow"/>
+		</route>
+		<route frontName="designnbuy_workflow" id="designnbuy_workflow">
+			<module before="Magento_Backend" name="Designnbuy_Workflow"/>
+		</route>
+	</router>
+</config>

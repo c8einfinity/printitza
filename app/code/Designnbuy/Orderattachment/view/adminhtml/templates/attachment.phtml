@@ -1,0 +1,115 @@
+<?php
+/** @var \Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn $block */
+?>
+<?php /*$attachments = $block->getAttachments(); */?><!--
+<div class="file-uploader">
+    <?php /*if(isset($attachments) && isset($attachments['fileName'])): */?>
+        <?php /*$cnt = 0; foreach ($attachments['fileName'] as $name):*/?>
+            <div class="file-uploader-summary">
+
+                <div class="file-uploader-preview">
+                    <a target="_blank"  href="<?php /*echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]*/?>">
+                        <img class="preview-image" src="<?php /*echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]*/?>">
+                    </a>
+                </div>
+                <div class="file-uploader-filename">
+                    <a target="_blank" href="<?php /*echo $block->getImageUrlPath().$name*/?>"><?php /*echo $name; */?>
+                    </a>
+                </div>
+
+
+            </div>
+            <?php /*$cnt++; */?>
+        <?php /*endforeach; */?>
+    <?php /*endif; */?>
+</div>-->
+
+<?php 
+//echo get_class($block); exit;
+$attachments = $block->getAttachments(); 
+//echo $block->getItem()->getId(); exit;
+//echo $block->getOrder()->getIncrementId(); exit;
+$_item = $block->getItem();
+$productOptions = $_item->getProductOptionByCode('info_buyRequest');
+$viewProofValue = "";
+if (isset($productOptions['proofing_options']) && $productOptions['proofing_options'] != "") {
+    $viewProofValue = ($productOptions['proofing_options'] == 'proof_request') ? 'I need a PDF proof' : 'I don\'t need a proof';
+}
+//echo "<pre>";print_r($productOptions);
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$objectManager->create('Designnbuy\Base\Observer\Output')->generateItemOutput($block->getOrder()->getIncrementId(),$block->getItem()->getId(),'front');
+
+?>
+<?php if(isset($attachments) && count($attachments) > 0 ): ?>
+    <a href="#" class="action action-attachment attachment-action<?php echo $block->getItemId()?>" title="Attachment"><span><?php /* @escapeNotVerified */ echo __('Attachment') ?></span></a>
+    <div class="popup-attachment<?php echo $block->getItemId()?>" style="display:none;">
+        <div class="product media">
+            <div class="file-uploader">
+                <?php if(isset($attachments) && isset($attachments['fileName'])): ?>
+                    <?php $cnt = 0; foreach ($attachments['fileName'] as $name):?>
+                        <div class="file-uploader-summary">
+
+                            <div class="file-uploader-preview">
+                                <a target="_blank"  href="<?php echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]?>">
+                                    <img class="preview-image" src="<?php echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]?>">
+                                </a>
+                            </div>
+                            <div class="file-uploader-filename">
+                                <a target="_blank" href="<?php echo $block->getImageUrlPath().$name?>"><?php echo $name; ?>
+                                </a>
+                            </div>
+
+
+                        </div>
+                        <?php $cnt++; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php if(isset($viewProofValue) && $viewProofValue != ""){?>
+    <div>
+        <?php echo __('Proofing Options : '); ?> <?php echo $viewProofValue;?>
+    </div>
+    <?php } ?>
+    <script>
+        require(
+            [
+                'jquery',
+                'Magento_Ui/js/modal/modal'
+            ],
+
+            function(
+                $,
+                modal
+            ) {
+                var options = {
+                    type: 'popup',
+                    responsive: false,
+                    innerScroll: false,
+                    content: '',
+                    title: $.mage.__('Attachment'),
+                    buttons: [{
+                        text: $.mage.__('Continue'),
+                        class: '',
+                        click: function () {
+                            this.closeModal();
+                        }
+                    }]
+                };
+                var popup = modal(options, $(".popup-attachment<?php echo $block->getItemId()?>"));
+                $(".attachment-action<?php echo $block->getItemId()?>").on('click',function()
+                {
+                    $(".popup-attachment<?php echo $block->getItemId()?>").modal("openModal");
+                });
+            }
+        );
+    </script>
+<?php endif; ?>
+<style type="text/css">
+
+</style>
+
+
+

@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+$required = '';
+if ($block->hasRequiredOptions()) {
+    $required = ' data-hasrequired="' . __('* Required Fields') . '"';
+}
+?>
+<div class="product-options-wrapper" id="product-options-wrapper"<?= /* @escapeNotVerified */ $required ?>>
+    <!--<h4 class="prodtheading"><?php //echo __('CALCULATE PRICE'); ?></h4>-->
+    <div class="fieldset" tabindex="0">
+        <?= $block->getChildHtml('', true) ?>
+    </div>
+</div>
+<?php if($block->getProduct()->getHidePrice() == 1){ ?>
+<script>
+     require(['jquery', 'jquery/ui'], function($){ 
+        jQuery(document).ready(function () {
+            jQuery('select.product-custom-option').change(function(){
+                debugger;
+                jQuery('option').each(function(){
+                    var selectedOption = jQuery(this).text();
+                
+                    if (selectedOption.indexOf('+') > -1) {
+                    selectedOption = selectedOption.substring(0, selectedOption.indexOf('+'));
+                        jQuery(this).text(selectedOption);
+                    }
+                });     
+            });     
+        });
+     });
+</script>
+<?php } ?>

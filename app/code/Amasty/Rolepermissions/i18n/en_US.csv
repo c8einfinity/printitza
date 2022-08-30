@@ -1,0 +1,34 @@
+"Advanced: Categories","Advanced: Categories"
+"Category Access","Category Access"
+"Allow Access To","Allow Access To"
+"All Categories","All Categories"
+"Selected Categories","Selected Categories"
+"Advanced: Affected Entities","Advanced: Affected Entities"
+"Affected Entities","Affected Entities"
+"Limit Access To Orders","Limit Access To Orders"
+"Limit Access To Invoices And Transactions","Limit Access To Invoices And Transactions"
+"Limit Access To Shipments","Limit Access To Shipments"
+"Limit Access To Credit Memos","Limit Access To Credit Memos"
+"Product Access","Product Access"
+"All Products","All Products"
+"Selected Products","Selected Products"
+"Own Created Products","Own Created Products"
+ID,ID
+Name,Name
+Type,Type
+"Attribute Set","Attribute Set"
+Status,Status
+Visibility,Visibility
+SKU,SKU
+Price,Price
+"Advanced: Scope","Advanced: Scope"
+"Choose Access Scope","Choose Access Scope"
+"Limit Access To","Limit Access To"
+"Allow All Stores","Allow All Stores"
+"Specified Websites","Specified Websites"
+"Specified Store Views","Specified Store Views"
+Websites,Websites
+"Store Views","Store Views"
+"Access Denied","Access Denied"
+"- Not Specified -","- Not Specified -"
+"Advanced: Products","Advanced: Products"

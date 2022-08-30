@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="brainacts_salesrep_admin_template_notification" label="Assign SR to Order" file="representative_notification.html" type="html" module="BrainActs_SalesRepresentative" area="adminhtml"/>
+    <template id="brainacts_salesrep_admin_template_confirmation" label="Confirm Change SR for Customer" file="representative_confirm.html" type="html" module="BrainActs_SalesRepresentative" area="adminhtml"/>
+</config>

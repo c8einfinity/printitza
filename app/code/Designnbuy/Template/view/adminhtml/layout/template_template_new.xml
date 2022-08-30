@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <!--<update handle="template_template_edit"/>-->
+    <update handle="styles"/>
+    <update handle="editor"/>
+    <update handle="template_template_form"/>
+    <body>
+        <!--<referenceBlock name="template_form">
+            <block name="product.form.modulename.matrix" class="Designnbuy\Template\Block\Adminhtml\Template\Tool" template="template/tool.phtml" as="product_configarea">
+                <arguments>
+                    <argument name="config" xsi:type="array">
+                        <item name="collapsible" xsi:type="boolean">false</item>
+                        <item name="label" xsi:type="string" translate="true" />
+                        <item name="sortOrder" xsi:type="string">1000</item>
+                        <item name="canShow" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">fieldset</item>
+                        <item name="provider" xsi:type="string">template_form.template_form_data_source</item>
+                        <item name="form" xsi:type="string">template_form.template_form</item>
+                        <item name="modal" xsi:type="string">configureAreaModal</item>
+                        <item name="nameStepWizard" xsi:type="string">variation-steps-wizard</item>
+                        <item name="dataScope" xsi:type="string">productFormCustommodule</item>
+                        <item name="urlWizard" xsi:type="string">merchandise/index/configarea</item>
+                    </argument>
+                </arguments>
+            </block>
+
+        </referenceBlock>-->
+    </body>
+</page>

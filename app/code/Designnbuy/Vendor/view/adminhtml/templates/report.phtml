@@ -1,0 +1,105 @@
+<?php
+$itemStatuses = $block->getVendorItemStatuses();
+$isOrderAvaialable = true;
+?>
+<?php if($isOrderAvaialable == true): ?>
+    <div class="admin__data-grid-wrap admin__data-grid-wrap-static">
+        <table class="data-grid">
+            <thead>
+                <tr class="headings">
+                    <th class="data-grid-th"colspan="2"><span><?php echo __('Production Status'); ?></span></th>
+                    <th class="data-grid-th"><span><?php echo __('Orders'); ?></span></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($itemStatuses as $itemStatus): ?>
+                <?php $orderItemsByVendorStatus = $block->getOrderItemsByVendorStatus($itemStatus->getStatusId()); ?>
+                <tr>
+
+                    <td class="<?php echo $itemStatus->getColorClass(); ?>" width="200px">
+                        <div
+                            class="<?php echo $itemStatus->getColorClass(); ?>"><?php echo $itemStatus->getTitle(); ?>
+                        </div>
+                    </td>
+                    <td width="50px">&nbsp;</td>
+                    <td>
+                        <?php if ($orderItemsByVendorStatus->count() > 0) : ?>
+                            <?php foreach ($orderItemsByVendorStatus as $orderItem): ?>
+
+                                <?php echo $orderItem->getIncrementId() ?><?php echo ', '; ?>
+
+                            <?php endforeach; ?>
+
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else :?>
+    <div class="content-header">
+        <div class="container">
+            <div class="row">
+                <div style="" class="col-sm-6 col-xs-9">
+                    <h3 class="icon-head head-sales-order"><?php echo $this->getHeaderText(); ?></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="dashboard-content">
+            <table cellpadding="0" cellspacing="0" width="100%" class="table itemstatusreport">
+                <thead>
+                <tr class="headings">
+                    <th colspan="2"><?php echo __('Item Status Vendor') . ' / <br/>' . __('Item Status'); ?></th>
+                    <th><?php echo $this->__('Orders'); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="3" style="text-align:center;">
+                        <?php echo __('No orders found.');?>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php endif; ?>
+<style>
+    .red_class {
+        background-color: #ff0000 !important;
+        color: #ffffff !important;
+    }
+    .blue_class {
+        background-color: #0000ff !important;;
+        color: #ffffff !important;
+    }
+    .green_class {
+        background-color: #00ff00 !important;;
+        color: #000000 !important;
+    }
+    .yellow_class {
+        background-color: #ffff00 !important;;
+        color: #000000 !important;
+    }
+    .black_class {
+        background-color: #000000 !important;;
+        color: #ffffff !important;
+    }
+    .dashboard_item_status {
+        display: inline;
+        float: left;
+        font-weight: bold;
+        margin: 5px;
+        padding: 10px;
+    }
+    .itemstatusreport .red_class, .itemstatusreport .blue_class, .itemstatusreport .green_class, .itemstatusreport .yellow_class, .itemstatusreport .black_class {
+        border-radius: 5px;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px;
+    }
+</style>

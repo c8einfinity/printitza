@@ -1,0 +1,17 @@
+{
+    "name": "designnbuy/module-orderticket",
+    "description": "N/A",
+    "type": "magento2-module",
+    "version": "100.1.3",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Designnbuy\\OrderTicket\\": ""
+        }
+    }
+}

@@ -1,0 +1,31 @@
+
+New products with scroller extension allows you to set and show new products in frontend.
+
+This extension gives ability to show new product block in cms pages or phtml.
+
+If you want to show in any other cms page or static block then you can easily add by: 
+
+1. Homepage, CMS page: 
+
+   + Backend Cms page content:
+
+	{{block class="Designnbuy\HomePageCategory\Block\Home\NewList" name="new_data" template="Designnbuy_HomePageCategory::newblock.phtml"}}
+
+   + Template (.phtml) file:
+
+	<?php echo $this->getLayout()->createBlock('Designnbuy\HomePageCategory\Block\Home\NewList')->setTemplate('Designnbuy_HomePageCategory::newblock.phtml')->toHtml(); ?>
+
+2. Left/Right sidebar:
+
+   + Backend Cms page content:
+
+   {{block class="Designnbuy\HomePageCategory\Block\NewList" name="new_data" template="new_vertical.phtml"}}
+
+   + Template (.phtml) file:
+
+   <?php echo $this->getLayout()->createBlock('Designnbuy\HomePageCategory\Block\NewList')->setTemplate('Designnbuy_HomePageCategory::new_vertical.phtml')->toHtml(); ?>
+
+3. View all list homepagecategory:
+
+   mypageurl/homepagecategory
+	

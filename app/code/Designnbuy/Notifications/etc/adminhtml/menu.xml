@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<!-- <add id="Designnbuy_Designer::marketplace" title="Marketplace" module="Designnbuy_Designer" sortOrder="20" resource="Designnbuy_Designer::marketplace" /> -->
+    	
+        <add id="Designnbuy_Notifications::notification" title="Manage Notifications" module="Designnbuy_Notifications" sortOrder="40" parent="Designnbuy_Base::network" resource="Designnbuy_Notifications::notification" />
+        
+        <add id="Designnbuy_Notifications::notifications" title="Notifications" module="Designnbuy_Notifications" action="notifications/notifications" sortOrder="10" parent="Designnbuy_Notifications::notification" resource="Designnbuy_Notifications::notifications" />
+    </menu>
+</config>

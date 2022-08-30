@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceBlock name="product.info.mailto" remove="true"/>
+		<move element="product.info.extrahint" destination="product.info.price" after="product.info.stock.sku" />
+	</body>
+</page>

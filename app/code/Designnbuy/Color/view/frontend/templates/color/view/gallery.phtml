@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Color color media gallery images template
+ *
+ * @var $block \Designnbuy\Color\Block\Color\View\Gallery
+ */
+?>
+
+<?php
+    $color = $block->getColor();
+    $galleryImages = $color->getGalleryImages();
+?>
+
+<?php if (count($galleryImages)) { ?>
+    <div class="color-gallery clearfix">
+        <?php foreach ($galleryImages as $image) { ?>
+            <a class="gallery-image-hld" data-fancybox="gallery" href="<?php echo $block->escapeHtml($image) ?>">
+                <img class="gallery-image" src="<?php echo $block->escapeHtml($image->resize(200)) ?>" alt="" />
+            </a>
+        <?php } ?>
+    </div>
+    <script>
+    require(['jquery', 'domReady!'], function($){
+        /* Deferer fancybox css loading */
+        $("head").append($("<link rel='stylesheet' href='<?php echo $block->getViewFileUrl("Designnbuy_Color::css/jquery.fancybox.min.css") ?>' type='text/css' media='screen' />"));
+        /* Deferer fancybox js loading */
+        require(['Designnbuy_Color/js/jquery.fancybox.min'], function(){});
+    });
+</script>
+<?php } ?>

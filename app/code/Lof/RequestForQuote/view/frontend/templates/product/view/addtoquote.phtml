@@ -1,0 +1,129 @@
+<?php
+/** @var $block \agento\Catalog\Block\Product\View */
+?>
+<?php
+$helper                  = $this->helper("Lof\RequestForQuote\Helper\Data");
+$enable = $helper->getConfig('general/enable');
+$disable_addtocart = $helper->getConfig('general/disable_addtocart');
+$_product = $block->getProduct();
+$productType = '';
+if($_product->getAttributeSetId() == $this->helper('Designnbuy\Base\Helper\Data')->getCustomCanvasAttributeSetId()){
+    $productType = 'canvas';
+} else if($_product->getAttributeSetId() == $this->helper('Designnbuy\Base\Helper\Data')->getCustomProductAttributeSetId()){
+    $productType = 'merchandise';
+}
+//if($enable && (!$disable_addtocart || ( $_product->hasData('product_quote') && $_product->getData('product_quote')))) {
+if($enable && $_product->hasData('product_quote') && $_product->getData('product_quote')) {
+    ?>
+    <?php $buttonTitle = __('Add to Quote'); ?>
+    <?php if ($_product->isSaleable()): ?>
+        <button type="submit"
+                title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                class="action primary tocart"
+                id="product-addtoquote-button">
+            <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+        </button>
+        <!--<div class="product-options-bottom" style="clear: both">
+    <div class="box-tocart">
+
+        <div class="fieldset">
+            <div class="actions">
+        <button type="submit"
+                        title="<?php /*/* @escapeNotVerified */ //echo $buttonTitle */?>"
+                        class="action primary tocart"
+                        id="product-addtoquote-button">
+            <span><?php /*/* @escapeNotVerified */ //echo $buttonTitle */?></span>
+        </button>
+            </div>
+        </div>
+
+    </div>
+</div>-->
+        <script>
+            var productType = '<?php echo $productType; ?>';
+            require([
+                'jquery',
+                'mage/mage',
+                'mage/validation',
+                'Lof_RequestForQuote/js/catalog-add-to-quote'
+            ], function($,mage,validation,addtoquote) {
+                'use strict'
+                var addToQuote = false;
+                var dataForm = $('#product_addtocart_form');
+                $('#product-addtoquote-button').click(function (e) {
+                    addToQuote = dataForm.attr('action').replace("checkout/cart/add", "quotation/cart/add");
+                });
+                var ignore = null;
+
+                dataForm.mage('validation', {
+                    ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+                }).find('input:text').attr('autocomplete', 'off');
+                var buttonpressed;
+                $('button[type=submit]').click(function() {
+                    buttonpressed = $(this).attr('id');
+                });
+                dataForm.on("submit", function(evt){
+                    evt.preventDefault();
+                    // alert("====="+buttonpressed);
+                    if(dataForm.validation('isValid')){
+                        if(buttonpressed == 'product-addtoquote-button'){
+                                addToQuote = dataForm.attr('action').replace("checkout/cart/add", "quotation/cart/add");
+                                this.action = addToQuote;
+                                this.submit();
+                                return;
+                            }
+                            if(productType == 'canvas'){
+                                if(buttonpressed == 'personalise'){
+                                    this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasScratchPageUrl($_product)) ?>';
+                                    this.submit();
+                                    return;
+                                }else if(buttonpressed == 'customize'){
+                                    this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasPageUrl($_product)) ?>';
+                                    this.submit();
+                                }
+                                else if(buttonpressed == 'template'){
+                                    console.log('buttonpressed',buttonpressed);
+                                    //form.action = '<?php //echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasPageUrl($_product)) ?>';
+                                    this.submit();
+                                }
+                                else if(buttonpressed == 'design'){
+                                    console.log('buttonpressed',buttonpressed);
+                                    this.action = '<?php //echo $block->escapeUrl($this->helper('Designnbuy\Designer\Helper\Data')->getPersonalisePageUrl($_product)) ?>';
+                                    this.submit();
+                                } else {
+                                    console.log('buttonpressed',buttonpressed);
+                                    this.submit();
+                                }
+                            } else if(productType == 'merchandise'){
+                                if(buttonpressed == 'personalise'){
+                                    this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Merchandise\Helper\Data')->getStartFromScratchPageUrl($_product)) ?>';
+                                    this.submit();
+                                    return;
+                                }else if(buttonpressed == 'customize'){
+                                    this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Merchandise\Helper\Data')->getPersonalisePageUrl($_product)) ?>';
+                                    this.submit();
+                                } else if(buttonpressed == 'template'){
+                                    console.log('buttonpressed',buttonpressed);
+                                    //form.action = '<?php //echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasPageUrl($_product)) ?>';
+                                    this.submit();
+                                } else if(buttonpressed == 'design'){
+                                    console.log('buttonpressed',buttonpressed);
+                                    this.action = '<?php //echo $block->escapeUrl($this->helper('Designnbuy\Designer\Helper\Data')->getPersonalisePageUrl($_product)) ?>';
+                                    this.submit();
+                                } else {
+                                    console.log('buttonpressed',buttonpressed);
+                                    this.submit();
+                                }
+                            } else {
+                                console.log('buttonpressed',buttonpressed);
+                                this.submit();
+                            }
+
+                    }
+                   
+                });
+            });
+        </script>
+    <?php endif; ?>
+<?php } ?>
+

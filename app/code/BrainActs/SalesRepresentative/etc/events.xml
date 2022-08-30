@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="email_order_set_template_vars_before">
+        <observer name="salesrep_email_order_add_var" instance="BrainActs\SalesRepresentative\Observer\OrderEmail" />
+    </event>
+    <event name="email_invoice_set_template_vars_before">
+        <observer name="salesrep_email_invoice_add_var" instance="BrainActs\SalesRepresentative\Observer\InvoiceEmail" />
+    </event>
+</config>

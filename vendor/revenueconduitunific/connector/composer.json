@@ -1,0 +1,28 @@
+{
+  "name": "revenueconduitunific/connector",
+  "description": "Unific Magento 2 Connector",
+  "type": "magento2-module",
+  "version": "1.4.25", 
+  "license": [
+    "https://www.unific.com/end-user-agreement"
+  ],
+  "authors": [
+    {
+      "name": " Team Unific",
+      "email": "support@unific.com",
+      "homepage": "https://www.unific.com",
+      "role": "Support"
+    }
+  ],
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Unific\\Connector\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}

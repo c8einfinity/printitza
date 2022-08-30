@@ -1,0 +1,110 @@
+<?php
+/**
+ * Get Configure Area
+ *
+ * @var $block Designnbuy\ConfigArea\Block\Adminhtml\ConfigArea\Edit\Tab\ConfigArea
+ */
+?>
+<!--<div class="page-main-actions">
+    <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+        <button id="save_configarea" title="Save" type="button" class="primary"  data-form-role="save" data-ui-id="save-button" role="button" aria-disabled="false">
+            <span class="ui-button-text">
+                <span>Save</span>
+            </span>
+        </button>
+    </div>
+</div>-->
+<div class="modal-content" data-role="content">
+    <fieldset class="admin__fieldset">
+        <div class="admin__field">
+            <div class="admin__field-control">
+                <div class="admin__control-table-wrapper">
+                    <form id="configure_area" name="configure_area">
+                        <table class="admin__dynamic-rows admin__control-table">
+                            <thead>
+                            <tr>
+                                <th>X</th>
+                                <th>Y</th>
+                                <th>Width</th>
+                                <th>Height</th>
+                                <th>Output Width</th>
+                                <th>Output Height</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="data-row">
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="pos_x" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="pos_y" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="width" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="height" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="output_width" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="output_height" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <button id="save_configarea" title="Save" type="button" class="primary"
+                                                data-form-role="save" data-ui-id="save-button" role="button"
+                                                aria-disabled="false">
+                                            <span class="ui-button-text">
+                                                <span>Save</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="modal-component">
+        <canvas style="box-shadow:rgba(0,0,0,0.5) 0 0 5px" id="config_canvas" width="500" height="500" ></canvas>
+    </div>
+</div>
+
+<script>
+    require([
+        "jquery",
+        "Designnbuy_ConfigArea/js/config_area"
+    ], function(jQuery,configArea){
+        jQuery(function ($) {
+            //var data = {id:"1", image:"http://192.168.0.75/dnb_products/AIODV30/pub/media/designnbuy/configarea/front_1385447847_1.png"};
+            configArea(<?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode(
+                [
+                    'id' => $block->getConfigArea()->getId(),
+                    'image' => $block->getConfigArea()->getImage(),
+                    'area' => $block->getConfigArea()->getArea(),
+                    'saveUrl' => $block->getUrl('configarea/configarea/ConfigAreaSave',['id' => $block->getConfigArea()->getId()]),
+                ]
+            )?>);
+        });
+    });
+</script>
+
+

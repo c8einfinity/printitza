@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * BSS Commerce does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BSS Commerce does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   BSS
+ * @package    Bss_FastOrder
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceBlock name="content">
+        <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="Bss_FastOrder::product/view/options.phtml" cacheable="false">
+            <block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" as="default" template="product/view/options/type/default.phtml"/>
+            <block class="Magento\Catalog\Block\Product\View\Options\Type\Text" as="text" template="Bss_FastOrder::product/view/options/type/text.phtml"/>
+            <block class="Magento\Catalog\Block\Product\View\Options\Type\File" as="file" template="product/view/options/type/file.phtml"/>
+            <block class="Bss\FastOrder\Block\Product\View\Options\Type\Select" as="select" template="Bss_FastOrder::product/view/options/type/select.phtml"/>
+            <block class="Magento\Catalog\Block\Product\View\Options\Type\Date" as="date" template="product/view/options/type/date.phtml"/>
+			<block class="Magento\Framework\View\Element\Template"
+		name="jobthumb.js" as="jobthumb.js" template="Magento_Catalog::product/view/jobthumbjs.phtml"/>
+        <block class="MageWorx\OptionAdvancedPricing\Block\Config" name="mageworx_optionadvancedpricing_config" as="mageworx_optionadvancedpricing_config" template="Bss_FastOrder::mageworx/options.phtml"/>
+        <block class="MageWorx\OptionFeatures\Block\Product\View\Wrapper" name="mageworx_optionfeatures_additional_wrapper" as="mageworx_optionfeatures_additional_wrapper" template="Bss_FastOrder::mageworx/additional_wrapper.phtml"/>
+        <block class="MageWorx\OptionFeatures\Block\Features" name="mageworx.option.features" as="mageworx.option.features" template="Bss_FastOrder::mageworx/catalog/product/options.phtml"/>
+        <block class="MageWorx\OptionInventory\Block\Inventory" name="mageworx.option.inventory" as="mageworx.option.inventory" template="Bss_FastOrder::mageworx/catalog/product/inventory_options.phtml"/>
+        <block class="MageWorx\OptionSwatches\Block\Swatches" name="mageworx.option.swatches" as="mageworx.option.swatches" template="Bss_FastOrder::mageworx/config.phtml"/>
+        <block class="MageWorx\OptionBase\Block\Product\View\Options" name="mageworx.option.base" as="mageworx.option.base" template="Bss_FastOrder::product/options.phtml"/>
+        <block class="MageWorx\OptionDependency\Block\Config" name="mageworx_option_dependency_config" as="mageworx_option_dependency_config" template="Bss_FastOrder::mageworx/optiondependency_config.phtml"/>
+        </block>
+        <block class="Magento\Framework\View\Element\Html\Calendar" name="html_calendar" as="html_calendar" template="Magento_Theme::js/calendar.phtml"/>
+    </referenceBlock>
+</page>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+		<css src="Designnbuy_HomePageCategory::css/homepagecategory.css"/>
+    </head>
+    <body>
+		<referenceContainer name="content">
+			 <block class="Designnbuy\HomePageCategory\Block\Home\CategoryList" name="homepage_category" after="-" template="Designnbuy_HomePageCategory::categorylist.phtml"/>
+                <block class="Magento\Cms\Block\Block" name="promocode_section" after="homepage_category">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">promocode_section</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="home-three-box" after="promocode_section">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">home-three-box</argument>
+                    </arguments>
+                </block>
+		</referenceContainer>
+
+    </body>
+</page>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Background::elements" title="Background" module="Designnbuy_Background" parent="Designnbuy_Base::DNB" sortOrder="35"  resource="Designnbuy_Background::elements"/>
+
+        <add id="Designnbuy_Background::background" title="Backgrounds" module="Designnbuy_Background" parent="Designnbuy_Background::elements" sortOrder="10" action="background/background/" resource="Designnbuy_Background::background"/>
+
+        <add id="Designnbuy_Background::category" title="Categories" module="Designnbuy_Background" parent="Designnbuy_Background::elements" sortOrder="20" action="background/category/" resource="Designnbuy_Background::category"/>
+
+        <!--<add id="Designnbuy_Background::import" title="Import" module="Designnbuy_Background" parent="Designnbuy_Background::elements" sortOrder="30" action="background/import/" resource="Designnbuy_Background::import"/>-->
+
+        <!--<add id="Designnbuy_Background::config_background" title="Configuration" module="Designnbuy_Background" parent="Designnbuy_Background::elements" sortOrder="40" action="adminhtml/system_config/edit/section/dnbbackground/" resource="Designnbuy_Background::config_background"/>-->
+    </menu>
+</config>

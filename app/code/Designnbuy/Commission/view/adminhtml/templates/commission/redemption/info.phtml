@@ -1,0 +1,104 @@
+<?php $adminUserCommission = $block->getStoreOwnerCommission(); ?>
+<?php $resellerId = $this->helper('Designnbuy\Commission\Helper\Data')->getOwnerUserId() ?>
+<?php $resellerName = $this->helper('Designnbuy\Commission\Helper\Data')->getOwnerUserName() ?>
+<?php $defaultStatus = $this->helper('Designnbuy\Commission\Helper\Data')->getDefaultStatus() ?>
+<?php $isWebsiteOwner = $this->helper('Designnbuy\Commission\Helper\Data')->isWebsiteOwner(); ?>
+<?php if($isWebsiteOwner == true): ?>
+	<form 
+		class="form redemption-post" 
+		action="<?php echo $block->escapeUrl($block->getRedemptionPostUrl()) ?>" 
+		method="post" 
+		id="form-validate" 
+		enctype="multipart/form-data" 
+		autocomplete="off" 
+		data-mage-init='{"validation":{}}'>
+
+		<input name="user_id" id="user_id" type="hidden" value="<?php echo $resellerId; ?>" />
+		<input name="user_name" id="user_name" type="hidden" value="<?php echo $resellerName;?>" />
+		<input name="is_active" id="is_active" type="hidden" value="<?php echo $defaultStatus; ?>" />
+		<input name="balance" id="balance" type="hidden" value="<?php echo $adminUserCommission['balance']?>" />
+		<input name="user_type" id="user_type" type="hidden" value="<?php echo "1"; ?>" />
+		
+		<div class="page-main-actions">    
+			<div class="page-actions-placeholder"></div>
+			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+				<div class="page-actions-inner" data-title="Manage Designers">
+					<div class="page-actions-buttons">
+		        		 <button type="submit" class="action submit submit-redemption" title="<?php echo __('Send Redeem Request'); ?>"><span><?php echo __('Send Redeem Request'); ?></span></button>
+		        	</div>
+		        </div>
+		    </div>
+		</div>		
+		<table class="data-grid">
+		    <thead>
+		        <tr>
+		            <th class="data-grid-th" width="250px"><span><?php echo __('Request Payment'); ?></span></th>
+		            <th></th>
+		        </tr>
+		    </thead>
+		    <tbody>
+	            <?php echo $block->getBlockHtml('formkey'); ?>
+		        <tr class="data-grid-tr-data">
+		            <td class="label"><?php echo __('Total Commission Earned');?></td>
+		            <td class="value"><b><?php echo $block->setFormatedAmount($adminUserCommission['earnedCommission']); ?></b></td>
+		        </tr>
+		        <tr>
+		            <td class="label"><?php echo __('Total Pending Commission');?></td>
+		            <td class="value"><b><?php echo $block->setFormatedAmount($adminUserCommission['pendingCommission']); ?></b></td>
+		        </tr>
+		        <tr>
+		            <td class="label"><?php echo __('Canceled Order Commission');?></td>
+		            <td class="value"><b><?php echo $block->setFormatedAmount($adminUserCommission['canceledCommission']); ?></b></td>
+		        </tr>
+		        <tr>
+		            <td class="label"><?php echo __('Total Redeemed');?></td>
+		            <td class="value"><b><?php echo $block->setFormatedAmount($adminUserCommission['redeemedCommission']); ?></b></td>
+		        </tr>
+		        <tr>
+		            <td class="label"><?php echo __('Redeemable Amount');?></td>
+		            <td class="value"><b>
+		        		<?php if($adminUserCommission['balance']): ?>
+							<label for="balanceamount"><?php echo $block->setFormatedAmount($adminUserCommission['balance']); ?></label>
+						<?php endif; ?>
+		            	</b>
+		            </td>
+		        </tr>
+		        <tr>
+		            <td class="label"><?php echo __('Amount');?></td>
+		            <td class="value">
+		            	<input tabindex="1" name="commission_amount" id="commission_amount" title="<?= $block->escapeHtmlAttr(__('Redeem Amount')) ?>" class="validate-greater-than-zero admin__control-text" type="text" data-validate="{'max-amount':true}" value="" />
+		            </td>
+		        </tr>
+		    </tbody>
+		</table>
+	</form>
+	<br />
+	<br />
+<?php endif;  ?>
+<script type="text/javascript">
+	require([
+        'jquery',
+        'mage/validation'
+    ], function($){
+        $.validator.addMethod('max-amount', function (value) {
+            if(value > parseFloat($('#balance').val())){
+                return false;
+            } else {
+                return true;
+            }
+        }, $.mage.__('You have not sufficient balance.'));
+    });
+</script>
+<style type="text/css">
+	.submit-redemption{
+		background-color: #ba4000 !important;
+	    border-color: #b84002 !important;
+	    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25) !important;
+	    color: #ffffff !important;
+	    text-decoration: none;
+	    font-size: 1.6rem;
+	    letter-spacing: .025em;
+	    padding-bottom: 0.6875em;
+	    padding-top: 0.6875em;
+}
+</style>

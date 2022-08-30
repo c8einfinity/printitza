@@ -1,0 +1,95 @@
+/* header */
+.switcher-language .weltpixel_multistore li {
+	margin-right: 5px;
+}
+.switcher-language .weltpixel_multistore li:last-child{
+	margin-right: 0;
+}
+.switcher-language .weltpixel_multistore li img{
+	height: 20px;
+}
+
+/* footer */
+.page-wrapper footer.page-footer .footer.content .footer-v3{
+	padding-bottom: 30px;
+    padding-top: 30px;
+}
+.page-wrapper footer.page-footer .footer.content h4{
+	padding-top: 0;
+}
+
+@media only screen and (min-width: 768px), print{
+	.nav-sections .navigation .level0{
+		margin-right: 9px;
+	}
+	.nav-sections .navigation ul li.level0.first > a {
+		padding-left: 10px;
+	}
+	header.page-header .switcher .label{
+	    display: inline-block;
+	    width: auto;
+	    height: auto;
+	    float: none;
+	    color: #fff;
+	    line-height: 1;
+	    font-size: 12px;
+	    clip: inherit;
+	    position: static;
+	    margin: 0;
+	    margin-right: 5px;
+	    vertical-align: middle;
+	}
+	.page-header-v1 header.page-header .multistore-switcher{
+	    position: static;
+    	margin-left: 0;
+	    float: left;
+
+	}
+	header.page-header ul.weltpixel_multistore{
+		display: inline-block;
+    	vertical-align: middle;
+	}
+}
+
+.design-image-container{
+	background: #ffffff;
+	border: 1px solid #cacaca;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: block;
+	height: 150px;
+	line-height: 1;
+	margin: 1rem 0.3rem 1rem 0;
+	overflow: hidden;
+	position: relative;
+	width: 150px;
+    vertical-align: middle;
+    display: -webkit-box;
+	display: -moz-box;
+  	display: -ms-flexbox;
+  	display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    float: left;
+}
+.design-image-container .design-image-photo {
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+	max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+.account .block-collapsible-nav .title{
+	position: static;
+	width: 100%;
+	height: auto;
+	margin: 0 0 10px 0;
+}
+.checkout-index-index .ui-datepicker-buttonpane .ui-datepicker-current{
+    display:none;   
+}

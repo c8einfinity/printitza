@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background sidebar recent backgrounds template
+ *
+ * @var $block \Designnbuy\Background\Block\Sidebar\Recent
+ */
+?>
+
+<?php
+    $_backgroundCollection = $block->getBackgroundCollection();
+?>
+<?php if ($_backgroundCollection->count()) { ?>
+<div class="widget block block-recent-backgrounds" data-bind="scope: 'recemt-backgrounds'">
+    <div class="block-title">
+        <strong><?php echo __('Recent Backgrounds') ?></strong>
+    </div>
+    <div class="block-content">
+        <?php foreach ($_backgroundCollection as $_background) { ?>
+            <div class="item">
+                <a class="background-item-link"
+                   href="<?php echo $_background->getBackgroundUrl() ?>">
+                    <?php echo $block->escapeHtml($_background->getTitle()) ?>
+                </a>
+            </div>
+
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>

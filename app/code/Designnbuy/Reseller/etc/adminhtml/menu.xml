@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Reseller::reseller" title="Manage Reseller" module="Designnbuy_Reseller" sortOrder="60" resource="Designnbuy_Reseller::reseller" parent="Designnbuy_Base::network" />
+        
+        <!-- <add id="Designnbuy_Reseller::reseller_request" title="Manage Request" module="Designnbuy_Reseller" sortOrder="10" action="designnbuy_reseller/request" resource="Designnbuy_Reseller::reseller_request" parent="Designnbuy_Reseller::reseller" /> -->
+        
+        <add id="Designnbuy_Reseller::manage_resellers" title="Resellers" module="Designnbuy_Reseller" sortOrder="20" action="designnbuy_reseller/resellers" resource="Designnbuy_Reseller::manage_resellers" parent="Designnbuy_Reseller::reseller" />
+        
+        <add id="Designnbuy_Reseller::reseller_productpool" title="Manage Product Pool" module="Designnbuy_Reseller" sortOrder="30" action="designnbuy_reseller/productpool" resource="Designnbuy_Reseller::reseller_productpool" parent="Designnbuy_Reseller::reseller" />
+    </menu>
+</config>

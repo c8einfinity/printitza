@@ -1,0 +1,26 @@
+type Query {
+    layoutCategory : layoutCategory @resolver(class: "Designnbuy\\Template\\Model\\Resolver\\LayoutCategory") @doc(description: "Get All Layout Category")
+    layoutByCategory (
+        category_id: Int @doc(description: "Category Id")
+    ): layoutByCategory @resolver(class: "Designnbuy\\Template\\Model\\Resolver\\LayoutByCategory") @doc(description: "Get Layout By Category Id")
+}
+
+type layoutCategory @doc(description: "Get All Layout Category") {
+    allLayout: [LayoutData] @doc(description: "All Layout Category")
+}
+
+type LayoutData {
+    entity_id: String @doc(description: "Category Id")
+    title: String @doc(description: "Category Title")
+}
+
+type layoutByCategory @doc(description: "Get Layout By Category") {
+    LayoutByCategory : [LayoutCategories] @doc(description: "Album by customer")
+}
+
+type LayoutCategories {
+    entity_id: String @doc(description: "Layout Id")
+    title: String @doc(description: "Layout Title")
+    svg: String @doc(description: "Layout Title")
+    image: String @doc(description: "Layout Title")
+}

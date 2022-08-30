@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background sidebar search form template
+ *
+ * @var $block \Designnbuy\Background\Block\Sidebar\Search
+ */
+?>
+
+<div class="widget block background-search" data-bind="scope: 'background-search'">
+	<div class="block-content">
+		<form class="form" id="background_search_mini_form" action="<?php echo $block->getFormUrl() ?>" method="get">
+            <div class="field search">
+                <label class="label" for="background_search">
+                    <span><?php echo __('Search') ?></span>
+                </label>
+                <div class="control">
+                    <input id="background_search" type="text" name="q" value="<?php echo $block->escapeHtml($block->getQuery()) ?>" placeholder="<?php echo __('Search backgrounds here...') ?>" class="input-text" maxlength="128" role="combobox" aria-haspopup="false" aria-autocomplete="both" autocomplete="off">
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit" onclick="return goBackgroundSearch(this);" title="<?php echo __('Search') ?>" class="action search">
+                    <span><?php echo __('Search') ?></span>
+                </button>
+            </div>
+        </form>
+	</div>
+</div>
+<script type="text/javascript">
+	function goBackgroundSearch(e)
+	{
+		var value = document.getElementById('background_search').value;
+		if (value) {
+			window.location = e.form.action + value + '/';
+		}
+		return false;
+	}
+</script>

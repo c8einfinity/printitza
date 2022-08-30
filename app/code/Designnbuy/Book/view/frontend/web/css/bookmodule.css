@@ -1,0 +1,684 @@
+.book-product.catalog-product-view .product-options-bottom {clear: both;}
+.book-product.catalog-product-view .product-options-bottom, .book-product.catalog-product-view .product-social-links {display: none;}
+.overlay
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	background: #ffffff;
+	opacity: 0.7;
+	z-index: 5;
+}
+
+iframe#container-file-pp
+{
+	position: absolute;
+	height: 57%;
+	width: 80%;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 5;
+	margin: auto;
+	background: #ffffff;
+	border: none;
+}
+.close-btn
+{
+	position: absolute;
+	top: 22.2%;
+	right: 12%;
+	z-index: 999;
+	border: 1px solid;
+	border-radius: 50%;
+	height: 20px;
+	width: 20px;
+	text-align: center;
+	background: #fff;
+	color: #000000 !important;
+}
+.custom-loader-cl
+{
+	position: absolute;
+	background: #fff;
+	top: -5%;
+	bottom: 0;
+	left: 216px;
+	right: 0;
+	opacity: 0.94;
+	height: 49%;
+	width: 1031px;
+	margin: auto;
+}
+.custom-loader-cl img
+{
+	position: absolute;
+	top: 0;
+	height: 200px;
+	width: 300px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+}.mageworx-optionswatches-option-gallery
+	 /*---------------Book Module css------------------*/
+	 /*---General css---*/
+ .book-module, .book-module a, .book-module p,
+ .book-module h1, .book-module h2, .book-module h3, .book-module h4, .book-module h5, .book-module h6
+ {
+	 color: #54534a;
+ }
+.book-module ul, .book-module ul li {padding:0; margin: 0; list-style: none;}
+/*---End General css---*/
+
+.mageworx-optionswatches-option-gallery {
+	display: block;
+	clear: both;
+	margin-top: 3px;
+	width: 100%;
+	position: relative;
+	height: 114px;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+}
+.mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	position: absolute;
+	top:0;
+	left:12px;
+	max-width: none;
+	transition: left 0.2s linear 0s;
+}
+.mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image:hover
+{
+	left:-218px;
+	transition: left 0.2s linear 0s;
+}
+.mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image.active
+{
+	left: -450px;
+}
+.book-product .product-info-main
+{
+	width: 100% !important;
+}
+.book-product .product-info-main .page-title-wrapper, .book-product .product-info-main .product-reviews-summary, .book-product .product-info-main .product-info-price
+{
+	display: none;
+}
+.book-product .book-module
+{
+	-webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+	background: #f5f5f5;
+	margin-bottom: 50px;
+}
+.book-product .book-module .main-bg
+{
+	display: table;
+	width: 100%;
+}
+.book-product .book-module .main-bg .main-menu
+{
+	display: inline-block;
+	width: 200px;
+	box-sizing: border-box;
+	float: left;
+	padding: 10px;
+}
+.book-product .book-module .main-bg .main-menu ul {
+	padding: 0;
+	margin-bottom:0;
+}
+.book-product .book-module .main-bg .main-menu ul li {
+	display: block;
+	list-style: none;
+	text-align: center;
+	padding: 20px 0;
+	border: 2px solid #e9e9e9;
+	border-bottom: none;
+	margin-bottom: 0;
+	position: relative;
+}
+.book-product .book-module .main-bg .main-menu ul li:last-child
+{
+	border-bottom: 2px solid #e9e9e9;
+}
+.book-product .book-module .main-bg .main-menu ul li.active::after
+{
+	color: #e0e0e0;
+	right: -17px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid #000000;
+	content: "";
+}
+.book-product .book-module .main-bg .main-menu ul li:hover, .book-product .book-module .main-bg .main-menu ul li.active
+{
+	background: #000000;
+	border: 2px solid transparent;
+}
+.book-product .book-module .main-bg .main-menu ul li:hover
+{
+	border-top: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+}
+.book-product .book-module .main-bg .main-menu ul li.active:hover
+{
+	border: 2px solid transparent;
+}
+.book-product .book-module .main-bg .main-menu ul li:hover a, .book-product .book-module .main-bg .main-menu ul li.active a
+{
+	color: #ffffff;
+}
+.book-product .book-module .main-bg .main-menu ul li a {
+	font-size: 20px;
+	font-weight: 600;
+}
+.book-product .book-module .main-bg .main-menu ul li a:hover
+{
+	text-decoration: none;
+}
+.book-product .book-module .main-bg .main-menu ul li a span.no {
+	display: block;
+	font-weight: 800;
+	border: 1px solid #e0e0e0;
+	width: 30px;
+	margin: 0 auto;
+	border-radius: 50%;
+}
+.book-product .book-module .main-bg .main-menu ul li:hover a span.no,
+.book-product .book-module .main-bg .main-menu ul li.active a span.no
+{
+	background: #ffffff;
+	color: #54534a;
+	border-radius: 50%;
+}
+.book-product .book-module .main-bg .module-bg
+{
+	padding: 10px;
+	display: inline-block;
+	height: 605px;
+	overflow: auto;
+	width: calc(100% - 220px);
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select h1.title
+{
+	text-align: center;
+	font-weight: bold;
+	margin-bottom:20px;
+	font-size:30px;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select li .job_type_section li:first-child h1.title,
+.book-product .book-module .main-bg .module-bg .steps .step_select li .binding_style_section li:first-child h1.title,
+.book-product .book-module .main-bg .module-bg .steps .step_select li .page_stock_section li:first-child h1.title,
+.book-product .book-module .main-bg .module-bg .steps .step_select li .size_section li:first-child h1.title,
+.book-product .book-module .main-bg .module-bg .steps .step_select li .proofs_files_section li:first-child h1.title,
+.book-product .book-module .main-bg .module-bg .steps .step_select li .summary_section > h1.title
+{
+	font-size: 40px;
+	margin-bottom:30px;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select h1.title span
+{
+	font-weight: 100;
+	margin-right: 15px;
+}
+.book-product .book-module .main-bg .module-bg .steps .title .title_no
+{
+	border: 1px solid #54534a;
+	border-radius: 7px;
+	display: inline-block;
+	font-size: 32px;
+	padding: 0px 8px;
+	font-weight: 600;
+	color: #fff;
+	background: #000000;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select
+{
+	padding:0;
+	text-align: center;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select li select,
+.book-product .book-module .main-bg .module-bg .steps .step_select li input
+{
+	width: 200px;
+	border: 2px solid #e9e9e9;
+	height: 45px;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select .admin__field-label
+{
+	font-weight: bold;
+	font-size: 16px;
+	padding-top: 104px;
+	display: block;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice .admin__field-label {
+	display: initial !important;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select .tip-top.active::after
+{
+	background: #000000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: "\e610";
+	font-family: 'luma-icons';
+	height: 25px;
+	width: 25px;
+	color: #fff;
+	border-radius: 4px;
+	font-size: 18px;
+	z-index: 1;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select .job_type_section li:first-child .diff-step
+{
+	width: 232px;
+	background-image: url('../image/book-bg_red.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-position: -236px 0;
+	position: relative;
+	height: auto;
+	display: block;
+	margin: 0 auto;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select li:first-child .diff-step:hover,
+.book-product .book-module .main-bg .module-bg .steps .step_select li:first-child.active .diff-step
+{
+	background-position: -468px 0;
+}
+.book-product .step_select .job_type_section li.hide-section-data
+{
+	background-image: none;
+	margin-top: 50px;
+}
+.perv-btn, .next-btn, .next_btn_last
+{
+	background: #54534a;
+	color: #ffffff !important;
+	padding: 10px 0;
+	border-radius: 3px;
+	display: inline-block;
+	width: 160px;
+	font-weight: bold;
+	margin: 5px 5px;
+	position: relative;
+}
+.perv-btn::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -19px;
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	border-right: 20px solid #54534a;
+}
+.next-btn::after, .next_btn_last::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: -19px;
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	border-left: 20px solid #54534a;
+}
+.perv-btn:hover, .next-btn:hover, .next_btn_last:hover
+{
+	background: #000000;
+	text-decoration: none;
+}
+.perv-btn:hover:before
+{
+	border-right: 20px solid #000000;
+}
+.next-btn:hover:after, .next_btn_last:hover:after
+{
+	border-left: 20px solid #000000;
+}
+.hide-section-data .option_images_gallery
+{
+	display: none;
+}
+.book-product .book-module .main-bg .module-bg .steps .step_select li .radio
+{
+	display: block;
+	visibility: hidden;
+	height: 0;
+}
+.book-product .step_select li:nth-child(2) .binding_style_section li .diff-step .field.choice,
+.book-product .step_select li:nth-child(3) .page_stock_section li .diff-step .field.choice,
+.book-product .step_select li:nth-child(4) .size_section li:nth-child(2) .diff-step .field.choice,
+.book-product .step_select li:nth-child(5) .proofs_files_section li .diff-step .field.choice
+{
+	width: 116px;
+	background-image: url('../image/book-bg_red.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-position: -122px 0;
+	position: relative;
+	height: 200px;
+	display: inline-block;
+	margin-left: 25px;
+	vertical-align: top;
+}
+.book-product .step_select li:nth-child(2) .binding_style_section li .diff-step,
+.book-product .step_select li:nth-child(3) .page_stock_section li .diff-step,
+.book-product .step_select li:nth-child(4) .size_section li .diff-step,
+.book-product .step_select li:nth-child(5) .proofs_files_section li .diff-step .field.choice
+{
+	margin-bottom: 50px;
+}
+.book-product .step_select li:nth-child(2) .binding_style_section li .diff-step .field.choice:first-child,
+.book-product .step_select li:nth-child(3) .page_stock_section li .diff-step .field.choice:first-child,
+.book-product .step_select li:nth-child(4) .size_section li .diff-step .field.choice:first-child,
+.book-product .step_select li:nth-child(5) .proofs_files_section li .diff-step .field.choice:first-child
+{
+	margin-left: 0;
+}
+.book-product .step_select li:nth-child(2) .binding_style_section li .diff-step .field.choice:hover,
+.book-product .step_select li:nth-child(2) .binding_style_section li .diff-step .field.choice.active,
+.book-product .step_select li:nth-child(3) .page_stock_section li .diff-step .field.choice:hover,
+.book-product .step_select li:nth-child(3) .page_stock_section li .diff-step .field.choice.active,
+.book-product .step_select li:nth-child(4) .size_section li:nth-child(2) .diff-step .field.choice:hover,
+.book-product .step_select li:nth-child(4) .size_section li:nth-child(2) .diff-step .field.choice.active,
+.book-product .step_select li:nth-child(5) .proofs_files_section li .diff-step .field.choice:hover,
+.book-product .step_select li:nth-child(5) .proofs_files_section li .diff-step .field.choice.active
+{
+	background-position: -6px 0;
+}
+.binding_style_section li .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image,
+.page_stock_section li .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image,
+.size_section li:nth-child(2) .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image,
+.proofs_files_section li .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	max-width: none;
+	transition: left 0.2s linear 0s;
+}
+.book-module .step_select li .binding_style_section li:nth-child(3) .diff-step .field.choice,
+.book-module .step_select li .page_stock_section li:nth-child(4) .diff-step .field.choice
+{
+	width: 116px;
+	background-image: url('../image/sprite.png');
+	background-position: -224px 0;
+	height: 180px;
+}
+.book-module .step_select li .binding_style_section li:nth-child(3) .diff-step .field.choice:hover,
+.book-module .step_select li .binding_style_section li:nth-child(3) .diff-step .field.choice.active,
+.book-module .step_select li .page_stock_section li:nth-child(4) .diff-step .field.choice:hover,
+.book-module .step_select li .page_stock_section li:nth-child(4) .diff-step .field.choice.active
+{
+	background-position: -108px 0;
+}
+.book-product .step_select li:nth-child(4) .size_section li .diff-step .field.choice
+{
+	width: 140px;
+	position: relative;
+	height: 220px;
+	display: inline-block;
+	margin-left: 25px;
+	vertical-align: top;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice .mageworx-optionswatches-option-gallery
+{
+	height: 170px;
+	position: relative;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:first-child .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	top: 20px;
+	left: 0;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:nth-child(2) .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	top: 20px;
+	left: -158px;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:nth-child(3) .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	top: 20px;
+	left: -301px;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:nth-child(4) .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	top: 20px;
+	left: -424px;
+}
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:first-child:hover .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image,
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:nth-child(2):hover .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image,
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:nth-child(3):hover .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image,
+.book-product .step_select li:nth-child(4) .size_section li:first-child .diff-step .field.choice:nth-child(4):hover .mageworx-optionswatches-option-gallery .mageworx-optionswatches-option-gallery_image
+{
+	top: -184px;
+}
+.book-product .step_select .size_section li:first-child .diff-step .field.choice:first-child .tip-top.active::after
+{
+	top: 97px;
+	left: 25px;
+}
+.book-product .step_select .size_section li:first-child .diff-step .field.choice:nth-child(2) .tip-top.active::after
+{
+	top: 52px;
+}
+.book-product .step_select .size_section li:first-child .diff-step .field.choice:nth-child(3) .tip-top.active::after
+{
+	top: 93px;
+	left: 25px;
+}
+.book-product .step_select .size_section li:first-child .diff-step .field.choice:nth-child(4) .tip-top.active::after
+{
+	top: 95px;
+	left: 20px;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3),
+.book-product .step_select .proofs_files_section li:nth-child(4)
+{
+	margin-bottom: 30px;
+}
+.book-product .step_select .proofs_files_section li:nth-child(4),
+.book-product .step_select .proofs_files_section li:nth-child(5)
+{
+	display: inline-block;
+}
+.book-product .step_select .proofs_files_section li:nth-child(5)
+{
+	float: right;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3) h1.title,
+.book-product .step_select .proofs_files_section li:nth-child(4) h1.title
+{
+	display: inline-block;
+	margin-bottom: 0;
+	margin-right: 15px;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3) .diff-step.file-data,
+.book-product .step_select .proofs_files_section li:nth-child(4) .diff-step.file-data
+{
+	display: inline-block;
+	position: relative;
+	/* background: #000000;
+    text-align: center;
+    color: #fff; */
+	width: 130px !important;
+	/* height: 42px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 40px; */
+	vertical-align: top;
+	cursor: pointer;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3) .diff-step.file-data span,
+.book-product .step_select .proofs_files_section li:nth-child(4) .diff-step.file-data span
+{
+	background: #000000;
+	text-align: center;
+	color: #fff;
+	width: 130px !important;
+	height: 42px;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 40px;
+	display: inherit;
+}
+.book-product .step_select .proofs_files_section li .diff-step.file-data input[type="file"]
+{
+	opacity:0;
+	position: absolute;
+	top: -5px;
+	right: -25px;
+	cursor: pointer;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3) .diff-step.file-data .preview_image,
+.book-product .step_select .proofs_files_section li:nth-child(4) .diff-step.file-data .preview_image
+{
+	/* position: absolute;
+    top: 0;
+    right: 0; */
+	min-height: 0;
+	max-height: 300px;
+	width: 226px;
+	/* overflow: auto; */
+	display: block;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3) .diff-step.file-data .preview_image,
+.book-product .step_select .proofs_files_section li:nth-child(3) .diff-step.file-data .title-preview-image
+{
+	margin: 20px 0 0 -200px;
+}
+.book-product .step_select .proofs_files_section li:nth-child(4) .diff-step.file-data .preview_image,
+.book-product .step_select .proofs_files_section li:nth-child(4) .diff-step.file-data .title-preview-image
+{
+	margin: 20px 0 0 -200px;
+}
+.book-product .step_select .proofs_files_section li:nth-child(3) .diff-step.file-data .title-preview-image,
+.book-product .step_select .proofs_files_section li:nth-child(4) .diff-step.file-data .title-preview-image
+{
+	width: 300px;
+	color: #000000;
+}
+.book-product .step_select .proofs_files_section li textarea
+{
+	width: 300px;
+	height: 42px;
+	margin-left: 20px;
+}
+.summary_section .book_specifications table
+{
+	background: #ffffff;
+	margin-bottom: 30px;
+}
+.summary_section .book_specifications table tr td
+{
+	text-align: left;
+	padding: 5px 10px;
+	word-break: break-all;
+}
+.summary_section .book_specifications table tr td:first-child
+{
+	width: 50%;
+}
+.summary_section .book_specifications ul li:nth-child(3),
+.summary_section .book_specifications ul li:nth-child(4)
+{
+	margin: 15px 0;
+}
+.book-product .step_select .summary_section .book_specifications li.temp-li:nth-child(3) input
+{
+	height: 20px; width: 20px !important; display: inline-block;
+}
+.summary_section .book_specifications li.temp-li:nth-child(3) h1.title
+{
+	display: inline-block;
+}
+
+.book-product .book-module .main-bg .module-bg .steps .step_select .summary_section .book_specifications ul li:nth-child(3) input,
+.book-product .book-module .main-bg .module-bg .steps .step_select .summary_section .book_specifications ul li:nth-child(4) input
+{
+	width: 500px;
+}
+.summary_section .book_specifications > h1.title
+{
+	margin-bottom: 0 !important;
+	line-height: 1.5;
+	color: #ffffff;
+	background: -moz-linear-gradient(top, #000000, #54534a);
+	background: -webkit-linear-gradient(top, #000000, #54534a);
+	background: -ms-linear-gradient(top, #000000, #54534a);
+	background: -o-linear-gradient(top, #000000, #54534a);
+}
+.diff-step .mono-with-color-main {width: 850px;margin: 0 auto;}
+.diff-step .mono-with-color-main .element {display: inline-block;width: 80px;background: #ffffff;border: 1px solid #54534a;margin: 0 10px 10px 0;height: 35px;line-height: 35px;font-size: 15px;font-weight: 600; cursor: pointer;}
+.diff-step .mono-with-color-main .element.active {
+	background: #000000;
+	border: none;
+	color: #fff;
+	border: 1px solid;
+}
+.book-module .step_select li:last-child .specification_list li.perm-li
+{
+	margin-top: 30px;
+}
+.book-module .step_select li:last-child .specification_list li.perm-li h1.title
+{
+	font-weight: normal !important;
+}
+.book-module .step_select li:last-child .specification_list li.perm-li h1.title
+{
+	display: inline-block;
+	margin-bottom: 0 !important;
+}
+.book-module .step_select li:last-child .specification_list li.perm-li .sub-price, .book-module .step_select li:last-child .specification_list li.perm-li .delevary
+{
+	margin-left: 50px;
+	display: inline-block;
+	font-size: 24px;
+	font-weight: bold;
+}
+.book-module .step_select li:last-child .specification_list li.perm-li .place_order_btn
+{
+	color: #ffffff;
+	background: #000000;
+	padding: 8px 15px;
+	border-radius: 3px;
+}
+.book-product .step_select .proofs_files_section .diff-step.file-data .preview_image
+{
+	position: relative;
+}
+.book-product .step_select .proofs_files_section .diff-step.file-data .preview_image::after
+{
+	content: "\e615";
+	position: absolute;
+	top: 50%;
+	font-family: 'luma-icons';
+	left: 0;
+	right: 0;
+	margin: auto;
+	color: #ffffff;
+	font-size: 36px;
+	transform: translateY(-50%);
+}
+@media (min-width: 768px)
+{
+	.book-product .book-module .main-bg .module-bg .steps .step_select li .control
+	{
+		width: 100%;
+	}
+	.cart-container .form-cart {word-break: break-all;}
+}

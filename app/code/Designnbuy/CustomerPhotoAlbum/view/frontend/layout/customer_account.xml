@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2019 Bhavin Gehlot (bhavin.gehlot@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Nothing Is Impossible
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Designnbuy_CustomerPhotoAlbum::css/custom.css" />
+    </head>
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="photoalbum-link">
+                <arguments>
+                    <argument name="path" xsi:type="string">photoalbum/album/</argument>
+                    <argument name="label" xsi:type="string">My Photos</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

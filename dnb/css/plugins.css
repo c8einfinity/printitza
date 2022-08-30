@@ -1,0 +1,132 @@
+h2.jGraduate_Title{font-family:Arial,Helvetica,Sans-Serif;font-size:11px !important;font-weight:bold;margin:-13px 0 0 0;padding:0;text-align:center}
+.jGraduate_Picker{font-family:Arial,Helvetica,Sans-Serif;font-size:9px;border-style:solid;border-color:lightgrey ;border-width:1px;z-index: 99;background-color:#ffffff;position:absolute;padding:5px;/*right: 0px;bottom: 0px;*/width: 560px;height: 320px;}
+.jGraduate_tabs li{background-color:#ccc;display:inline;border:solid 1px grey;padding:3px;margin:2px;cursor:pointer}
+li.jGraduate_tab_current{
+	background-color: transparent;
+    display: inline;
+    margin: 0 0 0 5px;
+    border: none;
+    cursor: move;
+    font-size: 16px;
+    line-height: 13px;
+}
+.jGraduate_colPick{display:none}.jGraduate_gradPick{display:none;border:0;padding:10px 7px 5px 5px;overflow:auto}.jGraduate_gradPick{display:none;border:0;padding:10px 7px 5px 5px;overflow:auto}
+.jGraduate_tabs{
+	position: relative;
+    background-color: transparent;
+    padding: 5px;
+    margin: 0;
+    display: block;
+    cursor: move;
+    border-bottom: 1px solid #d3d3d3;
+}
+div.jGraduate_Swatch{float:left;margin:8px}div.jGraduate_GradContainer{border:2px inset #EEE;background-image:url(../images/map-opacity.png);background-position:0 0;height:256px;width:256px;position:relative}div.jGraduate_GradContainer div.grad_coord{background:#000;border:1px solid #fff;border-radius:40px;-moz-border-radius:40px;width:20px;height:20px;position:absolute;margin:-5px -5px;top:0;left:0;text-align:center;font-size:xx-small;line-height:17px;color:#fff;text-decoration:none;cursor:pointer;-moz-user-select:none;-webkit-user-select:none}.jGraduate_AlphaArrows{position:absolute;margin-top:-10px;margin-left:250.5px}div.jGraduate_Opacity{border:2px inset #eee;margin-top:14px;background-color:black;background-image:url(../images/Maps.png);background-position:0 -2816px;height:20px;cursor:ew-resize}div.jGraduate_StopSlider{margin:0 0 0 -10px;width:276px;overflow:visible;background:#efefef;height:45px;cursor:pointer}div.jGraduate_StopSection{width:120px;text-align:center}input.jGraduate_Ok,input.jGraduate_Cancel{display:block;width:100px !important;margin-left:-4px;margin-right:-4px}input.jGraduate_Ok{margin:9px -4px 5px -4px}.colorBox{float:left;height:16px;width:16px;border:1px solid gray;cursor:pointer;margin:4px 4px 4px 30px}.colorBox+label{float:left;margin-top:7px}label.jGraduate_Form_Heading{position:relative;top:10px;background-color:#efefef;padding:2px;font-weight:bold;font-size:9px}div.jGraduate_Form_Section{border-style:solid;border-width:1px;border-color:grey;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:15px 5px 5px 5px;margin:0;width:110px;text-align:center;overflow:auto}div.jGraduate_Form_Section label{padding:0 2px;font-size:10px}div.jGraduate_StopSection input[type=text],div.jGraduate_Slider input[type=text]{width:33px;border:0;height:22px;font-size:10px}div.jGraduate_LightBox{position:fixed;top:0;left:0;right:0;bottom:0;background-color:#000;opacity:.5;display:none}div.jGraduate_stopPicker{position:absolute;display:none;background:#e8e8e8}.jGraduate_gradPick{width:535px}.jGraduate_gradPick div.jGraduate_OpacField{position:absolute;left:0;bottom:5px}.jGraduate_gradPick .jGraduate_Form{float:left;width:270px;position:absolute;left:284px;width:266px;height:200px;top:167px;margin:-3px 3px 0 10px}.jGraduate_gradPick .jGraduate_Points{position:static;width:150px;margin-left:0}.jGraduate_SpreadMethod{position:absolute;right:8px;top:100px}.jGraduate_Colorblocks{display:table;border-spacing:0 5px}.jGraduate_colorblock{display:table-row}.jGraduate_Colorblocks .jGraduate_colorblock>*{display:table-cell;vertical-align:middle;margin:0;float:none}.jGraduate_gradPick div.jGraduate_StopSection{float:left;width:133px;margin-top:-8px}.jGraduate_Slider{font-family:lato}.jGraduate_gradPick .jGraduate_Form_Section{padding-top:7px;padding-bottom:1px}.jGraduate_Slider{text-align:center;float:left;width:100%}.focalPoint .jGraduate_Form_Section{width:220px !important}.jGraduate_Slider .jGraduate_Form_Section{border:0;width:250px;padding:0 2px;overflow:visible}.jGraduate_Slider label{display:inline-block;line-height:50px;padding:0;font-size:11px}.jGraduate_Slider label.prelabel{width:40px;text-align:left}.jGraduate_SliderBar{width:140px;float:left;margin-right:5px;border:1px solid #BBB;height:20px;margin-top:14px;margin-left:5px;position:relative}div.jGraduate_Slider input{margin-top:5px}div.jGraduate_Slider img{top:0;left:0;position:absolute;margin-top:-10px;cursor:ew-resize;width:9px;height:40px}.jGraduate_gradPick .jGraduate_OkCancel{position:absolute;top:39px;right:10px;width:113px}.jGraduate_OpacField{position:absolute;right:-10px;bottom:0}
+
+.jPicker  { color:#363636; font-size:12px;}
+.jPicker .Icon {
+	display: inline-block;
+	height: 24px;
+	position: relative;
+	text-align: left;
+	width: 25px
+}
+.jPicker .Icon span.Color, .jPicker .Icon span.Alpha {
+	background-position: 2px 2px;
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%
+}
+.jPicker .Icon span.Image {
+	background-repeat: no-repeat;
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%
+}
+.jPicker.Container {
+	z-index: 10
+}
+
+
+
+table.jPicker {background-color: #ffffff;border: none;font-family: Arial, Helvetica, Sans-Serif;font-size: 12px!important;margin: 0;/* padding: 5px; */width: 545px;z-index: 20;}
+.jPicker .Move {
+	background-color: #ddd;
+	border-color: #fff #666 #666 #fff;
+	border-style: solid;
+	border-width: 1px;
+	cursor: move;
+	height: 12px;
+	padding: 0
+}
+.jPicker .Title {font-size: 11px!important; display:none;font-weight: bold;margin: -2px 0 0 0;padding: 0;text-align: center;width: 100%}
+.jPicker div.Map {
+	border: none;
+	cursor: crosshair;
+	height: 260px;
+	margin: 12px 5px 0 5px;
+	
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	width: 260px
+}
+.jPicker div[class="Map"] {
+	height: 256px;
+	width: 256px
+}
+.jPicker div.Bar {
+	border: none;
+	cursor: n-resize;
+	height: 260px;
+	margin: 12px 10px 0 5px;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	width: 24px
+}
+.jPicker div[class="Bar"] {
+	height: 256px;
+	width: 20px
+}
+.jPicker .Map .Map1, .jPicker .Map .Map2, .jPicker .Map .Map3, .jPicker .Bar .Map1, .jPicker .Bar .Map2, .jPicker .Bar .Map3, .jPicker .Bar .Map4, .jPicker .Bar .Map5, .jPicker .Bar .Map6 {background-color: transparent;background-image: none;display: block;left: 0;position: absolute;top: 0}
+.jPicker .Map .Map1, .jPicker .Map .Map2, .jPicker .Map .Map3 {	height: 2596px;	width: 256px}
+.jPicker .Bar .Map1, .jPicker .Bar .Map2, .jPicker .Bar .Map3, .jPicker .Bar .Map4 {height: 3896px;	width: 20px}
+.jPicker .Bar .Map5, .jPicker .Bar .Map6 {height: 256px;	width: 20px}
+.jPicker .Map .Map1, .jPicker .Map .Map2, .jPicker .Bar .Map6 {	background-repeat: no-repeat}
+.jPicker .Map .Map3, .jPicker .Bar .Map5 {background-repeat: repeat}
+.jPicker .Bar .Map1, .jPicker .Bar .Map2, .jPicker .Bar .Map3, .jPicker .Bar .Map4 {background-repeat: repeat-x}
+.jPicker .Map .Arrow {display: block;position: absolute; width:15px; height:15px;}
+.jPicker .Bar .Arrow {	display: block;left: 0;position: absolute; width:20px; height:7px;}
+.jPicker .Preview {	font-size: 9px;text-align: center}
+.jPicker .Preview div {	border: 2px solid #eee;	margin: 0 auto;padding: 0;width: 62px;height: 62px;}
+.jPicker .Preview div span {border: 1px solid #000;display: block;height: 30px;margin: 0 auto;padding: 0;width: 60px}
+.jPicker .Preview .Active {border-bottom-width: 0}
+.jPicker .Preview .Current {border-top-width: 0;cursor: pointer;}
+.jPicker .Button {text-align: center; width: 115px}
+.jPicker .Button input {width: 100px}
+.jPicker .Button .Ok {margin: 12px 0 5px 0}
+.jPicker td.Radio {	margin: 0;padding: 0;width: 60px; text-align:center;}
+.jPicker td.Radio input {margin: 0 5px 0 0; padding: 0}
+.jPicker td label { font-size:12px;	display:inline-block}
+.jPicker td.Text {font-size: 12px!important; height: 22px; margin: 0;	padding: 0;	text-align: left;width: 120px;}
+.jPicker td.TextCustom {font-size: 12px!important; height: 22px; margin: 0;	padding: 0;	text-align: left;width: 120px;}
+.jPicker tr.Hex td.Text {width: 100px}
+.jPicker td.Text input {background-color: #fff;border: 1px solid #aaa;height: 19px;margin: 0 0 0 0px;text-align: left;width: 30px; border-radius:0px;}
+.jPicker td[class="Text"] input {height: 18px; font-size:10px;padding: 0px 2px;}
+.jPicker td.TextCustom input {background-color: #fff;border: 1px solid #aaa;height: 19px;margin: 0 0 0 0px;text-align: left;width: 30px; border-radius:0px;}
+.jPicker td[class="TextCustom"] input {height: 18px; font-size:10px;padding: 0px 2px;}
+.jPicker tr.Hex td.Text input.Hex 	{width: 45px; margin-right:2px; font-size:11px;}
+.jPicker tr.Hex td.Text input.AHex 	{width: 20px}
+.jPicker .Grid {text-align: center;width: 114px;background:#EFEFEF !important; margin-top:29px;}
+.jPicker .Grid span.QuickColor {border: 1px inset #aaa;cursor: pointer;display: inline-block;height:30px;line-height: 15px;margin: 0;padding: 0;width: 30px}
+.jPicker .Grid span[class="QuickColor"] {width: 30px}
+.jPicker hr { margin:2px 0;}
+
+.jPicker .DesignColor {background: #ffffff url("../images/c_picker.png") no-repeat scroll 7px 10px;box-shadow: 2px 1px 3px #cccccc;width: auto !important;margin: 0 auto !important;padding: 7px 5px 5px 27px;}

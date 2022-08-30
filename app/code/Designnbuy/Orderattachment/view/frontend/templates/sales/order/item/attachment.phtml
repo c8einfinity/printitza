@@ -1,0 +1,23 @@
+
+<?php $attachments = $block->getAttachments(); ?>
+<div class="file-uploader">
+    <?php if(isset($attachments) && isset($attachments['fileName'])): ?>
+        <?php $cnt = 0; foreach ($attachments['fileName'] as $name):?>
+            <div class="file-uploader-summary">
+
+                <div class="file-uploader-preview">
+                    <a target="_blank"  href="<?php echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]?>">
+                        <img class="preview-image" src="<?php echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]?>">
+                    </a>
+                </div>
+                <div class="file-uploader-filename">
+                    <a target="_blank" href="<?php echo $block->getImageUrlPath().$name?>"><?php echo $name; ?>
+                    </a>
+                </div>
+
+
+            </div>
+            <?php $cnt++; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>

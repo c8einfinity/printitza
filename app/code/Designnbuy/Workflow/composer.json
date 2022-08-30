@@ -1,0 +1,25 @@
+{
+    "name": "designnbuy/module-workflow",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "Ajay Makwana",
+            "email": "ajaymakwana.mail@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Designnbuy\\Workflow\\": ""
+        }
+    }
+}

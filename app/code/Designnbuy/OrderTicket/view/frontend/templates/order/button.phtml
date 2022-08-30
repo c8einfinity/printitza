@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Designnbuy\OrderTicket\Block\Order\Button */
+?>
+<?php if ($this->helper('Designnbuy\OrderTicket\Helper\Data')->canCreateOrderTicket($block->getOrder())): ?>
+    <a href="<?php /* @escapeNotVerified */ echo $this->helper('Designnbuy\OrderTicket\Helper\Data')->getReturnCreateUrl($block->getOrder()) ?>" class="action return"><span><?php /* @escapeNotVerified */ echo __('Order Ticket') ?></span></a>
+<?php endif;?>

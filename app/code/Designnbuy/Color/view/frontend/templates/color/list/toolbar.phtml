@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Color color list toolbar template
+ *
+ * @var $block \Designnbuy\Color\Block\Color\ColorList\Toolbar
+ */
+?>
+<?php if ($block->getCollection()->getSize()) { ?>
+	<?php $woj = $block->getWidgetOptionsJson() ?>
+    <div class="toolbar toolbar-color-colors" <?php if ($woj) echo 'data-mage-init="'.$woj.'"' ?>>
+        <?php echo $block->getPagerHtml() ?>
+    </div>
+<?php } ?>

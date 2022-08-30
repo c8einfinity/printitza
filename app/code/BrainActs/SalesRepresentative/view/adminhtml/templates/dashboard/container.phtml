@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Container $block */
+?>
+<div class="salesrep-dashboard" data-mage-init='{"salesrepDashboard":{}}'>
+    <div class="row-section">
+        <?php echo $block->getChildHtml('salesrep.dashboard.commission') ?>
+        <div class="my-sales">
+            <h5><?php echo $block->escapeHtml('My Commissions') ?></h5>
+            <?php echo $block->getChildHtml('salesrep.dashboard.graph') ?>
+        </div>
+    </div>
+
+    <div class="withdrawal">
+        <h4><?php echo $block->escapeHtml('My withdrawals') ?></h4>
+        <?php echo $block->getChildHtml('salesrep.dashboard.withdrawals'); ?>
+    </div>
+
+    <div class="withdrawal">
+        <h4><?php echo $block->escapeHtml('My Products') ?></h4>
+        <div class="salesrep-withrawals-container">
+            <?php echo $block->getChildHtml('salesrep.dashboard.product')?>
+        </div>
+    </div>
+
+    <div class="withdrawal">
+        <h4><?php echo $block->escapeHtml('My Customers') ?></h4>
+        <div class="salesrep-withrawals-container">
+            <?php echo $block->getChildHtml('salesrep.dashboard.customer')?>
+        </div>
+    </div>
+
+</div>
+
+
+

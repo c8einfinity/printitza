@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Commission $block */
+?>
+
+<div class="commissions">
+    <form id="request-withdrawal" action="<?php echo $block->getRequestUrl()?>">
+    <h5><?php echo $block->escapeHtml('Commissions') ?></h5>
+    <h3><?php echo $block->getAvailableAmount(); ?></h3>
+    <h4>Available commissions</h4>
+
+    <div class="row">
+        <div class="left">Available Commissions:</div>
+        <div class="right"><?php echo $block->getAvailableAmount(); ?></div>
+    </div>
+    <div class="row">
+        <div class="left">Pending Commissions:</div>
+        <div class="right"><?php echo $block->getPendingAmount(); ?></div>
+    </div>
+    <div class="row">
+        <div class="left">Lifetime Commissions:</div>
+        <div class="right"><?php echo $block->getLifeTimeAmount() ?></div>
+    </div>
+    <?php if ($block->config->isWithdrawalActive() && $block->checkPermission()): ?>
+        <div class="row amount-withdrawal">
+            <div class="left">Amount: <input type="text" name="amount" id="amount" value="<?php echo $block->getAvailableAmount(false); ?>"/></div>
+        </div>
+        <div class="row btn-actions">
+            <button class="btn-withdrawal">Request a withdrawal</button>
+        </div>
+    <?php endif; ?>
+    </form>
+</div>

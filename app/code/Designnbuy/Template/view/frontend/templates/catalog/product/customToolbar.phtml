@@ -1,0 +1,47 @@
+<div class="toolbar toolbar-products toolbar-browse-template">
+<form id="toolbar-form" >
+        <div class="search">
+            <input type="search" name="template_search" id="template_search" placeholder="Search" />
+        </div>
+    <?php if ($block->getSizeOption()) { ?>
+    <?php
+    $size = $block->getSizeOption();
+    $request = $this->getRequest()->getParams();
+   // echo "<pre>"; print_r ($request['options'][$size['id']]); exit;
+    //echo "<pre>"; print_r($this->getRequest()->getParams()); exit;
+    
+    ?>
+        <div class="size">
+            <select aria-label="Size" class="sorter-options" id="template-size" data-size="<?php echo $size['id']; ?>">
+            <option value=""><?php echo __('Size'); ?></option>
+            <?php foreach ($size['size'] as $key => $dt) { ?>
+                <?php if(isset($dt[0]) && isset($dt[1])){ ?>
+                <option value="<?php echo $key; ?>" width="<?php echo $dt[0]; ?>" height="<?php echo $dt[1]; ?>" <?php if($request['options'][$size['id']]== $key){ echo "selected"; } ?> ><?php echo $dt[0].'X'.$dt[1]; ?>
+                </option>
+                <?php } ?>
+            <?php } ?>
+            </select>
+            <?php //echo "<pre>"; print_r($key);  exit;?>
+        </div>
+    <?php } ?>
+    <div class="search-btn-action">
+        <button id="search-template" class="action search" data-mage-init='{ "Designnbuy_Template/js/toolbar": { "size": "<?php echo $block->getTemplateCollection()->getSize(); ?>", "pagelimit" : "<?php echo $block->fixPageSize(); ?>", "baseurl" : "<?php echo $block->getBaseUrl(); ?>", "product" : "<?php echo $block->getRequest()->getParam('product'); ?>" } }'><span><?php echo __('Search'); ?></span></button>
+    </div>
+</form>
+</div>
+
+<script>
+require(['jquery', 'jquery/ui'], function($){ 
+    jQuery( window ).load(function() {
+        setTimeout(function(){
+          jQuery("#search-template").click();
+        }, 500);
+});
+    
+ });
+
+</script>
+
+
+
+

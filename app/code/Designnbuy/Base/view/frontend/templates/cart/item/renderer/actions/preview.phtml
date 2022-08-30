@@ -1,0 +1,123 @@
+
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product media data template
+ *
+ * @var $block \Designnbuy\Base\Block\Cart\Item\Renderer\Actions\Preview
+ */
+
+?>
+
+
+<?php $images = $block->getImages(); ?>
+<?php if(isset($images) && count($images) > 0): ?>
+
+    <a href="#" class="action action-preview preview-action<?php echo $block->getItemId()?>" title="<?php /* @escapeNotVerified */ echo __('Preview') ?>"><span><?php /* @escapeNotVerified */ echo __('Preview') ?></span></a>
+
+<div class="popup-mpdal<?php echo $block->getItemId()?>" style="display:none;">
+    <div class="product media">
+    <div class="gallery-placeholder _block-content-loading" data-gallery-role="gallery-placeholder<?php echo $block->getItemId()?>">
+        <div data-role="loader" class="loading-mask">
+            <div class="loader">
+                <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                     alt="<?php /* @escapeNotVerified */ echo __('Loading...') ?>">
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: $.mage.__('Preview'),
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $(".popup-mpdal<?php echo $block->getItemId()?>"));
+            $(".preview-action<?php echo $block->getItemId()?>").on('click',function(){
+                $(".popup-mpdal<?php echo $block->getItemId()?>").modal("openModal");
+            });
+
+        }
+    );
+</script>
+
+
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder<?php echo $block->getItemId()?>]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": <?php /* @escapeNotVerified */ echo $block->getMagnifier(); ?>,
+                "data": <?php /* @escapeNotVerified */ echo $block->getImagesJson(); ?>,
+                "options": {
+                    "nav": true,
+                    "loop": false,
+                    "keyboard": false,
+                    "arrows": true,
+                    "allowfullscreen": false,
+                    "showCaption": true,
+                    "width": 50,
+                    "thumbwidth": 50,
+                    "thumbheight": 50,
+                    "height": 50,
+                    "transitionduration": 1000,
+                    "transition": "slide",
+                    "navarrows": true,
+                    "navtype": "slides",
+                    "navdir": "horizontal"
+                },
+                "fullscreen": {
+                    "nav": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/nav"); ?>",
+                    <?php if ($block->getVar("gallery/fullscreen/loop")): ?>
+                        "loop": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/loop"); ?>,
+                    <?php endif; ?>
+                    "navdir": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navdir"); ?>",
+                    <?php if ($block->getVar("gallery/transition/navarrows")): ?>
+                        "navarrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navarrows"); ?>,
+                    <?php endif; ?>
+                    "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navtype"); ?>",
+                    <?php if ($block->getVar("gallery/fullscreen/arrows")): ?>
+                        "arrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/arrows"); ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/fullscreen/caption")): ?>
+                        "showCaption": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/caption"); ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/fullscreen/transition/duration")): ?>
+                        "transitionduration": <?php /* @escapeNotVerified */  //echo $block->getVar("gallery/fullscreen/transition/duration"); ?>,
+                    <?php endif; ?>
+                    "transition": "<?php /* @escapeNotVerified */  //echo $block->getVar("gallery/fullscreen/transition/effect"); ?>"
+                },
+                 "breakpoints": <?php /* @escapeNotVerified */ echo $block->getBreakpoints(); ?>
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+

@@ -1,0 +1,69 @@
+ajay
+
+<div id="grid_tab" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+    <ul class="tabs-horiz ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+        <li class="ui-state-default ui-corner-top " role="tab" tabindex="0" aria-controls="grid_tab_ordered_products_content" aria-labelledby="grid_tab_ordered_products" aria-selected="true">
+            <a href="#grid_tab_ordered_products_content" id="grid_tab_ordered_products" title="Bestsellers" class="ui-tabs-anchor" data-tab-type="" role="presentation" tabindex="-1">
+            <span>
+                <span class="changed" title="The information in this tab has been changed."></span>
+                <span class="error" title="This tab contains invalid data. Please resolve this before saving."></span>
+                <span class="loader" title="Loading..."></span>
+                Bestsellers            </span>
+            </a>
+
+        </li>
+        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="Most_Viewed_Products" aria-labelledby="grid_tab_reviewed_products" aria-selected="false">
+            <a href="#Most_Viewed_Products" id="grid_tab_reviewed_products" title="Most Viewed Products" class="ui-tabs-anchor" data-tab-type="" role="presentation" tabindex="-1">
+            <span>
+                <span class="changed" title="The information in this tab has been changed."></span>
+                <span class="error" title="This tab contains invalid data. Please resolve this before saving."></span>
+                <span class="loader" title="Loading..."></span>
+                Most Viewed Products            </span>
+            </a>
+
+        </li>
+        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="New_Customers" aria-labelledby="grid_tab_new_customers" aria-selected="false">
+            <a href="#New_Customers" id="grid_tab_new_customers" title="New Customers" class="ui-tabs-anchor" data-tab-type="" role="presentation" tabindex="-1">
+            <span>
+                <span class="changed" title="The information in this tab has been changed."></span>
+                <span class="error" title="This tab contains invalid data. Please resolve this before saving."></span>
+                <span class="loader" title="Loading..."></span>
+                New Customers            </span>
+            </a>
+
+        </li>
+        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="Customers" aria-labelledby="grid_tab_customers" aria-selected="false">
+            <a href="#Customers" id="grid_tab_customers" title="Customers" class="ui-tabs-anchor" data-tab-type="" role="presentation" tabindex="-1">
+            <span>
+                <span class="changed" title="The information in this tab has been changed."></span>
+                <span class="error" title="This tab contains invalid data. Please resolve this before saving."></span>
+                <span class="loader" title="Loading..."></span>
+                Customers            </span>
+            </a>
+        </li>
+    </ul>
+    <div id="grid_tab_ordered_products_content"><p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p></div>
+    <div id="Most_Viewed_Products"><p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p></div>
+    <div id="New_Customers"><p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p></div>
+    <div id="Customers"><p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p></div>
+</div>
+
+<script>
+    require(['jquery', 'uiRegistry', 'underscore'], function ($, registry, _) {
+        var  provider = registry.get('product_form.product_form_data_source'),
+            data = provider.data;
+        console.log(provider.product);
+        console.log(data);
+
+    });
+    require(["jquery","mage/backend/tabs", 'uiRegistry' ], function($, uiRegistry){
+
+
+        $(function(uiRegistry) {
+            var  provider = uiRegistry.get('product_form.product_form_data_source'),
+                data = provider.data;
+            console.log(data);
+            $('#grid_tab').tabs();
+        });
+    });
+</script>

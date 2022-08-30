@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<body>
+    <!--<referenceBlock name="product.info.form.options">
+        <block class="Magento\Catalog\Block\Product\View"
+               name="product.view.personalise"
+               template="Designnbuy_Merchandise::catalog/product/view/personalise.phtml"
+               after="product.info.options.wrapper.bottom"></block>
+    </referenceBlock>-->
+	<!--
+	name="product.info.options.wrapper" as="product_options_wrapper"
+	-->
+	<referenceContainer name="product.info.main">
+		<block class="Magento\Framework\View\Element\Template" name="pretemplate.quickedit" before="product.price.tier"/>
+	</referenceContainer>
+
+    <!--<referenceContainer name="product.info.form.content">
+        <block class="Magento\Catalog\Block\Product\View"
+               name="product.view.personalise1"
+               template="Designnbuy_Merchandise::catalog/product/view/personalise.phtml"
+               after="product.info.addtocart"></block>
+    </referenceContainer>-->
+    <referenceBlock name="product.info.addtocart.additional">
+        <block class="Magento\Catalog\Block\Product\View"
+               name="product.view.personalise" as="personalise" after="product.info.addtoquote2"
+               template="Designnbuy_Merchandise::catalog/product/view/personalise.phtml"/>
+    </referenceBlock>
+	<referenceBlock name="product.info.addtocart">
+		<block class="Magento\Catalog\Block\Product\View"
+			   name="product.view.personalise" as="personalise" after="product.info.addtoquote2"
+			   template="Designnbuy_Merchandise::catalog/product/view/personalise.phtml"/>
+	</referenceBlock>
+</body>
+</page>

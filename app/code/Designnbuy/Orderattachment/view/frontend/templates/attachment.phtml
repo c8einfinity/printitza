@@ -1,0 +1,50 @@
+<?php  if($block->getEnable() == 1): ?>
+    <?php $uploadedFiles = $block->getAttachments(); ?>
+    <?php $maxFileSize = $block->getMaxFileSize(); ?>
+    <?php $allowedExtensions = $block->getAllowedExtensions(); ?>
+
+    <div class="heading-box"><h4><?php echo __('Upload'); ?></h4></div>
+    <div class="product-options">
+        <div class="box_upload">
+            <h4 class="prodtheading"><?php echo __('Please choose files from your computer') ?></h4>
+            <span><?php echo __('Allowed Extensions'); ?>:</span><span class="allowed_extension"> <?php echo str_replace(" ",", ",strtoupper($allowedExtensions)); ?></span>
+        </div>
+        <div class="upload_image_block">
+            <div class="field admin__field">
+                <label class="admin__field-label"
+                    for="file"><?php /* @escapeNotVerified */ //echo __('Upload File') ?></label>
+                <div class="upload-wrapper" data-bind="scope: 'uploader'"  data-mage-init='{
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "uploader": {
+                                "value" : <?php echo $uploadedFiles; ?>,
+                                "formElement" : "fileUploader",
+                                "maxFileSize": "<?php echo $maxFileSize ?>",
+                                "allowedExtensions": "<?php echo $allowedExtensions ?>",
+                                "componentType" : "fileUploader",
+                                "component": "Designnbuy_Orderattachment/js/form/element/file-uploader",
+                                "template": "Designnbuy_Orderattachment/components/file-uploader",
+                                "inputName": "attachment",
+                                "name": "attachment",
+                                "fileInputName": "attachment",
+                                "isMultipleFiles": true,
+                                "uploaderConfig": {
+                                        "url": "<?php echo $block->getUrl('orderattachment/index/upload'); ?>"
+                                }
+                            }
+                        }
+                        }
+                    }
+                '>
+                    <div class="meter" style="display:none;">
+                        <label>Uploading... 1 of 1 files</label>
+                        <span orig-width="0" style="width: 0%"></span>
+                    </div>
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <p id="jobthumb_preview"></p>
+    </div>
+
+<?php endif; ?>

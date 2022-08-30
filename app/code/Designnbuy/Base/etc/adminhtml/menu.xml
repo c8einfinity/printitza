@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Base::DNB" title="Design N Buy" module="Designnbuy_Base" sortOrder="10" dependsOnModule="Designnbuy_Base"  resource="Designnbuy_Base::DNB"/>
+        <add id="Designnbuy_Base::settings" title="Global Settings" parent="Designnbuy_Base::DNB" module="Designnbuy_Base" sortOrder="10" resource="Designnbuy_Base::settings"/>
+        <add id="Designnbuy_Base::general" title="General Settings" parent="Designnbuy_Base::settings" action="adminhtml/system_config/edit/section/base/" module="Designnbuy_Base" sortOrder="200" resource="Designnbuy_Base::general"/>
+        <add id="Designnbuy_Base::network" title="Network" module="Designnbuy_Base" sortOrder="10" dependsOnModule="Designnbuy_Base"  resource="Designnbuy_Base::network"/>
+        <update id="Magento_Backend::dashboard" title="Dashboard" translate="title" module="Magento_Backend" sortOrder="1" action="adminhtml/dashboard" resource="Magento_Backend::dashboard"/>
+        <update id="Magento_Catalog::catalog" title="Catalog" translate="title" module="Magento_Catalog" sortOrder="11" dependsOnModule="Magento_Catalog" resource="Magento_Catalog::catalog"/>
+        <update id="Magento_Customer::customer" title="Customers" translate="title" module="Magento_Customer" sortOrder="11" resource="Magento_Customer::customer"/>
+        <update id="Magento_Sales::sales" title="Sales" translate="title" module="Magento_Sales" sortOrder="11" dependsOnModule="Magento_Sales" resource="Magento_Sales::sales"/>
+        <update id="Magento_Backend::content" title="Content" translate="title" module="Magento_Backend" sortOrder="11" resource="Magento_Backend::content"/>
+        <update id="Magento_Backend::stores" title="Stores" translate="title" module="Magento_Backend" sortOrder="11" resource="Magento_Backend::stores"/>
+    </menu>
+</config>

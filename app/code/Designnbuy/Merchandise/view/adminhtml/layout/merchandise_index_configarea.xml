@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root">
+        <head>
+            <css src="jquery/fileUploader/css/jquery.fileupload-ui.css"/>
+            <!--<link src="Designnbuy_ConfigArea::js/components/tab.js"/>-->
+        </head>
+        <block class="Designnbuy\Merchandise\Block\Adminhtml\Catalog\Product\Edit\Tab\Configarea" template="catalog/product/edit/tab/configarea.phtml" name="product_configarea">
+
+        </block>
+    </container>
+</layout>

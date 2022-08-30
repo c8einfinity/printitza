@@ -1,0 +1,14 @@
+<?php
+
+$buttonTitle = "Upload Photos";
+?>
+<div class="actions">
+    <button type="submit"
+            title="<?= /* @escapeNotVerified */ $buttonTitle ?>"
+            class=""
+            id="product-album-button" 
+			data-mage-init='{ "Designnbuy_CustomerPhotoAlbum/js/customize": { "action": "<?php echo $block->getBaseUrl().'photoalbum/album/create'; ?>" } }'
+             >
+        <span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+    </button>
+</div>

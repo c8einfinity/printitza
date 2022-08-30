@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+
+	<type name="Magento\Sales\Block\Adminhtml\Items\AbstractItems" >
+		<plugin name="output" type="Designnbuy\Base\Plugin\Sales\Order\Item\Output" sortOrder="12"/>
+		<plugin name="image" type="Designnbuy\Base\Plugin\Sales\Order\Item\Image" sortOrder="2"/>
+	</type>
+	<type name="Magento\Catalog\Block\Adminhtml\Product\Attribute\Set\Main">
+        <plugin name="RemoveAttributeDeleteButton" type="Designnbuy\Base\Plugin\RemoveAttributeDelete" sortOrder="2"/>
+    </type>
+	<type name="Magento\Catalog\Block\Adminhtml\Product\Attribute\Set\Main\Formset">
+        <plugin name="DisableAttributeSetName" type="Designnbuy\Base\Plugin\Product\Attribute\Set\Main\Formset" />
+    </type>
+</config>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Designnbuy_Base::DNB">
+                    <resource id="Designnbuy_ConfigArea::elements" title="Design Areas" sortOrder="10">
+                        <resource id="Designnbuy_ConfigArea::configarea" title="Design Areas" sortOrder="10" />
+                        <resource id="Designnbuy_ConfigArea::category" title="Categories" sortOrder="20" />
+                        <resource id="Designnbuy_ConfigArea::import" title="Import" sortOrder="30" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Designnbuy_ConfigArea::config_configarea" title="ConfigArea Section" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

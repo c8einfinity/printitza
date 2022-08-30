@@ -1,0 +1,36 @@
+<?php $collection = $block->getCollection(); ?>
+<h4><?php echo __('Design Reports'); ?></h4>
+<?php if (count($collection) == 0): ?>
+    	<div class="message info empty"><div><?php echo __('We can\'t find report matching the selection.') ?></div></div>
+<?php else: ?>
+	<div class="table-wrapper designer-list-wrapper">		
+		<table class="items data table">
+			<thead>
+			<tr>
+				<th class="col" scope="col"><span><?php echo __('Order Id'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Design Name'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Created At'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Qty'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Commission Earned'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Status'); ?></span></th>
+			</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($collection as $order): ?>
+					<tr>
+						<td data-th="Order #" class="col"><span><?php echo $order->getOrderId(); ?></span></td>
+						<td data-th="Design Name" class="col"><span><?php echo $order->getItemName(); ?></span></td>
+						<td data-th="Created At" class="col"><span><?php echo $order->getCreatedAt(); ?></span></td>
+						<td data-th="Qty" class="col"><span><?php echo $order->getItemQty(); ?></span></td>
+						<td data-th="Commission Earned" class="col"><span><?php echo $block->setFormatedAmount($order->getCommissionAmount()); ?></span></td>
+						<td data-th="Status" class="col"><span><?php echo $order->getStatus(); ?></span></td>
+		            	
+					</tr>
+		            <?php endforeach; ?>
+			</tbody>
+		</table>
+    </div>
+    <?php if($block->getPagerHtml()): ?>
+	    	<div class="designer-commission-design-report-toolbar toolbar"><?php echo $block->getPagerHtml(); ?></div>
+	<?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_PrintingMethod::elements" title="Printing Methods" module="Designnbuy_PrintingMethod" parent="Designnbuy_Base::DNB" sortOrder="70"  resource="Designnbuy_PrintingMethod::elements"/>
+        <add id="Designnbuy_PrintingMethod::printingmethod" title="Printing Methods" module="Designnbuy_PrintingMethod" parent="Designnbuy_PrintingMethod::elements" sortOrder="10" action="printingmethod/printingmethod/" resource="Designnbuy_PrintingMethod::printingmethod"/>
+        <add id="Designnbuy_PrintingMethod::colorcounter" title="Color Counter" module="Designnbuy_PrintingMethod" parent="Designnbuy_PrintingMethod::elements" sortOrder="20" action="printingmethod/colorcounter/" resource="Designnbuy_PrintingMethod::colorcounter"/>
+        <add id="Designnbuy_PrintingMethod::squarearea" title="Square Area" module="Designnbuy_PrintingMethod" parent="Designnbuy_PrintingMethod::elements" sortOrder="20" action="printingmethod/squarearea/" resource="Designnbuy_PrintingMethod::squarearea"/>
+        <add id="Designnbuy_PrintingMethod::quantityrange" title="Quantity Range" module="Designnbuy_PrintingMethod" parent="Designnbuy_PrintingMethod::elements" sortOrder="20" action="printingmethod/quantityrange/" resource="Designnbuy_PrintingMethod::quantityrange"/>
+        <!--<add id="Designnbuy_PrintingMethod::config_printingmethod" title="Configuration" module="Designnbuy_PrintingMethod" parent="Designnbuy_PrintingMethod::elements" sortOrder="40" action="adminhtml/system_config/edit/section/dnbprintingmethod/" resource="Designnbuy_PrintingMethod::config_printingmethod"/>-->
+
+    </menu>
+</config>

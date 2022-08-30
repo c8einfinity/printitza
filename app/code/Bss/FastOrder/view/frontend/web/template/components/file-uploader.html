@@ -1,0 +1,33 @@
+<div class="admin__field-control">
+    <div class="file-uploader" data-role="drop-zone" css="_loading: isLoading">
+        <div class="file-uploader-area" data-role="drop-area" drop-zone="drop-area">
+            <input type="file" afterRender="onElementRender" attr="id: uid, name: fileInputName, multiple: true"/>
+            <label class="file-uploader-button action  primary" attr="for: uid" translate="'Upload'"/>
+            <span class="file-uploader-spinner" />
+            <div class="file-uploader-drop-area"><b><span data-bind="i18n: 'Drag and Drop Here'" translate="'Drag and Drop Here'"/></b></div>
+        </div>
+        <each args="data: value, as: '$file'">
+            <div class="file-uploader-summary">
+                <div class="file-uploader-preview">
+                    <a attr="href: $file.file_url" target="_blank">
+                        <img attr="src: $file.preview_url" class="preview-image" tabindex="1"  />
+                    </a>
+
+                    <div class="">
+                        <button
+                                type="button"
+                                class="action-remove"
+                                data-role="delete-button"
+                                attr="title: $t('Remove')"
+                                click="$parent.removeFile.bind($parent, $file)">
+                            <span translate="'Remove'"/>
+                        </button>
+                    </div>
+                </div>
+                <div class="file-uploader-filename" ><a attr="href: $file.file_url" target="_blank" text="$file.finalName"></a></div>
+                <input attr="name: $file.attachment_filename" type="hidden" file="fileName" data-bind="value: $file.finalName"/>
+               <input attr="name: $file.attachment_fileUrl" type="hidden" file="fileUrl" data-bind="value: $file.iconName"/>
+            </div>
+        </each>
+    </div>
+</div>

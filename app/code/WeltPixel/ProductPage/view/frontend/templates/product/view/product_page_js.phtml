@@ -1,0 +1,14 @@
+<?php $_helper = $this->helper('WeltPixel\ProductPage\Helper\Data'); ?>
+<?php $_mobileHelper = $this->helper('WeltPixel\MobileDetect\Helper\Data'); ?>
+<?php $positionProductInfo = $_helper->getPositionProductInfo($_helper->getStoreId()) ?>
+<?php $isMobile = $_mobileHelper->isMobile() ?>
+<div id="swipeOff"></div>
+<script>
+require(['jquery', 'productPage', 'mage/mage', 'mage/ie-class-fixer', 'mage/gallery/gallery'],
+	function ($) {
+        window.positionProductInfo = '<?php echo $positionProductInfo ?>';
+        window.isMobile = '<?php echo $isMobile ?>';
+		productPage.load();
+	}
+);
+</script>

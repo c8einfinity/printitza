@@ -1,0 +1,104 @@
+#bss-fastorder-form {
+	table {
+		td{
+			&.bss-fastorder-row-edit {
+				button.btn-edit{
+					background: none;
+					border: none;
+					&:before{
+						font-size: 18px;
+						line-height: 20px;
+						color: #000;
+						font-family: 'luma-icons';
+						overflow: hidden;
+						content: '\e601';
+					}
+				}
+			}
+			&.bss-fastorder-row-action{
+				button.btn-ok{
+					&:extend(#bss-fastorder-form table td.bss-fastorder-row-edit button.btn-edit);
+					&:before{
+						font-size: 18px;
+						line-height: 20px;
+						color: #000;
+						font-family: 'luma-icons';
+						overflow: hidden;
+						content: '\e603';
+					}
+				}
+			}
+		}
+	}
+	.add-btn{
+		text-align: right;
+		padding: 10px 0;
+	}
+    .bss-fastorder-autocomplete {
+        @media only screen and (max-width: 767px){
+            border: 1px solid #C2C2C2;
+        }
+        ul{
+            @media only screen and (max-width: 767px){
+                border:none;
+            }
+        }
+    }	
+}
+@media only screen and (max-width:767px){
+    #bss-fastorder-form tr > th{
+		display: none;
+	}
+	#bss-fastorder-form tr.bss-fastorder-row{
+        display: block;
+    }
+    #bss-fastorder-form tbody tr.bss-fastorder-row{
+    	border: 1px solid #dddddd;
+    	margin-bottom: 12px;
+    }
+    #bss-fastorder-form table td.bss-fastorder-row-name{
+    	text-align: center;
+    }
+	#bss-fastorder-form table td{
+		border-bottom: none;
+		display: block;
+		padding: 5px 10px;
+	}
+	#bss-fastorder-form table td:before{
+		padding-right: 10px;
+		content: attr(data-th) ': ';
+		display: inline-block;
+		color: #000000;
+		font-weight: 700;
+		vertical-align: middle;
+	}
+	#bss-fastorder-form table .bss-fastorder-row-ref .bss-height-tr{
+		margin-bottom: 10px;
+	}
+	#bss-fastorder-form table .bss-fastorder-autocomplete{
+		position: static;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	#bss-fastorder-form table .bss-fastorder-autocomplete + .input-box{
+		display: inline-block;
+    	vertical-align: middle;
+	}
+	#bss-fastorder-form .bss-fastorder-row-image img{
+		display: inline-block;
+    	vertical-align: middle;
+	}
+	#bss-fastorder-form .table-responsive{
+		border: none;
+	}
+}
+@media only screen and (max-width: 480px){
+	#bss-fastorder-form table td.bss-fastorder-row-name{
+		text-align: left;
+	}
+}
+@media only screen and (max-width:479px){
+	#bss-fastorder-form table .bss-fastorder-autocomplete{
+		max-width: 182px;
+	}
+}

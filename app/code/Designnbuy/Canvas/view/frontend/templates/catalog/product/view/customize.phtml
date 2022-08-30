@@ -1,0 +1,196 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+    $currencyCode = $storeManager->getStore()->getCurrentCurrencyCode(); 
+    $currency = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($currencyCode);
+?>
+
+<?php if ($_product->isSaleable()
+    && $_product->getIsCustomizable()
+    && $this->getRequest()->getFullActionName() != 'catalog_category_view' && $this->getRequest()->getFullActionName() != 'checkout_cart_configure' && $this->getRequest()->getFullActionName() != 'weltpixel_quickview_catalog_product_view'
+    && $_product->getAttributeSetId() == $this->helper('Designnbuy\Base\Helper\Data')->getCustomCanvasAttributeSetId()){ ?>
+	
+
+            <?php if($this->helper('Designnbuy\Canvas\Helper\Data')->isFullDesignerEnable($_product)): ?>
+
+						<?php if($this->helper('Designnbuy\Canvas\Helper\Data')->isFullDesignerEnable($_product)): ?>
+							<?php $buttonTitle = $this->helper('Designnbuy\Base\Helper\Data')->getPersonolizeButton(); ?>
+							<button type="submit"
+									title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+									id="customize"
+									class="personaliseit action tocart primary" data-mage-init='{
+                                            "Designnbuy_Canvas/js/customize": {
+                                                "action": "<?php echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasPageUrl($_product)) ?>"
+                                            }
+                                        }'>
+								<span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+							</button>
+						<?php endif; ?>
+
+            <?php endif; ?>
+
+
+
+<style type="text/css">
+	.product-options-bottom .box-tocart {
+		clear: both;
+	}
+	.product-actions-info-box.box-3 .product-options-bottom .box-tocart .fieldset .subtotal label.label {
+		margin-right: 5px;
+		margin-top: 0;
+		font-weight: 600;
+		font-size: 25px;
+	}
+	.product-actions-info-box.box-3 .product-options-bottom .box-tocart .fieldset .subtotal span {
+		margin-right: 5px;
+		margin-top: 0;
+		font-weight: 600;
+		font-size: 25px;
+		float : right;
+	}
+	.product-actions-info-box.box-3 .product-options-bottom .box-tocart .fieldset .subtotal {
+		padding-bottom: 10px;
+	}
+	.product-actions-info-box.box-3 #qty {
+		width: 82px;
+	}
+	.product-actions-info-box.box-3 .product-info-price .label:after {
+		content: "Unit Price";
+		font-weight: 600;
+		font-size: 1.6rem;
+	}
+	.product-actions-info-box.box-3 .product-info-price .label span {
+		display: none;
+	}
+	.product-actions-info-box .product-info-price .price-box .price {
+		font-size: 21px !important;
+	}
+	/*.theme-pearl.catalog-product-view .box-tocart .actions{margin: 0 0 20px !important;}*/
+</style>
+<script>
+
+  	require([
+   		'jquery',
+   		'mage/mage',
+   		'mage/validation',
+   		'Magento_Catalog/js/catalog-add-to-cart'
+
+   	], function ($,mage,validation,addtocart) {
+   		'use strict';
+   		var dataForm = $('#product_addtocart_form');
+   		var ignore = null;
+   		/*dataForm.mage('validation', {
+   			ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+   		}).find('input:text').attr('autocomplete', 'off');*/
+   		dataForm.mage('validation', {ignore: ''});
+   		var buttonpressed;
+           var addToQuote = false;
+   		$('button[type=submit]').click(function() {
+  			buttonpressed = $(this).attr('id');
+  		});
+
+ 		dataForm.on("submit", function(evt){
+   			evt.preventDefault();
+   			if(dataForm.validation('isValid')){
+   				if(buttonpressed == 'personalise'){
+  					this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasScratchPageUrl($_product)) ?>';
+   					this.submit();
+   					return;
+   				}else if(buttonpressed == 'customize'){
+   					this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasPageUrl($_product)) ?>';
+  					this.submit();
+  				}else if(buttonpressed == 'product-addtoquote-button'){
+   					addToQuote = dataForm.attr('action').replace("checkout/cart/add", "quotation/cart/add");
+   					this.action = addToQuote;
+  					this.submit();
+   					return;
+   				}else {
+   					console.log('buttonpressed cu',buttonpressed);
+   					this.submit();
+ 				}
+			}
+   		})
+
+   		// dataForm.mage('validation', {
+   		// 	radioCheckboxClosest: '.nested',
+   		// 	submitHandler: function (form) {
+  		// 		alert(buttonpressed);
+   		// 	}
+  		// });
+		
+  	}); 
+
+	require([
+    	'jquery',
+    	'Magento_Catalog/js/price-utils'
+	], function ($, priceUtils) {
+		"use strict";
+		var priceFormat = <?= /* @escapeNotVerified */ $this->helper('Magento\Tax\Helper\Data')->getPriceFormat($block->getStore()) ?>; 
+		
+		var product_id = "<?php echo $_product->getId(); ?>";
+		//jQuery("span#product-price-"+product_id+".price-wrapper").bind('DOMNodeInserted', function(e) {
+		jQuery("span#product-price-"+product_id+".price-wrapper").eq(0).bind('DOMNodeInserted', function(e) {
+			console.log("updateSubTotal");
+			setTimeout(function () {
+				updateSubTotal();
+			}, 120)
+		});
+		jQuery(".product-actions-info-box.box-3 #qty").on("input", function(){
+			updateSubTotal();
+		})
+		var updateSubTotal = function (){
+			var price_span = jQuery(".product-info-price .price-box .price-wrapper");
+			
+			var price = price_span.attr("finalprice");
+			
+			var qty = parseInt(jQuery("#qty").val());
+			console.log("price");
+			console.log(price);
+			console.log(qty);
+			var subtotal = price * qty;
+
+			subtotal = priceUtils.formatPrice(subtotal, priceFormat);
+			jQuery(".product-info-price .price-box .price-wrapper").eq(1).text(subtotal);
+
+			if(jQuery(".product-actions-info-box.box-3 .box-tocart .fieldset .subtotal").length == 0){
+				jQuery(".product-actions-info-box.box-3 .box-tocart .fieldset .actions").before("<div class='subtotal'><label class='label'>Total</label><span>"+ subtotal +"</span></div>");
+			} else {
+				jQuery(".product-actions-info-box.box-3 .box-tocart .fieldset .subtotal").html("<label class='label'>Total</label><span>"+ subtotal +"</span>");
+			}
+		}
+
+	});
+
+
+
+</script>
+<?php } else if ($_product->isSaleable()
+    && $_product->getIsCustomizable()
+    && $this->getRequest()->getFullActionName() == 'checkout_cart_configure' && $_product->getAttributeSetId() == $this->helper('Designnbuy\Base\Helper\Data')->getCustomCanvasAttributeSetId()){ ?>
+	
+	<style>
+		.product-actions-info-box.box-3 .product-info-price .label:after {
+			content: "Unit Price";
+			font-weight: 600;
+			font-size: 1.6rem;
+		}
+		.product-actions-info-box.box-3 .product-info-price .label span {
+			display: none;
+		}
+		.product-actions-info-box .product-info-price .price-box .price {
+			font-size: 21px !important;
+		}
+	</style>
+<?php } ?>

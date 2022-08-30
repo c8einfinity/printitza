@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+        	<block class="Designnbuy\Commission\Block\Adminhtml\UserRedemption" name="adminuser.redemption.container" template="Designnbuy_Commission::commission/redemption/info.phtml"/>
+            <!-- <uiComponent name="commission_redemption_reseller_form"/> -->
+        </referenceContainer>
+    </body>
+</page>

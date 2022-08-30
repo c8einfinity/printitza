@@ -1,0 +1,178 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!--<preference for="Designnbuy\Workflow\Api\UserRepositoryInterface" type="Designnbuy\Workflow\Model\UserRepository"/>
+	<preference for="Designnbuy\Workflow\Api\Data\UserInterface" type="Designnbuy\Workflow\Model\User"/>
+	<preference for="Designnbuy\Workflow\Api\Data\UserSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>-->
+
+	<preference for="Designnbuy\Workflow\Api\Data\UserInterface"
+				type="Designnbuy\Workflow\Model\User"/>
+	<preference for="Designnbuy\Workflow\Api\UserRepositoryInterface"
+				type="Designnbuy\Workflow\Model\UserRepository"/>
+	<preference for="Designnbuy\Workflow\Api\Data\UserSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+	<preference for="Designnbuy\Workflow\Api\Data\GroupInterface"
+				type="Designnbuy\Workflow\Model\Group"/>
+	<preference for="Designnbuy\Workflow\Api\GroupRepositoryInterface"
+				type="Designnbuy\Workflow\Model\GroupRepository"/>
+	<preference for="Designnbuy\Workflow\Api\Data\GroupSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+	<preference for="Designnbuy\Workflow\Api\Data\StatusInterface"
+				type="Designnbuy\Workflow\Model\Status"/>
+	<preference for="Designnbuy\Workflow\Api\StatusRepositoryInterface"
+				type="Designnbuy\Workflow\Model\StatusRepository"/>
+	<preference for="Designnbuy\Workflow\Api\Data\StatusSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+	<preference for="Designnbuy\Workflow\Api\Data\RoleInterface"
+				type="Designnbuy\Workflow\Model\Role"/>
+	<preference for="Designnbuy\Workflow\Api\RoleRepositoryInterface"
+				type="Designnbuy\Workflow\Model\RoleRepository"/>
+	<preference for="Designnbuy\Workflow\Api\Data\RoleSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+
+
+	<!--<virtualType name="UserGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Workflow\Model\ResourceModel\User\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">UserGridFilterPool</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="UserGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Designnbuy\Workflow\Model\ResourceModel\User\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_user</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_workflow_user_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">user_grid_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\User</argument>
+		</arguments>
+	</virtualType>-->
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="designnbuy_user_grid_data_source" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\User\Grid\Collection</item>
+				<item name="designnbuy_role_grid_data_source" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Role\Grid\Collection</item>
+				<item name="designnbuy_group_grid_data_source" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Group\Grid\Collection</item>
+				<item name="designnbuy_status_grid_data_source" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Status\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<!--<virtualType name="Designnbuy\Workflow\Model\ResourceModel\Role\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_role</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Role\Collection</argument>
+		</arguments>
+	</virtualType>-->
+
+	<virtualType name="Designnbuy\Workflow\Model\ResourceModel\User\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_user</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_workflow_user_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_workflow_user_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\User</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="UserFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="UserDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Workflow\Model\ResourceModel\User\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">UserFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+
+	<virtualType name="Designnbuy\Workflow\Model\ResourceModel\Group\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_group</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_workflow_group_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_workflow_group_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Group</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="GroupFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="GroupDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Workflow\Model\ResourceModel\Group\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">GroupFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Designnbuy\Workflow\Model\ResourceModel\Status\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_status</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_workflow_status_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_workflow_status_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Status</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="StatusFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="StatusDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Workflow\Model\ResourceModel\Status\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">StatusFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Designnbuy\Workflow\Model\ResourceModel\Role\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_role</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_workflow_role_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_workflow_role_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Role</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="RoleFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="RoleDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Workflow\Model\ResourceModel\Role\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">RoleFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+
+	<!--<virtualType name="Designnbuy\Workflow\Model\ResourceModel\Status\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_workflow_status</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Workflow\Model\ResourceModel\Status\Collection</argument>
+		</arguments>
+	</virtualType>-->
+
+</config>

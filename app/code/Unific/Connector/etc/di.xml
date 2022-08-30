@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../vendor/magento/framework/ObjectManager/etc/config.xsd">
+
+    <virtualType name="zendHttpClient" type="Zend\Http\Client">
+        <arguments>
+            <argument name="uri" xsi:type="string">https://api2.unific.com/webhooks/magento</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Unific\Connector\Connection\Connection">
+        <arguments>
+            <argument name="httpClient" xsi:type="object">zendHttpClient</argument>
+            <argument name="requestFactory" xsi:type="object">\Zend\Http\RequestFactory</argument>
+            <argument name="headersFactory" xsi:type="object">\Zend\Http\HeadersFactory</argument>
+        </arguments>
+    </type>
+
+    <preference for="Unific\Connector\Api\HistoricalManagementInterface"
+                type="Unific\Connector\Model\Api\HistoricalManagement"/>
+    <preference for="Unific\Connector\Api\ReportManagementInterface"
+                type="Unific\Connector\Model\Api\ReportManagement"/>
+    <preference for="Unific\Connector\Api\SetupManagementInterface" type="Unific\Connector\Model\Api\SetupManagement"/>
+    <preference for="Unific\Connector\Api\QueueRepositoryInterface" type="Unific\Connector\Model\QueueRepository"/>
+
+    <preference for="Unific\Connector\Api\Data\QueueInterface" type="Unific\Connector\Model\Queue"/>
+    <preference for="Unific\Connector\Api\Data\IntegrationInterface"
+                type="Unific\Connector\Model\Api\Data\Integration"/>
+    <preference for="Unific\Connector\Api\Data\HmacInterface" type="Unific\Connector\Model\Api\Data\Hmac"/>
+    <preference for="Unific\Connector\Api\Data\TotalsInterface" type="Unific\Connector\Model\Api\Data\Totals"/>
+    <preference for="Unific\Connector\Api\Data\SetupResponseInterface"
+                type="Unific\Connector\Model\Api\Data\SetupResponse"/>
+
+    <virtualType name="unificOrderMetadata" type="Unific\Connector\Model\ResourceModel\Metadata">
+        <arguments>
+            <argument name="resourceClassName" xsi:type="string">Magento\Sales\Model\ResourceModel\Order</argument>
+            <argument name="modelClassName" xsi:type="string">Magento\Sales\Model\Order</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Unific\Connector\Plugin\OrderPlugin">
+        <arguments>
+            <argument name="metadata" xsi:type="object">unificOrderMetadata</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="unific_connector_listing_data_source" xsi:type="string">Unific\Connector\Model\ResourceModel\Log\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Unific\Connector\Model\ResourceModel\Log\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">unific_connector_audit_log</argument>
+            <argument name="eventPrefix" xsi:type="string">unific_connector_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">unific_connector_log_collection</argument>
+            <argument name="resourceModel" xsi:type="object">Unific\Connector\Model\ResourceModel\Audit\Log</argument>
+        </arguments>
+    </type>
+
+    <!-- START WEBHOOK DEFINITIONS -->
+
+    <!-- CATALOG WEBHOOKS -->
+    <type name="Magento\Catalog\Model\Category">
+        <plugin name="unific_category_webhook" type="Unific\Connector\Plugin\CategoryPlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="unific_product_webhook" type="Unific\Connector\Plugin\ProductPlugin" sortOrder="99"/>
+    </type>
+
+    <!-- SALES WEBHOOKS -->
+    <type name="Magento\Checkout\Model\Cart">
+        <plugin name="unific_customer_cart_webhook" type="Unific\Connector\Plugin\CartPlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="unific_order_api_webhook" type="Unific\Connector\Plugin\OrderPlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Sales\Model\Order\Invoice">
+        <plugin name="unific_invoice_webhook" type="Unific\Connector\Plugin\InvoicePlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Sales\Model\Order\Shipment">
+        <plugin name="unific_shipment_webhook" type="Unific\Connector\Plugin\ShipmentPlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Newsletter\Model\Subscriber">
+        <plugin name="unific_customer_newsletter_webhook" type="Unific\Connector\Plugin\SubscriberPlugin" sortOrder="99"/>
+    </type>
+
+
+    <type name="Magento\Customer\Api\CustomerRepositoryInterface">
+        <plugin name="unific_customer_update_webhook" type="Unific\Connector\Plugin\CustomerPlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Customer\Api\AddressRepositoryInterface">
+        <plugin name="unific_customer_address_update_webhook" type="Unific\Connector\Plugin\CustomerAddressPlugin" sortOrder="99" />
+    </type>
+
+    <type name="Magento\Quote\Api\GuestShipmentEstimationInterface">
+        <plugin name="unific_enrich_cart_webhook" type="Unific\Connector\Plugin\GuestCheckoutPlugin" sortOrder="99"/>
+    </type>
+    <type name="Magento\Quote\Api\ShippingMethodManagementInterface">
+        <plugin name="unific_enrich_cart_webhook" type="Unific\Connector\Plugin\CustomerCheckoutPlugin" sortOrder="99"/>
+    </type>
+
+    <type name="Magento\Checkout\Api\ShippingInformationManagementInterface">
+        <plugin name="unific_checkout_webhook" type="Unific\Connector\Plugin\CheckoutPlugin" sortOrder="99"/>
+    </type>
+
+    <!-- END WEBHOOK DEFINITIONS -->
+
+    <type name="Magento\ConfigurableProduct\Model\Product\VariationHandler">
+        <plugin name="unifixCongiruableVariationHandlerFixer" type="Unific\Connector\Plugin\ConfigurableVariationHandler" />
+    </type>
+</config>

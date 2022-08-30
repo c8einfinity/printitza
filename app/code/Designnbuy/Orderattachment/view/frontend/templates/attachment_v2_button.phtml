@@ -1,0 +1,10 @@
+<?php  
+if($block->getEnable() == 1): ?>
+<?php $url = $block->getBaseUrl().'orderattachment/index/attachment';  ?>
+    <button type="button" title="Upload" class="action primary upload" id="product-upload-button" data-mage-init='{ "Designnbuy_Canvas/js/customize": { "action": "<?php echo $block->escapeUrl($url) ?>" } }'>
+        <span>Upload</span>
+    </button>
+<?php endif; ?>
+<style type="text/css">
+	#product-upload-button{clear: both;}
+</style>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Designnbuy_Canvas::css/canvas-l.css" />
+    </head>
+    <body>
+        <referenceContainer name="header" remove="true"/>
+        <referenceContainer name="menu.wrapper" remove="true"/>
+        <referenceBlock name="menu" remove="true"/>
+        <referenceBlock name="head" remove="true"/>
+        <referenceBlock name="global_notices" remove="true"/>
+        <referenceContainer name="head" remove="true"/>
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceContainer name="page.top" remove="true" />
+        <referenceContainer name="header.container" remove="true" />
+        <referenceContainer name="content">
+            <!-- <block class="Designnbuy\Canvas\Block\Index" name="canvas.index.index" template="index.phtml" cacheable="false"/> -->
+        </referenceContainer>
+    </body>
+</page>

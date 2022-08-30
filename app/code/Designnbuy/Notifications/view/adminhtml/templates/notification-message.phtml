@@ -1,0 +1,41 @@
+<?php $notificationMessage = $this->getNotificationReportContent(); ?>
+<?php $message = 'You have '; ?>
+    <?php if($notificationMessage['unread_message_count'] > 0): ?>
+        <?php $message .= $notificationMessage['unread_message_count'] .' Unread'; ?>
+    <?php endif; ?>
+
+    <?php if($notificationMessage['designer_count'] > 0): ?>
+        <?php $message .= ', '.$notificationMessage['designer_count'] .' Designer Request'; ?>
+    <?php endif; ?>
+
+    <?php if($notificationMessage['shop_count'] > 0): ?>
+        <?php $message .= ', '.$notificationMessage['shop_count'] .' Reseller Request'; ?>
+    <?php endif; ?>
+
+    <?php if($notificationMessage['design_count'] > 0): ?>
+        <?php $message .= ', '.$notificationMessage['design_count'] .' Design Published'; ?>
+    <?php endif; ?>
+
+    <?php if($notificationMessage['report_count'] > 0): ?>
+        <?php $message .= ', '.$notificationMessage['report_count'] .' Report'; ?>
+    <?php endif; ?>
+
+    <?php if($notificationMessage['redeem_count'] > 0): ?>
+        <?php $message .= ', '.$notificationMessage['redeem_count'] .' Redemption'; ?>
+    <?php endif; ?>
+
+    <?php if($notificationMessage['unpublished_design_count'] > 0): ?>
+        <?php $message .= ', ' .$notificationMessage['unpublished_design_count'] .' Design Un Published'; ?>
+    <?php endif; ?>
+    
+<?php if($block->getFullPageAction() != 'notifications_notifications_index' && $notificationMessage['unread_message_count'] > 0): ?>
+    <div class="notificaton-wrapper">
+        <span class="notification-span">
+            <?php echo $message ?> message(s). <a href="<?php echo $this->getUrl('notifications/notifications'); ?>">Go to notification inbox</a>
+        </span>
+    </div>
+<?php endif; ?>
+<style type="text/css">
+.notificaton-wrapper{width: 100%; background-color: #fffbbb; padding: 10px 15px 10px 25px;}
+.notificaton-wrapper::before {color: #eb5202; content: '\e623'; background: none; border: 0; content: '\e61a'; font-family: 'Admin Icons'; font-size: 1.9rem; font-style: normal; font-weight: 400; height: auto; left: 1.9rem; line-height: inherit; speak: none; text-shadow: none; top: 1.3rem; width: auto; float: left; padding: 0 8px;  }
+</style>

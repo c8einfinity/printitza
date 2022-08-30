@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/** @var \Designnbuy\Vendor\Block\Adminhtml\Sales\Order\Items\Column\Vendor $block */
+$vendors = $block->getVendors();
+$_item = $block->getItem();
+
+?>
+<?php if($block->isSuperAdmin()): ?>
+<?php /* @escapeNotVerified */  //$block->displayPrices($block->getBaseTotalAmount($_item), $block->getTotalAmount($_item)) ?>
+<div class="admin__field-control">
+    <select class="admin__control-select" id="item_vendor_<?php echo $_item->getId()?>" name="item_vendor_<?php echo $_item->getId()?>">
+        <?php foreach($vendors as $vendor): ?>
+            <?php if($_item->getVendorId() == $vendor['value']): ?>
+                <?php $select = 'selected="selected"'; ?>
+            <?php else: ?>
+                <?php $select = ''; ?>
+            <?php endif; ?>
+            <option value="<?php echo $vendor['value'];?>" <?php echo $select;?> ><?php echo __($vendor['label']);?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+<?php endif; ?>
+<div class="admin__field-control">
+    <div class="order-history-comments-actions" id="item_vendor_commission_<?php echo $_item->getId()?>">
+        <strong><?php echo __('Commission');?>: </strong>
+        <?php echo $block->getVendorCommission()?>
+    </div>
+</div>
+<?php if($block->isSuperAdmin()): ?>
+<div class="order-history-comments-actions">
+    <button onclick="submitAndReloadArea($('sales_order_view_tabs_order_info_content').parentNode, '<?php echo $block->getSubmitUrl() ?>')" title="<?php echo __('Change Vendor');?>" type="button" class="action-default scalable action-save action-secondary"  data-ui-id="widget-button-0">
+        <span><?php echo __('Change Vendor');?></span>
+    </button>
+</div>
+<?php endif; ?>
+<script>
+    require(['prototype'], function(){
+        /*submitVendor = function() {
+            submitAndReloadArea($('sales_order_view_tabs_order_info_content').parentNode, '<?php  //echo $block->getSubmitUrl() ?>')
+        }
+
+        if ($('.submit_vendor_button')) {
+            $('.submit_vendor_button').observe('click', submitVendor);
+        }*/
+    });
+</script>
+
+
+

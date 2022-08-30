@@ -1,0 +1,75 @@
+.canvas-product-browsetemplates .templates-grid.products-related {
+	background: rgba(0,0,0,0);
+}
+.canvas-product-browsetemplates .templates-grid.products-related:before,
+.canvas-product-browsetemplates .templates-grid.products-related:after{
+	background: rgba(0,0,0,0);
+}
+.canvas-product-browsetemplates .templates-grid.products-related .products.products-grid .product-item:hover{
+	padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.search-btn-action .action.search > span{
+	border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.search-btn-action .action.search {
+    line-height: 1;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.search-btn-action .action.search:before{
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1;
+    color: #ffffff;
+    content: '\e615';
+    font-family: 'luma-icons';
+    margin: 0;
+    vertical-align: top;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}
+.search-btn-action .action.search:hover:before{
+	color: #000000	
+}
+.toolbar-browse-template .search,
+.toolbar-browse-template .size,
+.toolbar-browse-template .search-btn-action{
+	display: inline-block;
+    vertical-align: middle;
+}
+.toolbar-browse-template {
+    text-align: right;
+}
+.canvas-product-browsetemplates .actions-primary.see-more {
+    text-align: center;
+}
+.canvas-product-browsetemplates .sidebar .widget.block.block-categories{
+	border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 0 10px 5px;
+}
+.canvas-product-browsetemplates .sidebar .block-categories .block-title.sidebar-title{
+	background: #eaeaea;
+    padding: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 0;
+}
+.canvas-product-browsetemplates .sidebar .block-categories .category-filter li:last-child > a{
+	border-bottom: none;
+}
+.canvas-product-browsetemplates .sidebar .block-categories .category-filter li > a {
+    padding-right: 0;
+}

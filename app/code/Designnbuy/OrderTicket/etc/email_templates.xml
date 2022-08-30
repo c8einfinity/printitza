@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="sales_email_designnbuy_orderticket_template" label="New Order Ticket" file="new.html" type="html" module="Designnbuy_OrderTicket" area="frontend"/>
+    <template id="sales_email_designnbuy_orderticket_guest_template" label="New Order Ticket for Guest" file="new_guest.html" type="html" module="Designnbuy_OrderTicket" area="frontend"/>
+    <template id="sales_email_designnbuy_orderticket_auth_template" label="Order Ticket Authorization" file="auth.html" type="html" module="Designnbuy_OrderTicket" area="frontend"/>
+    <template id="sales_email_designnbuy_orderticket_auth_guest_template" label="Order Ticket Authorization for Guest" file="auth_guest.html" type="html" module="Designnbuy_OrderTicket" area="frontend"/>
+    <template id="sales_email_designnbuy_orderticket_comment_template" label="Order Ticket Admin Comments" file="comment.html" type="html" module="Designnbuy_OrderTicket" area="frontend"/>
+    <template id="sales_email_designnbuy_orderticket_comment_guest_template" label="Order Ticket Admin Comments for Guest" file="comment_guest.html" type="html" module="Designnbuy_OrderTicket" area="frontend"/>
+    <template id="sales_email_designnbuy_orderticket_customer_comment_template" label="Order Ticket Customer Comments" file="customer_comment.html" type="html" module="Designnbuy_OrderTicket" area="adminhtml"/>
+</config>

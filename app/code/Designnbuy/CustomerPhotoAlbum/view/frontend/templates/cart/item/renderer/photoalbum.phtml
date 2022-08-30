@@ -1,0 +1,35 @@
+
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product namenumber data template
+ *
+ * @var $block \Designnbuy\Merchandise\Block\Cart\Item\Renderer\Actions\NameNumber
+ */
+
+?>
+
+
+<?php $photoAlbum = $block->getPhotoAlbum() ?>
+<?php $itemId = $block->getItemId(); ?>
+<?php if($photoAlbum == true): ?>
+
+    
+<script>
+    /*Disable Quantity Box When Name number with cart item - Start*/
+    require(['jquery'],function($) {
+            var itemId = <?php echo $itemId; ?>;
+            
+            $("#cart-"+itemId+"-qty").prop('disabled', true);
+            $(".remove-required-action-"+itemId+" .actions-toolbar .action-towishlist").css('display', 'none');
+        }
+    );
+    /*Disable Quantity Box When Name number with cart item - End*/
+</script>
+<?php endif;?>

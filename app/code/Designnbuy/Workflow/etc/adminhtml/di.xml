@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!-- <type name="Magento\Sales\Block\Adminhtml\Items\AbstractItems" >
+		<plugin name="workflowstatus" type="Designnbuy\Workflow\Plugin\Sales\Order\Item\Status" sortOrder="0"/>
+	</type> -->
+	<type name="Magento\Sales\Model\ResourceModel\Order\Grid\Collection">
+		<plugin name="filterOrder" type="Designnbuy\Workflow\Plugin\Sales\Order\FilterOrderByWorkFlowAdmin" />
+	</type>
+	<type name="Magento\Sales\Model\ResourceModel\Order\Item\Collection">
+		<plugin name="filterOrderItem" type="Designnbuy\Workflow\Plugin\Sales\Order\Item\FilterOrderItemByWorkFlowAdmin" />
+	</type>
+	<preference for="Magento\Backend\Block\Dashboard\Grids" type="Designnbuy\Workflow\Block\Adminhtml\Dashboard\ReportGrid" />
+</config>

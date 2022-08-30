@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2019 Design 'N' Buy. All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ * ALWAYS DO BETTER @a
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="formkey"/>
+    <update handle="jobmanagement_jobmanagement_grid_block"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Designnbuy\JobManagement\Block\Adminhtml\Jobmanagement" name="jobmanagement.jobmanagement.container" />
+        </referenceContainer>
+    </body>
+</page>

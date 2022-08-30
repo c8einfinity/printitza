@@ -1,0 +1,182 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!--<preference for="Designnbuy\Vendor\Api\UserRepositoryInterface" type="Designnbuy\Vendor\Model\UserRepository"/>
+	<preference for="Designnbuy\Vendor\Api\Data\UserInterface" type="Designnbuy\Vendor\Model\User"/>
+	<preference for="Designnbuy\Vendor\Api\Data\UserSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>-->
+
+	<preference for="Designnbuy\Vendor\Api\Data\UserInterface"
+				type="Designnbuy\Vendor\Model\User"/>
+	<preference for="Designnbuy\Vendor\Api\UserRepositoryInterface"
+				type="Designnbuy\Vendor\Model\UserRepository"/>
+	<preference for="Designnbuy\Vendor\Api\Data\UserSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+	<!--<preference for="Designnbuy\Vendor\Api\Data\GroupInterface"
+				type="Designnbuy\Vendor\Model\Vendor"/>
+	<preference for="Designnbuy\Vendor\Api\GroupRepositoryInterface"
+				type="Designnbuy\Vendor\Model\GroupRepository"/>
+	<preference for="Designnbuy\Vendor\Api\Data\GroupSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+	<preference for="Designnbuy\Vendor\Api\Data\StatusInterface"
+				type="Designnbuy\Vendor\Model\Status"/>
+	<preference for="Designnbuy\Vendor\Api\StatusRepositoryInterface"
+				type="Designnbuy\Vendor\Model\StatusRepository"/>
+	<preference for="Designnbuy\Vendor\Api\Data\StatusSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />
+
+	<preference for="Designnbuy\Vendor\Api\Data\RoleInterface"
+				type="Designnbuy\Vendor\Model\Role"/>
+	<preference for="Designnbuy\Vendor\Api\RoleRepositoryInterface"
+				type="Designnbuy\Vendor\Model\RoleRepository"/>
+	<preference for="Designnbuy\Vendor\Api\Data\RoleSearchResultsInterface"
+				type="Magento\Framework\Api\SearchResults" />-->
+
+
+
+	<!--<virtualType name="UserGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Vendor\Model\ResourceModel\User\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">UserGridFilterPool</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="UserGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Designnbuy\Vendor\Model\ResourceModel\User\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_user</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_vendor_user_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">user_grid_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\User</argument>
+		</arguments>
+	</virtualType>-->
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="designnbuy_vendor_user_grid_data_source" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\User\Grid\Collection</item>
+				<!--<item name="designnbuy_role_grid_data_source" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Role\Grid\Collection</item>-->
+				<item name="designnbuy_vendor_transaction_grid_data_source" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Transaction\Grid\Collection</item>
+				<!--<item name="designnbuy_status_grid_data_source" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Status\Grid\Collection</item>-->
+			</argument>
+		</arguments>
+	</type>
+	<!--<virtualType name="Designnbuy\Vendor\Model\ResourceModel\Role\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_role</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Role\Collection</argument>
+		</arguments>
+	</virtualType>-->
+
+	<virtualType name="Designnbuy\Vendor\Model\ResourceModel\User\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_user</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_vendor_user_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_vendor_user_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\User</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="UserFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="UserDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Vendor\Model\ResourceModel\User\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">UserFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+
+	<virtualType name="Designnbuy\Vendor\Model\ResourceModel\Transaction\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_transaction</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_vendor_transaction_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_vendor_transaction_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Transaction</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="TransactionFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="TransactionDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Vendor\Model\ResourceModel\Transaction\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">TransactionFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Designnbuy\Vendor\Model\ResourceModel\Status\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_status</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_vendor_status_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_vendor_status_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Status</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="StatusFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="StatusDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Vendor\Model\ResourceModel\Status\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">StatusFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Designnbuy\Vendor\Model\ResourceModel\Role\Grid\Collection">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_role</argument>
+			<argument name="eventPrefix" xsi:type="string">designnbuy_vendor_role_grid_collection</argument>
+			<argument name="eventObject" xsi:type="string">designnbuy_vendor_role_collection</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Role</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="RoleFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="RoleDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Designnbuy\Vendor\Model\ResourceModel\Role\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">RoleFilterPool</argument>
+		</arguments>
+	</virtualType>
+
+	<type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+		<plugin name="vendor_id_quote_to_order_item" type="Designnbuy\Vendor\Plugin\Sales\Quote\QuoteToOrderItem"/>
+	</type>
+	<!--<virtualType name="Designnbuy\Vendor\Model\ResourceModel\Status\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">designnbuy_vendor_status</argument>
+			<argument name="resourceModel" xsi:type="string">Designnbuy\Vendor\Model\ResourceModel\Status\Collection</argument>
+		</arguments>
+	</virtualType>-->
+	<type name="Magento\Ui\Component\MassAction">
+		<plugin name="vendor_remove_order_massaction" type="Designnbuy\Vendor\Plugin\Ui\MassAction" />
+	</type>
+</config>

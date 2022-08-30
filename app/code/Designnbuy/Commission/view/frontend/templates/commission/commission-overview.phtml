@@ -1,0 +1,66 @@
+<?php $designer = $block->getDesignerInformation(); ?>
+<div class="designer-overview-wrapper">
+	<div class="designer-content">
+		<div class="welcome-msg">
+			<p class="hello"><strong>Hello, <?php echo $designer->getName(); ?>!</strong></p>
+			<p><?php echo __('From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.');?></p>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="dnb-userinfo-box">
+					<div class="box-title">
+						<h3><?php echo __('Contact Information');?></h3>
+						<a href="<?php echo $block->getDesignerInfoLink(); ?>"><?php echo __('Edit'); ?></a>
+					</div>
+					<div class="box-content">
+						<div class="inner-content">
+							<label><b><?php echo __('Name');?> : </b></label><?php echo $designer->getName(); ?>
+						</div>
+						<div class="inner-content">
+							<label><b><?php echo __('Email');?> : </b></label><?php echo $designer->getEmail(); ?>
+						</div>
+						<div class="inner-content">
+							<label><b><?php echo __('Account Type');?> : </b></label><?php echo __('Designer');?>
+						</div>
+					</div>						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="designer-order-wrapper">
+		<?php $collection = $block->getCollection(); ?>
+		<h4><?php echo __('Recent Design Orders'); ?></h4>
+		<a href="<?php echo $block->getCommissionReportLink(); ?>"><?php echo __('View All'); ?></a>
+		<?php if (count($collection) == 0): ?>
+		    	<div class="message info empty"><div><?php echo __('We can\'t find report matching the selection.') ?></div></div>
+		<?php else: ?>
+			<div class="table-wrapper designer-list-wrapper">		
+				<table class="items data table">
+					<thead>
+						<tr>
+							<th class="col" scope="col"><span><?php echo __('Order #'); ?></span></th>
+							<th class="col" scope="col"><span><?php echo __('Created At'); ?></span></th>
+							<th class="col" scope="col"><span><?php echo __('Design Id'); ?></span></th>
+							<th class="col" scope="col"><span><?php echo __('Commission Earned'); ?></span></th>
+							<th class="col" scope="col"><span><?php echo __('Order Status'); ?></span></th>	
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($collection as $order): ?>
+							<tr>
+				            	<td data-th="Order #" class="col"><span><?php echo $order->getOrderId(); ?></span></td>
+								<td data-th="Created At" class="col"><span><?php echo $order->getCreatedAt(); ?></span></td>
+								<td data-th="Design Id" class="col"><span><?php echo $order->getItemId(); ?></span></td>
+								<td data-th="Commission Earned" class="col"><span><?php echo $block->setFormatedAmount($order->getCommissionAmount()); ?></span></td>
+								<td data-th="Order Status" class="col"><span><?php echo $order->getStatus(); ?></span></td>
+							</tr>
+				            <?php endforeach; ?>
+					</tbody>
+				</table>
+		    </div>
+		<?php endif; ?>	
+	</div>
+</div>
+<style type="text/css">
+.welcome-msg {background: #dff0d8; border: 1px solid #d6e9c6; border-radius: 4px; color: #3c763d; margin: 0; padding: 10px; }
+</style>

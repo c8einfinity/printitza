@@ -1,0 +1,261 @@
+<?php
+$isQuickEdit = true;
+$noOfSides = 4;//$_product->getNoSide();
+$colorId = '';
+$sides = array();
+$_product = $block->getProduct();
+$request = [];
+$request['id'] = $_product->getId();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$merchandise = $objectManager->get('Designnbuy\Merchandise\Model\Merchandise');
+
+$useQuickEdit = $merchandise->isQuickEditEnable($_product);
+$productData = $merchandise->getProductData($request,'front');
+
+$noOfSides = $productData['noofSides'];
+
+$quickEditSvg = array();
+$quickeditWithJob = false;
+$jobId = $this->getRequest()->getParam('jobId');
+if(isset($jobId) && $jobId != "")
+{
+    $quickeditWithJob = true;
+    $outputHelper = $objectManager->get('Designnbuy\Base\Helper\Output');
+    $svgDir = $outputHelper->getDesignIdeaDesignsDir();
+
+    $designDir = $objectManager->create('\Designnbuy\Base\Helper\Output')->getJobDesignsDir();
+    $designUrl = $objectManager->create('\Designnbuy\Base\Helper\Output')->getJobDesignsUrl();
+    $designFactory = $objectManager->create('\Designnbuy\CorporateJobRequest\Model\Corporatejob')->load($jobId);
+    $designSVGs = explode(",", $designFactory->getSvg());
+
+    if(isset($designSVGs) && !empty($designSVGs)){
+        $design = array();
+        foreach ($designSVGs as $designSVG) {
+            if(file_exists($designDir.$designSVG)){
+                $formatedSVG = $objectManager->create('\Designnbuy\Base\Helper\Output')->getFormatedSVG($designDir.$designSVG);
+                $design['svg'][] = $formatedSVG;
+            }
+        }
+        $quickEditSvg = $design['svg'];
+    }    
+} else {
+    if($block->getRequest()->getModuleName() == 'checkout')
+    {
+        $itemId = $block->getRequest()->getParam('id');
+        $design = $merchandise->getQuoteItemDesign($itemId);
+        if(isset($design) && !empty($design)){
+            if (isset($design['svg']) && $design['svg'] != '') {
+                $quickEditSvg = $design['svg'];
+            } else {
+                $designIdea = $merchandise->getDesignIdeaDesign($_product->getDesignideaId());
+
+                if (isset($designIdea) && !empty($designIdea)) {
+                    if (isset($designIdea['svg']) && $designIdea['svg'] != '') {
+                        $quickEditSvg = $designIdea['svg'];
+                    } else {
+                        $isQuickEdit = false;
+                    }
+                }
+            }
+        }
+    } else {
+        $designIdea = $merchandise->getDesignIdeaDesign($_product->getDesignideaId());
+
+        if (isset($designIdea) && !empty($designIdea)) {
+            if (isset($designIdea['svg']) && $designIdea['svg'] != '') {
+                $quickEditSvg = $designIdea['svg'];
+            } else {
+                $isQuickEdit = false;
+            }
+        }
+    }
+}
+
+$outputHelper = $objectManager->get('Designnbuy\Base\Helper\Output');
+$svgDir = $outputHelper->getDesignIdeaDesignsDir();
+$colorPickerType = 'Full';
+$colorCollection = '';
+if($_product->getElementColorPickerType() !='' && $_product->getElementColorPickerType() != null) {
+    $colorPickerValue = $_product->getElementColorPickerType();
+    if($colorPickerValue == 1){
+        $colorPickerType = "Full";
+    } else{
+        $colorPickerType = "Printable";
+    }
+}
+if($colorPickerType == "Printable"){
+    $color = $objectManager->get('Designnbuy\Color\Model\Color');
+    $result = $color->getRelatedProductColors($_product);
+    $colorCollection = json_encode($result, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+}
+
+?>
+<div id="quickedit-loader" class="loading-mask" data-role="loader" style="display: block;">
+    <div class="loader">
+        <img alt="Loading..." src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif'); ?>">
+        <p>Please wait...</p>
+    </div>
+</div>
+<div id="quickeditarea"></div>
+<div id="quickedit_changeside_button_holder"></div>
+<!-- <button type="button" page="0" id="changeSide" title="<?php //echo __('View Back') ?>" class="button" style="display:none;"><span><span><?php //echo __('View Back') ?></span></span></button> -->
+<script type="text/javascript">
+
+    var loaderImg = '';
+    var loaderDiv = document.createElement("div");
+    loaderDiv.innerHTML = '<div style="display: none;" id="loading-mask"><p id="loading_mask_loader" class="loader"><img alt="Loading..." src=' + loaderImg + '><br>Please wait...</p></div>';
+    document.body.appendChild(loaderDiv);
+    var quickEditSvg = <?php echo json_encode($quickEditSvg);?>;
+    var quickeditWithJob = '<?php echo $quickeditWithJob;?>';
+    var productData = <?php echo json_encode($productData);?>;
+    var isQuickEdit = '<?php echo $isQuickEdit;?>';
+    var colorId = '<?php echo $colorId;?>';
+    var noOfSides = '<?php echo $noOfSides;?>';
+    var colorPickerType = '<?php echo $colorPickerType;?>';
+    var colorJson = '';
+    colorJson = '<?php echo $colorCollection;?>';
+    var colorlist = [];
+    var sides = <?php echo json_encode($sides);?>;
+
+    var toolType = "producttool";
+
+    require(['jquery','quickedit'],
+        function ($) {
+
+            /*$(document).ready(function () {
+                $('#loading-mask').show();
+            });
+            $('#loading-mask').hide();*/
+        });
+</script>
+
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'mage/validation',
+        'Magento_Catalog/js/catalog-add-to-cart',
+        'quickedit'
+
+    ], function ($,mage,validation,addtocart,quickedit) {
+        'use strict';
+        var buttonpressed;
+        var dataForm = $('#product_addtocart_form');
+		var ignore = null;
+
+		dataForm.mage('validation', {
+			ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+        }).find('input:text').attr('autocomplete', 'off');
+        
+        $('button[type=submit]').click(function() {
+            buttonpressed = $(this).attr('id');
+            var addToCartForm = $('#product_addtocart_form');
+            if(buttonpressed == 'product-addtocart-button'  || buttonpressed == 'product-updatecart-button' || buttonpressed == 'customize' || buttonpressed == 'sendJob'){
+                if(isQuickEdit) {
+                    var previewSvg;
+                    var addToCartForm = jQuery('#product_addtocart_form');
+                    var quickEditDiv,svgTextArea,configAreaInput;
+                    if(jQuery('#quickEditDiv').length == 0){
+                        quickEditDiv = jQuery("<div/>").attr('id','quickEditDiv');
+                        quickEditDiv.appendTo(addToCartForm);
+                    } else {
+                        quickEditDiv = jQuery('#quickEditDiv');
+                        quickEditDiv.empty();
+                    }
+
+                    var config_area = [];
+                    for(var cnt=0; cnt < productData.sides.length; cnt++){
+                        var area = Object.values(productData.Area)[cnt].split(",");
+                        config_area.push(area[0]+","+area[1]+","+area[2]+","+area[3]+","+area[4]+","+area[5]);
+                    }
+
+
+                    quickedit.getSvgString();
+                    jQuery.each(quickEditSvg, function (index, value) {
+                        svgTextArea = jQuery('<textarea id="svgTextArea' + index + '" name="svgTextArea[' + index + ']">');
+                        svgTextArea.appendTo(quickEditDiv);
+                        svgTextArea.css("display", "none");
+                        svgTextArea.val(value);
+
+                        configAreaInput = jQuery('<input type="text" id="config_area' + index + '" name="config_area[' + index + ']">');
+                        configAreaInput.appendTo(quickEditDiv);
+                        configAreaInput.css("display", "none");
+                        configAreaInput.val(config_area[index]);
+                    });
+
+
+                    jQuery('#canvasBackground rect').attr('stroke','none');
+                    for(var sideCnt=0; sideCnt<noOfSides; sideCnt++){
+                        // drawSvg(sideCnt, false);
+                        quickedit.drawcartSvg(sideCnt, false);
+                        jQuery("#canvasBackground").hide();
+                        previewSvg = jQuery('<textarea id="previewSvg' + sideCnt + '" name="previewSvg[' + sideCnt + ']">');
+                        previewSvg.appendTo(quickEditDiv);
+                        previewSvg.css("display", "none");
+                        previewSvg.val(jQuery("#product-image").html());
+                    }
+                    var from_quickedit = jQuery('<input id="from_quickedit" type="hidden" name="from_quickedit" value="1">');
+                    from_quickedit.appendTo(quickEditDiv);
+                    var cur_time = jQuery('<input id="designed_id" type="hidden" name="designed_id" value="<?php echo time();?>">');
+                    cur_time.appendTo(quickEditDiv);
+                }
+            }
+        });
+
+        dataForm.on("submit", function(evt){
+			evt.preventDefault();
+			if(dataForm.validation('isValid')){
+                this.submit();
+            }
+        });
+    });
+</script>
+
+<div class="gallery-placeholder" data-gallery-role="gallery-placeholder" style="display: none">
+    <div class="fotorama--hidden"></div>
+    <div class="fotorama-item fotorama fotorama1553065343057" data-gallery-role="gallery">
+        <div data-gallery-role="fotorama__focusable-start" tabindex="-1"></div>
+
+    </div>
+    <div class="magnifier-preview magnify-hidden" data-gallery-role="magnifier" id="preview"
+         style="display: none;"></div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": {"fullscreenzoom":"5","top":"","left":"","width":"","height":"","eventType":"hover","enabled":"false","mode":"outside"},
+                "data": [{}],
+                "options": {
+                    "nav": "thumbs",
+                                            "loop": true,
+                                                                "keyboard": true,
+                                                                "arrows": true,
+                                                                "allowfullscreen": true,
+                                                                "showCaption": false,
+                                        "width": "1250",
+                    "thumbwidth": "80",
+                                            "thumbheight": 80,
+                                                                                    "height": 1000,
+                                                                "transitionduration": 500,
+                                        "transition": "slide",
+                                            "navarrows": true,
+                                        "navtype": "slides",
+                    "navdir": "horizontal"
+                },
+                "fullscreen": {
+                    "nav": "thumbs",
+                                            "loop": true,
+                                        "navdir": "horizontal",
+                                        "navtype": "slides",
+                                            "arrows": true,
+                                                                "showCaption": true,
+                                                            "transition": "slide"
+                },
+                "breakpoints": {"mobile":{"conditions":{"max-width":"767px"},"options":{"options":{"nav":"dots"}}}}            }
+        }
+    }
+
+</script>

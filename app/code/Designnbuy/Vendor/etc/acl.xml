@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Magento_Sales::sales">
+					<resource id="Magento_Sales::sales_operation">
+						<resource id="Designnbuy_Vendor::order_invoice" title="Vendor Order Invoice" translate="title" sortOrder="50" />
+						<resource id="Designnbuy_Vendor::order_ship" title="Vendor Order Ship" translate="title" sortOrder="50" />
+					</resource>
+				</resource>
+				<resource id="Designnbuy_Base::network">
+					<resource id="Designnbuy_Vendor::vendor" title="Vendor" sortOrder="10">
+						<resource id="Designnbuy_Vendor::vendor_user" title="User" sortOrder="10" />
+						<resource id="Designnbuy_Vendor::vendor_transaction" title="Transaction" sortOrder="20" />
+					</resource>
+				</resource>
+				<!--<resource id="Designnbuy_Vendor::Role" sortOrder="10" title="Role">
+					<resource id="Designnbuy_Vendor::Role_save" sortOrder="10" title="Save Role"/>
+					<resource id="Designnbuy_Vendor::Role_delete" sortOrder="20" title="Delete Role"/>
+					<resource id="Designnbuy_Vendor::Role_update" sortOrder="30" title="Update Role"/>
+					<resource id="Designnbuy_Vendor::Role_view" sortOrder="40" title="View Role"/>
+				</resource>
+				<resource id="Designnbuy_Vendor::Vendor" sortOrder="10" title="Vendor">
+					<resource id="Designnbuy_Vendor::Group_save" sortOrder="10" title="Save Vendor"/>
+					<resource id="Designnbuy_Vendor::Group_delete" sortOrder="20" title="Delete Vendor"/>
+					<resource id="Designnbuy_Vendor::Group_update" sortOrder="30" title="Update Vendor"/>
+					<resource id="Designnbuy_Vendor::Group_view" sortOrder="40" title="View Vendor"/>
+				</resource>
+				<resource id="Designnbuy_Vendor::Status" sortOrder="10" title="Status">
+					<resource id="Designnbuy_Vendor::Status_save" sortOrder="10" title="Save Status"/>
+					<resource id="Designnbuy_Vendor::Status_delete" sortOrder="20" title="Delete Status"/>
+					<resource id="Designnbuy_Vendor::Status_update" sortOrder="30" title="Update Status"/>
+					<resource id="Designnbuy_Vendor::Status_view" sortOrder="40" title="View Status"/>
+				</resource>
+				<resource id="Magento_Sales::sales">
+					<resource id="Magento_Sales::sales_operation">
+						<resource id="Designnbuy_Vendor::designnbuy_report" title="Vendor Report" translate="title" sortOrder="50" />
+					</resource>
+				</resource>-->
+			</resource>
+		</resources>
+	</acl>
+</config>

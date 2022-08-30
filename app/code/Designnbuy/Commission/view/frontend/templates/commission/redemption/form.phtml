@@ -1,0 +1,62 @@
+<?php $designerCommission = $block->getDesignerCommission(); ?>
+<div class="col-2">
+    <div class="box">
+        <div class="box-title"><h3><?php echo __('Request Payment'); ?></h3></div>
+        <div class="box-content">
+            <form 
+            class="form redemption-post" 
+            action="<?= $block->escapeUrl($block->getRedemptionPostUrl()) ?>" 
+            method="post" 
+            id="form-validate"             
+            autocomplete="off" 
+            data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+            data-mage-init='{"validation":{}}'>
+                <input name="user_id" id="user_id" type="hidden" value="<?php echo $block->getUserId(); ?>" />
+                <input name="user_name" id="user_name" type="hidden" value="<?php echo $block->getUserFullName();?>" />
+                <input name="is_active" id="is_active" type="hidden" value="<?php echo $block->getDefaultStatus(); ?>" />
+                <input name="balance" id="balance" type="hidden" value="<?php echo $designerCommission['balance']?>" />
+                <input name="user_type" id="user_type" type="hidden" value="<?php echo "2"; ?>" />
+                <?php echo $block->getBlockHtml('formkey')?>
+                <fieldset class="fieldset info">
+                    <div class="field required">
+                        <label class="label" for="commission_amount"><span><?= $block->escapeHtml(__('Redeem Amount')) ?></span></label>
+                        <div class="control">
+                            <!--validate-digits-range digits-range-1---><?php /*echo $designerCommission['balance']*/?>
+                            <input data-validate="{'max-amount':true, 'non-zerocheck':true}"
+                             tabindex="1" name="commission_amount" id="commission_amount" title="<?= $block->escapeHtmlAttr(__('Redeem Amount')) ?>" class="validate-greater-than-zero required-entry input-text" type="text"  value="" />
+                        </div>                        
+                    </div>
+                    <div class="primary">
+                        <button type="submit" <?php if($designerCommission['balance'] <= 0):?><?php endif;?> class="action submit submit-redemption" title="<?php echo __('Send Redeem Request'); ?>"><span><?php echo __('Send Redeem Request'); ?></span></button>
+                    </div>
+                </fieldset>                
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/validation'
+    ], function($){
+        $.validator.addMethod('max-amount', function (value) 
+        {
+            if(value > parseFloat($('#balance').val())){
+                return false;
+            } else {
+                return true;
+            }
+        }, $.mage.__('You have not sufficient balance.'));
+
+        $.validator.addMethod('non-zerocheck', function (value) 
+        {
+            if(value < 0){
+                return false;
+            } else {
+                return true;
+            }
+        }, $.mage.__('Add proper redemption amount.'));
+    });
+</script>
+
+

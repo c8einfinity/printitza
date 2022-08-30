@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <script>		
+        // window.opener.InstagramImportObj.authenticated(window.location.hash.replace('#access_token=', ''));
+        // window.close();
+        debugger
+        var p = new URLSearchParams(window.location.search)
+        window.opener.Helper.InstagramImportObj.authenticated(p.get("code"));
+        window.close();
+
+    </script>
+</body>
+</html>

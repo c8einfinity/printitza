@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_ConfigArea::elements" title="Design Areas" module="Designnbuy_ConfigArea" parent="Designnbuy_Base::DNB" sortOrder="60"  resource="Designnbuy_ConfigArea::elements"/>
+        <add id="Designnbuy_ConfigArea::configarea" title="Design Areas" module="Designnbuy_ConfigArea" parent="Designnbuy_ConfigArea::elements" sortOrder="10" action="configarea/configarea/" resource="Designnbuy_ConfigArea::configarea"/>
+        <!--<add id="Designnbuy_ConfigArea::category" title="Categories" module="Designnbuy_ConfigArea" parent="Designnbuy_ConfigArea::elements" sortOrder="20" action="configarea/category/" resource="Designnbuy_ConfigArea::category"/>-->
+        <!--<add id="Designnbuy_ConfigArea::import" title="Import" module="Designnbuy_ConfigArea" parent="Designnbuy_ConfigArea::elements" sortOrder="30" action="configarea/import/" resource="Designnbuy_ConfigArea::import"/>-->
+        <!--<add id="Designnbuy_ConfigArea::config_configarea" title="Configuration" module="Designnbuy_ConfigArea" parent="Designnbuy_ConfigArea::elements" sortOrder="40" action="adminhtml/system_config/edit/section/dnbconfigarea/" resource="Designnbuy_ConfigArea::config_configarea"/>-->
+
+    </menu>
+</config>

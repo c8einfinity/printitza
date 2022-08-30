@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background background list lazyload template
+ *
+ * @var $block \Designnbuy\Background\Block\Background\BackgroundList\Toolbar\Pager
+ */
+?>
+<?php if ($block->useLazyload()) { ?>
+    <?php
+        $config = $block->getLazyloadConfig([
+            'trigger_element' => '.mbbackground-lazyload-trigger'
+        ]);
+    ?>
+    <div class="dnbbackground-autoloader" data-mage-init='{"<?php echo $block->getLazyloadJs() ?>" : <?php echo $config ?>}'>
+    	<button class="mbbackground-lazyload-trigger dnbbackground-hide-onload action primary" title="<?php echo __('See more') ?>" type="button">
+            <span><?php echo __('See more') ?></span>
+        </button>
+        <img class="backgrounds-loader dnbbackground-show-onload" src="<?php echo $block->getViewFileUrl('images/loader-2.gif') ?>" alt="<?php echo __('Backgrounds loader') ?>" />
+    </div>
+<?php } ?>

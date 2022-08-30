@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="designidea_default"/>
+    <update handle="designidea_designidea_list"/>
+    <head>
+        <css src="Designnbuy_Designidea::css/designidea-m.css" />
+        <css src="Designnbuy_Designidea::css/designidea-custom.css" />
+    </head>
+    <body>
+
+        <!-- <move element="page.main.title" destination="sidebar.main" before="-"/> -->
+        <attribute name="class" value="page-products"/>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Designidea\Block\Category\Info" name="designidea.designideas.info" template="Designnbuy_Designidea::category/info.phtml" before="designidea.designideas.list" />
+            <block class="Designnbuy\Designidea\Block\Sidebar\Search" name="designidea.sidebar.search" before="designidea.designideas.list" template="sidebar/search.phtml" />
+            <block class="Designnbuy\Designidea\Block\Category\View" name="designidea.designideas.list" template="designidea/list.phtml" />
+        </referenceContainer>
+        <referenceContainer name="sidebar.additional">
+            <referenceBlock name="sale.reorder.sidebar" remove="true"/>
+        </referenceContainer>
+        <move element="designidea.sidebar.search" destination="page.main.title" before="-"/>
+    </body>
+</page>

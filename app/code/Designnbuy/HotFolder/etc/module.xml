@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Designnbuy_HotFolder" schema_version="1.1.1" setup_version="1.1.1">
+        <sequence>
+            <module name="Designnbuy_Base"/>
+            <module name="Designnbuy_Canvas"/>
+            <module name="Designnbuy_Merchandise"/>
+        </sequence>
+    </module>
+</config>

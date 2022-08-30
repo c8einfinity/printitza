@@ -1,0 +1,77 @@
+.welcome-msg {background: #dff0d8; border: 1px solid #d6e9c6; border-radius: 4px; color: #3c763d; margin: 0; padding: 10px; }
+.redemptin-earning-info { float: left; width: 42%; display: block; border: 1px solid #ccc; padding: 0px 0px 0 15px; border-radius: 10px; }
+.redemptin-form{margin-left: 20px; width: 44%; padding: 0 15px 15px 15px; float: left; display: block; border: 1px solid #ccc; border-radius: 10px;}
+.redemptin-history{float: left; width: 100%; display: block;}
+.theme-pearl .designer-content .row { width: auto !important; margin-left: -15px !important; margin-right: -15px !important; }
+.dnb-userinfo-box { background: #f5f5f5; border-radius: 5px; overflow: hidden;display: inline-block; margin: 15px 0;width: 100%;}
+.dnb-userinfo-box .box-title h3 {
+    margin-top: 0;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    width: calc(100% - 26px);
+    vertical-align: middle;
+    padding-right: 10px;
+}
+.dnb-userinfo-box .box-title a {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 18px;
+    font-size: 13px;
+    text-align: right;
+}
+.dnb-userinfo-box .box-title a:hover{
+    text-decoration: underline;
+}
+.box-content .inner-content {
+    margin-bottom: 3px;
+}
+.dnb-userinfo-box .box-title{
+    padding: 10px 10px 0;
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+.dnb-userinfo-box .box-content{
+    padding: 10px 10px 20px;
+}
+.designer-order-wrapper h4{
+    display: inline-block;
+    float: left;
+}
+.designer-order-wrapper > a{
+    display: inline-block;
+    float: right;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    line-height: 1;
+    text-transform: capitalize;
+}
+.designer-order-wrapper > a:hover{
+    text-decoration: underline;
+}
+.designer-order-wrapper .message{
+    width: 100%;
+    clear: both;
+}
+.
+/*.marketplace-search{ width: 100%; float: left; display: block; }*/
+.marketplace-search .shorting-wrapper{ width: 150px; float: left; }
+.marketplace-search .search-wrapper{ /*width: 150px; */float: left; padding: 0 0 5px 5px;}
+.marketplace-search .button-wrapper{/*padding: 18px 0 10px 0px; */float: right}
+.marketplace-search .button-wrapper .filter-button{margin-left: 4px}
+.sorter-action:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: inherit;
+    color: #757575;
+    content: '\e613';
+    font-family: 'luma-icons';
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}

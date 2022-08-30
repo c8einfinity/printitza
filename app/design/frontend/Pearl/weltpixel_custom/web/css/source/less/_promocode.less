@@ -1,0 +1,121 @@
+.promocode-wrapper {
+	position: relative;
+	background: #fadc32;
+	padding: 41px 0;
+	margin: 90px 0;
+	@media only screen and (max-width:767px){
+		padding: 18px 0;
+		margin: 30px 0;
+	}
+	&:before {
+		content: "";
+		background: #fadc32;
+		position: absolute;
+		height: ~'calc(100% - 77.5px)';
+		width: 100%;
+		left: 0;
+		top: 50%;
+		right: 0;
+		-webkit-transform: translateY(-50%);
+		-moz-transform:    translateY(-50%);
+		-ms-transform:     translateY(-50%);
+		-o-transform:      translateY(-50%);
+		transform: translateY(-50%);
+		max-width: 1370px;
+		display: block;
+		margin: -3px auto 0;
+	}
+	.content{
+		> .row {
+			@media only screen and (max-width:767px){
+				margin-left: 0;
+			}
+			> div:first-child{
+				min-width: 0;
+    			max-width: 199px;
+			}
+		}
+	}
+	.pro-image-box{
+		    background: #fff;
+			position: absolute;
+			transform: translateY(-38.98%);
+			top: 1.5px;
+			@media only screen and (max-width:1199px){
+				top: 0.5px;
+    			min-width: 163px;
+			}
+	}
+	.discount-text{
+		@media only screen and (max-width:767px){
+			text-align: center;
+    		margin-bottom: 20px;
+		}
+		.upto-txt,
+		.discount-content {
+			display: inline-block;
+			font-family: 'Milkshake';
+		}
+		.discountbox {
+			color: #363636;
+			display: inline-block;
+			font-size: 35px;
+			font-weight: 900;
+			text-transform: uppercase;
+			border: 2px solid #363636;
+			line-height: 1;
+			padding: 6px 9px;
+			margin: 0 4px;
+			vertical-align: middle;
+			text-shadow: 2px 0px 1px rgba(54,54,54,1);
+			@media only screen and (max-width:1199px){
+				font-size: 26px;
+				padding: 6px 10px;
+			}
+		}
+		.upto-txt {
+			vertical-align: top;
+			font-size: 23px;
+			line-height: 1;
+		}
+		.discount-content{
+			vertical-align: middle;
+			font-size: 33px;
+			line-height: 1;
+			@media only screen and (max-width:1199px){
+				font-size: 19px;
+			}
+		}
+	}
+	.promocode-coupon{
+		    /*display: inline-block;*/
+		    background: #ffffff;
+		    padding: 14px 16px;
+		@media only screen and (max-width:991px){
+			float: right;
+		}
+		@media only screen and (max-width:767px){
+			text-align: center;
+			float: none !important;
+		}
+		h6 {
+			font-size: 20px;
+			display: inline-block;
+			text-transform: capitalize;
+			color: #363636;
+			margin: 0;
+			vertical-align: middle;
+    		font-weight: 900;
+		}
+		.promo-box {
+			font-size: 18px;
+			display: inline-block;
+			text-transform: uppercase;
+			color: #363636;
+			margin: 0;
+			vertical-align: middle;
+			line-height: 1;
+			font-weight: 900;
+		}
+	}
+}

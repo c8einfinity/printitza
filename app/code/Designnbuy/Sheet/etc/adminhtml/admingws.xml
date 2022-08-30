@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Designnbuy (support@designnbuy.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_AdminGws:etc/admingws.xsd">
+    <group name="collection_load_before" processor="Magento\AdminGws\Model\Collections">
+        <callback class="Designnbuy\Sheet\Model\ResourceModel\Size\Collection" method="addStoreFilter" />
+        <callback class="Designnbuy\Sheet\Model\ResourceModel\Category\Collection" method="addStoreFilter" />
+    </group>
+    <group name="model_save_before" processor="Magento\AdminGws\Model\Models">
+        <callback class="Designnbuy\Sheet\Model\Size" method="cmsPageSaveBefore" />
+        <callback class="Designnbuy\Sheet\Model\Category" method="cmsPageSaveBefore" />
+    </group>
+    <group name="model_delete_before" processor="Magento\AdminGws\Model\Models">
+        <callback class="Designnbuy\Sheet\Model\Size" method="cmsPageDeleteBefore" />
+        <callback class="Designnbuy\Sheet\Model\Category" method="cmsPageDeleteBefore" />
+    </group>
+</config>

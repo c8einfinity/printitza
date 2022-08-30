@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\WithdrawalsContainer $block */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Withdrawals\WithdrawalsGrid $blockGrid */
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+<div class="salesrep-withrawals-container">
+<?php  echo $block->getGridHtml();?>
+</div>

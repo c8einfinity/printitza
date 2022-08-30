@@ -1,0 +1,169 @@
+<?php $_helper = $this->helper('Designnbuy\CustomerPhotoAlbum\Helper\Data'); ?>
+<?php $_albumList = $_helper->getallAlbums(); ?>
+<div class="customer-album-section">
+    <div class="upload-album-photos">
+        <form action="<?php echo $block->getBaseUrl().'photoalbum/album/save'; ?>" method="post" id="photo-album" enctype="multipart/form-data">
+            <div class="photo-select-box">  
+                <div class="photo-select-toolbar">
+                    <div class="form-group-control photo-select-control">
+                        <label><?php echo __("Create New Album"); ?></label>
+                        <input type="radio" name="move_album_photos" value="new_album" checked />
+                        <input id="album_name" name="album_name" type="text" required />
+                        <?php if(!empty($_albumList) && $_albumList->getSize() > 0 ): ?>
+                            <strong class="or-text"> OR </strong>
+                            <input type="radio" name="move_album_photos" value="move_album"/>
+                            <select name="move_album" id="opration-album-list" required disabled>
+                                <option value=""> <?php echo "Select Album" ?> </option>
+                                <?php foreach ($_albumList as $value): ?>
+                                    <option value="<?php echo $value->getId(); ?>"> <?php echo $value->getTitle(); ?> </option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group-control">
+                        <button id="album-upload" class="album-create" type="submit"> <?php echo __('Next'); ?></button>
+                    </div>
+                </div>
+            </div>
+            <div class="upload-image-block">
+                <div class="image-dropzone">
+                    <input type="hidden" name="uploaded_files" id="uploaded_files" />
+                    <input type="hidden" name="removed_files" id="removed_files" />
+                    <input id="albumfiles" name="albumfiles[]" type="file" multiple="multiple" />
+                    <p>Drag and drop your photo here OR click to upload</p>
+                </div>
+            </div>
+            <div class="load-image-block">
+                <div class="pre-photos">
+                    <ul id="album-image-pre"></ul>
+                </div>
+            </div>
+        </form>
+        
+        <script type="text/javascript">
+            require(["jquery",'Magento_Ui/js/modal/alert'],function($,alert)
+            {
+                var album_type = "new";
+                var time = new Date().toGMTString();
+                var pre_specify = time;  
+                $("#pre_specify").val(pre_specify);
+                $(document).ready(function () {
+                    var photosPre = document.getElementById("album-image-pre");
+                    if (window.File && window.FileList && window.FileReader) {
+                        $("#albumfiles").on("change", function (e) {
+                            /* var files = e.target.files,
+                                filesLength = files.length;
+                            var sortorder = 0; */
+                            /* for (var i = 0; i < filesLength; i++) {
+                                var f = files[i];
+                                var fileReader = new FileReader();
+                                
+                                fileReader.onload = (function (e) {
+                                    var file = e.target;
+                                    var base64Data = e.target.result;
+                                    console.log(base64Data);
+                                    
+                                        var extension = base64Data.substring("data:image/".length, base64Data.indexOf(";base64"));
+                                        
+                                        extension = extension.toLowerCase();
+                                        console.log(extension);
+                                        
+                                        
+                                        
+                                        if(extension == "jpg" || extension == "jpeg" || extension == "png"){
+                                            var imagephoto = $("<li class=\"pip\">" +
+                                                "<div class=\"imageThumb-box\"><img class=\"imageThumb\" src=\"" + base64Data +
+                                                "\" width='200' />" +
+                                                "<br/><a class=\"album-image-remove action primary\" sortorder=\""+sortorder+"\" >Remove Image</a></div>" +
+                                                "</li>").insertAfter("#albumfiles");
+                                            imagephoto.appendTo(photosPre);
+                                            sortorder++;
+                                        }else{
+                                            console.log('Some files were not uploaded because they have invalid file type!!!');
+                                        }
+                                    
+                                });
+                                fileReader.readAsDataURL(f);
+                            } */
+                            var form = $('#photo-album')[0];
+                            var formData = new FormData(form);
+
+                            $.ajax({
+                                url: "<?php echo $block->getBaseUrl().'photoalbum/album/saveuploads/'; ?>",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: formData,
+                                success: function (data) {
+                                    if(data.uploaded){
+                                        $("#uploaded_files").val(data.message);
+                                        if(data.list_files != ""){
+                                            var listed_files = data.list_files.split(',');
+                                            var listed_files_message = data.message.split('|');
+                                            photosPre.innerHTML = "";
+                                            $.each(listed_files, function(index, value) { 
+                                                var imagephoto = $("<li class=\"pip\">" +
+                                                    "<div class=\"imageThumb-box\"><img class=\"imageThumb\" src=\"" + value +
+                                                    "\" width='200' />" +
+                                                    "<br/><a class=\"album-image-remove action primary\" sortorder=\""+listed_files_message[index]+"\" >Remove Image</a></div>" +
+                                                    "</li>").insertAfter("#albumfiles");
+                                                imagephoto.appendTo(photosPre);
+                                            });
+                                        }
+                                    } else {
+                                        $("#uploaded_files").val("");
+                                        $("#album-image-pre").html("");
+                                        alert({
+                                            title: $.mage.__('Album Photos'),
+                                            content: $.mage.__(data.message),
+                                            actions: {
+                                                always: function(){
+                                                    return false;
+                                                }
+                                            }
+                                        });
+                                    }
+                                },
+                                cache: false,
+                                contentType: false,
+                                processData: false
+                            });
+                        });
+                    } else {
+                        alert("<?php echo __('Not supported File API'); ?>");
+                    }
+                    jQuery("body").on("click",".album-image-remove",function () {
+                        if(jQuery("#removed_files").val() != ""){
+                            var sortorder = jQuery(this).attr("sortorder") +'|'+ jQuery("#removed_files").val();
+                            jQuery("#removed_files").val(sortorder);
+                        } else {
+                            jQuery("#removed_files").val(jQuery(this).attr("sortorder"));
+                        }
+                        $(this).parent().parent(".pip").remove();
+                        //$("#albumfiles").val("");
+                    });
+                });
+
+                $("input[name='move_album_photos']").on( "change", function() {
+                    if(this.value == "new_album"){
+                        album_type = "new";
+                        $('#opration-album-list').prop('disabled', true);
+                        $('#album_name').prop('disabled', false);
+                    }else{
+                        album_type = "selected";
+                        $('#opration-album-list').prop('disabled', false);
+                        $('#album_name').prop('disabled', true);
+                    }
+                });
+
+                $("#photo-album").submit(function(){
+                    var album_con = document.getElementById("album-image-pre");
+                    if(!album_con.childNodes.length && album_type == "new"){
+                        alert("please upload at least one image.");
+                        return false;
+                    }
+                   
+                });
+            });
+        </script>
+    </div>
+</div>

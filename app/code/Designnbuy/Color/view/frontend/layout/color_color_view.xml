@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="color_default"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Color\Block\Color\View" name="color.color" template="color/view.phtml">
+                <block class="Designnbuy\Color\Block\Color\Info" name="color.color.info" template="color/info.phtml" />
+                <action method="setColorInfoBlockName">
+                    <argument name="name" xsi:type="string">color.color.info</argument>
+                </action>
+                <block class="Magento\Framework\View\Element\Text\ListText" name="color.color.bottom">
+                    <block class="Designnbuy\Color\Block\Color\View\Gallery" name="color.color.gallery" as="gallery"  template="Designnbuy_Color::color/view/gallery.phtml" />
+                    <block class="Designnbuy\Color\Block\Color\View\NextPrev" name="color.color.nextprev" as="nextprev"  template="Designnbuy_Color::color/view/nextprev.phtml" />
+                    <block class="Designnbuy\Color\Block\Color\View\RelatedColors" name="color.color.relatedcolors" as="relatedcolors"  template="Designnbuy_Color::color/view/relatedcolors.phtml" />
+                    <block class="Designnbuy\Color\Block\Color\View\RelatedProducts" name="color.color.relatedproducts" as="relatedproducts"  template="Designnbuy_Color::color/view/relatedproducts.phtml" />
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Designnbuy\Merchandise\Block\Adminhtml\Catalog\Product\Edit\Tab\Area */
+?>
+<div class="<?= /* @noEscape */ $block->getData('config/dataScope') ?>" data-role="configarea-dialog" data-bind="scope: '<?= /* @noEscape */ $block->getForm() ?>.<?= /* @noEscape */ $block->getModal() ?>'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<div class="<?= /* @noEscape */ $block->getData('config/dataScope') ?>" id="product-configarea" data-role="product-configarea">
+    <div data-bind="scope: 'configurableVariations'"></div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @noEscape */ $block->getData('config/form') ?>.<?= /* @noEscape */ $block->getModal() ?>": {
+                        "component": "Designnbuy_Merchandise/js/components/modal-configarea",
+                      
+                        "options": {"type": "slide", "title": "<?php echo $block->escapeHtml(__('Configure Side Area')); ?>"},
+                        "formName": "<?= /* @noEscape */ $block->getForm() ?>",
+                        "isTemplate": true,
+                        "stepWizard": "<?= /* @noEscape */ $block->getData('config/nameStepWizard') ?>",
+                        "children": {
+                            "wizard": {
+                                "url": "<?= /* @noEscape */ $block->getUrl($block->getData('config/urlWizard'), ['_current' => true]) ?>",
+                                "component": "Magento_Ui/js/form/components/html"
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    require(['jquery', 'mage/apply/main'], function ($, main) {
+        main.apply();
+
+        $('.<?= /* @noEscape */ $block->getData('config/dataScope') ?>[data-role=configarea-dialog]').applyBindings();
+        $('.<?= /* @noEscape */ $block->getData('config/dataScope') ?>[data-role=product-configarea]').applyBindings();
+
+    })
+</script>
+

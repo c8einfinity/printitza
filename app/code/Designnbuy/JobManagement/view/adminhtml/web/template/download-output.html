@@ -1,0 +1,17 @@
+<!-- ko if: value-->
+<a id="download_output" class="download_output" data-bind="href: download_output,
+	attr: {
+    	href:value
+    }">Download Output</a>
+<!-- /ko -->
+<!-- ko ifnot: value -->
+<a id="download_output" class="download_output" data-bind="href: download_output,
+	attr: {
+    	href:value
+    }">Not Available Or Access Denied</a>
+<!-- /ko -->
+<style type="text/css">
+.download_output{padding-top: 6px;
+    font-weight: bold;
+    float: left;}
+</style>

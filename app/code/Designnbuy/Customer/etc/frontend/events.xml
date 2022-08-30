@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_collection_apply_limitations_after">
+        <observer name="Designnbuy_Customer_Group_Wise_Product" instance="Designnbuy\Customer\Observer\CustomerGroupProductFilter" />
+    </event>
+    <event name="customer_login">
+        <observer name="designnbuy_customer_group_login" instance="Designnbuy\Customer\Observer\CustomerLogin" />
+    </event>
+    <event name="customer_logout">
+        <observer name="designnbuy_customer_group_logout" instance="Designnbuy\Customer\Observer\CustomerLogin" />
+    </event>
+</config>

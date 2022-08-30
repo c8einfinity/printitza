@@ -1,0 +1,80 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Template template list template
+ *
+ * @var $block \Designnbuy\Template\Block\Template\TemplateList
+ */
+?>
+<?php $_templateCollection = $block->getTemplateCollection(); ?>
+<?php
+$activeDesigner = $this->helper('Designnbuy\Merchandise\Helper\Data')->isModuleEnabled('Designnbuy_Designer');
+$designerName = '';
+$designerUrl = '';
+?>
+<?php if (!$_templateCollection->count()): ?>
+    <div class="template-lists message info empty"><div><?php echo __('We can\'t find templates matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <div class="page-products template-lists">
+        <div class="products page-products wrapper grid products-grid template-list-wrapper">
+            <?php $iterator = 1; ?>
+            <ol class="products list items product-items">
+                <?php foreach ($_templateCollection as $_template): ?>
+                    <?php
+                    if($activeDesigner == 1):
+                        $identifier = $_template->getIdentifier();
+                        $designerId = $_template->getDesignerId();
+                        if($designerId):
+                            $_customer = $this->helper('Designnbuy\Designer\Helper\Data')->getCustomerInformation($designerId);
+                            $designerName = $_customer->getFirstname(). ' ' .$_customer->getLastname();
+                            $designerIdentifier = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerUrl($designerId);
+                            $designerUrl = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerInfoUrl($designerIdentifier);
+                        endif;
+                        $templatenUrl = $this->helper('Designnbuy\Merchandise\Helper\Data')->getTemplateUrl($identifier);
+                    else:
+                        $templatenUrl = $this->helper('Designnbuy\Merchandise\Helper\Data')->getTemplatePersonalisePageUrl($_template);
+                    endif;
+
+                    //$_templateUrl = $_template->getTemplateUrl();
+                    $_templateName = $block->escapeHtml($_template->getTitle(), null, true); ?>
+                    <?php //echo $block->getTemplateHtml($_template) ?>
+                <li class="item product product-item template-holder-<?php echo $_template->getId() ?>">
+                    <div class="product-item-info" data-container="product-grid">
+                        <?php if ($featuredImage = $_template->getImage()): ?>
+                            <a class="product photo product-item-photo" href="<?php echo $templatenUrl ?>" title="<?php echo $_templateName ?>">
+                                <span class="product-image-container" data-bind="style: {width: 240 + 'px'}">
+                                    <span class="product-image-wrapper"  data-bind="style: {'padding-bottom': 298/240*100 + '%'}">
+                                        <img src="<?php echo $featuredImage ?>" alt="<?php echo $_templateName ?>" class="product-image-photo" data-bind="style: {width: 240 + 'px'}" />
+                                    </span>
+                                </span>
+                            </a>
+                        <?php endif; ?>
+                        <div class="product details product-item-details">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link" title="<?php echo $_templateName ?>" href="<?php /* @escapeNotVerified */ echo $templatenUrl ?>">
+                                    <?php echo $_templateName ?>
+                                </a>
+                            </strong>
+                            <?php if($designerName): ?>
+                                <strong class="designer-name"><a href="<?php echo $designerUrl; ?>"><?php echo 'By ' .$designerName; ?></a></strong>
+                            <?php endif;?>
+                            <button class="design-View button" type="button" title="<?php echo __('View');?>" onclick="window.location.href='<?php /* @escapeNotVerified */ echo $templatenUrl ?>';"><?php echo __('View');?></button>
+                        </div>
+                    </div>
+                    </li><?php endforeach; ?>
+            </ol>
+        </div>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php if($block->getPagerHtml()): ?>
+        <div class="designer-design-designidea-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif; ?>
+<?php endif; ?>

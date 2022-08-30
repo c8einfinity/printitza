@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="designnbuy" translate="label" sortOrder="110">
+            <label>designnbuy Extensions</label>
+        </tab>
+        <section id="jobmanagement" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Job Management</label>
+            <tab>designnbuy</tab>
+            <resource>Designnbuy_JobManagement::config_jobmanagement</resource>
+            <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Job Sheet Template</label>
+                <field id="general_pdf_template" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>General PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+                <field id="only_payment_pdf_template" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+                <field id="only_customer_pdf_template" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+
+                <field id="only_download_pdf_template" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Download PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+
+                <field id="customer_and_payment_pdf_template" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer and Payment PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+
+                <field id="customer_and_download_pdf_template" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer and Download PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+
+                <field id="payment_and_download_pdf_template" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment and Download PDF Template</label>
+                    <source_model>Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\PdfTemplate</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

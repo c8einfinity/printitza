@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="template_default"/>
+    <update handle="template_template_list"/>
+    <body>
+
+        <!-- <move element="page.main.title" destination="sidebar.main" before="-"/> -->
+    	<referenceBlock name="customer_account_navigation" remove="true"/>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Template\Block\Category\Info" name="template.templates.info" template="Designnbuy_Template::category/info.phtml" before="template.templates.list" />
+            <block class="Designnbuy\Template\Block\Sidebar\Search" name="template.sidebar.search" before="template.templates.list"  template="sidebar/search.phtml" />
+            <block class="Designnbuy\Template\Block\Category\View" name="template.templates.list" template="template/list.phtml" />
+        </referenceContainer>
+        <move element="template.sidebar.search" destination="page.main.title" before="-"/>
+    </body>
+</page>

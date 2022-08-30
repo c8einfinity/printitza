@@ -1,0 +1,60 @@
+<?php
+use Magento\Framework\App\Action\Action;
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
+ * Product list template
+ *
+ * @var $block \Designnbuy\HomePageCategory\Block\NewList
+ */
+?>
+<?php $categoryCollection = $block->getHomePageCategryList(); ?>
+<?php $_helper    = $this->helper('Magento\Catalog\Helper\Category'); ?>
+<?php
+    $lazyLoadHelper = $this->helper('WeltPixel\LazyLoading\Helper\Data');
+    $lazyLodImgSrc = $lazyLoadHelper->getImageLoader();    
+?>
+<?php if ($categoryCollection->count()): ?>
+    <div class="content home-catlist-wrapper">
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2><?php echo __('our services'); ?></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <?php foreach ($categoryCollection as $category): ?>
+                    <?php if($category->getCustomImage() && $category->getCustomImage() != 'false'): ?>
+                        <div class="col-md-4 col-sm-6 col-xs-12 box-content home-catlist">
+                            <div class="drop-panel">
+                                <div class="hcaption">
+                                    <div class="image-wrapper">
+                                        <a href="<?php echo $_helper->getCategoryUrl($category); ?>">
+                                            <img class="lazy" src="<?= $lazyLodImgSrc; ?>" 
+                                                alt="<?php echo $block->escapeHtml($category->getName()) ?>" 
+                                                data-original="<?php echo $block->getCustomImageUrl($category) ?>"
+                                                >
+                                        </a>
+                                        <div class="category-description-block text-center">
+                                            <h2><?php echo $block->escapeHtml($category->getName()) ?></h2>
+                                            <div class="cat-short-desc">
+                                                <p><?php echo $block->stripTags($category->getDescription()) ?></p>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif;?>
+                <?php endforeach; ?>
+            </div>
+        
+    </div>
+<?php endif;?>
+
+

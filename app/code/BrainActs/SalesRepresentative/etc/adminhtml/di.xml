@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Controller\Adminhtml\Order\View">
+        <plugin name="restrict_order_view_salesrep" type="BrainActs\SalesRepresentative\Plugin\Restriction\OrderViewPlugin" sortOrder="10" />
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Controller\Adminhtml\Dashboard\Request">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Controller\Adminhtml\Dashboard\Index">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Controller\Adminhtml\Dashboard\Report">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Withdrawals\WithdrawalsGrid">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+    <type name="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Commission">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+    <type name="BrainActs\SalesRepresentative\Block\Adminhtml\Report\Profit\BalanceAfter">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+    <type name="BrainActs\SalesRepresentative\Block\Adminhtml\Report\Profit\BalanceBefore">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Backend\Model\Auth\Session</argument>
+        </arguments>
+    </type>
+</config>

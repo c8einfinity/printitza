@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Unific_Connector::config" title="Unific" translate="title" module="Unific_Connector" sortOrder="200" parent="Magento_Backend::stores" resource="Unific_Connector::config"/>
+        <add id="Unific_Connector::log" title="Connector Log" module="Unific_Connector" parent="Unific_Connector::config" sortOrder="10" action="unific/log" resource="Unific_Connector::log"/>
+    </menu>
+</config>

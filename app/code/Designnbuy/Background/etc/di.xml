@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Designnbuy\Background\Api\BackgroundManagementInterface" type="Designnbuy\Background\Model\BackgroundManagement" />
+    <preference for="Designnbuy\Background\Api\CategoryManagementInterface" type="Designnbuy\Background\Model\CategoryManagement" />
+    <virtualType name="Designnbuy\Background\ImageUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/background/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/background</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Background\Controller\Adminhtml\Background\Upload\Image">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Background\ImageUpload</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Background\Controller\Adminhtml\Background\Upload\Gallery">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Background\ImageUpload</argument>
+        </arguments>
+    </type>
+    <virtualType name="Designnbuy\Background\BackgroundUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/background/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/background/images</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Background\Controller\Adminhtml\Background\Upload\Output">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Background\BackgroundUpload</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Background\Controller\Adminhtml\Background\Upload\Display">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Background\BackgroundUpload</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Background\Model\ResourceModel\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">designnbuy_background_background</argument>
+            <argument name="eventPrefix" xsi:type="string">designnbuy_background_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">background_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Designnbuy\Background\Model\ResourceModel\Background</argument>
+        </arguments>
+    </type>
+</config>

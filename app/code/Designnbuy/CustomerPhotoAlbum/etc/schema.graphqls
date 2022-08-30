@@ -1,0 +1,39 @@
+type Query {
+    photoAlbum (
+        id: Int @doc(description: "Album Id")
+    ): PhotoAlbum @resolver(class: "Designnbuy\\CustomerPhotoAlbum\\Model\\Resolver\\PhotoAlbum") @doc(description: "Customer photo album information")
+    customerAlbum (
+        id: Int @doc(description: "Customer Id")
+        storeid: Int @doc(description: "Store Id")
+    ): CustomerAlbum @resolver(class: "Designnbuy\\CustomerPhotoAlbum\\Model\\Resolver\\CustomerAlbum") @doc(description: "Customer photo album information")
+    customerCreateAlbum (
+        title: String @doc(description: "Album Title")
+        customer_id: String @doc(description: "Customer Id")
+        storeid: String @doc(description: "Store Id")
+    ): CustomerCreateAlbum @resolver(class: "Designnbuy\\CustomerPhotoAlbum\\Model\\Resolver\\CustomerCreateAlbum") @doc(description: "Customer create photo album")
+}
+
+type PhotoAlbum @doc(description: "Customer uploaded image by album") {
+    allPhotos: [PhotoRecord] @doc(description: "Photos by album")
+}
+
+type PhotoRecord {
+    photo_id: String @doc(description: "Photo Id")
+    album_id: String @doc(description: "Album Id")
+    path: String @doc(description: "Image Name")
+}
+
+type CustomerAlbum @doc(description: "Customer album by customer id") {
+    allAlbum: [AlbumRecord] @doc(description: "Album by customer")
+}
+
+type CustomerCreateAlbum @doc(description: "Customer album by customer id") {
+    album_id : String @doc(description: "Album created?")
+}
+
+type AlbumRecord {
+    image : String @doc(description: "Album Image")
+    album_id: String @doc(description: "Album Id")
+    title: String @doc(description: "Album Name")
+    customer_id: String @doc(description: "Album Name")
+}

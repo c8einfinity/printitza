@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Eadesigndev_PdfGeneratorPro::settings" title="EaDesign" module="Eadesigndev_PdfGeneratorPro" sortOrder="21" parent="Designnbuy_Base::DNB" resource="Eadesigndev_PdfGeneratorPro::settings"/>
+        <add id="Eadesigndev_PdfGeneratorPro::template_list" title="Manage PDF Templates" module="Eadesigndev_PdfGeneratorPro" sortOrder="21" parent="Eadesigndev_PdfGeneratorPro::settings" action="eadesign_pdf/templates" resource="Eadesigndev_PdfGeneratorPro::templates"/>
+    </menu>
+</config>

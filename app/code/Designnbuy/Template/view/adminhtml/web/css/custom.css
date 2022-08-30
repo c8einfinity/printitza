@@ -1,0 +1,10 @@
+.template-template-edit aside.template_form_template_form_create_tool_modal, .template-layout-edit aside.template_form_template_form_create_tool_modal, .designidea-designidea-edit aside.designidea_form_designidea_form_create_tool_modal {
+    left: 0 !important;
+}
+
+.designidea-designidea-edit aside.designidea_form_designidea_form_create_tool_modal .modal-inner-wrap .modal-header div.page-main-actions,
+.template-template-edit aside.template_form_template_form_create_tool_modal .modal-inner-wrap .modal-header div.page-main-actions,
+.template-layout-edit aside.template_form_template_form_create_tool_modal .modal-inner-wrap .modal-header div.page-main-actions
+{
+    display: none;
+}

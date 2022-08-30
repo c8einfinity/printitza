@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="BrainActs\SalesRepresentative\Block\Adminhtml\Report\Products" template="report/grid/container.phtml" name="salesrep.report.grid.container">
+                <block class="BrainActs\SalesRepresentative\Block\Adminhtml\Report\Filter\Form" name="grid.filter.form" />
+            </block>
+        </referenceContainer>
+    </body>
+</page>

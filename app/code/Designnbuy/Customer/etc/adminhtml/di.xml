@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Theme\Model\Favicon\Favicon">
+        <plugin name="change_admin_favicon_icon"
+                type="Designnbuy\Customer\Model\Plugin\changeFavicon"/>
+    </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Group\Save">
+        <plugin name="designnbuy_customer_group_save"
+                type="Designnbuy\Customer\Plugin\Group\Save"/>
+    </type>
+    <preference for="Magento\Customer\Ui\Component\Listing\Column\GroupActions" type="Designnbuy\Customer\Ui\Component\Listing\Column\GroupActions" />
+</config>

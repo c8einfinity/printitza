@@ -1,0 +1,88 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php if ($_product->isSaleable()
+	&& $_product->getIsCustomizable()
+	&& $this->getRequest()->getFullActionName() != 'catalog_category_view' && $this->getRequest()->getFullActionName() != 'checkout_cart_configure' && $this->getRequest()->getFullActionName() != 'weltpixel_quickview_catalog_product_view'
+	&& ($_product->getMerchandisePersonalizeOption() == 1 || $_product->getMerchandisePersonalizeOption() == 2)
+	&& $_product->getAttributeSetId() == $this->helper('Designnbuy\Base\Helper\Data')->getCustomProductAttributeSetId()): ?>
+	
+
+		
+			<?php if($_product->getMerchandisePersonalizeOption() == 1 || $_product->getMerchandisePersonalizeOption() == 2): ?>
+
+						<?php if($_product->getMerchandisePersonalizeOption() == 1 || $_product->getMerchandisePersonalizeOption() == 2): ?>
+							<?php $buttonTitle = $this->helper('Designnbuy\Base\Helper\Data')->getPersonolizeButton(); ?>
+							<button type="submit"
+									title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+									id="customize"
+									class="action tocart primary"
+									data-mage-init='{
+													"Designnbuy_Merchandise/js/personalise": {
+														"action": "<?php echo $block->escapeUrl($this->helper('Designnbuy\Merchandise\Helper\Data')->getPersonalisePageUrl($_product)) ?>"
+													}
+												}'>
+								<span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+							</button>
+						<?php endif; ?>
+					
+				
+			<?php endif; ?>
+		
+	
+	<script>
+
+	require([
+		'jquery',
+		'mage/mage',
+		'mage/validation',
+		'Magento_Catalog/js/catalog-add-to-cart'
+
+	], function ($,mage,validation,addtocart) {
+		'use strict';
+		var buttonpressed;
+		var addToQuote = false;
+		var dataForm = $('#product_addtocart_form');
+		var ignore = null;
+
+		dataForm.mage('validation', {
+			ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+		}).find('input:text').attr('autocomplete', 'off');
+
+		$('button[type=submit]').click(function() {
+			buttonpressed = $(this).attr('id')
+		});
+
+		dataForm.on("submit", function(evt){
+			evt.preventDefault();
+			if(dataForm.validation('isValid')){
+				if(buttonpressed == 'personalise'){
+					this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Merchandise\Helper\Data')->getStartFromScratchPageUrl($_product)) ?>';
+					this.submit();
+					return;
+				}else if(buttonpressed == 'customize'){
+					this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Merchandise\Helper\Data')->getPersonalisePageUrl($_product)) ?>';
+					this.submit();
+				}else if(buttonpressed == 'product-addtoquote-button'){
+					addToQuote = dataForm.attr('action').replace("checkout/cart/add", "quotation/cart/add");
+					this.action = addToQuote;
+					this.submit();
+					return;
+				}else {
+					console.log('buttonpressed per',buttonpressed);
+					this.submit();
+				}
+			}
+		});
+	});
+</script>
+<?php endif; ?>
+

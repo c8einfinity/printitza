@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Customer attribute admin menu.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Template::elements" title="Template" module="Designnbuy_Template" parent="Designnbuy_Base::DNB" sortOrder="90"  resource="Designnbuy_Template::elements"/>
+        <!--<add id="Designnbuy_Template::category_attributes" title="Category Attributes" module="Designnbuy_Template" sortOrder="20" parent="Designnbuy_Template::elements" action="template/category_attribute" resource="Designnbuy_Template::category_attributes"/>-->
+        <add id="Designnbuy_Template::category" title="Categories" module="Designnbuy_Template" action="template/category" sortOrder="30" parent="Designnbuy_Template::elements" resource="Designnbuy_Template::category"/>
+        <!--<add id="Designnbuy_Template::template_attributes" title="Template Attributes" module="Designnbuy_Template" sortOrder="40" parent="Designnbuy_Template::elements" action="template/template_attribute" resource="Designnbuy_Template::template_attributes"/>-->
+        <add id="Designnbuy_Template::template" title="Templates" module="Designnbuy_Template" action="template/template" sortOrder="50" parent="Designnbuy_Template::elements" resource="Designnbuy_Template::template"/>
+        <add id="Designnbuy_Template::layout" title="Layouts" module="Designnbuy_Template" action="template/layout" sortOrder="50" parent="Designnbuy_Template::elements" resource="Designnbuy_Template::layout"/>
+        <!--<add id="Designnbuy_Template::create" title="template" module="Designnbuy_Template" action="template/template/create" sortOrder="50" parent="Designnbuy_Template::elements" resource="Designnbuy_Template::create"/>-->
+    </menu>
+</config>

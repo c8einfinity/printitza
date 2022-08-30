@@ -1,0 +1,109 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Designidea sidebar categories template
+ *
+ * @var $block \Designnbuy\Designidea\Block\Sidebar\Categories
+ */
+?>
+
+<?php $items = $this->getGroupedChilds(); ?>
+
+<?php if (count($items)) { ?>
+
+<div class="widget block block-categories" data-bind="scope: 'categories'">
+    <div class="block-title sidebar-title">
+        <strong><?php echo __('Categories') ?></strong>
+    </div>
+	<div class="category-filter">
+		<ul class="accordion"  id="accordion-2">
+		<?php
+			$level = 0;
+			$first = true;
+			foreach($items as $item) {
+				$newLevel = $item->getLevel();
+                if($item->getDesignideaIncludeInMenu() != "" && $item->getDesignideaIncludeInMenu() != 1){
+                    continue;
+                }
+				if ($level == $newLevel && !$first) {
+					echo '</li>';
+				}
+
+				if ($level < $newLevel) {
+					echo '<ul class="o-list o-list--unstyled" style="display:none">';
+				}
+
+				if ($level > $newLevel) {
+					for ($i = $level; $i > $newLevel; $i--){
+						echo '</ul></li>';
+					}
+				}
+
+				?>
+					<li>
+						<a href="<?php echo $item->getCategoryUrl() ?>">
+							<?php echo $block->escapeHtml($item->getTitle()) ?>
+							<span class="template-count">
+	                            <?php if ($block->showDesignideasCount()) { ?>
+	                                (<?php echo $block->escapeHtml($item->getDesignideasCount()) ?>)
+	                            <?php } ?>
+	                        </span>
+						</a>
+						
+				<?php
+				$level = $newLevel;
+				$first = false;
+			}
+		?>
+		</ul>
+	</div>
+</div>
+<?php } ?>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(function () {
+            /*$('.category-heading').on('click', function () {
+                $('.category-filter').toggle();
+            });
+            $('.category-filter').on('click', '.o-list .expand, .o-list .expanded', function () {
+                var element = $(this).parent('li');
+                if (element.hasClass('active')) {
+                    element.find('ul:first').slideUp();
+                    element.removeClass('active');
+                } else {
+                    element.addClass('active');
+                    element.children('ul').slideDown();
+                    element.parent('ul').find('i').addClass('fa-plus');
+                    element.find('> span i').addClass('fa-minus');
+                }
+            });*/
+
+            $('.category-filter li ul').prev('a').after('<span class="faicon faicon-plus"></span>');
+            $(".faicon").click(function(){
+               if(false == $(this).next().is(':visible'))
+               {
+                   $(this).next().slideDown();
+                   $(this).removeClass("faicon-plus");
+                   $(this).addClass("faicon-minus");
+               }
+               else
+               {
+                   $(this).next().slideUp();
+                   $(this).removeClass("faicon-minus");
+                   $(this).addClass("faicon-plus");
+               }
+        });
+        });
+
+        
+
+    });
+</script>

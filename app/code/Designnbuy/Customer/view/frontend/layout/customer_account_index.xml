@@ -1,0 +1,10 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="2columns-left">
+	<head>
+		<css src="Designnbuy_Customer::css/profile_image.css"/>
+	</head>
+	<body>
+		<referenceContainer name="content">
+			<block class="Designnbuy\Customer\Block\Customer\Account\ProfileImage" name="customer_account_profile_image" as="customer.account.profile_image" before="customer_account_dashboard_info" template="Designnbuy_Customer::profile_image.phtml" />
+		</referenceContainer>
+	</body>
+</page>

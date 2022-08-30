@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-left">
+    <body>
+        <referenceBlock name="customer_account_navigation" remove="true"/>
+        <referenceBlock name="template.templates.list">
+            <block class="Designnbuy\Template\Block\Template\TemplateList\Item" name="template.templates.list.item" template="template/list/item.phtml">
+                <block class="Designnbuy\Template\Block\Template\Info" name="template.template.info" template="template/info.phtml" />
+                <action method="setTemplateInfoBlockName">
+                    <argument name="name" xsi:type="string">template.template.info</argument>
+                </action>
+            </block>
+            <block class="Designnbuy\Template\Block\Template\TemplateList\Toolbar" name="template_list_toolbar" template="template/list/toolbar.phtml">
+                <block class="Designnbuy\Template\Block\Template\TemplateList\Toolbar\Pager" name="template_list_toolbar_pager">
+                    <action ifconfig="dnbtemplate/template_list/lazyload_enabled" method="setTemplate">
+                        <argument name="template" xsi:type="string">Designnbuy_Template::template/list/toolbar/lazyload.phtml</argument>
+                    </action>
+                    <arguments>
+                        <argument name="lazyload_js" xsi:type="string">Designnbuy_Template/js/lazyload</argument>
+                        <argument name="list_wrapper" xsi:type="string">.template-list-wrapper .template-list, .template-list-wrapper .template-list</argument>
+                    </arguments>
+                </block>
+            </block>
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">template_list_toolbar</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

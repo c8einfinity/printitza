@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="1column">
+    <!-- <update handle="customer_account"/> -->
+    <head>
+        <css src="Designnbuy_CustomerPhotoAlbum::css/custom.css" />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Designnbuy\CustomerPhotoAlbum\Block\Album" name="customer.album" cacheable="false">
+                <container name="customer.album.info" as="album" label="Photo Album"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

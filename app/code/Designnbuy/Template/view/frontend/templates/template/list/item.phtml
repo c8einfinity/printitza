@@ -1,0 +1,61 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Template template list item template
+ *
+ * @var $block \Designnbuy\Template\Block\Template\AbstractTemplate
+ */
+echo "template";
+?>
+<?php
+    $_template = $this->getTemplateDesign();
+
+    $_templateUrl = $_template->getTemplateUrl();
+    $_templateName = $block->escapeHtml($_template->getTitle(), null, true);
+?>
+<li class="item product product-item template-holder-<?php echo $_template->getId() ?>">
+    <div class="product-item-info" data-container="product-grid">
+        <?php if ($featuredImage = $_template->getImage()): ?>
+            <a class="product photo product-item-photo" href="<?php echo $_templateUrl ?>" title="<?php echo $_templateName ?>">
+                <!--<span class="product-image-container" style="width:240px;">
+                    <span class="product-image-wrapper">
+                        <img class="product-image-photo" src="<?php /*echo $featuredImage */?>" alt="<?php /*echo $_templateName */?>" height="298" width="240"/>
+                    </span>
+                </span>-->
+                <span class="product-image-container">
+                    <span class="product-image-wrapper"  data-bind="style: {'padding-bottom': 298/240*100 + '%'}">
+                        <img src="<?php echo $featuredImage ?>" alt="<?php echo $_templateName ?>" class="product-image-photo" />
+                    </span>
+                </span>
+            </a>
+        <?php endif; ?>
+        <div class="product details product-item-details">
+            <strong class="product name product-item-name">
+                <a class="product-item-link" title="<?php echo $_templateName ?>" href="<?php /* @escapeNotVerified */ echo $_templateUrl ?>">
+                    <?php echo $_templateName ?>
+                </a>
+            </strong>
+        </div>
+    </div>
+
+    <!--<div class="template-content">
+        <div class="template-description clearfix">
+
+            <div class="template-text-hld clearfix">
+                <?php /*echo $block->getShorContent() */?>
+            </div>
+            <a class="template-read-more" href="<?php /*echo $_templateUrl */?>" title="<?php /*echo $_templateName */?>"
+               >
+               <?php /*echo __('Read more &#187;') */?>
+            </a>
+        </div>
+    </div>-->
+
+</li>

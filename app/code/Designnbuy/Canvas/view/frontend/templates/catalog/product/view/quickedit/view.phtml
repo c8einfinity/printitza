@@ -1,0 +1,303 @@
+<?php
+$isQuickEdit = true;
+
+$colorId = '';
+$sides = array();
+$_product = $block->getProduct();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+
+$bleedMargin = array();
+$safeMargin = array();
+
+
+
+
+$bleedMargin = array(
+    $_product->getTopBleedMargin()  ? $_product->getTopBleedMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/top_bleed_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/top_bleed_margin') : 0),
+    $_product->getRightBleedMargin()  ? $_product->getRightBleedMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/right_bleed_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/right_bleed_margin') : 0),
+    $_product->getBottomBleedMargin() ? $_product->getBottomBleedMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/bottom_bleed_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/bottom_bleed_margin') : 0),
+    $_product->getLeftBleedMargin()  ?  $_product->getLeftBleedMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/left_bleed_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/left_bleed_margin') : 0),
+);
+
+$safeMargin = array(
+    $_product->getTopSafeMargin()  ? $_product->getTopSafeMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/top_safe_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/top_safe_margin') : 0),
+    $_product->getRightSafeMargin()  ? $_product->getRightSafeMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/right_safe_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/right_safe_margin') : 0),
+    $_product->getBottomSafeMargin()  ? $_product->getBottomSafeMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/bottom_safe_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/bottom_safe_margin') : 0),
+    $_product->getLeftSafeMargin()  ? $_product->getLeftSafeMargin() : ($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/left_safe_margin') ? $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/left_safe_margin') : 0)
+);
+
+
+$noOfSides = $_product->getNoOfPages();
+$request = [];
+$productId = $_product->getId();
+
+$canvas = $objectManager->get('Designnbuy\Canvas\Model\Canvas');
+$useQuickEdit = $canvas->isQuickEditEnable($_product);
+$productData = $canvas->getProductData($productId,'front');
+$baseUnit = $productData['baseUnit'];
+$quickEditSvg = array();
+
+$quickeditWithJob = false;
+$jobId = $this->getRequest()->getParam('jobId');
+if(isset($jobId) && $jobId != "")
+{
+    $quickeditWithJob = true;
+    $outputHelper = $objectManager->get('Designnbuy\Base\Helper\Output');
+    $svgDir = $outputHelper->getTemplateDesignsDir();
+
+    $designDir = $objectManager->create('\Designnbuy\Base\Helper\Output')->getJobDesignsDir();
+    $designUrl = $objectManager->create('\Designnbuy\Base\Helper\Output')->getJobDesignsUrl();
+    $designFactory = $objectManager->create('\Designnbuy\CorporateJobRequest\Model\Corporatejob')->load($jobId);
+    $designSVGs = explode(",", $designFactory->getSvg());
+
+    if(isset($designSVGs) && !empty($designSVGs)){
+        $design = array();
+        foreach ($designSVGs as $designSVG) {
+            if(file_exists($designDir.$designSVG)){
+                $formatedSVG = $objectManager->create('\Designnbuy\Base\Helper\Output')->getFormatedSVG($designDir.$designSVG);
+                $design['svg'][] = $formatedSVG;
+            }
+        }
+        $quickEditSvg = $design['svg'];
+    }    
+} 
+else 
+{
+
+    if($block->getRequest()->getModuleName() == 'checkout')
+    {
+        $itemId = $block->getRequest()->getParam('id');
+        $design = $canvas->getQuoteItemDesign($itemId);
+        if(isset($design) && !empty($design)){
+            if (isset($design['svg']) && $design['svg'] != '') {
+                $quickEditSvg = $design['svg'];
+            } else {
+                $designIdea = $canvas->getTemplateDesign($_product->getTemplateId());
+
+                if (isset($designIdea) && !empty($designIdea)) {
+                    if (isset($designIdea['svg']) && $designIdea['svg'] != '') {
+                        $quickEditSvg = $designIdea['svg'];
+                    } else {
+                        $isQuickEdit = false;
+                    }
+                }
+            }
+        }
+    } else {
+        $designIdea = $canvas->getTemplateDesign($_product->getTemplateId());
+
+        if (isset($designIdea) && !empty($designIdea)) {
+            if (isset($designIdea['svg']) && $designIdea['svg'] != '') {
+                $quickEditSvg = $designIdea['svg'];
+                $noOfSides = count($quickEditSvg);
+            } else {
+                $isQuickEdit = false;
+            }
+        }
+    }
+}
+
+$outputHelper = $objectManager->get('Designnbuy\Base\Helper\Output');
+$svgDir = $outputHelper->getTemplateDesignsDir();
+$colorPickerType = 'Full';
+$colorCollection = '';
+if($_product->getElementColorPickerType() !='' && $_product->getElementColorPickerType() != null) {
+    $colorPickerValue = $_product->getElementColorPickerType();
+    if($colorPickerValue == 1){
+        $colorPickerType = "Full";
+    } else if ($colorPickerValue == 2) {
+        $colorPickerType = "Printable";
+    } else{
+        $colorPickerType = "OneColor";
+    }
+} else {
+    
+    if($objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('canvas/configuration/element_color_picker_type') == 1){
+        $colorPickerType = "Full";
+    } else{
+        $colorPickerType = "Printable";
+    }
+}
+if($colorPickerType == "Printable"){
+    $color = $objectManager->get('Designnbuy\Color\Model\Color');
+    $result = $color->getRelatedProductColors($_product);
+    $colorCollection = json_encode($result, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+    if(count($result) <= 0 && $colorPickerType != "OneColor"){
+        $colorPickerType = 'Full';
+    }
+}
+
+$sideOptionId = '';
+$sides = array();
+foreach ($_product->getOptions() as $o) {
+    if(strtoupper($o->getDesigntoolType())=="SIDES")
+    {
+        $sides['id'] = $o->getOptionId();
+        $values = array();
+        foreach ($o->getValues() as $v) {
+
+            $values[] = isset($v['designtool_title']) && $v['designtool_title'] != '' ? $v['designtool_title'] : $v['title'];
+            $sides['options'][$v['option_type_id']]['value'] = isset($v['designtool_title']) && $v['designtool_title'] != '' ? $v['designtool_title'] : $v['title'];
+        }
+        $noOfSides = max($values);
+        if(count($quickEditSvg) < $noOfSides){
+            $noOfSides = count($quickEditSvg);
+        }
+    }
+}
+
+/*if($noOfSides > 2){
+    $quickEditSvg = null;
+    $isQuickEdit = false;
+}*/
+ 
+?>
+<div id="quickedit-loader" class="loading-mask" data-role="loader" style="display: block;">
+    <div class="loader">
+        <img alt="Loading..." src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif'); ?>">
+        <p>Please wait...</p>
+    </div>
+</div>
+<div id="quickeditarea"></div>
+
+<div class="pagination">
+    <div id="pageNav" class="row-flex" style="display:none;"> 
+        <span class="firstPage"><i class="fa fa-caret-left" aria-hidden="true"></i></span> 
+        <span class="prevPage"><i class="fa fa-angle-left" aria-hidden="true"></i></span> 
+        <span class="gotoPage"><input type="text" id="gotoPageTxt" name="gotoPageTxt" maxlength="2" autocomplete="off"></span> 
+        <span class="nextPage"><i class="fa fa-angle-right" aria-hidden="true"></i></span> 
+        <span class="lastPage"><i class="fa fa-caret-right" aria-hidden="true"></i></span> 
+    </div>
+</div>
+
+<!-- <button type="button" page="0" id="changeSide" title="<?php //echo __('View Back') ?>" class="button" style="display:none;"><span><span><?php //echo __('View Back') ?></span></span></button> -->
+<script type="text/javascript">
+
+        var loaderImg = '';
+        var loaderDiv = document.createElement("div");
+        loaderDiv.innerHTML = '<div style="display: none;" id="loading-mask"><p id="loading_mask_loader" class="loader"><img alt="Loading..." src=' + loaderImg + '><br>Please wait...</p></div>';
+        document.body.appendChild(loaderDiv);
+        var quickEditSvg = <?php echo json_encode($quickEditSvg);?>;
+        var quickeditWithJob = '<?php echo $quickeditWithJob;?>';
+        var productData = <?php echo json_encode($productData);?>;
+        var safeMargin = <?php echo json_encode($safeMargin) ?>;//top , right, bottom, left
+        var bleedMargin = <?php echo json_encode($bleedMargin) ?>//top , right, bottom, left
+        var baseUnit = '<?php echo $baseUnit ?>';
+
+        var isQuickEdit = '<?php echo $isQuickEdit;?>';
+        var colorId = '<?php echo $colorId;?>';
+        var noOfSides = '<?php echo $noOfSides;?>';
+        var colorPickerType = '<?php echo $colorPickerType;?>';
+        var colorJson = "";
+        colorJson = '<?php echo $colorCollection;?>';
+        var colorlist = [];
+        var sides = <?php echo json_encode($sides);?>;
+        function setLoaderPos() {
+            var elem = $('loading_mask_loader');
+            elem.show('loading_mask_loader');
+        }
+        var toolType = "web2print";
+
+        require(['jquery','quickedit'],
+            function ($) {
+
+
+                $(document).ready(function () {
+
+                });
+            });
+</script>
+
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'mage/validation',
+        'Magento_Catalog/js/catalog-add-to-cart',
+        'quickedit'
+
+    ], function ($,mage,validation,addtocart,quickedit) {
+        'use strict';
+        var buttonpressed;
+        var dataForm = $('#product_addtocart_form');
+        var ignore = null;
+
+        dataForm.mage('validation', {
+            ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+        }).find('input:text').attr('autocomplete', 'off');
+
+        $('button[type=submit]').click(function() {
+            buttonpressed = $(this).attr('id');
+
+            var addToCartForm = $('#product_addtocart_form');
+            if(buttonpressed == 'product-addtocart-button' || buttonpressed == 'product-updatecart-button' || buttonpressed == 'customize' || buttonpressed == 'sendJob'){
+                console.log('buttonpressed',buttonpressed)
+                if(isQuickEdit) {
+                    var previewSvg;
+                    var addToCartForm = jQuery('#product_addtocart_form');
+                    var quickEditDiv;
+                    if(jQuery('#quickEditDiv').length == 0){
+                        quickEditDiv = jQuery("<div/>").attr('id','quickEditDiv');
+                        quickEditDiv.appendTo(addToCartForm);
+                    } else {
+                        quickEditDiv = jQuery('#quickEditDiv');
+                        quickEditDiv.empty();
+                    }
+
+
+                    quickedit.getSvgString();
+                    jQuery.each(quickEditSvg, function (index, value) {
+                        svgTextArea = jQuery('<textarea id="svgTextArea' + index + '" name="svgTextArea[' + index + ']">');
+                        svgTextArea.appendTo(quickEditDiv);
+                        svgTextArea.css("display", "none");
+                        svgTextArea.val(value);
+
+                    });
+                    /*jQuery('#canvasBackground rect').attr('stroke','none');
+                     for(var sideCnt=0; sideCnt<noOfSides; sideCnt++){
+                     // drawSvg(sideCnt, false);
+                     quickedit.drawcartSvg(sideCnt, false);
+                     jQuery("#canvasBackground").hide();
+                     previewSvg = jQuery('<textarea id="previewSvg' + sideCnt + '" name="previewSvg[' + sideCnt + ']">');
+                     previewSvg.appendTo(addToCartForm);
+                     previewSvg.css("display", "none");
+                     previewSvg.val(jQuery("#product-image").html());
+                     }*/
+                    var from_quickedit = jQuery('<input id="from_quickedit" type="hidden" name="from_quickedit" value="1">');
+                    from_quickedit.appendTo(quickEditDiv);
+                    var cur_time = jQuery('<input id="designed_id" type="hidden" name="designed_id" value="<?php echo time();?>">');
+                    cur_time.appendTo(quickEditDiv);
+                }
+            }
+        });
+
+        dataForm.on("submit", function(evt){
+            evt.preventDefault();
+            if(dataForm.validation('isValid')){
+                if(buttonpressed == 'personalise'){
+                    this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Merchandise\Helper\Data')->getStartFromScratchPageUrl($_product)) ?>';
+                    this.submit();
+                    return;
+                }else if(buttonpressed == 'customize'){
+                    this.action = '<?php echo $block->escapeUrl($this->helper('Designnbuy\Canvas\Helper\Data')->getCanvasPageUrl($_product)) ?>';
+                    this.submit();
+                }else if(buttonpressed == 'product-addtoquote-button'){
+                    addToQuote = dataForm.attr('action').replace("checkout/cart/add", "quotation/cart/add");
+                    this.action = addToQuote;
+                    this.submit();
+                    return;
+                }
+                else if(buttonpressed == 'sendJob'){     
+                    this.action = '<?php //echo $block->escapeUrl($this->helper('Designnbuy\CorporateUser\Helper\Data')->getSubmitRequestPageUrl($_product)) ?>';
+                    this.submit();
+                } else {
+                    if(!quickedit.hasRequiredData()){
+                        console.log('buttonpressed per',buttonpressed);
+                        this.submit();   
+                    }
+                }
+            }
+        });
+    });
+</script>

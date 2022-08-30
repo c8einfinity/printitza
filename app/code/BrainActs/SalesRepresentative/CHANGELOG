@@ -1,0 +1,60 @@
+[v.2.6.4] - 10/25/18
+### Fixed
+    - Bug Fixes
+
+[v.2.6.2] - 13/08/18
+### Fixed
+    - Fix DI in report block
+
+[v.2.6.2] - 02/08/18
+### Added
+    - Add sales representative dashboard
+    - Add ability to control withdrawals
+    - Add "All Sales Rep" filter in reports
+
+### Fixed
+        - Fix issue to restrict access to reports
+        - Replace "Multi Links" with SR names in order grid
+
+[v.2.6.0] - 02/08/18
+### Added
+    - Ability to control manually assignment restriction
+
+[v.2.5.0] - 17/05/18
+### Added
+    - Remove commissions when order canceled
+    - Remove commissions when refund
+
+[v.2.3.1] - 04/27/18
+### Added
+    - Add sales representative name to order email
+    - Add sales representative name to invoice email
+
+### Fixed
+    - Bug fixes
+
+[v.2.3.0] - 04/14/18
+### Added
+    - Add sales rep via customer account
+    - Enable sales rep feature at frontend
+    - Add ability to select SR form customer area in admin panel
+
+### Fixed
+    - Bug fixes
+
+[v.2.2.3] - 02/23/18
+
+### Added
+    - Send an email to the Sales Representative when order is assigned(optional)
+
+### Fixed
+    - Fix issue with cancel selection member in order edit form
+
+
+[v.2.2.2]  - 03/23/18
+
+### Added
+    - Add Ability to assign member to customer from customer edit form.
+
+### Fixed
+    - Bug Fixes

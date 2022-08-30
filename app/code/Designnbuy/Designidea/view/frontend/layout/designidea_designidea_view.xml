@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="designidea_default"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Designidea\Block\Designidea\View" name="designidea.designidea" template="designidea/view.phtml">
+                <block class="Designnbuy\Designidea\Block\Designidea\Info" name="designidea.designidea.info" template="designidea/info.phtml" />
+                <action method="setDesignideaInfoBlockName">
+                    <argument name="name" xsi:type="string">designidea.designidea.info</argument>
+                </action>
+                <block class="Magento\Framework\View\Element\Text\ListText" name="designidea.designidea.bottom">
+                    <block class="Designnbuy\Designidea\Block\Designidea\View\Gallery" name="designidea.designidea.gallery" as="gallery"  template="Designnbuy_Designidea::designidea/view/gallery.phtml" />
+                    <block class="Designnbuy\Designidea\Block\Designidea\View\NextPrev" name="designidea.designidea.nextprev" as="nextprev"  template="Designnbuy_Designidea::designidea/view/nextprev.phtml" />
+                    <block class="Designnbuy\Designidea\Block\Designidea\View\RelatedDesignideas" name="designidea.designidea.relateddesignideas" as="relateddesignideas"  template="Designnbuy_Designidea::designidea/view/relateddesignideas.phtml" />
+                    <block class="Designnbuy\Designidea\Block\Designidea\View\RelatedProducts" name="designidea.designidea.relatedproducts" as="relatedproducts"  template="Designnbuy_Designidea::designidea/view/relatedproducts.phtml" />
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

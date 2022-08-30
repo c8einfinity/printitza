@@ -1,0 +1,46 @@
+.cart.table-wrapper .actions-toolbar > .action-preview {
+
+	position: absolute;
+	right: 55px;
+	top: 0;
+	display: inline-block;
+	text-decoration: none;
+
+}
+
+.cart.table-wrapper .actions-toolbar > .action-preview::before {
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 18px;
+	line-height: 20px;
+	color: #757575;
+	/*content: '\e615';
+	font-family: 'luma-icons';*/
+	content: "\e724";
+    font-family: 'font-icons';
+	vertical-align: middle;
+	display: inline-block;
+	font-weight: normal;
+	overflow: hidden;
+	speak: none;
+	text-align: center;
+
+}
+.cart.table-wrapper .actions-toolbar > .action-preview > span {
+
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+
+}
+
+.cart img.product-image-photo {
+	max-height: 165px;
+	object-fit: contain;
+}

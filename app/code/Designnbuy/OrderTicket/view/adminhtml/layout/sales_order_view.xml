@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sales_order_tabs">
+            <block class="Designnbuy\OrderTicket\Block\Adminhtml\Order\View\Tab\OrderTicket" name="designnbuy_orderticket_order_view_tab_orderticket">
+                <block class="Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket" name="designnbuy_orderticket"/>
+            </block>
+            <action method="addTabAfter">
+                <argument name="name" xsi:type="string">order_orderticket</argument>
+                <argument name="block" xsi:type="string">designnbuy_orderticket_order_view_tab_orderticket</argument>
+                <argument name="after" xsi:type="string">order_shipments</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="sales_order_edit">
+            <block class="Designnbuy\OrderTicket\Block\Adminhtml\Order\View\Buttons" name="orderticket_buttons">
+                <action method="addButtons"/>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

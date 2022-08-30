@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2019 Designnbuy WebToPrint Pvt. Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ * ALWAYS DO BETTER @a
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">    
+    <body>
+        <referenceContainer name="content">
+            <block class="Drc\Storepickup\Block\Adminhtml\Holidays\Edit" name="drc_storepickup_holidays_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Drc\Storepickup\Block\Adminhtml\Holidays\Edit\Tabs" name="drc_storepickup_holidays_tabs">
+                <block class="Drc\Storepickup\Block\Adminhtml\Holidays\Edit\Tab\Holidays" name="drc_storepickup_holidays_edit_tab_holidays"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">holidays</argument>
+                    <argument name="block" xsi:type="string">drc_storepickup_holidays_edit_tab_holidays</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

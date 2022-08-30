@@ -1,0 +1,684 @@
+<?php $_albumId = $this->getRequest()->getParam('id'); ?>
+<?php $_helper = $this->helper('Designnbuy\CustomerPhotoAlbum\Helper\Data'); ?>
+<?php $_priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data'); ?>
+<?php if($this->getRequest()->getParam('id')): ?>
+	<?php $_albumList = $_helper->getCustomerAlbums($_albumId); ?>
+	<?php $_albumPhotosCollection = $_helper->getPhotosByAlbumId($_albumId); ?>
+	<script>
+		var loaded_img = 0;
+		function img_onload(img){
+			loaded_img++;
+			img.setAttribute("orig_width", img.naturalWidth);
+			img.setAttribute("orig_height", img.naturalHeight);
+		}
+	</script>
+	<div class="customer-album-section">
+	    <div class="photo-select-box">
+	    	<div class="main-menu-album">
+				<div class="album-qty-price">
+					
+					<?php
+						$productParams = $_helper->getProductParams();
+						$productPrice = "";
+						if(isset($productParams['product']) && $productParams['product'] != ''){
+							$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+							$product_obj = $objectManager->create('Magento\Catalog\Model\Product')->load($productParams['product']);
+							$productPrice = $_priceHelper->currency($product_obj->getFinalPrice(), true, false);
+							$tier_price = $product_obj->getTierPrice();
+							if(count($tier_price) > 0){
+								echo '<div class="tearprice">';
+								foreach($tier_price as $pirces){
+									echo "Buy ".$pirces['price_qty']." from $".$pirces['price'];
+									
+								}
+								echo'</div>';
+								
+							}
+						}
+					?>
+					<!-- <div class="number-of-copy">
+						<label>Number Of Copies</label>
+						<input type="number" name="number_of_copy" id="number_of_copy" value="1" />
+					</div> -->
+					<div class="price-box">
+						<span class="price"><?php echo $productPrice; ?></span>
+					</div>
+					<button id="addtocart-photos" class="addtocart-photos"> Add To Cart </button>
+	    		</div>
+				<div class="page-title-cust"><h4><b>Selected Photos :</b></h4></div>
+				<div class="album-actions-toolbar">
+					<ul class="album-actions-toolbar-ul">
+						<li class="update-section">
+							<?php 
+								if (isset($productParams['product']) && $productParams['product'] != '' && $_helper->getCustomOption($product_obj)) {
+							?>
+							<div class="update-main">
+								<!-- <label>Update</label> -->
+								<div id="album_custom_option_update" class="album-custom-option-block">
+									<?= $_helper->getCustomOption($product_obj); ?>
+									<div class="field">
+										<label class="label">
+											<span>Quantity</span>
+										</label>
+										<div class="control">
+											<input type="number" id="photo_qty_update" />
+										</div>
+									</div>
+									<div class="update-button">
+										<button>Update</button>
+									</div>
+								</div>
+							</div>
+							<?php
+								}
+							?>
+						</li>
+						<li class="album-actions-item">
+							<div class="move-album-box">
+								<div class="organize-fields">
+									<input id="current_album" name="id" type="hidden" value="<?php echo $_albumId; ?>" />
+									<?php if(!empty($_albumList) && $_albumList->getSize() > 0): ?>
+									<!-- <div class="label">Move to other album</div> -->
+									<select id="opration-album-list">
+										<option value=""> <?php echo "select album" ?> </option>
+										<?php foreach ($_albumList as $value): ?>
+											<option value="<?php echo $value->getId(); ?>"> <?php echo $value->getTitle(); ?> </option>
+										<?php endforeach; ?>
+									</select>
+									<button id="submit-album">Move</button>
+									<?php endif; ?>
+								</div>
+							</div>
+						</li>
+						<li class="album-actions-item">
+							<div class="select-all-album">
+								<div class="page__toggle">
+									<label class="image-toggle">
+										<input id="check_all" name="check_all" class="toggle__input" type="checkbox">
+										<span class="toggle__label">
+											<span class="toggle__text"></span>
+										</span>
+										<span class="select-all-label">check all</span>
+									</label>
+								</div>
+							</div>
+							<div class="delete-album-items">
+								<button id="delete-photos">Delete All</button>
+							</div>
+						</li>
+						
+					</ul>
+	    		</div>
+	    	</div>
+			<div class="select-all-div"></div>
+	    </div>
+	    <div class="photo-album-photo-list">
+			<?php if($_albumPhotosCollection->getSize() > 0): ?>
+				<ul>
+				<?php foreach ($_albumPhotosCollection as $_photos): ?>
+					<li class="album-photo" photo-id="<?php echo $_photos->getPhotoId(); ?>" id="album-photo-<?php echo $_photos->getPhotoId(); ?>">
+						<div class="album-photo-edit-box">
+							<div class="photo-img-block">
+								<img src="<?php echo $_helper->getImageUrl($_photos->getPath()); ?>" width="200" onload="img_onload(this)" />
+								<div class="LowDpiIcon warning" title="Poor Photo Quality"><span class="icon icon-dpi-alert"></span></div>
+							</div>
+							<div class="img-edit-delete">
+								<div class="page__toggle">
+									<label class="image-toggle">
+									<input name="photo_select" class="toggle__input" photo-id="<?php echo $_photos->getPhotoId(); ?>" type="checkbox">
+									<span class="toggle__label">
+										<span class="toggle__text"></span>
+									</span>
+									</label>
+								</div>
+								<?php 
+									if(isset($productParams['product']) && $productParams['product'] != ''){
+								?>
+								<div class="album_custom_option">
+									<div class="field">
+										<label class="label"><span>Qty</span></label>
+										<div class="control">
+											<input type="number" name="photo_qty" class="photo_qty" id="photo_qty" value="1"/>
+										</div>
+									</div>
+								</div>
+								<?php
+										if($_helper->getCustomOption($product_obj)){
+											echo '<div class="album_custom_option" >'.$_helper->getCustomOption($product_obj).'</div>';
+										}
+									}
+								?>
+								<div class="edit-image action primary img-buttons">
+									<a href="javascript:void(0)" title="Delete" class="delete-img"></a>
+								</div>
+								<div class="edit-image action primary img-buttons">
+									<a href="#" class="edit-img click-me" data-img="<?php echo $_helper->getImageUrl($_photos->getPath()); ?>" title="Edit"></a>
+								</div>
+							</div>
+						</div>
+					</li>
+				<?php endforeach ?>
+				</ul>
+				
+				<div id="popup-modal" data-mage-init='{"modelpopup": {}}' style="display:none;">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="img-container">
+								<img id="image" src="<?php echo $_helper->getImageUrl('placeholder.jpg'); ?>" alt="Picture">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					<div class="col-md-9 docs-buttons">
+						<div class="btn-group">
+						<button type="button" class="action primary" data-method="rotate" data-option="-45" title="Rotate Left">
+							<span class="docs-tooltip" data-toggle="tooltip" data-animation="false" >
+							<span class="fa fa-rotate-left"></span>
+							</span>
+						</button>
+						<button type="button" class="action primary" data-method="rotate" data-option="45" title="Rotate Right">
+							<span class="docs-tooltip flip_icon" data-toggle="tooltip" data-animation="false" >
+							<span class="fa fa-rotate-right"></span>
+							</span>
+						</button>
+						</div>
+
+						<div class="btn-group">
+							<button type="button" class="action primary" data-method="reset" title="Refresh">
+								<span class="docs-tooltip" data-toggle="tooltip" data-animation="false" >
+								<span class="fa fa-refresh"></span>
+								</span>
+							</button>
+						</div>
+
+						<div class="btn-group btn-group-crop" style="display:none;">
+							<button type="button" class="btn btn-success" id="cropped-canvas" data-method="getCroppedCanvas" data-option="{ &quot;maxWidth&quot;: 4096, &quot;maxHeight&quot;: 4096 }">
+								<span class="docs-tooltip" data-toggle="tooltip" data-animation="false" >
+								Get Cropped Canvas
+								</span>
+							</button>
+						</div>
+
+						<!-- Show the cropped image in modal -->
+						<div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1" style="display:none;">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="getCroppedCanvasTitle">Cropped</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body"></div>
+									<div class="modal-footer">
+										<button type="button" class="action primary" data-dismiss="modal">Close</button>
+										<a class="action primary" id="download" href="javascript:void(0);" download="cropped.jpg">Download</a>
+									</div>
+								</div>
+							</div>
+						</div><!-- /.modal -->
+					</div><!-- /.docs-buttons -->
+
+					<div class="col-md-3 docs-toggles">
+						
+					</div><!-- /.docs-toggles -->
+					</div>
+				</div>
+			<?php endif; ?>
+	    </div>
+	</div>
+	<script type="text/javascript">
+		
+		require(['jquery','Magento_Ui/js/modal/confirm','Magento_Ui/js/modal/alert'],function($,confirmation,alert){
+			var resolution_timer;
+			$(document).ready(function(){
+				jQuery(".album_custom_option .field .control select").find('option[value=""]').remove();
+				// $.each($(".album_custom_option .field .control select"), function(i, value){
+				// 	checkResolution(value);
+				// });
+				$("input[name='photo_select']").on("change", function(){
+					if(this.checked){
+						$(this).parents(".img-edit-delete").addClass("active");
+					}else{
+						$(this).parents(".img-edit-delete").removeClass("active");
+					}
+					var qty = parseInt(jQuery(this).parents(".img-edit-delete").find(".album_custom_option .field .control .photo_qty").val());
+					if(qty)
+						calculatePrice();
+				});
+				$("input[name='photo_qty']").on("input", function(){
+					if(jQuery(this).parents(".img-edit-delete.active").length)
+						calculatePrice();
+				});
+
+				$("#check_all").on("change", function(){
+					if(this.checked){
+						$(".img-edit-delete").addClass("active");
+						$("input[name='photo_select']").prop("checked","checked");
+					}else{
+						$(".img-edit-delete").removeClass("active");
+						$("input[name='photo_select']").prop("checked","");
+					}
+						calculatePrice();
+				});
+			
+				$("#delete-album").on("click",function(){
+					confirmation({
+						title: 'Delete Album',
+						content: 'Are you sure ??',
+						actions: {
+							confirm: function(){
+								$.ajax({
+									url: "<?php echo $block->getBaseUrl().'photoalbum/album/delete/'; ?>",
+									type: 'POST',
+									dataType: 'json',
+									showLoader:true,
+									data: {
+										album_id:$("#current_album").val()
+									},
+									complete: function(response) {
+										if(response.responseJSON.delete){
+											window.location.replace("<?php echo $block->getBaseUrl().'photoalbum/album/'; ?>");
+										}
+									},
+									error: function (xhr, status, errorThrown) {
+										console.log('Error happens. Try again.');
+									}
+								});
+							}
+						}
+					});
+				});
+				$("#album_custom_option_update .update-button").on("click",function(){
+					if(jQuery(".img-edit-delete.active").length){
+						var selected = false;
+						jQuery.each(jQuery("#album_custom_option_update .product-custom-option"), function(){
+							if(jQuery(this).val()){
+								selected = true;
+							}
+						});
+						if(jQuery("#photo_qty_update").val() || selected){
+							if(jQuery("#photo_qty_update").val())
+								jQuery(".img-edit-delete.active .photo_qty").val(jQuery("#photo_qty_update").val());
+							jQuery.each(jQuery("#album_custom_option_update .product-custom-option"), function(){
+								if(jQuery(this).val()){
+									var option_id = jQuery(this).attr("id").replace("select_","");
+									jQuery(".img-edit-delete.active select[name='options["+option_id+"]']").val(jQuery(this).val());
+								}
+							});
+							calculatePrice();
+						}else{
+							alert({
+								title: $.mage.__('Album Photos'),
+								content: $.mage.__('Please select atleast one option to update.'),
+								actions: {
+									always: function(){
+										return false;
+									}
+								}
+							});
+						}
+					}else{
+						alert({
+							title: $.mage.__('Album Photos'),
+							content: $.mage.__('Please select Album Photos.'),
+							actions: {
+								always: function(){
+									return false;
+								}
+							}
+						});
+					}
+					
+				});
+
+				$("#submit-album").on("click",function(event){
+					var photos = [];
+					var actions = "move";
+					$.each($("input[name='photo_select']:checked"), function(){
+						photos.push(this.getAttribute('photo-id'));
+					});
+					if(photos.length < 1){
+						alert({
+							title: $.mage.__('Album Photos'),
+							content: $.mage.__('Please select Album Photos.'),
+							actions: {
+								always: function(){
+									return false;
+								}
+							}
+						});
+						return false;
+					}
+					var move_album = "null";
+					if($("#opration-album-list").length > 0){
+						if($("#opration-album-list").val() != ""){
+							move_album = $("#opration-album-list").val();
+						}else{
+							alert({
+								title: $.mage.__('Album Error'),
+								content: $.mage.__('Please select Album for move photos.'),
+								actions: {
+									always: function(){
+										return false;
+									}
+								}
+							});
+							return false;
+						}
+					}
+					
+					$.ajax({
+						url: "<?php echo $block->getBaseUrl().'photoalbum/album/move/'; ?>",
+						type: 'POST',
+						dataType: 'json',
+						showLoader:true,
+						data: {
+							album_id:$("#current_album").val(),
+							photos : photos,
+							move_album : move_album
+						},
+						complete: function(response) {
+							if(response.responseJSON.moved){
+								$.each($("input[name='photo_select']:checked"), function(){
+								$("#album-photo-"+this.getAttribute('photo-id')).remove();
+								});
+							}
+						},
+						error: function (xhr, status, errorThrown) {
+							console.log('Error happens. Try again.');
+						}
+					});
+				});
+
+				$("#delete-photos").on("click",function(event){
+					var photos = [];
+					$.each($("input[name='photo_select']"), function(){            
+						photos.push(this.getAttribute('photo-id'));
+					});
+					if(photos.length < 1){
+						alert({
+							title: $.mage.__('Album Photos'),
+							content: $.mage.__('Please select Album Photos.'),
+							actions: {
+								always: function(){
+									return false;
+								}
+							}
+						});
+						return false;
+					}
+					confirmation({
+						title: 'Delete Album',
+						content: 'Are you sure ??',
+						actions: {
+							confirm: function(){
+								$.ajax({
+									url: "<?php echo $block->getBaseUrl().'photoalbum/album/deletephotos/'; ?>",
+									type: 'POST',
+									dataType: 'json',
+									showLoader:true,
+									data: {
+										album_id:$("#current_album").val(),
+										photos : photos,
+									},
+									complete: function(response) {
+										if(response.responseJSON.deleted){
+											$.each($("input[name='photo_select']"), function(){
+												$("#album-photo-"+this.getAttribute('photo-id')).remove();
+											});
+										}
+									},
+									error: function (xhr, status, errorThrown) {
+										console.log('Error happens. Try again.');
+									}
+								});
+							},
+							cancel: function(){
+							return false;
+							},
+							always: function(){
+								return false;
+							}
+						}
+					});
+				});
+				$(".delete-img").on("click",function(event){
+					var photos = [];
+					var mythis = $(this); 
+					photos.push(mythis.parents(".album-photo").attr("photo-id"));
+					
+					if(photos.length < 1){
+						alert({
+							title: $.mage.__('Album Photos'),
+							content: $.mage.__('Please select Album Photos.'),
+							actions: {
+								always: function(){
+									return false;
+								}
+							}
+						});
+						return false;
+					}
+					$.ajax({
+						url: "<?php echo $block->getBaseUrl().'photoalbum/album/deletephotos/'; ?>",
+						type: 'POST',
+						dataType: 'json',
+						showLoader:true,
+						data: {
+							album_id:$("#current_album").val(),
+							photos : photos,
+						},
+						complete: function(response) {
+							if(response.responseJSON.deleted){
+								mythis.parents(".album-photo").remove();
+							}
+						},
+						error: function (xhr, status, errorThrown) {
+							console.log('Error happens. Try again.');
+						}
+					});
+				});
+				$(".album_custom_option .field div.control select").on("change",function(event){
+					checkResolution(this);
+				});
+				
+				$("#addtocart-photos").on("click",function(event){
+					
+					var photos = [];
+					
+					/* $.each($(".album_custom_option .field"), function(){            
+						if($(this).find("div.control .product-custom-option").val() != ""){
+							album_custom_option.push({
+								custom_option_label : $(this).find("label.label span").text() +'||'+ $(this).find("div.control .product-custom-option").val()
+							});
+						}
+					}); */
+					//console.log(album_custom_option);
+					var selected_custom_option = [];
+					$.each($("input[name='photo_select']:checked"), function(){    
+						
+						var album_custom_option = [];
+						var custom_option_label;
+						$.each($(this).parents(".img-edit-delete").find(".album_custom_option .field"), function(){
+							if($(this).find("div.control .product-custom-option").val() != ""){
+								album_custom_option.push($(this).find("label.label span").text() +'||'+ $(this).find("div.control .product-custom-option option:selected").text());
+							}
+						});
+						photos.push({
+							photo_id: this.getAttribute('photo-id'),
+							photo_qty:  $(this).parents(".img-edit-delete").find('#photo_qty').val(),
+							album_custom_option : album_custom_option
+
+						});
+						// selected_custom_option = new Object();
+						$.each($(this).parents(".img-edit-delete").find(".album_custom_option .field .control .product-custom-option"), function(){
+							// debugger;
+							var optionVal = jQuery(this).val();
+							selected_custom_option.push(jQuery(this).attr("id").replace("select_","") + '||' + optionVal + '||' + jQuery(this).parents(".img-edit-delete").find(".album_custom_option .field .control .photo_qty").val());
+						});
+
+					console.log(album_custom_option);
+					});
+					if(photos.length < 1){
+						alert({
+							title: $.mage.__('Album Photos'),
+							content: $.mage.__('Please select Album Photos.'),
+							actions: {
+								always: function(){
+									return false;
+								}
+							}
+						});
+						return false;
+					}
+					var qty = photos.length;
+					$.ajax({
+						url: "<?php echo $block->getBaseUrl().'photoalbum/album/addtocart/'; ?>",
+						type: 'POST',
+						dataType: 'json',
+						showLoader:true,
+						data: {
+							album_id:$("#current_album").val(),
+							photos : photos,
+							qty : qty,
+							selected_custom_option : selected_custom_option,
+							number_of_copy : $("#number_of_copy").val(),
+						},
+						complete: function(response) {
+							
+							if(response.responseJSON.success){ 
+								
+								window.location = "<?php echo $block->getBaseUrl().'checkout/cart/'; ?>";
+
+							} else { 
+								console.log(response.responseJSON.message);
+								alert({
+									content: $.mage.__(response.responseJSON.message),
+									actions: {
+										always: function(){
+											return false;
+										}
+									}
+								});
+							}
+							
+						},
+						error: function (xhr, status, errorThrown) {
+							console.log('Error happens. Try again.');
+						}
+					});
+				});
+
+				resolution_timer = setInterval(checkAllImageResolution,1000);
+				
+				jQuery(".img-edit-delete select.product-custom-option").on("change", function(){
+					if(jQuery(this).parents(".img-edit-delete.active").length)
+						calculatePrice();
+				});
+			});
+			
+			function calculatePrice(){
+					var photos = [];
+					
+					var selected_custom_option = [];
+					$.each($("input[name='photo_select']:checked"), function(){    
+						
+						// selected_custom_option = new Object();
+						$.each($(this).parents(".img-edit-delete").find(".album_custom_option .field .control .product-custom-option"), function(){
+							// debugger;
+							var qty = jQuery(this).parents(".img-edit-delete").find(".album_custom_option .field .control .photo_qty").val();
+							if(qty){
+								var optionVal = jQuery(this).val();
+								selected_custom_option.push(jQuery(this).attr("id").replace("select_","") + '||' + optionVal + '||' + qty);
+							}
+						});
+
+					});
+					if(selected_custom_option.length){
+						$.ajax({
+							url: "<?php echo $block->getBaseUrl().'photoalbum/album/calculatePrice/'; ?>",
+							type: 'POST',
+							dataType: 'json',
+							showLoader:true,
+							data: {
+								selected_custom_option : selected_custom_option
+							},
+							complete: function(response) {
+								console.log(response);
+								if(response.success){ 
+									
+									jQuery(".main-menu-album .album-qty-price .price-box span.price").text(response.responseJSON.success);
+	
+									showLoader:false;
+	
+								} else { 
+									console.log(response.responseJSON.message);
+									alert({
+										content: $.mage.__(response.responseJSON.message),
+										actions: {
+											always: function(){
+												return false;
+											}
+										}
+									});
+								}
+								
+							},
+							error: function (xhr, status, errorThrown) {
+								console.log('Error happens. Try again.');
+							}
+						});
+					}else{
+						jQuery(".main-menu-album .album-qty-price .price-box span.price").text("<?php echo $productPrice; ?>");
+					}
+				
+				}
+
+			function checkAllImageResolution(){
+				if(loaded_img == $(".photo-img-block img").length){
+					clearInterval(resolution_timer);
+					$.each($(".album_custom_option .field div.control select"), function(cnt, select){
+						checkResolution(select);
+					});
+				}
+			}
+
+			function checkResolution(dropdown){
+				var size = $(dropdown).children("option:selected").text();
+				size = size.toLowerCase();
+				if(size.indexOf("x") > 0){
+					size = size.split("x");
+					var width = parseFloat(size[0]);
+					var height = parseFloat(size[1]);
+					var warn_icon = $(dropdown).parents(".album-photo-edit-box").find(".LowDpiIcon.warning")[0];
+					var imagetag = $(dropdown).parents(".album-photo-edit-box").find(".photo-img-block img")[0];
+					var image_width = imagetag.getAttribute("orig_width");
+					var image_height = imagetag.getAttribute("orig_height");
+					console.log(width);
+					console.log(height);
+					console.log(image_width);
+					console.log(image_height);
+					if(image_width > image_height && height > width){
+						var tmp = width;
+						width = height;
+						height = tmp;
+					}
+					var dpi = 72;
+					if(image_width < width*dpi || image_height < height * dpi ){
+						console.log("poor quality");
+						$(warn_icon).css("display","flex");
+					}else{
+						console.log("good quality");
+						$(warn_icon).hide();
+					}
+					
+				}
+			}
+
+			
+			window.img_onload = img_onload;
+		})
+	</script>
+
+<?php endif;?>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_DesignReview::design_reviews_ratings" title="Design Reviews/Ratings" module="Designnbuy_DesignReview" parent="Designnbuy_Base::network" sortOrder="50" resource="Designnbuy_DesignReview::design_reviews_ratings" />
+        
+        <add id="Designnbuy_DesignReview::design_reviews_ratings_reviews_all" title="Design Reviews" module="Designnbuy_DesignReview" parent="Designnbuy_DesignReview::design_reviews_ratings" sortOrder="10" action="designreview/product/index" resource="Designnbuy_DesignReview::design_reviews_ratings_reviews_all" />
+        
+        <add id="Designnbuy_DesignReview::design_reviews_ratings_ratings" title="Rating" module="Designnbuy_DesignReview" parent="Designnbuy_DesignReview::design_reviews_ratings" sortOrder="20" action="designreview/rating/" resource="Designnbuy_DesignReview::design_reviews_ratings_ratings" />
+    </menu>
+</config>

@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Product related colors template
+ *
+ * @var $block \Designnbuy\Color\Block\Catalog\Product\RelatedColors
+ */
+?>
+
+<?php if ($block->displayColors()) { ?>
+    <?php $_colorCollection = $block->getColorCollection(); ?>
+    <?php if ($_colorCollection->count()) { ?>
+    <div class="block related">
+        <div class="block-title title">
+            <strong id="block-relatedcolors-heading" role="heading" aria-level="2">
+                <?php echo __('Related colors') ?>
+            </strong>
+        </div>
+        <ol class="block-content">
+            <?php foreach ($_colorCollection as $_color) { ?>
+                <li class="item">
+                    <a class="color-item-link"
+                       href="<?php echo $_color->getColorUrl() ?>">
+                        <?php echo $block->escapeHtml($_color->getTitle()); ?>
+                    </a>
+                </li>
+            <?php } ?>
+        </ol>
+    </div>
+    <?php } ?>
+<?php } ?>

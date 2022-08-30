@@ -1,0 +1,12 @@
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<div class="sales-representative-block" data-bind="visible: config.isEnabled()">
+    <div class="step-title">
+        <!-- ko i18n: 'Choose a Sales Representative' --><!-- /ko -->
+    </div>
+    <div>
+        <select name="salesrep_member" id="salesrep_member" data-bind="event:{change:config.updateSalesRepresentative}, options: config.availableMembers, optionsText: 'name', optionsValue: 'id', optionsCaption: ''"></select>
+    </div>
+</div>

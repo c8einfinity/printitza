@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/unific/order/count" method="GET">
+        <service class="Unific\Connector\Api\ReportManagementInterface" method="getOrderCount"/>
+        <resources>
+            <resource ref="Unific_Connector::report"/>
+        </resources>
+    </route>
+    <route url="/V1/unific/customer/count" method="GET">
+        <service class="Unific\Connector\Api\ReportManagementInterface" method="getCustomerCount"/>
+        <resources>
+            <resource ref="Unific_Connector::report"/>
+        </resources>
+    </route>
+    <route url="/V1/unific/product/count" method="GET">
+        <service class="Unific\Connector\Api\ReportManagementInterface" method="getProductCount"/>
+        <resources>
+            <resource ref="Unific_Connector::report"/>
+        </resources>
+    </route>
+    <route url="/V1/unific/category/count" method="GET">
+        <service class="Unific\Connector\Api\ReportManagementInterface" method="getCategoryCount"/>
+        <resources>
+            <resource ref="Unific_Connector::report"/>
+        </resources>
+    </route>
+    <route url="/V1/unific/connect" method="POST">
+        <service class="Unific\Connector\Api\SetupManagementInterface" method="getData"/>
+        <resources>
+            <resource ref="Unific_Connector::config"/>
+        </resources>
+    </route>
+    <route url="/V1/unific/historical" method="POST">
+        <service class="Unific\Connector\Api\HistoricalManagementInterface" method="triggerHistorical"/>
+        <resources>
+            <resource ref="Unific_Connector::historical"/>
+        </resources>
+    </route>
+
+    <route url="/V1/unific/historical/type/:type" method="POST">
+        <service class="Unific\Connector\Api\HistoricalManagementInterface" method="triggerHistoricalForType"/>
+        <resources>
+            <resource ref="Unific_Connector::historical"/>
+        </resources>
+    </route>
+
+    <route url="/V1/unific/historical/stop" method="POST">
+        <service class="Unific\Connector\Api\HistoricalManagementInterface" method="stopHistorical"/>
+        <resources>
+            <resource ref="Unific_Connector::historical"/>
+        </resources>
+    </route>
+
+    <route url="/V1/unific/historical/stop/type/:type" method="POST">
+        <service class="Unific\Connector\Api\HistoricalManagementInterface" method="stopHistoricalForType"/>
+        <resources>
+            <resource ref="Unific_Connector::historical"/>
+        </resources>
+    </route>
+</routes>

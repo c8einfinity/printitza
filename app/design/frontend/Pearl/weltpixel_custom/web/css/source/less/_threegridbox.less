@@ -1,0 +1,105 @@
+.threebox-wrapper {
+	padding: 15px 0;
+	margin-bottom: 20px;
+	margin-top: 15px;
+    display: inline-block;
+    width: 100%;
+	> .row{
+		@media only screen and (min-width:768px){
+			display: -webkit-box;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-wrap: nowrap;
+			-ms-flex-wrap: nowrap;
+			flex-wrap: nowrap;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-align-items: stretch;
+			align-items: stretch;
+		}
+		@media only screen and (max-width:767px){
+			margin-left: 0;
+		}
+		> .col-8{
+			width: 62%;
+			@media only screen and (max-width:767px){
+				width:100%;
+			}
+		}
+		> .col-4{
+			width: 37%;
+			@media only screen and (max-width:767px){
+				width:100%;
+			}
+		}
+		> div[class*="col-"]{
+			padding: 0 15px;
+			@media only screen and (min-width:768px){
+				display: -webkit-box;
+				display: -moz-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-wrap: wrap;
+				-ms-flex-wrap: wrap;
+			}
+			.three-box-block {
+				&.box2{
+					@media only screen and (min-width:768px){
+						-webkit-align-items: flex-start;
+						align-self: flex-start;
+					}
+				}
+				&.box3{
+					@media only screen and (min-width:768px){
+						-webkit-align-items: flex-end;
+						align-self: flex-end;
+					}
+				}
+			}
+		}
+	}
+	.three-box-block {
+		margin-bottom: 10px;
+		position: relative;
+		.floating-div{
+			position: absolute;
+			bottom: 6%;
+			left: 5%;
+			a.action {
+			    font-size: 18px;
+			    padding: 13px 22px;
+			    box-sizing: border-box;
+			    display: inline-block;
+			    border-radius: 50px;
+			    font-weight: bold;
+			    line-height: 1;
+			    vertical-align: middle;
+			    margin: 0;
+    			height: auto;
+    			text-transform: capitalize;
+    			color: #363636;
+    			[class^=icon-]{
+    				font-weight: bold;
+    			}
+				&:hover{
+			    	color: #ffffff !important;
+				}
+			}
+		}
+		img{
+			width: 100%;
+		}
+	}
+}
+.widget{
+	&.block{
+		&.block-static-block{
+			.threebox-wrapper{
+				padding: 15px 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,45 @@
+.custom-slider{
+	display: inline-block;
+    width: 100%;
+    @media only screen and (min-width:768px){
+        padding-bottom:20px;
+    }
+    .owl-theme {
+    	.owl-controls{
+    		display: inline-block;
+		    width: 100%;
+		    margin-top: -40px;
+		    float: left;
+		    .owl-page {
+		    	span{
+				    background: #ffffff;
+				    z-index: 1;
+				    position: relative;
+				    opacity: 1;
+				    -webkit-transition: width 0.5s;
+				    -moz-transition: width 0.5s;
+				    -o-transition: width 0.5s;
+				    transition: width 0.5s;
+		    	}
+		    	&.active{
+		    		span{
+		    			background: #363636;
+    					width: 60px;
+    					-webkit-transition: width 0.5s;
+					    -moz-transition: width 0.5s;
+					    -o-transition: width 0.5s;
+					    transition: width 0.5s;
+		    		}
+		    	}
+		    }
+    	}
+	}
+    .owl-carousel {
+        .owl-stage-outer{
+            padding-top: 0;
+            @media only screen and (max-width:767px){
+                padding-top: 0;
+            }
+        }
+    }
+}

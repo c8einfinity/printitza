@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="designnbuy_customer/group/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Customer Group</label>
+            </button>
+        </buttons>
+        <spinner>customer_group_columns</spinner>
+        <deps>
+            <dep>customer_group_listing.customer_group_listing_data_source</dep>
+        </deps>
+    </settings>
+</listing>

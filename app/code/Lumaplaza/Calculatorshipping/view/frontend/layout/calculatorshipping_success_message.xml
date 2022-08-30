@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+	<container name="root">
+        <block class="Lumaplaza\Calculatorshipping\Block\Calculatorshipping" as="calculatorshipping_success_message" template="Lumaplaza_Calculatorshipping::success_message.phtml">
+            <block class="Lumaplaza\Calculatorshipping\Block\Calculatorshipping" name="calculatorshipping.item" template="view.phtml" />
+        </block>
+    </container>
+</layout>

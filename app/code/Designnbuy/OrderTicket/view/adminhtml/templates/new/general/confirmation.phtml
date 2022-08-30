@@ -1,0 +1,35 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Designnbuy\OrderTicket\Block\Adminhtml\OrderTicket\Edit\Tab\General\History" */
+?>
+<div class="admin__page-section-item orderticket-confiordertickettion">
+    <div class="admin__page-section-item-title">
+        <span class="title"><?php /* @escapeNotVerified */ echo __('Return Confirmation') ?></span>
+    </div>
+    <div class="admin__page-section-item-content order-totals-actions orderticket-history-form">
+        <?php if ($block->canSendConfiordertickettionEmail()): ?>
+            <div class="admin__field admin__field-option field-orderticket-confirmation">
+                <input name="orderticket_confiordertickettion"
+                       class="admin__control-checkbox"
+                       type="checkbox"
+                       id="orderticket_confiordertickettion"
+                       value="1"
+                       checked="checked"/>
+                <label class="admin__field-label" for="orderticket_confirmation">
+                    <span><?php /* @escapeNotVerified */ echo __('Email Order Ticket Confirmation') ?></span>
+                </label>
+            </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button data-mage-init='{"button":{"event":"save","target":"#edit_form"}}'
+                    class="action-primary action-save action-default" type="button" id="orderticket_confirmation_submit">
+                <span><?php /* @escapeNotVerified */ echo __('Submit Order Ticket') ?></span></button>
+        </div>
+    </div>
+</div>

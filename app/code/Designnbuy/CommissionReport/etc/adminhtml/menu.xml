@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">    
+    <menu>
+        <add id="Designnbuy_CommissionReport::reports" title="Commission Reports" module="Designnbuy_CommissionReport" sortOrder="20" parent="Designnbuy_Base::network" resource="Designnbuy_CommissionReport::reports" />
+        
+        <add id="Designnbuy_CommissionReport::commissionreport" title="Order Wise" module="Designnbuy_CommissionReport" action="commissionreport/report/order" sortOrder="10" parent="Designnbuy_CommissionReport::reports" resource="Designnbuy_CommissionReport::commissionreport" />
+        
+        <add id="Designnbuy_CommissionReport::designreport" title="Design Wise" module="Designnbuy_CommissionReport" action="commissionreport/report/design" sortOrder="20" parent="Designnbuy_CommissionReport::reports" resource="Designnbuy_CommissionReport::designreport" />
+        
+        <!-- <add id="Designnbuy_CommissionReport::designerreport" title="Designer Wise" module="Designnbuy_CommissionReport" action="commissionreport/report/designer" sortOrder="30" parent="Designnbuy_CommissionReport::reports" resource="Designnbuy_CommissionReport::designerreport" /> -->
+        
+        <add id="Designnbuy_CommissionReport::productreport" title="Product Wise" module="Designnbuy_CommissionReport" action="commissionreport/report/product" sortOrder="40" parent="Designnbuy_CommissionReport::reports" resource="Designnbuy_CommissionReport::productreport" />
+    </menu>    
+</config>

@@ -1,0 +1,51 @@
+<?php
+
+if($block->getDeliveryEstimationsEnabled() && $block->productIsShippable())
+{
+
+$postCode = $block->getAddressDetail('postcode');
+$countryCode = $block->getAddressDetail('country_id');
+
+$selectedDeliveryInfo = $block->getSelectedDeliveryEstimate();
+
+?>
+     <div class="loader" style="display:none">
+            <img style="height:30px" src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+                 alt="<?= /* @escapeNotVerified */ __('Loading...') ?>">
+     </div>
+    <?php
+    if($selectedDeliveryInfo === false){
+            $estimationsAlreadyMade = false;
+            ?>
+
+            <div id="estimated_response" style="display:none">
+                <strong>Estimated Arrival </strong><br/><span id="date"></span> at ZIP <span id="zip" style="cursor:pointer; text-decoration:underline" ></span><input class="wesupply_estimations_zip" id="input_zip" value="<?php echo $postCode; ?>" />  <span id="country"></span>
+            </div>
+        <?php
+        }else{
+            $estimationsAlreadyMade = true;
+            ?>
+            <div id="estimated_response" style="display:block">
+                <strong>Estimated Arrival </strong><br/><span id="date"><?php echo $selectedDeliveryInfo['estimatedDelivery'];?></span> at ZIP <span id="zip" style="cursor:pointer; text-decoration:underline" ><?php echo $selectedDeliveryInfo['zipcode'];?></span><input class="wesupply_estimations_zip" id="input_zip" value="<?php echo $postCode; ?>" style="display:none; "/>  <span id="country"><?php echo $selectedDeliveryInfo['country'];?></span>
+            </div>
+            <?php
+    }
+?>
+        <div id="error" style="display:none"><span id="error-message" style="color:red"></span></div>
+
+    <script>
+        requirejs(['jquery', 'wesupplyestimations' ],
+            function   ($, wesupplyestimations) {
+                $(document).ready(function() {
+                    wesupplyestimations.initialize("<?php echo $block->getEstimationsUrl() ?>",  "<?php echo $block->getIp() ?>", "<?php echo $block->getCurrentStoreId(); ?>", "<?php echo $postCode; ?>", "<?php echo $countryCode; ?>",  "<?php echo $block->getProductPrice(); ?>", "<?php echo  $block->getStoreCurrency(); ?>", "<?php   echo $estimationsAlreadyMade; ?>");
+                });
+            });
+    </script>
+
+<?php
+
+}
+
+?>
+
+

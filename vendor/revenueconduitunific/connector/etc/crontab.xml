@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="unific_message">
+        <job name="unific_send_from_queue" instance="Unific\Connector\Helper\Queue" method="process">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job name="unific_queue_historical" instance="Unific\Connector\Helper\Historical" method="queueHistorical">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job name="unific_log_cleaner" instance="Unific\Connector\Helper\Logger" method="cleanLog">
+            <schedule>0 3 * * *</schedule>
+        </job>
+    </group>
+</config>

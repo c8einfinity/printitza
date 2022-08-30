@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="customer_manage" xsi:type="string">/customer/manage/</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="saveDesignToolRouter" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Customer\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">50</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Template\Block\Template\TemplateList\AbstractList">
+        <plugin name="Designnbuy_Customer_Group_Login_Template" type="Designnbuy\Customer\Plugin\Group\CustomerGroupTemplateFilter" sortOrder="10" disabled="false"  />
+    </type>
+    <type name="Designnbuy\Designidea\Block\Designidea\DesignideaList\AbstractList">
+        <plugin name="Designnbuy_Customer_Group_Login_Designidea" type="Designnbuy\Customer\Plugin\Group\CustomerGroupDesignideaFilter" sortOrder="10" disabled="false"  />
+    </type>
+    <!-- <type name="Designnbuy\Designer\Block\Designer\Designs\DesignList">
+        <plugin name="Designnbuy_Customer_Group_Login_Template_Designer" type="Designnbuy\Customer\Plugin\Group\CustomerGroupTemplateDesignerFilter" sortOrder="10" disabled="false"  />
+    </type>
+    <type name="Designnbuy\Designer\Block\Designer\Designs\DesignList">
+        <plugin name="Designnbuy_Customer_Group_Login_Designidea_Designer" type="Designnbuy\Customer\Plugin\Group\CustomerGroupDesignideaDesignerFilter" sortOrder="10" disabled="false"  />
+    </type> -->
+    <type name="Designnbuy\Template\Model\Category">
+        <plugin name="Designnbuy_Customer_Group_Login_Template_Category_Designer" type="Designnbuy\Customer\Plugin\Group\CustomerGroupTemplateCategoryDesignerFilter" sortOrder="10" disabled="false"  />
+    </type>
+    <type name="Designnbuy\Designidea\Model\Category">
+        <plugin name="Designnbuy_Customer_Group_Login_Designidea_Category_Designer" type="Designnbuy\Customer\Plugin\Group\CustomerGroupDesignideaCategoryDesignerFilter" sortOrder="10" disabled="false"  />
+    </type>
+    <type name="Designnbuy\Template\Helper\Menu">
+        <plugin name="Designnbuy_Customer_Group_Login_Template_Category_Menu_Designer" type="Designnbuy\Customer\Plugin\Group\CustomerGroupTemplateCategoryMenuDesignerFilter" sortOrder="10" disabled="false"  />
+    </type>
+    <type name="Designnbuy\Designidea\Helper\Menu">
+        <plugin name="Designnbuy_Customer_Group_Login_Designidea_Category_Menu_Designer" type="Designnbuy\Customer\Plugin\Group\CustomerGroupDesignideaCategoryMenuDesignerFilter" sortOrder="10" disabled="false"  />
+    </type>
+</config>

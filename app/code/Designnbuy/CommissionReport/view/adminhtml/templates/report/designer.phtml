@@ -1,0 +1,29 @@
+<?php  $_report = $block->getDesignCommissionDashboard(); ?>
+<table class="data-grid">
+    <thead>
+        <tr>
+            <th class="data-grid-th" width="250px"><span><?php echo __('Design Report Dashboard');?></span></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="data-grid-tr-data">
+            <td class="label"><?php echo __('Total Designers');?></td>
+            <td class="value"><b><?php echo $_report['total_designer'];?></b></td>
+        </tr>
+        <tr>
+            <td class="label"><?php echo __('Total Resellers');?></td>
+            <td class="value"><b><?php echo $_report['total_reseller'];?></b></td>
+        </tr>
+        <tr>
+            <td class="label"><?php echo __('Total Sold Qty');?></td>
+            <td class="value"><b><?php echo $_report['total_design_sold'];?></b></td>
+        </tr>
+        <tr>
+            <td class="label"><?php echo __('Total Commission Earned');?></td>
+            <td class="value"><b><?php echo $block->setFormatedAmount($_report['total_commission_paid']); ?></b></td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<br />

@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \BrainActs\SalesRepresentative\Block\Account\Dashboard\Representative $block */
+
+?>
+
+<?php
+    $members = $block->getMembers();
+    $selected = $block->getCurrentMembers();
+    $isExistRequest = (bool)$block->isRequestExist();
+?>
+<?php if ($block->isEnabled()):?>
+<div class="block block-dashboard-info">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('My Sales Representative')) ?></strong></div>
+    <div class="block-content" data-mage-init='<?php echo $block->getJsonConfig()?>'>
+        <?php if (!$isExistRequest && $block->isAllowEdit()):?>
+        <form class="form-sr-edit" id="form-sr-edit" method="post" action="<?= $block->getSubmitUrl()?>">
+            <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset">
+                <div>
+                    <?php if (count($members) && $block->isAllowEdit()):?>
+                        <?php foreach ($members as $member):?>
+                        <div class="field choice">
+                            <span class="tooltip-section">
+                            <?php if($block->isAllowEdit()):?>
+                                <input name="members[]" type="checkbox" id="member_<?= $member->getId() ?>" value="<?= $member->getId()?>" <?php if (in_array($member->getId(), $selected)):?> checked="checked"<?php endif?> />
+                                <label class="label" for="member_<?= $member->getId() ?>"><span class="tooltip-toggle"><?= $block->escapeHtml($member->getFirstname())?> <?= $block->escapeHtml($member->getLastname())?></span></label>
+                                <?php if (!empty($member->getComment())):?>
+                                    <span class="tooltip-content"><?= $block->escapeHtml($member->getComment()) ?></span>
+                                <?php endif;?>
+                            <?php else:?>
+                                <?php if (in_array($member->getId(), $selected)):?>
+                                    <label class="label" for="member_<?= $member->getId() ?>"><span><?= $block->escapeHtml($member->getFirstname())?> <?= $block->escapeHtml($member->getLastname())?></span></label>
+                                <?php endif?>
+                            <?php endif;?>
+                            </span>
+
+                        </div>
+                        <?php endforeach;?>
+                    <?php else:?>
+                        <?= $block->escapeHtml(__('Sales Representative is not assigned.')) ?>
+                    <?php endif;?>
+                </div>
+                <?php if($block->isAllowEdit()):?>
+                <br />
+                <div class="actions">
+                    <div class="primary">
+                        <button class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>" type="submit">
+                            <span><?= $block->escapeHtml(__('Save')) ?></span>
+                        </button>
+                    </div>
+                </div>
+                <?php endif;?>
+            </fieldset>
+        </form>
+        <?php else:?>
+        <form>
+            <fieldset class="fieldset">
+                <div>
+                    <?php foreach ($members as $member):?>
+                        <div class="field choice">
+                            <?php if (in_array($member->getId(), $selected)):?>
+                            <span class="tooltip-section">
+                                <label class="label"><span class="tooltip-toggle"><?= $block->escapeHtml($member->getFirstname())?> <?= $block->escapeHtml($member->getLastname())?></span></label>
+                                <?php if (!empty($member->getComment())):?>
+                                    <span class="tooltip-content"><?= $block->escapeHtml($member->getComment()) ?></span>
+                                <?php endif;?>
+                            </span>
+                            <?php endif?>
+                        </div>
+                    <?php endforeach;?>
+                </div>
+            </fieldset>
+        </form>
+
+            <?php if ($isExistRequest):?>
+            <br />
+            <div class="page messages">
+                    <div role="alert" class="messages">
+                        <div class="message-notice notice message">
+                            <div> <?= $block->escapeHtml('Your request to change sales representative is under review.') ?></div>
+                        </div>
+                    </div>
+            </div>
+            <?php endif;?>
+
+        <?php endif;?>
+    </div>
+</div>
+<?php endif;?>

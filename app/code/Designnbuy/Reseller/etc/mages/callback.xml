@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+<adminhtml>
+<designnbuy>
+    <reseller>
+        <acl_deny>
+            <website_level>
+            </website_level>
+            <store_level>
+                <sales_order_create>admin/sales/order/actions/create</sales_order_create>
+                <customer_attributes>admin/customer/attributes</customer_attributes>
+            </store_level>
+        </acl_deny>
+        <!-- all callbacks support absolute naming with factory_classname::method -->
+        <collection_load_before>
+            <Magento_Cms_Model_ResourceModel_Page_Grid_Collection>addStoreFilter</Magento_Cms_Model_ResourceModel_Page_Grid_Collection>
+            <Magento_Sales_Model_ResourceModel_Order_Collection>addStoreAttributeToFilter</Magento_Sales_Model_ResourceModel_Order_Collection>
+            <Magento_Sales_Model_ResourceModel_Order_Grid_Collection>addStoreFieldToFilter</Magento_Sales_Model_ResourceModel_Order_Grid_Collection>
+            <Magento_Customer_Model_ResourceModel_Customer_Collection>limitCustomers</Magento_Customer_Model_ResourceModel_Customer_Collection>
+            <Magento_Customer_Model_ResourceModel_Grid_Collection>addCustomerWebsiteFilter</Magento_Customer_Model_ResourceModel_Grid_Collection>
+            <Magento_Catalog_Model_ResourceModel_Product_Collection>limitProducts</Magento_Catalog_Model_ResourceModel_Product_Collection>
+
+            <Designnbuy_Font_Model_ResourceModel_Font_Collection>addStoreFilter</Designnbuy_Font_Model_ResourceModel_Font_Collection>
+            <Designnbuy_Font_Model_ResourceModel_Category_Collection>addStoreFilter</Designnbuy_Font_Model_ResourceModel_Category_Collection>
+
+            <Designnbuy_Clipart_Model_ResourceModel_Clipart_Collection>addStoreFilter</Designnbuy_Clipart_Model_ResourceModel_Clipart_Collection>
+
+            <Designnbuy_Background_Model_ResourceModel_Grid_Collection>addStoreFilter</Designnbuy_Background_Model_ResourceModel_Grid_Collection>
+
+            <Designnbuy_Color_Model_ResourceModel_Color_Collection>addStoreFilter</Designnbuy_Color_Model_ResourceModel_Color_Collection>
+            <Designnbuy_Template_Model_ResourceModel_Template_Collection>addTemplateWebsiteFilter</Designnbuy_Template_Model_ResourceModel_Template_Collection>
+
+            <Designnbuy_Designidea_Model_ResourceModel_Designidea_Collection>addDesignideaWebsiteFilter</Designnbuy_Designidea_Model_ResourceModel_Designidea_Collection>
+            <!-- <Designnbuy_AdminImages_Model_ResourceModel_Image_Grid_Collection>addStoreFilter</Designnbuy_AdminImages_Model_ResourceModel_Image_Grid_Collection> -->
+            <Magefan_Blog_Model_ResourceModel_Post_Collection>addStoreFilter</Magefan_Blog_Model_ResourceModel_Post_Collection>
+            <Designnbuy_OrderTicket_Model_ResourceModel_OrderTicket_Grid_Collection>addAttributeToFilter</Designnbuy_OrderTicket_Model_ResourceModel_OrderTicket_Grid_Collection>
+        </collection_load_before>
+
+        <widget_container_buttons_rendering>
+            <Magento_Catalog_Block_Adminhtml_Product>widgetProductGridContainer</Magento_Catalog_Block_Adminhtml_Product>
+            <!--<Designnbuy_Corporate_Block_Adminhtml_Corporate_Edit>removeCorporateButtons</Designnbuy_Corporate_Block_Adminhtml_Corporate_Edit>-->
+        </widget_container_buttons_rendering>
+        <block_html_before>
+            <!--<Designnbuy_Corporate_Block_Adminhtml_Corporate_Edit_Tab_Products>removeProductColumn</Designnbuy_Corporate_Block_Adminhtml_Corporate_Edit_Tab_Products>-->
+            <Magento_Catalog_Block_Adminhtml_Product_Edit_Tabs>removeProductTabs</Magento_Catalog_Block_Adminhtml_Product_Edit_Tabs>
+        </block_html_before>
+    </reseller>
+</designnbuy>
+</adminhtml>
+</config>

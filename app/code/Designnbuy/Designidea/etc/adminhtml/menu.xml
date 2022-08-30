@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Customer attribute admin menu.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Designidea::elements" title="Editable Artwork" module="Designnbuy_Designidea" parent="Designnbuy_Base::DNB" sortOrder="70"  resource="Designnbuy_Designidea::elements"/>
+        <!--<add id="Designnbuy_Designidea::category_attributes" title="Category Attributes" module="Designnbuy_Designidea" sortOrder="20" parent="Designnbuy_Designidea::elements" action="designidea/category_attribute" resource="Designnbuy_Designidea::category_attributes"/>-->
+        <add id="Designnbuy_Designidea::category" title="Categories" module="Designnbuy_Designidea" action="designidea/category" sortOrder="30" parent="Designnbuy_Designidea::elements" resource="Designnbuy_Designidea::category"/>
+        <!--<add id="Designnbuy_Designidea::designidea_attributes" title="Designidea Attributes" module="Designnbuy_Designidea" sortOrder="40" parent="Designnbuy_Designidea::elements" action="designidea/designidea_attribute" resource="Designnbuy_Designidea::designidea_attributes"/>-->
+        <add id="Designnbuy_Designidea::designidea" title="Editable Artworks" module="Designnbuy_Designidea" action="designidea/designidea" sortOrder="50" parent="Designnbuy_Designidea::elements" resource="Designnbuy_Designidea::designidea"/>
+    </menu>
+</config>

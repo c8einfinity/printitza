@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * Copyright © 2015 Designnbuy. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    <add id="Designnbuy_AdminImages::adminimages"
+             title="Admin Images"
+             module="Designnbuy_CustomerPhotoAlbum"
+             sortOrder="20"
+             parent="Designnbuy_Base::DNB"
+             resource="Designnbuy_AdminImages::adminimagess"/>
+
+        <add id="Designnbuy_CustomerPhotoAlbum::album" title="Album"
+             module="Designnbuy_CustomerPhotoAlbum"
+             sortOrder="20"
+             parent="Designnbuy_AdminImages::adminimages"
+             action="customerphotoalbum/album"
+             resource="Designnbuy_CustomerPhotoAlbum::album"/>
+        <add id="Designnbuy_CustomerPhotoAlbum::photos" title="Images" 
+             module="Designnbuy_CustomerPhotoAlbum" 
+             sortOrder="20" 
+             parent="Designnbuy_AdminImages::adminimages" 
+             action="customerphotoalbum/photos" 
+             resource="Designnbuy_CustomerPhotoAlbum::photos"/>
+    </menu>
+</config>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation" remove="true"/>
+        
+        <referenceBlock name="designidea.designideas.list">
+            <block class="Designnbuy\Designidea\Block\Designidea\DesignideaList\Item" name="designidea.designideas.list.item" template="designidea/list/item.phtml">
+                <block class="Designnbuy\Designidea\Block\Designidea\Info" name="designidea.designidea.info" template="designidea/info.phtml" />
+                <action method="setDesignideaInfoBlockName">
+                    <argument name="name" xsi:type="string">designidea.designidea.info</argument>
+                </action>
+            </block>
+            <block class="Designnbuy\Designidea\Block\Designidea\DesignideaList\Toolbar" name="designidea_list_toolbar" template="designidea/list/toolbar.phtml">
+                <block class="Designnbuy\Designidea\Block\Designidea\DesignideaList\Toolbar\Pager" name="designidea_list_toolbar_pager">
+                    <action ifconfig="dnbdesignidea/designidea_list/lazyload_enabled" method="setTemplate">
+                        <argument name="template" xsi:type="string">Designnbuy_Designidea::designidea/list/toolbar/lazyload.phtml</argument>
+                    </action>
+                    <arguments>
+                        <argument name="lazyload_js" xsi:type="string">Designnbuy_Designidea/js/lazyload</argument>
+                        <argument name="list_wrapper" xsi:type="string">.designidea-list-wrapper .designidea-list, .designidea-list-wrapper .designidea-list</argument>
+                    </arguments>
+                </block>
+            </block>
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">designidea_list_toolbar</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

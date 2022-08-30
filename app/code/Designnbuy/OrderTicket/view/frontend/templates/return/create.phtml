@@ -1,0 +1,141 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Designnbuy\OrderTicket\Block\Returns\Create */
+?>
+<?php $_order =  $block->getOrder(); ?>
+<?php $_data = $block->getFormData(); ?>
+<?php $_items = $block->getItems(); ?>
+<?php $totalAvlQty = 0; ?>
+<script id="template-registrant" type="text/x-magento-template">
+    <div class="actions-toolbar">
+        <div class="secondary" id="delete<%- data._index_ %>">
+            <button type="button" class="action remove delete"><span><?php /* @escapeNotVerified */ echo __('Remove') ?></span></button>
+        </div>
+    </div>
+    <fieldset class="fieldset">
+
+
+    </fieldset>
+</script>
+
+<form id="orderticket_create_form" method="post" enctype="multipart/form-data" class="form form-create-return">
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><?php /* @escapeNotVerified */ echo __('New Order Ticket for Order %1', $_order->getIncrementId()) ?></span>
+        </legend>
+        <br>
+        <div class="field id">
+            <span class="label"><span><?php /* @escapeNotVerified */ echo __('Order ID') ?></span></span>
+            <div class="control"><span><?php /* @escapeNotVerified */ echo $_order->getIncrementId() ?></span></div>
+        </div>
+        <div class="field name">
+            <span class="label"><span><?php /* @escapeNotVerified */ echo __('Customer Name') ?></span></span>
+            <div class="control"><span><?php echo $block->escapeHtml($_order->getCustomerName()) ?></span></div>
+        </div>
+        <div class="field email">
+            <span class="label"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></span>
+            <div class="control"><span><?php /* @escapeNotVerified */ echo $_order->getCustomerEmail()?></span></div>
+        </div>
+        <div class="field contact email">
+            <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo $this->helper('Designnbuy\OrderTicket\Helper\Data')->getContactEmailLabel() ?></span></label>
+            <div class="control">
+                <input type="text" name="customer_custom_email" id="email" title="Contact Email Address" class="input-text" data-validate="{'validate-email':true}" value="<?php /* @escapeNotVerified */ echo $block->getContactEmail()?>">
+            </div>
+        </div>
+        <div class="field address shipping">
+            <span class="label"><span><?php /* @escapeNotVerified */ echo __('Order Shipping Address') ?></span></span>
+            <address class="control"><?php /* @escapeNotVerified */ echo $block->format($_order->getShippingAddress(), 'html') ?></address>
+        </div>
+    </fieldset>
+    <script type="text/x-magento-init">
+        {
+            "#orderticket_create_form": {
+                "orderticketCreate": {
+                    <?php $i = 0; ?>
+                    <?php if ($_data): ?>
+                    <?php $formDataPost = $_data->getItems(); ?>
+                    <?php if (is_array($formDataPost)): ?>
+                    "formDataPost": <?php /* @escapeNotVerified */ echo json_encode($formDataPost); ?>,
+                    <?php endif; ?>
+                    <?php endif; ?>
+                    "templateRegistrant": "#template-registrant",
+                    "registrantOptions": "#registrant-options",
+                    "addItemToReturn": "add-item-to-return",
+                    "btnRemove": "delete",
+                    "row": "#row",
+                    "addRow": "additional row",
+                    "qtyReqBlock": "#qty_requested_block",
+                    "remQtyBlock": "#remaining_quantity_block",
+                    "remQty": "#remaining_quantity",
+                    "reasonOtherRow": "#reason_other",
+                    "reasonOtherInput": "#items:reason_other",
+                    "radioItem": "#radio:item",
+                    "orderItemId": "#item:order_item_id",
+                    "itemsItem": "items:item",
+                    "itemsReason": "items:reason",
+                    "totalAvlQty": "",
+                    "firstItemId": "",
+                    "productType": "",
+                    "availableQuantity": "",
+                    "prodTypeBundle": "<?php /* @escapeNotVerified */ echo \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE ?>"
+                },
+                "validation": {
+                     "ignore": ":hidden:not(input[id$='_value'])"
+                }
+            }
+        }
+    </script>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Order Ticket Items Information') ?></span></legend>
+        <br>
+        <div id="registrant-options"></div> <?php /* fields of the form are inserted here */ ?>
+        <div class="field comment">
+            <label for="orderticket_comment" class="label"><span><?php /* @escapeNotVerified */ echo __('Comments') ?></span></label>
+            <div class="control">
+                <textarea id="orderticket_comment" cols="5" rows="3" name="comment[orderticket_comment]" class="input-text"><?php if ($_data): ?><?php /* @escapeNotVerified */ echo $_data->getOrderTicketComment(); ?><?php endif; ?></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset">
+        <div class="field admin__field">
+            <label class="admin__field-label"
+                   for="file"><?php /* @escapeNotVerified */ echo __('File') ?></label>
+            <div class="upload-wrapper" data-bind="scope: 'uploader'" data-mage-init='{
+                               "Magento_Ui/js/core/app": {
+                                   "components": {
+                                       "uploader": {
+                                            "formElement" : "fileUploader",
+                                            "componentType" : "fileUploader",
+                                           "component": "Magento_Ui/js/form/element/file-uploader",
+                                           "template": "Designnbuy_OrderTicket/components/file-uploader",
+                                           "inputName": "ticket",
+                                           "name": "ticket",
+                                           "fileInputName": "ticket",
+                                           "isMultipleFiles": false,
+                                           "uploaderConfig": {
+                                                "url": "<?php echo $block->getUrl('*/*/upload'); ?>"
+                                           }
+                                       }
+                                   }
+                                }
+                            }
+                        '>
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary" id="submit.save" title="<?php /* @escapeNotVerified */ echo __('Save') ?>"><span><?php /* @escapeNotVerified */ echo __('Submit') ?></span></button>
+        </div>
+        <div class="secondary">
+            <a href="<?php /* @escapeNotVerified */ echo $block->getBackUrl() ?>" class="action back"><span><?php /* @escapeNotVerified */ echo __('Back') ?></span></a>
+        </div>
+    </div>
+</form>

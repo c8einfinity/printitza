@@ -1,0 +1,40 @@
+<?php //$designerCommission = $block->getDesignerCommissionCollection(); ?>
+<?php $designerCommission = $block->getDesignerCommission(); ?>
+
+<div class="col-1">
+	<div class="box">
+		<div class="box-title">
+			<h3><?php echo __('Earning Information');?></h3>
+		</div>
+		<div class="box-content">
+			<ul class="form-list">
+				<li>
+					<label for="totalcommission"><?php echo __('Total Commission Earned : '); ?></label>
+					<label for="totalcommissionamount"><?php echo $block->setFormatedAmount($designerCommission['earnedCommission']); ?></label>
+				</li>
+				<li>
+					<label for="totalcommission"><?php echo __('Total Pending Commission : '); ?></label>
+					<label for="totalcommissionamount"><?php echo $block->setFormatedAmount($designerCommission['pendingCommission']); ?></label>
+				</li>
+				<li>
+					<label for="totalcommission"><?php echo __('Canceled Order Commission : '); ?></label>
+					<label for="totalcommissionamount"><?php echo $block->setFormatedAmount($designerCommission['canceledCommission']); ?></label>
+				</li>
+				<li>
+					<label for="redeemcommission"><?php echo __('Total Redeemed :'); ?></label>
+					<label for="redeemcommissionamount"><?php echo $block->setFormatedAmount($designerCommission['redeemedCommission']); ?></label>
+				</li>
+				<li>
+					<label for="balance"><?php echo __('Redeemable Amount :'); ?></label>
+					<?php //if($designerCommission['balance']): ?>
+							<label for="balanceamount"><?php echo $block->setFormatedAmount($designerCommission['balance']); ?></label>
+					<?php //endif; ?>
+				</li>
+				<li>
+					<label for="totalcommission"><?php echo __('Designer Pending Commission : '); ?></label>
+					<label for="totalcommissionamount"><?php echo $block->setFormatedAmount($block->getDesignerPenddingCommission()); ?></label>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,29 @@
+<?php
+/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$hideproductCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+$hideproductCollection->addAttributeToFilter('hide_addtocart',1);
+$hideCartCollection = $hideproductCollection->addAttributeToSelect('entity_id')
+            ->load();
+$hideAddtocartProduct = [];
+foreach ($hideCartCollection as $product){
+	$hideAddtocartProduct[] = $product->getId();
+}
+if(!empty($hideAddtocartProduct)){
+	$hideAddtocartProductString = implode(",",$hideAddtocartProduct);
+?>
+<script>
+require(['jquery'], function($) {
+	var hideaddtocartproductstring = "<?php echo $hideAddtocartProductString; ?>";
+	var productIds = hideaddtocartproductstring.split(",");
+	jQuery(jQuery("[name='product']")).each(function(){
+		if (jQuery.inArray(jQuery(this).val(), productIds) > -1) {
+			jQuery(this).parents('form').find("button.action.tocart.primary").remove();
+		}
+	});
+	
+
+})
+</script>
+<?php
+} */
+?>

@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background background list item template
+ *
+ * @var $block \Designnbuy\Background\Block\Background\AbstractBackground
+ */
+?>
+<?php
+    $_background = $this->getBackground();
+    $_backgroundUrl = $_background->getBackgroundUrl();
+    $_backgroundName = $block->escapeHtml($_background->getTitle(), null, true);
+?>
+<li class="background-holder background-holder-<?php echo $_background->getId() ?>">
+    <div class="background-header">
+
+        <div class="background-title-holder clearfix">
+            <h2 class="background-title">
+                <a class="background-item-link"
+                   href="<?php echo $_backgroundUrl ?>">
+                    <?php echo $_backgroundName; ?>
+                </a>
+            </h2>
+        </div>
+
+        <?php echo $this->getInfoHtml() ?>
+    </div>
+
+    <div class="background-content">
+        <div class="background-description clearfix">
+            <?php if ($featuredImage = $_background->getImage()) { ?>
+            <div class="background-ftimg-hld">
+                <a href="<?php echo $_backgroundUrl ?>" title="<?php echo $_backgroundName ?>">
+                    <img src="<?php echo $featuredImage ?>" alt="<?php echo $_backgroundName ?>" />
+                </a>
+            </div>
+            <?php } ?>
+            <div class="background-text-hld clearfix">
+                <?php echo $block->getShorContent() ?>
+            </div>
+            <a class="background-read-more" href="<?php echo $_backgroundUrl ?>" title="<?php echo $_backgroundName ?>"
+               >
+               <?php echo __('Read more &#187;') ?>
+            </a>
+        </div>
+    </div>
+    <div class="background-footer">
+
+    </div>
+</li>

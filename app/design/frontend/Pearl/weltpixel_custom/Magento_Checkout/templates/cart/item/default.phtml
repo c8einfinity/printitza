@@ -1,0 +1,300 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
+
+$_item = $block->getItem();
+$product = $_item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+
+$_helper_weltpixel = $this->helper('WeltPixel\ProductPage\Helper\Data');
+$selectMaxValue = $_helper_weltpixel->getQtySelectMaxValue();
+
+$infoBuyRequest = $_item->getOptionByCode('info_buyRequest');
+
+$buyRequest = json_decode($infoBuyRequest->getValue(),true);
+
+$isVdp = false;
+if (array_key_exists("vdp_file",$buyRequest))
+{
+    $isVdp = true;
+}
+$iscustomQty = false;
+$fixQty = false;
+$tierPrices = false;
+$customHeightWidht = false;
+
+if (is_array($product->getOptions()) || is_object($product->getOptions()))
+{
+    foreach($product->getOptions() as $_option) {
+        if($_option->getDesigntoolType() == "quantity")	{
+            $iscustomQty = true;
+            $fixQty = true;
+            $qtyInput = [];
+            foreach($_option->getValues() as $val){
+                $qtyInput[] = $val->getDesigntoolTitle();
+            }
+        }
+        if(strtolower($_option->getDesigntoolType()) == "width" || strtolower($_option->getDesigntoolType()) == "height"){
+            $customHeightWidht = true;
+        }
+    }
+    
+    foreach ($product->getOptions() as $option) {
+        if (empty($option->getValues())) {
+            continue;
+        }
+        foreach ($option->getValues() as $value) {
+            
+            if ($value->getTierPrice() != '') {
+                $tierPrices = true;            
+            }
+            if($value->getFieldHiddenDependency()){
+                $iscustomQty = false;
+            }
+        }
+        
+    }
+}
+
+
+?>
+<tbody class="cart item">
+    <tr class="item-info">
+        <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item">
+            <?php if ($block->hasProductUrl()):?>
+                <a href="<?= /* @escapeNotVerified */ $block->getProductUrl() ?>"
+                   title="<?= $block->escapeHtml($block->getProductName()) ?>"
+                   tabindex="-1"
+                   class="product-item-photo">
+            <?php else:?>
+                <span class="product-item-photo">
+            <?php endif;?>
+            <?= $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml() ?>
+            <?php if ($block->hasProductUrl()):?>
+                </a>
+            <?php else: ?>
+                </span>
+            <?php endif; ?>
+            <div class="product-item-details">
+                <strong class="product-item-name">
+                    <?php if ($block->hasProductUrl()):?>
+                        <a href="<?= /* @escapeNotVerified */ $block->getProductUrl() ?>"><?= $block->escapeHtml($block->getProductName()) ?></a>
+                    <?php else: ?>
+                        <?= $block->escapeHtml($block->getProductName()) ?>
+                    <?php endif; ?>
+                </strong>
+                <?php if ($_options = $block->getOptionList()):?>
+                    
+                    <?php if (isset($buyRequest['photoAlbum']) && $buyRequest['photoAlbum'] == 1): ?>
+                    <?php
+                        $optionLabel = [];
+                        $optionDefaultLabel = [];
+                    ?>
+                    <?php foreach ($_options as $_option) : ?>
+                        <?php if(isset($_option['print_value'])) { ?>
+                            <?php $optionDefaultLabel[] = $_option['label']; ?>
+                        <?php } else { ?>
+                            <?php 
+                                if($_option['label'] == "Photo") {
+                                    continue;
+                                }
+                            ?>
+                            <?php $optionLabel[] = $_option['label']; ?>
+                        <?php } ?>
+                    <?php endforeach; ?>
+                    <?php
+                        if(!empty($optionLabel)){
+                            $customizeAllOption = [];
+                            $customizeAllOptionWithoutQty = [];
+                            $mykey = 0;
+                            $optionkey = 0;
+                            foreach ($_options as $key => $_option1) {
+                                if(!isset($_option1['print_value'])) {
+                                    if ($_option1['label'] == "Photo"){
+                                        continue;
+                                    }
+                                    
+                                    if ($_option1['label'] == "Quantity"){
+                                        $optionkey = 0;
+                                        $mykey++;
+                                    }
+                                    $optionkey++;
+                                    
+                                        $customizeAllOption[$mykey][$optionkey] = $_option1;
+                                    
+                                    if ($_option1['label'] != "Quantity"){
+                                        $customizeAllOptionWithoutQty[$mykey][$optionkey] = $_option1;
+                                    }
+
+                                }
+                            }
+                            $encriptedArray = [];
+                            if(!empty($customizeAllOptionWithoutQty)){
+                                foreach($customizeAllOptionWithoutQty as $key => $withoutQty){
+                                    $encriptedArray[$key] = base64_encode(json_encode($withoutQty));
+                                }
+                            }
+                            $dups = $new_arr = array();
+                            if(!empty($encriptedArray)){
+                                foreach ($encriptedArray as $key => $val) {
+                                    if (!isset($new_arr[$val])) {
+                                        $new_arr[$val] = $key;
+                                    } else {
+                                        if (isset($dups[$val])) {
+                                        $dups[$val][] = $key;
+                                        } else {
+                                        //$dups[$val] = array($key);
+                                        // Comment out the previous line, and uncomment the following line to
+                                        // include the initial key in the dups array.
+                                            $dups[$val] = array($new_arr[$val], $key);
+                                        }
+                                    }
+                                }
+                            }
+                            if(!empty($dups)){
+                                foreach($dups as $dup){
+                                    $totalqty = 0;
+                                    foreach($dup as $singledup){
+                                        if(isset($customizeAllOption[$singledup][1]['label']) && $customizeAllOption[$singledup][1]['label'] == "Quantity"){
+                                            $totalqty = $totalqty + $customizeAllOption[$singledup][1]['value'];
+                                        }
+                                        if($singledup != end($dup)){
+                                        unset($customizeAllOption[$singledup]);
+                                        } else {
+                                            $customizeAllOption[end($dup)][1]['value'] = $totalqty;
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                            }
+                            
+
+                    ?>
+                        <table>
+                            <tr>
+                                <?php if(!empty($optionLabel)): ?>
+                                <?php foreach (array_unique($optionLabel) as $_option) : ?>
+                                    <th><?= $block->escapeHtml($_option) ?></th>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tr>
+                            <?php if(!empty($customizeAllOption)): ?>
+                            <?php foreach ($customizeAllOption as $_optionValue) : ?>
+                            <tr>
+                                <?php foreach ($_optionValue as $_optionValueChild) : ?>
+                                    <td><?= $_optionValueChild['value']; ?></td>
+                                <?php endforeach; ?>    
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            
+                        </table>
+                    <?php } ?>
+                    <?php else : ?>
+                        <dl class="item-options">
+                            <?php foreach ($_options as $_option) : ?>
+                                <?php 
+                                    $_formatedOptionValue = $block->getFormatedOptionValue($_option);
+                                    $optionSelectedValue = array();
+                                    $optionSelectedValue = explode(" +",$_option['value']);
+                                ?>
+                                <dt><?= $block->escapeHtml($_option['label']) ?></dt>
+                                <dd>
+                                    <?php if ($customHeightWidht == true && count($optionSelectedValue) > 1 && isset($optionSelectedValue[0])){ ?>
+                                        <?= /* @escapeNotVerified */ $optionSelectedValue[0] ?>
+                                    <?php } else if (isset($_formatedOptionValue['full_view'])){ ?>
+                                        <?= /* @escapeNotVerified */ $_formatedOptionValue['full_view'] ?>
+                                    <?php } else { ?>
+                                        <?= $block->escapeHtml($_formatedOptionValue['value'], ['span']) ?>
+                                    <?php } ?>
+                                </dd>
+                            <?php endforeach; ?>
+                        </dl>
+                    <?php endif;?>    
+                <?php endif;?>
+                <?php if ($messages = $block->getMessages()): ?>
+                    <?php foreach ($messages as $message): ?>
+                        <div class="cart item message <?= /* @escapeNotVerified */ $message['type'] ?>"><div><?= $block->escapeHtml($message['text']) ?></div></div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                <?php if ($addInfoBlock): ?>
+                    <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+                <?php endif;?>
+            </div>
+        </td>
+
+        <?php if ($canApplyMsrp): ?>
+            <td class="col msrp" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <span class="pricing msrp">
+                    <span class="msrp notice"><?= /* @escapeNotVerified */ __('See price before order confirmation.') ?></span>
+                    <?php $helpLinkId = 'cart-msrp-help-' . $_item->getId(); ?>
+                    <a href="#" class="action help map" id="<?= /* @escapeNotVerified */ ($helpLinkId) ?>" data-mage-init='{"addToCart":{"helpLinkId": "#<?= /* @escapeNotVerified */ $helpLinkId ?>","productName": "<?= /* @escapeNotVerified */ $product->getName() ?>","showAddToCart": false}}'>
+                        <span><?= /* @escapeNotVerified */ __("What's this?") ?></span>
+                    </a>
+                </span>
+            </td>
+        <?php else: ?>
+            <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                <?= $block->getUnitPriceHtml($_item) ?>
+            </td>
+        <?php endif; ?>
+        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+            <div class="field qty">
+                <label class="label" for="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty">
+                    <span><?= /* @escapeNotVerified */ __('Qty') ?></span>
+                </label>
+                <?php
+                    if($iscustomQty){
+                ?>
+                    <select name="cart[<?= /* @escapeNotVerified */ $_item->getId() ?>][qty]" class="product-custom-option">
+                    <?php if(!empty($qtyInput)){ ?>
+                    <?php foreach($qtyInput as $myQty) { ?>
+                        <option value="<?php echo $myQty; ?>" <?php if($block->getQty() == $myQty){ echo"selected"; } ?>><?php echo $myQty; ?></option>
+                    <?php } } ?>
+                    </select>
+                <?php } else { ?>
+                <div class="control qty">
+                          <input id="cart-<?= /* @escapeNotVerified */ $_item->getId() ?>-qty"
+                           name="cart[<?= /* @escapeNotVerified */ $_item->getId() ?>][qty]"
+                           data-cart-item-id="<?= $block->escapeHtml($_item->getSku()) ?>"
+                           value="<?= /* @escapeNotVerified */ $block->getQty() ?>"
+                           type="number"
+                           size="4"
+                           title="<?= $block->escapeHtml(__('Qty')) ?>"
+                           class="input-text qty"
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                           data-role="cart-item-qty"
+                           <?php if($isVdp || $fixQty || $tierPrices){ echo "disabled"; } ?>
+                           />
+                </div>
+                <?php } ?>
+            </div>
+        </td>
+
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+            <?php if ($canApplyMsrp): ?>
+                <span class="cart msrp subtotal">--</span>
+            <?php else: ?>
+                <?= $block->getRowTotalHtml($_item) ?>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr class="item-actions remove-required-action-<?php echo $_item->getId(); ?>">
+        <td colspan="4">
+            <div class="actions-toolbar">
+                <?= /* @escapeNotVerified */ $block->getActions($_item) ?>
+            </div>
+        </td>
+    </tr>
+</tbody>

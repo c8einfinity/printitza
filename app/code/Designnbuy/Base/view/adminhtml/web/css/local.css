@@ -1,0 +1,29 @@
+.admin__menu .submenu .column:only-of-type .submenu-group-title,
+.admin__menu .level-0 > .submenu > ul > .level-1:only-of-type > .submenu-group-title {
+  display: block !important;
+}
+.mageworx-cust-option [class*='admin__control-grouped'] > .admin__field:first-child > .admin__field-label {
+    width: 100%;
+}
+#designideaGrid_massaction .field-row {
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.template-layout-edit .modal-popup._image-box .thumbnail-preview .thumbnail-preview-link,
+.template-template-edit .modal-popup._image-box .thumbnail-preview .thumbnail-preview-link,
+.designidea-designidea-edit .modal-popup._image-box .thumbnail-preview .thumbnail-preview-link,
+.catalog-product-edit .modal-popup._image-box .thumbnail-preview .thumbnail-preview-link{
+	display: none;
+}
+aside.product_form_product_form_advanced_template_modal .template_image > .admin__field-control, 
+aside.product_form_product_form_advanced_design_modal .template_image > .admin__field-control
+{
+  text-align: left;
+  margin-left: calc( (100%) * 0.25 + 30px );
+}
+aside.product_form_product_form_advanced_template_modal .template_image .admin__field-control > img, 
+aside.product_form_product_form_advanced_design_modal .template_image .admin__field-control > img
+{
+  border: 1px solid #ddd;
+  height: auto;
+}

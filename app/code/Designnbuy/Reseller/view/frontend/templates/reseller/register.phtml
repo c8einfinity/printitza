@@ -1,0 +1,74 @@
+<div class="block-content" aria-labelledby="block-reseller-create-heading">
+    <form class="form form-register"
+          action="<?php echo $block->getPostActionUrl() ?>"
+          method="post"
+          id="reseller-form"
+          data-mage-init='{"validation":{}}'>
+        <?php echo $block->getBlockHtml('formkey'); ?>
+        <fieldset class="fieldset login" data-hasrequired="<?php echo __('* Required Fields') ?>">
+
+            <div class="field username required">
+                <label class="label" for="username"><span><?php echo __('Username') ?></span></label>
+                <div class="control">
+                    <input name="username" value="" id="username" type="text" class="input-text" title="<?php echo __('User Name') ?>" data-validate="{required:true}">
+                </div>
+            </div>
+
+            <div class="field firstname required">
+                <label class="label" for="firstname"><span><?php echo __('First Name') ?></span></label>
+                <div class="control">
+                    <input name="first_name" value="" id="firstname" type="text" class="input-text" title="<?php echo __('First Name') ?>" data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="field lastname required">
+                <label class="label" for="lastname"><span><?php echo __('Last Name') ?></span></label>
+                <div class="control">
+                    <input name="last_name" value="" id="lastname" type="text" class="input-text" title="<?php echo __('Last Name') ?>" data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="field email required">
+                <label class="label" for="email"><span><?php echo __('Email') ?></span></label>
+                <div class="control">
+                    <input name="email" value="" id="email" type="email" class="input-text" title="<?php echo __('Email') ?>" data-validate="{required:true, 'validate-email':true}">
+                </div>
+            </div>
+            <div class="field password required">
+                <label for="pass" class="label"><span><?php echo __('Password') ?></span></label>
+                <div class="control">
+                    <input name="password" type="password" class="input-text" id="password" title="<?php echo __('Password') ?>" data-validate="{required:true, 'validate-admin-password':true}">
+                </div>
+            </div>
+            <div class="field confirmation required">
+                <label for="password-confirmation" class="label"><span><?php echo __('Confirm Password') ?></span></label>
+                <div class="control">
+                    <input type="password" name="password_confirmation" title="<?php echo __('Confirm Password') ?>" id="password-confirmation" class="input-text" data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
+                </div>
+            </div>
+            <div class="field storecode required">
+                <label class="label" for="store_code"><span><?php echo __('Store Code') ?></span></label>
+                <div class="control">
+                    <input name="store_code" value="" id="store_code" type="text" class="input-text no-whitespace letters-only" title="<?php echo __('Store Code') ?>" data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="field company required">
+                <label class="label" for="company"><span><?php echo __('Company Registration Number') ?></span></label>
+                <div class="control">
+                    <input name="company_registration_number" value="" id="company_registration_number" type="text" class="input-text" title="<?php echo __('Store Code') ?>" data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="primary">
+                <button type="submit" class="action submit primary" title="<?php echo __('Register') ?>"><span><?php echo __('Register') ?></span></button>
+            </div>
+        </fieldset>
+    </form>
+
+    <script type="text/javascript">
+        require([
+            'jquery',
+            'mage/mage'
+        ], function($){
+            var dataForm = $('#reseller-form');
+            dataForm.mage('validation', {});
+
+        });
+    </script>

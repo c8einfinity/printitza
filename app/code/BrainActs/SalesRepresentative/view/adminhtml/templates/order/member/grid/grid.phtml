@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Order\View\Tab\Representative $block */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Order\View\Tab\Representative\MemberGrid $blockGrid */
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+
+<?php  echo $block->getGridHtml();?>
+<input type="hidden" name="order_members" id="in_order_members" data-form-part="salesrep_member_form" value="" />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "BrainActs_SalesRepresentative/order-member-link": {
+                "selectedProducts": <?php /* @escapeNotVerified */ echo $block->getProductsJson(); ?>,
+                "gridJsObjectName": <?php /* @escapeNotVerified */ echo '"' . $gridJsObjectName . '"' ?: '{}'; ?>,
+                "saveUrl": <?php /* @escapeNotVerified */ echo '"' . $block->getSaveUrl() . '"'; ?>
+            }
+        }
+    }
+</script>

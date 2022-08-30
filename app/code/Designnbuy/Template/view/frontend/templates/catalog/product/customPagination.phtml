@@ -1,0 +1,5 @@
+<div class="actions-primary see-more">
+    <button type="submit" title="<?php /* @escapeNotVerified */ echo __('See More') ?>" class="action tocart primary template" data-mage-init='{ "Designnbuy_Template/js/pagination": { "size": "<?php echo $block->getTemplateCollection()->getSize(); ?>", "pagelimit" : "<?php echo $block->fixPageSize(); ?>", "baseurl" : "<?php echo $block->getBaseUrl(); ?>", "product" : "<?php echo $block->getRequest()->getParam('product'); ?>", "height" : "<?php echo $block->getRequest()->getParam('height'); ?>", "width" : "<?php echo $block->getRequest()->getParam('width'); ?>", "search" : "<?php echo $block->getRequest()->getParam('search'); ?>", "category_id" : "<?php echo $block->getRequest()->getParam('category_id'); ?>" } }' <?php if($block->fixPageSize() != $block->getTemplateCollection()->count()) { echo"disabled"; } ?>>
+        <span><?php /* @escapeNotVerified */ echo __('See More') ?></span>
+    </button>
+</div>

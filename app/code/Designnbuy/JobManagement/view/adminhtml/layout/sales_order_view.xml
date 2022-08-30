@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="order_items">
+            <arguments>
+                <argument name="columns" xsi:type="array">
+                    <item name="product" xsi:type="string" translate="true">Product</item>
+                    <item name="status" xsi:type="string" translate="true">Item Status</item>
+                    <item name="price-original" xsi:type="string" translate="true">Original Price</item>
+                    <item name="price" xsi:type="string" translate="true">Price</item>
+                    <item name="ordered-qty" xsi:type="string" translate="true">Qty</item>
+                    <item name="subtotal" xsi:type="string" translate="true">Subtotal</item>
+                    <item name="tax-amount" xsi:type="string" translate="true">Tax Amount</item>
+                    <item name="tax-percent" xsi:type="string" translate="true">Tax Percent</item>
+                    <item name="discont" xsi:type="string" translate="true">Discount Amount</item>
+                    <item name="total" xsi:type="string" translate="true">Row Total</item>                    
+                    <item name="vendor" xsi:type="string" translate="false">Vendor</item>
+                    <item name="jobstart" xsi:type="string" translate="true">Vendor</item>
+                </argument>
+            </arguments>
+            <!-- <block class="Designnbuy\JobManagement\Block\Adminhtml\Sales\Order\Items\Column\Jobstart" name="column_jobstart" template="Designnbuy_JobManagement::sales/order/view/jobstart.phtml" group="column" /> --> 
+            
+           <block class="Designnbuy\Vendor\Block\Adminhtml\Sales\Order\Items\Column\Vendor" name="column_vendor" after="column_workflowstatus" template="Designnbuy_Vendor::vendor.phtml" group="column"/> 
+        </referenceBlock>
+    </body>
+</page>

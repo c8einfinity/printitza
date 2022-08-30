@@ -1,0 +1,1135 @@
+.album-title-contaner {
+    position: relative;
+    display: block;
+    height: auto;
+    background: #fff;
+    border: 1px solid #c6ccd6;
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-top-left-radius: 4px;
+    border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.album-title-contaner  ul.titlecontent {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+.album-title-contaner ul.titlecontent li:nth-child(1) {
+    text-align: left;
+}
+.album-title-contaner ul.titlecontent li:nth-child(2) {
+    text-align: center;
+    color: #f37937;
+    font-size: 14px;
+    font-weight: 400;
+}
+.album-title-contaner ul.titlecontent li {
+    display: inline-block;
+    border: 0px solid red;
+    width: 33%;
+    padding: 5px;
+    vertical-align: middle;
+    margin-bottom: 0px;
+}
+.album-title-contaner  ul.titlecontent li:nth-child(3) {
+    text-align: right;
+}
+.photo-select-box ul li {
+    display: inline-block;
+}
+.photo-select-box .main-menu-album ul li{
+  width: 100%;
+}
+.photo-select-box ul {
+    padding-left: 0;
+}
+#photo-album input{
+    border-radius: 5px;
+}
+#photo-album label{
+    font-size: 18px;
+    font-weight: bold;
+}
+#photo-album .control{
+    display: inline-block;
+}
+#photo-album .action{
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+}
+#photo-album .action button{
+    height: 60px;
+    width: 200px;
+}
+ul#album-image-pre li{
+    padding: 5px;
+    background: #fff;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    width: 20%;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+}
+ul#album-image-pre li .album-image-remove {
+    width: 100%;
+    text-align: center;
+    -webkit-align-self: flex-end;
+    -moz-align-self: flex-end;
+    align-self: flex-end;
+    margin-top: 5px;
+}
+.imageThumb-box .imageThumb {
+  -webkit-align-self: center;
+    -moz-align-self: center;
+    align-self: center;
+    max-height: 160px;
+    width: auto;
+}
+.image-dropzone{
+    position: relative;
+    width: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.image-dropzone p{
+  text-align: center;
+    font-family: Arial;
+    margin: 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.image-dropzone input[type='file']{
+      position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}
+.page__toggle{
+  float: left;
+  position: static;
+  /* display : block !important; */
+}
+.img-edit-delete .page__toggle{
+  position: absolute;
+  bottom: 16px;
+  left: 13px;
+}
+.edit-toggle {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+.edit-toggle:before {
+  content: "";
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 14px;
+  display: block;
+  background: #9A9999;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.edit-toggle span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+  transition: all 0.2s ease;
+}
+.edit-toggle span:before {
+  content: "";
+  position: absolute;
+  display: block;
+  margin: -18px;
+  width: 56px;
+  height: 56px;
+  background: rgba(79, 46, 220, 0.5);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+}
+
+#cbx:checked + .edit-toggle:before {
+  background: #947ADA;
+}
+#cbx:checked + .edit-toggle span {
+  background: #4F2EDC;
+  transform: translateX(20px);
+  transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+  box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+#cbx:checked + .edit-toggle span:before {
+  transform: scale(1);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.edit-toggle-center{
+  width: 84%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.edit-toggle-center div{
+  display: inline-block;
+}
+
+.select-all-div{
+  width: 15%;
+  text-align: right;
+  display: inline-block;
+}
+
+.toggle__input{
+  position: absolute;
+  left: -99999px;
+}
+
+.toggle__label{
+  display: inline-flex;
+  cursor: pointer;
+  /*min-height: var(--uiToggleSize);
+  padding-left: calc(var(--uiToggleSize) + var(--uiToggleIndent));*/
+}
+
+.toggle__label:before, .toggle__label:after{
+  content: "";
+  box-sizing: border-box;  
+  width: 1em;
+  height: 1em;
+  font-size: var(--uiToggleSize);
+
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.toggle__label:before{
+  border: var(--uiToggleBorderWidth) solid var(--uiToggleColor);
+  z-index: 2;
+}
+
+.toggle__input:disabled ~ .toggle__label:before{
+  border-color: var(--uiToggleDisabledColor);
+}
+
+.toggle__input:focus ~ .toggle__label:before{
+  box-shadow: 0 0 0 2px var(--uiToggleBgColor), 0 0 0px 4px var(--uiToggleColor);
+}
+
+.toggle__input:not(:disabled):checked:focus ~ .toggle__label:after{
+  box-shadow: 0 0 0 2px var(--uiToggleBgColor), 0 0 0px 4px var(--uiToggleColor);
+}
+
+.toggle__input:not(:disabled) ~ .toggle__label:after{
+  background-color: var(--uiToggleColor);
+  opacity: 0;
+}
+
+.toggle__input:not(:disabled):checked ~ .toggle__label:after{
+  opacity: 1;
+}
+
+.toggle__text{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/*
+The arrow size and position depends from sizes of square because I needed an arrow correct positioning from the top left corner of the element toggle
+*/
+
+.toggle__text:before{
+  content: "";
+  box-sizing: border-box;
+  width: 0;
+  height: 0;
+  font-size: var(--uiToggleSize);
+
+  border-left-width: 0;
+  border-bottom-width: 0;
+  border-left-style: solid;
+  border-bottom-style: solid;
+  border-color: var(--uiToggleArrowColor);
+
+  position: absolute;
+  top: 0.6em;
+  left: .25em;
+  z-index: 3;
+
+  -webkit-transform-origin: left top;
+
+          transform-origin: left top;
+  -webkit-transform: rotate(-40deg) skew(10deg);
+          transform: rotate(-40deg) skew(10deg);
+}
+
+.toggle__input:not(:disabled):checked ~ .toggle__label .toggle__text:before{
+  width: .5em;
+  height: .25em;
+  border-left-width: var(--uiToggleArrowWidth);
+  border-bottom-width: var(--uiToggleArrowWidth);
+  will-change: width, height;
+  transition: width .1s ease-out .2s, height .2s ease-out;
+}
+
+/*
+=====
+LEVEL 2. PRESENTATION STYLES
+=====
+*/
+
+/* 
+The demo skin
+*/
+
+.toggle__label:before, .toggle__label:after{
+  border-radius: 2px;
+}
+
+/* 
+The animation of switching states
+*/
+
+.toggle__input:not(:disabled) ~ .toggle__label:before,
+.toggle__input:not(:disabled) ~ .toggle__label:after{
+  opacity: 1;
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  will-change: transform;
+  transition: -webkit-transform .2s ease-out;
+  transition: transform .2s ease-out;
+  transition: transform .2s ease-out, -webkit-transform .2s ease-out;
+}
+
+.toggle__input:not(:disabled) ~ .toggle__label:before{
+  -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+  transition-delay: .2s;
+}
+
+.toggle__input:not(:disabled) ~ .toggle__label:after{
+  -webkit-transform: rotateY(90deg);
+          transform: rotateY(90deg);
+}
+
+.toggle__input:not(:disabled):checked ~ .toggle__label:before{
+  -webkit-transform: rotateY(-90deg);
+          transform: rotateY(-90deg);
+  transition-delay: 0s;
+}
+
+.toggle__input:not(:disabled):checked ~ .toggle__label:after{
+  -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+  transition-delay: .2s;
+}
+
+.toggle__text:before{
+  opacity: 0;
+}
+
+.toggle__input:not(:disabled):checked ~ .toggle__label .toggle__text:before{
+  opacity: 1;
+  transition: opacity .1s ease-out .3s, width .1s ease-out .5s, height .2s ease-out .3s;
+}
+
+.image-toggle{
+  --toggleColor: #133264;
+  --toggleBgColor: #fff;
+  --toggleSize: 24px;
+  --uiToggleSize: var(--toggleSize, 20px);
+  --uiToggleIndent: var(--toggleIndent, .4em);
+  --uiToggleBorderWidth: var(--toggleBorderWidth, 2px);
+  --uiToggleColor: var(--toggleColor, #000);
+  --uiToggleDisabledColor: var(--toggleDisabledColor, #868e96);
+  --uiToggleBgColor: var(--toggleBgColor, #fff);
+  --uiToggleArrowWidth: var(--toggleArrowWidth, 2px);
+  --uiToggleArrowColor: var(--toggleArrowColor, #fff);
+
+  display: inline-block;
+  position: relative;
+}
+.opration-select, .opration-select-albums{
+  margin-left: 10px;
+}
+.product-album-listing {
+    display: inline-block;
+    width: 100%;
+}
+.product-album-listing ul {
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.product-album-listing li {
+    list-style: none;
+    width: 33.33%;
+    float: left;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.page-layout-1column .product-album-listing li {
+    width: 25%;
+}
+.photo-album-listing {
+    margin: 30px 0;
+}
+.photo-album-block {
+    border: 1px solid #dddddd;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+}
+.photo-album-block:hover {
+    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.1);
+}
+.album-upload-box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    padding: 10px;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    justify-content: center;
+    height: 100%;
+}
+.album-upload-box img {
+    max-height: 100px;
+}
+.delete-album{
+  cursor: pointer;
+  color: #757575;
+}
+.icn-delete{
+  font-family: 'luma-icons';
+  font-style: normal;
+}
+.icn-delete:before{
+    content: '\e604';
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 22px;
+    line-height: 28px;
+}
+.album-img-box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    width: 100%;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    justify-content: center;
+    height: 230px;
+    background: #f1f1f1;
+}
+.album-caption {
+    padding: 10px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    width: 100%;
+    float: left;
+    -webkit-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between;
+}
+.album-caption h6 {
+    font-size: 17px;
+    text-transform: capitalize;
+    float: left;
+    margin: 0 10px 0 0;
+}
+.album-caption .delete-album {
+    float: right;
+}
+.upload-image-block{
+    position: relative;
+    min-height: 100px;
+    max-height: 100px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    -moz-align-items: stretch;
+    align-items: stretch;
+    width: 100%;
+    border: 4px dashed #a2a2a2;
+}
+.load-image-block{
+    position: relative;
+    /* min-height: 250px;
+    max-height: 250px;
+    overflow-y: auto; */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    -moz-align-items: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+.pre-photos{
+  /* position: absolute;
+    top: 0;
+    left: 0; */
+    padding: 10px;
+}
+#album-image-pre {
+    padding: 0;
+    margin: 0 -5px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.photo-select-box {
+    margin-bottom: 20px;
+}
+.customer-album-section {
+    margin: 30px 0;
+}
+.photo-select-toolbar{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.photo-select-control {
+    -webkit-box-flex: 1; 
+    -moz-box-flex: 1;
+    width: 80%;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-right: 20px;
+}
+.or-text{
+  margin: 0 15px;
+}
+#album_name,
+#opration-album-list{
+    width: 180px;
+    text-transform: capitalize;
+}
+.imageThumb-box {
+    border: 2px solid #ddd;
+    width: 100%;
+    padding: 10px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.photo-album-photo-list{
+  /*padding: 10px;background: #f5f5f5;*/
+}
+.album-qty-price {
+    float: right;
+    margin-bottom: 15px;
+    order: 3;
+    -webkit-align-self: flex-start;
+    align-self: flex-start;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.album-qty-price .price-box{
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.page-title-cust{
+  flex: 100%;
+  order: 1;
+}
+.number-of-copy label {
+    /*font-weight: bold;*/
+    padding-right: 10px;
+}
+.number-of-copy {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.album-qty-price .addtocart-photos {
+    float: right;
+}
+.number-of-copy #number_of_copy {
+    width: 100px;
+}
+.album-qty-price .tearprice {
+    margin-bottom: 11px;
+    color: #133264;
+    font-weight: bold;
+}
+.album-actions-toolbar{
+  width: 100%;
+  display: inline-block;
+  order: 2;
+  flex: 70%;
+  max-width: 70%;
+}
+.delete-album-items {
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
+}
+.delete-album-items > button {
+    margin-right: 10px;
+}
+.delete-album-items > button:last-child {
+    margin-right: 0;
+}
+.move-album-box select#opration-album-list{
+  max-width: 180px;
+  width: 100%;
+  height: 36px;
+  margin-right: 10px;
+      float: left;
+}
+.select-all-div:empty{
+  margin: 0;height: 0;display: none;
+}
+.photo-album-photo-list ul {
+    padding: 0;
+    margin: 0 -10px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.photo-album-photo-list ul li{
+  list-style: none;
+  width: 20%;
+  float: left;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+}
+.album-photo-edit-box{
+    position: relative;
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 100%;
+}
+.album-photo-edit-box img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+.photo-img-block{
+    -webkit-align-self: flex-start;
+    align-self: flex-start;
+    height: 200px;
+    width: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: relative
+}
+.img-edit-delete {
+    /*position: absolute;bottom: 6px;*/
+    position: relative;
+    text-align: center;
+    width: 100%;
+    -webkit-align-self: flex-end;
+    align-self: flex-end;
+    background: #fff;
+    padding: 8px;
+}
+
+.img-edit-delete .img-buttons.action.primary{
+  font-weight: normal;
+    display: inline-block;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-radius: 3px;
+    padding: 0;
+    float: right;
+}
+.img-edit-delete .img-buttons > .click-me,
+.img-edit-delete .img-buttons > .delete-img{
+  color: inherit;
+}
+.img-edit-delete .click-me,
+.img-edit-delete .delete-img {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 17px;
+    line-height: 28px;
+    font-family: 'luma-icons';
+    padding: 9px;
+}
+.img-edit-delete .click-me:before {
+    content: '\e601';
+}
+.img-edit-delete .delete-img:before {
+    content: '\e604';
+}
+.photo-album-listing .album-img-box img {
+    max-height: 100%;
+    width: auto;
+}
+.photo-select-box .main-menu-album{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-content: center;
+  align-content: center;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+.photo-select-box .album-actions-item .move-album-box .label{
+  margin-bottom: 6px;
+}
+.photo-select-box .update-section .update-main > label{
+  font-weight: bold;
+  margin-bottom: 9px;
+  width: 100%;
+  float: left;
+  font-size: 18px;
+}
+.photo-select-box .update-section .update-main > div .field .label{
+  margin-bottom: 6px;
+  float: left;
+}
+.photo-select-box .update-section .update-main > div .field .control {
+    margin-bottom: 10px;
+}
+.photo-album-photo-list .img-edit-delete .album_custom_option{
+  clear: both;
+  text-align: left;
+  width: 100%;
+}
+.photo-album-photo-list .img-edit-delete .album_custom_option .field{
+  display: -webkit-box;
+	display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.photo-album-photo-list .img-edit-delete .album_custom_option .field .label{
+    width: 57px;
+    text-align: left;
+    margin-right: 5px;
+}
+.photo-album-photo-list .img-edit-delete .album_custom_option .field .control {
+    flex: 1;
+}
+.icon-dpi-alert:before {
+  content: '\e60c';
+  font-family: 'luma-icons';
+  background-color: rgba(19, 50, 100, .5);
+  width: 36px;
+  height: 36px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+  background: rgba(225, 211, 0, 0.5);
+  display: inline-block;
+  text-align: center;
+  line-height: 36px;
+}
+.LowDpiIcon.warning {
+  display:none;
+}
+.LowDpiIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(19, 50, 100,0.7);
+  color: #fff;
+  font-size: 22px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index:1;
+}
+.select-all-album {
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+    margin: 6px 15px 6px 0;
+}
+.select-all-album .select-all-label {
+    margin-left: 7px;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: bold;
+}
+.album-custom-option-block{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+.album-custom-option-block > div{
+  margin-right: 10px;
+  width: 100%;
+}
+.album-custom-option-block > div:last-child{
+  margin-right: 0;
+}
+.album-custom-option-block .update-button{
+  margin-bottom: 10px;
+}
+.album-custom-option-block .control select, 
+.album-custom-option-block .control input[type="number"] {
+    height: 36px;
+}
+.move-album-box {
+    margin-bottom: 10px;
+}
+@media only screen and (min-width: 991px){
+  ul#album-image-pre li{
+        min-width: 200px;
+  }
+}
+@media only screen and (max-width: 991px){
+  ul#album-image-pre{
+    height: 45vh;
+    overflow: auto;
+  }
+  .photo-album-photo-list ul li,
+  ul#album-image-pre li{
+    width: 25%;
+  }
+  .photo-img-block{
+        height: 150px;
+  }
+  ul#album-image-pre li .album-image-remove{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .page-layout-1column .product-album-listing li{
+        width: 33.33%;
+  }
+  .album-img-box{
+    height: 200px;
+  }
+}
+@media only screen and (max-width: 767px){
+  .photo-album-photo-list ul li,
+  ul#album-image-pre li{
+    width: 33.33%;
+  }
+  ul#album-image-pre li{
+    min-width: 150px;
+  }
+  .move-album-box select#opration-album-list{
+    /* max-width: 161px; */
+    max-width: 28%;
+  }
+  #album_name, #opration-album-list{
+    width: 140px;
+  }
+  .or-text {
+      margin: 0 12px;
+  }
+  
+  .album-actions-toolbar{
+    flex: 100%;
+    max-width: 100%;
+  }
+  .album-custom-option-block > div.update-button {
+    width: auto;
+  }
+  .album-qty-price{
+    width: 100%;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+  }
+  .photo-select-box .album-actions-toolbar-ul {
+      margin-bottom: 0;
+  }
+}
+@media only screen and (max-width: 639px){
+  .photo-album-photo-list ul li,
+  ul#album-image-pre li,
+  .page-layout-1column .product-album-listing li,
+  .product-album-listing li{
+    width: 50%;
+  }
+  .album-img-box{
+        height: 185px;
+  }
+  .photo-img-block{
+    height: 175px;
+  }
+  .delete-album-items{
+    margin-bottom: 20px;
+        margin-right: 0;
+  }
+  .move-album-box {
+      display: block;
+      clear: both;
+  }
+  .upload-image-block{
+    min-height: 120px;
+    max-height: 120px;
+  }
+  .load-image-block{
+    min-height: 340px;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+  .photo-select-toolbar .form-group-control {
+      width: 100%;
+      -webkit-box-flex: 100%;
+    -moz-box-flex: 100%;
+    -webkit-flex: 100%;
+    -ms-flex: 100%;
+      flex: 100%;
+  }
+  .photo-select-toolbar{
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .photo-select-control{
+    margin-bottom: 10px;
+    padding-right: 0;
+  }
+  #album_name {
+      width: calc(100% - 168px);
+      margin-bottom: 10px;
+  }
+  .or-text {
+      margin: 2px 12px 12px 0;
+      clear: left;
+  }
+  #opration-album-list {
+      width: calc(100% - 60px);
+      margin-bottom: 10px;
+  }
+  .album-custom-option-block > div,
+  .album-custom-option-block > div.update-button,
+  .move-album-box select#opration-album-list,
+  .move-album-box .organize-fields #submit-album{
+    width: 48%;
+    width: calc(50% - 8px);
+  }
+  .album-custom-option-block > div:nth-child(2n+2) {
+      margin-right: 0;
+  }
+  .album-custom-option-block{
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .update-button button{width: 100%;}
+  .move-album-box select#opration-album-list{
+    margin-right: 16px;
+    max-width: 48%;
+    max-width: calc(50% - 8px);
+  }
+}
+@media only screen and (max-width: 479px){
+  
+  .upload-image-block{
+    min-height: 110px;
+    max-height: 110px;
+  }
+  .load-image-block{
+    min-height: 280px;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  .album-img-box{
+    height: 140px;
+  }
+  .page-layout-1column .product-album-listing li,
+  .product-album-listing li{
+    width: 100%;
+  }
+  .album-img-box{
+    height: auto;
+  }
+  .photo-album-photo-list ul li,
+  ul#album-image-pre li,
+  .page-layout-1column .product-album-listing li,
+  .product-album-listing li{
+    width: 100%;
+  }
+ 
+}
+@media only screen and (max-width:359px){
+  ul#album-image-pre li{
+    min-width: 135px;
+  }
+}
+
+.docs-tooltip span.fa-rotate-left:before {
+  content: '\e628';
+  font-family: 'luma-icons';
+}
+.docs-tooltip span.fa-rotate-right:before {
+  content: '\e628';
+  font-family: 'luma-icons';
+}
+.docs-tooltip span.fa-refresh:before {
+  content: '\e603';
+  font-family: 'luma-icons';
+}
+.flip_icon{
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}

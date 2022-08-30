@@ -1,0 +1,44 @@
+<?php
+$_designidea = $block->getDesignidea();
+$_designideaName = $block->escapeHtml($_designidea->getTitle(), null, true);
+$identifier = $_designidea->getIdentifier();
+
+$activeDesigner = $this->helper('Designnbuy\Merchandise\Helper\Data')->isModuleEnabled('Designnbuy_Designer');
+$designerName = '';
+$designerUrl = '';
+
+if($activeDesigner == 1):
+    $designerId = $_designidea->getDesignerId();
+    if($designerId):
+        $designerName = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerName($designerId);        //
+        $designerIdentifier = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerUrl($designerId);
+        $designerUrl = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerInfoUrl($designerIdentifier);
+    endif;
+    $designUrl = $this->helper('Designnbuy\Merchandise\Helper\Data')->getDesignUrl($identifier);
+else:
+    $designUrl = $this->helper('Designnbuy\Merchandise\Helper\Data')->getDesignIdeaPersonalisePageUrl($_designidea);
+endif;
+?>
+<li class="item product product-item">
+    <div class="product-item-info" data-container="product-grid">
+        <?php if ($featuredImage = $_designidea->getImage()): ?>
+            <a href="<?php echo $designUrl ?>" class="product photo product-item-photo">
+            <span class="product-image-container">
+                <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                    <img class="product-image-photo " src="<?php echo $featuredImage ?>" alt="<?php echo $_designideaName ?>" height="300" width="240"></span>
+            </span>
+            </a>
+        <?php endif; ?>
+        <div class="product details product-item-details">
+            <strong class="product name product-item-name">
+                <a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $designUrl ?>">
+                    <?php echo $_designideaName ?></a>                
+            </strong>
+            <?php if($designerName): ?>
+                <strong class="designer-name"><a href="<?php echo $designerUrl; ?>"><?php echo __('By ') .$designerName; ?></a></strong>
+            <?php endif;?>
+            <?php // $block->getLayout()->createBlock('Designnbuy\DesignReview\Block\Product\ReviewRenderer')->getReviewsSummaryHtml($_designidea, 'short'); ?>
+            <button class="design-View button" type="button" title="<?php echo __('View');?>" onclick="window.location.href='<?php /* @escapeNotVerified */ echo $designUrl ?>';"><?php echo __('View');?></button>
+        </div>
+    </div>
+</li>

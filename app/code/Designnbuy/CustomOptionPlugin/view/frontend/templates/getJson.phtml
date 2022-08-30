@@ -1,0 +1,22 @@
+<script>
+    require([
+        'jquery',
+        'optionDependency',
+        'uiRegistry'
+    ], function ($, optionDependency, registry) {
+        var optionBase = registry.get('mageworxOptionBase');
+        if (optionBase) {
+            optionBase.addUpdater('optionDependency', optionDependency(<?php echo $block->getJsonData('733');?>));
+        } else {
+
+            var updaters = registry.get('mageworxOptionUpdaters');
+            if (!updaters) {
+                updaters = {};
+            }
+            updaters.optionDependency = optionDependency(<?php echo $block->getJsonData('733');?>);
+            window.optionDependency = optionDependency(<?php echo $block->getJsonData('733');?>);
+            registry.set('mageworxOptionUpdaters', updaters);
+        }
+    });
+</script>
+<div class="log"></div>

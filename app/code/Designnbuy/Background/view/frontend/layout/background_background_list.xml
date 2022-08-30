@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="background.backgrounds.list">
+            <block class="Designnbuy\Background\Block\Background\BackgroundList\Item" name="background.backgrounds.list.item" template="background/list/item.phtml">
+                <block class="Designnbuy\Background\Block\Background\Info" name="background.background.info" template="background/info.phtml" />
+                <action method="setBackgroundInfoBlockName">
+                    <argument name="name" xsi:type="string">background.background.info</argument>
+                </action>
+            </block>
+            <block class="Designnbuy\Background\Block\Background\BackgroundList\Toolbar" name="background_list_toolbar" template="background/list/toolbar.phtml">
+                <block class="Designnbuy\Background\Block\Background\BackgroundList\Toolbar\Pager" name="background_list_toolbar_pager">
+                    <action ifconfig="dnbbackground/background_list/lazyload_enabled" method="setTemplate">
+                        <argument name="template" xsi:type="string">Designnbuy_Background::background/list/toolbar/lazyload.phtml</argument>
+                    </action>
+                    <arguments>
+                        <argument name="lazyload_js" xsi:type="string">Designnbuy_Background/js/lazyload</argument>
+                        <argument name="list_wrapper" xsi:type="string">.background-list-wrapper .background-list, .background-list-wrapper .background-list</argument>
+                    </arguments>
+                </block>
+            </block>
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">background_list_toolbar</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,389 @@
+<?php
+/*** Store Settings ***/
+$moduleStatus       = $this->helper('Drc\Storepickup\Helper\Data')->getConfig('carriers/storepickup/active');
+$apiKey             = $this->helper('Drc\Storepickup\Helper\Data')->getConfig('carriers/storepickup/google_api_key');
+$markerImage        = $this->helper('Drc\Storepickup\Helper\Data')->getConfig('carriers/storepickup/upload_image_id');
+
+$zoomLevel          = $this->helper('Drc\Storepickup\Helper\Data')->getConfig('carriers/storepickup/zoom_level');
+if (isset($zoomLevel)) {
+    $zoomLevel = $zoomLevel;
+} else {
+    $zoomLevel = 15;
+}
+/*** Store Settings ***/
+?>
+<?php if ($moduleStatus == 1) :?>
+<div id="store-container-main" style="display: none; width:40%;">
+    <?php 
+		$_stores = $block -> getStore() -> getData();
+    ?>
+    <label class="label"><?php /* @escapeNotVerified */ echo __('Select Store');?></label>
+    <div class="control">
+		<?php if (count($_stores)) :?>
+            <select name="store_list" id="store_list" tabindex="1">
+                <?php foreach ($_stores as $_name) : ?>
+                    <option value="<?php /* @escapeNotVerified */ echo $_name['store_title']; ?>" >
+                    	<?php /* @escapeNotVerified */ echo $_name['store_title']; ?></option>
+                <?php endforeach ?>
+            </select>
+		<?php endif ?>	    	
+    </div>
+    <a href="javascript:void(0);" id="view_store"><?php echo __('View Stores');?></a>
+    <script>
+	require(['jquery','Magento_Ui/js/modal/modal'], function($, modal) {
+		var options = {
+			type : 'popup',
+			responsive : true,
+			innerScroll : false,
+			title : 'Store locator',
+		};
+		var popup = modal(options, $('#form_popup'));
+		$("#view_store").on('click', function() {
+			initialize_store(markers, zoomLevel, markerimage);
+			$("#form_popup").modal("openModal");
+			$('.modal-footer').hide();
+		});
+	});
+    </script>	
+</div>
+
+<script type="text/javascript">
+
+    require(['jquery'], function ($) {
+
+        var initMyLib = function () {
+            if (jQuery('#checkout-shipping-method-load').length) {
+
+                jQuery('#checkout-shipping-method-load').after("<div id='onepage-checkout-shipping-method-additional-load'><tr class='row'><td colspan='4'>" + jQuery("#store-container-main").html() + "</td></tr></div>");
+                jQuery("#store-container-main").html("");
+            } else {
+                setTimeout(initMyLib, 2000);
+            }
+            
+            //if($('#s_method_storepickup_storepickup').is(':checked')) {
+            if($("input[value='storepickup_storepickup']").is(':checked')) {                
+        		$("div#onepage-checkout-shipping-method-additional-load").show();
+        		$("div#onepage-checkout-shipping-method-additional-load").css("width",350); 
+        	} else {
+        		$("div#onepage-checkout-shipping-method-additional-load").hide();
+        	}
+        }
+        initMyLib(); //-> initMyLib is undefined
+    });
+</script>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false?" src_type="url"></script>
+<div id="form_popup" style="display: none;">
+    <?php
+    $objectManager    = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager     = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $currentStore     = $storeManager->getStore();
+    if ($markerImage) {
+        $markerImageUrl   = $currentStore->
+        getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'marker/'.$markerImage;
+    } else {
+        $markerImageUrl   = '';
+    }
+    $storeCollection = $objectManager -> create('Drc\Storepickup\Model\ResourceModel\Storelocator\CollectionFactory');
+    $collection = $storeCollection -> create() -> addFieldToFilter('is_enable', ['eq' => 'Enabled']) -> load();
+    $i = 1;
+    $tmp = [];
+    $jsonCountryArray = [];
+    $jsonArray = [];
+    $totalStoreCount = $collection -> getSize();
+    ?>
+    <?php if (!$totalStoreCount) : ?>
+            <?php /* @escapeNotVerified */ echo __('There are no stores.') ?>
+    <?php else : ?>
+        <?php foreach ($collection as $store) : ?>
+            <?php $store_title = $store -> getStoreTitle();
+            $storeLat = $store -> getLatitude();
+            $storeLong = $store -> getLongitude();
+            
+            if ($store->getimage()) {
+                $storeImage = $currentStore->
+                getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).$store->getimage();
+            } else {
+                $storeImage = '';
+            }
+             
+            $latLong = $store -> getLatitude() . "," . $store -> getLongitude();
+            $info = $store -> getStoreTitle() . ',#Address:' . $store -> getAddress() . 
+            ',#Phone:' . $store -> getPhone() . ',#Email:' . $store -> getEmail() . ',#' .$storeImage;
+
+            $tmpCountry[$store -> getCountry()][$store -> getCity()][$store -> getId()][$latLong] = $info;
+            $tmp[$store -> getCity()][$store -> getId()][$latLong] = $info;
+            ?>
+            <?php if ($i++ % 2 == 0) :?>        
+            <?php endif; ?>
+            <?php $markers[$i]['store_title'] = $store -> getStoreTitle() . ',Address: ' . $store -> getAddress() . 
+            ',Phone: ' . $store -> getPhone() . ',Email: ' . $store -> getEmail() . ',' .$storeImage;
+                $markers[$i]['lat'] = $store -> getLatitude();
+                $markers[$i]['long'] = $store -> getLongitude();
+            ?>
+        <?php endforeach; ?>
+          
+        <?php
+            $NewMarkers[$latLong] = $info;
+            $NewMarkerData = json_encode($latLong);
+            $jsonCountryArray = json_encode($tmpCountry);
+            $jsonArray = json_encode($tmp);
+        ?>
+    <?php endif; ?>
+    
+    <div class="find-stores">
+        <label class="store"><b><?php /* @escapeNotVerified */ echo __('Find Stores');?></b></label>
+        <?php
+            $_stores = $block -> getStore() -> getData();
+            $_cities = $block -> getCities() -> getData();
+            $_countries = $block -> getCountries() -> getData();
+        ?>
+        <div class="select-box">
+            <label><?php /* @escapeNotVerified */ echo __('Country');?></label>
+            <?php if (count($_countries)) :?>
+            <select name="countries_select" id="countries_select" tabindex="1">
+                <?php foreach ($_countries as $_name) :?>
+                    <option value="<?php /* @escapeNotVerified */ echo $_name['country']; ?>" >
+                    	<?php /* @escapeNotVerified */ echo $_name['country']; ?></option>
+                <?php endforeach ?>
+            </select>
+            <?php endif ?>
+        </div>  
+            
+        <div class="select-box" id="city" >
+            <label><?php /* @escapeNotVerified */ echo __('City');?></label>
+            <?php if (count($_cities)) :?>
+            <select name="city_select" id="city_select" tabindex="1">
+                <?php foreach ($_cities as $_name) :?>
+                    <option value="<?php /* @escapeNotVerified */ echo $_name['city']; ?>" >
+                    	<?php /* @escapeNotVerified */ echo $_name['city']; ?></option>
+                <?php endforeach ?>
+            </select>
+            <?php endif ?>
+        </div>
+        <div class="select-box" id="store">
+            <label><?php /* @escapeNotVerified */ echo __('Store');?></label>
+            <?php if (count($_stores)) :?>
+            <select name="outlet_select" id="outlet_select" tabindex="1">
+                <?php foreach ($_stores as $_name) : ?>
+                    <option value="<?php /* @escapeNotVerified */ echo $_name['store_title']; ?>" >
+                    	<?php /* @escapeNotVerified */ echo $_name['store_title']; ?></option>
+                <?php endforeach ?>
+            </select>
+            <?php endif ?>
+        </div>
+    </div>
+    
+    <?php if ($totalStoreCount) : ?>
+    <div id="stores-list-gmap-div" width="100%" height="495">
+        <div id="store-list-map-canvas">&nbsp;</div>
+    </div>
+    <?php if (is_array($markers) && count($markers)>0) :?>
+        <script>
+            var markers = [
+                <?php foreach ($markers as $marker) : ?>
+                    ['<?php /* @escapeNotVerified */ echo addslashes($marker['store_title']); ?>',
+                    <?php /* @escapeNotVerified */ echo $marker['lat']; ?>,
+                    <?php /* @escapeNotVerified */ echo $marker['long']; ?>],
+                <?php endforeach ?>
+                    ];
+        </script>
+    <?php endif ?>
+    <?php endif; ?>
+
+<script>
+    var jq = jQuery.noConflict();
+    var form = jq("#addressSearch");
+    var content = <?php /* @escapeNotVerified */ echo $jsonCountryArray?>;
+    var store = "";
+    var cities = "";
+    var newMarkers = [];
+    var storesDetails;
+    var zoomLevel = <?php /* @escapeNotVerified */ echo $zoomLevel; ?>;
+    var markerimage = "<?php /* @escapeNotVerified */ echo $markerImageUrl;?>";
+    var cityLabelTitle = "<?php /* @escapeNotVerified */ echo __('City');?>";
+    var storeLabelTitle = "<?php /* @escapeNotVerified */ echo __('Store');?>";
+    
+    
+    cities += "<label>"+cityLabelTitle+"</label>";
+    cities += "<select name=city_select id=city_select tabindex=1>";
+    jq.each(content, function( key, value ) {
+        //if(jq("#countries_select").val()==key){
+            jq.each(value, function( keys, values ) {
+                var city = keys;
+                cities += "<option value='"+city+"'>" + city;
+                cities += "</option>";                  
+            });
+        //}
+    });
+    cities += "</select>";
+    jq("div#city").html(cities);
+    
+    store += "<label>"+storeLabelTitle+"</label>";
+    store += "<select name=outlet_select id=outlet_select tabindex=1>";
+    jq.each(content, function( key, value ) {
+        //if(jq("#countries_select").val()==key){
+            jq.each(value, function( keys, values ) {
+                jq.each(values, function( storekeys, stores ) {
+                    jq.each(stores, function( storkeys, stored ) {
+                    storesDetails = stored.split(',#');
+                    var newString = storesDetails[0].replace(/ /g, "/")+','+storesDetails[1].replace(/ /g, "/")+','
+                    +storesDetails[2].replace(/ /g, "/")+','+storesDetails[3].replace(/ /g, "/")+','+storesDetails[4];
+                    store += "<option data="+newString+" value="+storkeys+">" + storesDetails[0];
+                    var coordinate = storkeys.split(',');
+                    stored = stored.replace(/\#/g,"");
+                    newMarkers.push([stored,parseFloat(coordinate[0]),parseFloat(coordinate[1])]);
+                    store += "</option>";
+                    }); 
+                });
+            });
+        //}
+    });
+    store += "</select>";
+    jq("div#store").html(store);
+    
+    var googleMapDivId = 'store-list-map-canvas';
+    google.maps.event.addDomListener(window, 'load', initialize_store(markers,zoomLevel,markerimage));
+    
+    jq("#outlet_select").change(function(){
+        chnageStore();
+    });
+    
+    jq("#countries_select").on("change", function() {
+        var country = this.value;
+        if(country == null || country == "")
+        {
+            var Markers = [];
+            var marker = <?php /* @escapeNotVerified */ echo $NewMarkerData?>;
+            <?php if (is_array($NewMarkers)) :?>
+                jq.each(marker, function(key, values) {
+                    var coordinate = key.split(",");
+                    var text = values;
+                    Markers.push([text, parseFloat(coordinate[0]), parseFloat(coordinate[1])]);
+                });
+                google.maps.event.addDomListener(window, 'load', initialize_store(Markers, zoomLevel,markerimage));
+            <?php endif; ?>
+        } else {
+            var form = jq("#addressSearch");
+            var content = <?php /* @escapeNotVerified */ echo $jsonCountryArray?>;
+            var store = "";
+            var cities = "";
+            var newMarkers = [];
+            var storesDetails;
+            
+            cities += "<label>"+cityLabelTitle+"</label>";
+            cities += "<select name=city_select id=city_select tabindex=1>";
+                jq.each(content, function( key, value ) {
+                    if(country==key){
+                        jq.each(value, function( keys, values ) {
+                            var city = keys;
+                            cities += "<option value='"+city+"'>" + city;   
+                            cities += "</option>";  
+                        });
+                    }
+                });
+                cities += "</select>";
+            jq("div#city").html(cities);
+            
+            
+            store += "<label>"+storeLabelTitle+"</label>";
+            store += "<select name=outlet_select id=outlet_select tabindex=1>";
+                jq.each(content, function( key, value ) {
+                    if(jq("#countries_select").val()==key){
+                        jq.each(value, function( keys, values ) {
+                            //var city = keys;
+                            jq.each(values, function( storekeys, stores ) {
+                                jq.each(stores, function( storkeys, stored ) {
+                                storesDetails = stored.split(',#');
+                                var newString = storesDetails[0].replace(/ /g, "/")+','
+                                +storesDetails[1].replace(/ /g, "/")+','+storesDetails[2].replace(/ /g, "/")+','
+                                +storesDetails[3].replace(/ /g, "/")+','+storesDetails[4];
+                                store += "<option data="+newString+" value="+storkeys+">" + storesDetails[0];
+                                var coordinate = storkeys.split(',');
+                                stored = stored.replace(/\#/g,"");
+                                newMarkers.push([stored,parseFloat(coordinate[0]),parseFloat(coordinate[1])]);
+                                store += "</option>";
+                                }); 
+                            });
+                        });
+                    }
+                });
+                store += "</select>";
+            jq("div#store").html(store);
+            google.maps.event.addDomListener(window, 'load', initialize_store(newMarkers,zoomLevel,markerimage));
+            
+            jq("#outlet_select").change(function(){
+                chnageStore();
+            });
+        }
+        
+        jq("#city_select").on("change", function() {
+            chnageCity(jq("#city_select"));
+        });
+    }); 
+    
+    jq("#city_select").on("change", function() {
+        chnageCity(jq("#city_select"));
+    }); 
+    
+    
+    function chnageCity(cityVal){
+        var city = cityVal.val();
+        if(city == null || city == "")
+        {
+            var Markers = [];
+            var marker = <?php /* @escapeNotVerified */ echo $NewMarkerData?>;
+            <?php if (is_array($NewMarkers)) :?>
+                jq.each(marker, function(key, values) {
+                    var coordinate = key.split(",");
+                    var text = values;
+                    Markers.push([text, parseFloat(coordinate[0]), parseFloat(coordinate[1])]);
+                });
+                google.maps.event.addDomListener(window, 'load', initialize_store(Markers, zoomLevel,markerimage));
+            <?php endif; ?>
+        } else {
+            var form = jq("#addressSearch");
+            var content = <?php /* @escapeNotVerified */ echo $jsonArray?>;
+            var store = "";
+            var newMarkers = [];
+            var storesDetails;
+            var storeLabelTitle = "<?php /* @escapeNotVerified */ echo __('Store');?>";
+            
+            store += "<label>"+storeLabelTitle+"</label>";
+            store += "<select name=outlet_select id=outlet_select tabindex=1>";
+            jq.each(content, function(key, value) {
+                if (city == key) {
+                    jq.each(value, function(key, values) {
+                        jq.each(values, function(keys, stores) {
+                            storesDetails = stores.split(',#');
+                            var newString = storesDetails[0].replace(/ /g, "/") + ',' 
+                            + storesDetails[1].replace(/ /g, "/") + ',' + storesDetails[2].replace(/ /g, "/") + ',' 
+                            + storesDetails[3].replace(/ /g, "/")+','+storesDetails[4];
+                            store += "<option data=" + newString + " value=" + keys + ">" + storesDetails[0];
+                            var coordinate = keys.split(',');
+                            stores = stores.replace(/\#/g,"");
+                            newMarkers.push([stores, parseFloat(coordinate[0]), parseFloat(coordinate[1])]);
+                            store += "</option>";
+                        });
+                    });
+                }
+            });
+            google.maps.event.addDomListener(window, 'load', initialize_store(newMarkers, zoomLevel,markerimage));
+            store += "</select>";
+            jq("div#store").html(store);
+                jq("#outlet_select").change(function() {
+                    chnageStore();
+                });
+            }
+        }
+
+        function chnageStore() {
+            var text = jq("#outlet_select option:selected").text();
+            var data = jq("#outlet_select option:selected").attr('data');
+            var googleMapDivId = 'store-list-map-canvas';
+            var coordinate = jq("#outlet_select option:selected").val().split(',');
+            google.maps.event.addDomListener(window, 'load', initialize(coordinate, data, zoomLevel,markerimage));
+        }
+</script>
+</div>
+<?php endif; ?>

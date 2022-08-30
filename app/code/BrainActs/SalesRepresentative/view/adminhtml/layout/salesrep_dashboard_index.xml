@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block name="salesrep.dashboard" class="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Container" template="dashboard/container.phtml">
+                <block name="salesrep.dashboard.commission" class="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Commission" template="dashboard/commission.phtml" />
+                <block name="salesrep.dashboard.withdrawals" class="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\WithdrawalsContainer" />
+                <block name="salesrep.dashboard.graph" class="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Graph" />
+
+
+                <block name="salesrep.dashboard.product" class="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Assigned\AssignProducts" />
+                <block name="salesrep.dashboard.customer" class="BrainActs\SalesRepresentative\Block\Adminhtml\Dashboard\Assigned\AssignCustomers" />
+            </block>
+        </referenceContainer>
+    </body>
+</page>

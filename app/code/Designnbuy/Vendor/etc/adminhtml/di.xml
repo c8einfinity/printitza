@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+		<arguments>
+			<argument name="modifiers" xsi:type="array">
+				<item name="vendor-configuration" xsi:type="array">
+					<item name="class" xsi:type="string">Designnbuy\Vendor\Ui\DataProvider\Product\Form\Modifier\Vendor</item>
+					<item name="sortOrder" xsi:type="number">90</item>
+				</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<type name="Designnbuy\Vendor\Ui\DataProvider\Product\Form\Modifier\Vendor">
+		<arguments>
+			<argument name="scopeName" xsi:type="string">product_form.product_form</argument>
+			<argument name="dataScopeName" xsi:type="string">product_form.product_form</argument>
+			<argument name="dataSourceName" xsi:type="string">product_form.product_form_data_source</argument>
+		</arguments>
+	</type>
+
+	<!--<type name="Magento\Sales\Block\Adminhtml\Items\AbstractItems" >
+		<plugin name="vendorstatus" type="Designnbuy\Vendor\Plugin\Sales\Order\Item\Status" sortOrder="0"/>
+	</type>-->
+	<type name="Magento\Sales\Model\ResourceModel\Order\Grid\Collection">
+		<plugin name="Filter_Vendor_Order" type="Designnbuy\Vendor\Plugin\Sales\Order\FilterOrderByVendorAdmin" />
+	</type>
+	<type name="Magento\Sales\Model\ResourceModel\Order\Item\Collection">
+		<plugin name="filterOrderItemByVendor" type="Designnbuy\Vendor\Plugin\Sales\Order\Item\FilterOrderItemByVendorAdmin" />
+	</type>
+	<type name="Magento\Backend\Block\Widget\Context">
+		<plugin name="invoice_shipment_button" type="Designnbuy\Vendor\Plugin\Sales\Order\View\InvoiceShipButton" />
+		<!--<plugin name="shipment_button" type="Designnbuy\Vendor\Plugin\Sales\Order\View\ShipButton" />-->
+	</type>
+	<type name="Magento\Sales\Block\Adminhtml\Items\AbstractItems" >
+		<plugin name="vendor" type="Designnbuy\Vendor\Plugin\Sales\Order\Item\Vendor" sortOrder="13"/>
+	</type>
+
+	<!--<type name="Designnbuy\OrderTicket\Model\ResourceModel\OrderTicket\Grid\Collection">
+		<plugin name="Filter_Vendor_OrderTicket" type="Designnbuy\Vendor\Plugin\Sales\OrderTicket\FilterOrderTicketByVendorAdmin" />
+	</type>-->
+</config>

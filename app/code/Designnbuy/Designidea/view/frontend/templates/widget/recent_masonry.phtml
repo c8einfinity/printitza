@@ -1,0 +1,101 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Designidea recent designideas widget
+ *
+ * @var $block \Designnbuy\Designidea\Block\Widget\Recent
+ */
+?>
+
+<?php
+    $_designideaCollection = $block->getDesignideaCollection();
+?>
+<?php if ($_designideaCollection->count()) { ?>
+<div class="designidea-list-wrapper designidea-widget-recent designidea-widget-recent-masonry">
+    <h3 class="title"><?php echo $block->escapeHtml($block->getTitle()) ?></h3>
+    <ul class="designidea-list clearfix">
+        <?php foreach ($_designideaCollection as $_designidea) { ?>
+            <?php
+                $_designideaUrl = $_designidea->getDesignideaUrl();
+                $_designideaName = $block->escapeHtml($_designidea->getTitle(), null, true);
+            ?>
+            <li class="designidea-holder designidea-holder-<?php echo $_designidea->getId() ?>">
+                <div class="designidea-header">
+
+                    <div class="designidea-title-holder clearfix">
+                        <div class="designidea-title">
+                            <a class="designidea-item-link"
+                               href="<?php echo $_designideaUrl ?>">
+                                <?php echo $_designideaName; ?>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="designidea-info clear">
+                        <div class="item designidea-posed-date">
+                            <span class="label"><?php echo __('Designideaed:') ?></span>
+                            <span class="value"><?php echo $_designidea->getPublishDate('F d, Y') ?></span>
+                        </div>
+                        <?php if ($_categoriesCount = $_designidea->getCategoriesCount()) { ?>
+                        <div class="dash">|</div>
+                        <div class="item designidea-categories">
+                            <span class="label"><?php echo __('Categories:') ?></span>
+                            <?php $n = 0; foreach($_designidea->getParentCategories() as $ct) { $n++; ?>
+                                <a title="<?php echo $block->escapeHtml($ct->getTitle()) ?>" href="<?php echo $ct->getCategoryUrl() ?>"><?php echo $block->escapeHtml($ct->getTitle()) ?></a>
+                                <?php if ($n != $_categoriesCount) { ?>, <?php } ?>
+                            <?php } ?>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="designidea-content">
+                    <div class="designidea-description clearfix">
+                        <?php if ($featuredImage = $_designidea->getImage()) { ?>
+                        <div class="designidea-ftimg-hld">
+                            <a href="<?php echo $_designideaUrl ?>" title="<?php echo $_designideaName ?>">
+                                <img src="<?php echo $featuredImage ?>" alt="<?php echo $_designideaName ?>" />
+                            </a>
+                        </div>
+                        <?php } ?>
+                        <?php if ($content = $block->getShorContent($_designidea)) { ?>
+                            <div class="designidea-text-hld clearfix">
+                                <?php echo $content ?>
+                            </div>
+                        <?php } ?>
+                        <a class="designidea-read-more" href="<?php echo $_designideaUrl ?>" title="<?php echo $_designideaName ?>">
+                           <?php echo __('Read more &#187;') ?>
+                        </a>
+                    </div>
+                </div>
+                <div class="designidea-footer">
+
+                </div>
+            </li>
+
+        <?php } ?>
+    </ul>
+</div>
+<script>
+requirejs( [ 'require', 'jquery', 'Designnbuy_Designidea/js/lib/masonry.pkgd.min' ],
+function( require, $, Masonry ) {
+    require( [ 'jquery-bridget/jquery-bridget' ],
+    function( jQueryBridget ) {
+        jQueryBridget( 'masonry', Masonry, $ );
+        $('.designidea-list').masonry({
+            itemSelector: '.designidea-holder',
+            percentPosition: true
+        })
+    });
+});
+<?php /* more info http://masonry.desandro.com/extras.html */ ?>
+</script>
+
+<?php } ?>

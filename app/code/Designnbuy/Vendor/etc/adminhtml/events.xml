@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="core_collection_abstract_load_before">
+        <observer name="vendor_limit_core_collection" instance="Designnbuy\Vendor\Observer\LimitCoreCollection"/>
+    </event>
+    <!--<event name="adminhtml_block_html_before">
+        <observer name="vendor_access" instance="Designnbuy\Vendor\Observer\VendorRemoveOrderBlock" />
+    </event>-->
+   <!-- <event name="controller_action_postdispatch_sales_order_index">
+        <observer name="remove_workflow_blocks" instance="Designnbuy\Workflow\Observer\WorkflowRemoveBlocks" />
+    </event>-->
+</config>

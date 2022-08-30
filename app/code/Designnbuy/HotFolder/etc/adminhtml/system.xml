@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="designnbuy" translate="label" sortOrder="110">
+            <label>Designnbuy Extensions</label>
+        </tab>
+        <section id="hotfolder" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>HotFolder Settings</label>
+            <tab>designnbuy</tab>
+            <resource>Designnbuy_HotFolder::config</resource>
+            <group id="configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Configuration</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="setup" type="select" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Setup</label>
+                    <source_model>Designnbuy\HotFolder\Model\Config\Source\Setup</source_model>
+                </field>
+                <field id="folder_location" type="select" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Folder Location</label>
+                    <source_model>Designnbuy\HotFolder\Model\Config\Source\Location</source_model>
+                </field>
+                <field id="folder_name" type="text" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Folder Name</label>
+                    <comment>If folder location is "Same Server", folder must be located under (Magento root folder)/pub/media/</comment>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="remote_host" type="text" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Remote Host</label>
+                    <comment>Please provide FTP host name</comment>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="ftp_port" type="text" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FTP Port</label>
+                    <comment>Please provide FTP port like 22 or 21</comment>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="ftp_username" type="text" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FTP Username</label>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="ftp_password" type="password" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FTP Password</label>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="ftp_path" type="text" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FTP Path</label>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="connection_timeout" type="text" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Connection Timeout</label>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="passive_ftp" type="text" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Passive FTP</label>
+                    <depends>
+                        <field id="hotfolder/configuration/folder_location">1</field>
+                    </depends>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+            </group>
+            <group id="output_configuration" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Output Folder Naming Configuration</label>
+                <field id="prefix" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Prefix</label>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="postfix" type="text" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Postfix</label>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="order_naming" type="select" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Order Naming</label>
+                    <source_model>Designnbuy\HotFolder\Model\Config\Source\OrderNaming</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

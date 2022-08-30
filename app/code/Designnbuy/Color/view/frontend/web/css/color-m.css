@@ -1,0 +1,236 @@
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+
+.clearfix:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+
+.color-holder {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    background: #F5F5F5;
+    padding: 20px;
+}
+
+.color-holder:hover {
+    box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.color-holder .color-header {position:relative;}
+
+.color-holder .color-header .color-info {padding: 0 0 10px 0;}
+.color-holder .color-header .color-info .item,
+.color-holder .color-header .color-info .dash {display: inline-block;}
+.color-holder .color-header .color-info .label {font-weight: 700;}
+.color-holder .color-header .color-info .value {font-style: italic;}
+
+
+.color-list {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    list-style: none;
+}
+
+.color-list .color-content .color-read-more {padding-top:10px; float:right;}
+
+.color-category-view .category-content {padding-left: 40px;}
+
+.color-content .color-description img {margin:0 15px 0 15px;}
+.color-content .color-description ul,
+.color-content .color-description ol {list-style-position: inside;}
+
+.color-content .color-description .color-ftimg-hld {float: left; margin: 0 15px 0 15px; width: 33%}
+.color-content .color-description .color-ftimg-hld img {width:100%; padding:0px; margin:0px;}
+@media (max-width: 496px) {
+  .color-content .color-description .color-ftimg-hld {width: 100%; margin:0px;}
+}
+
+.color-list .color-header .color-title {max-width:80%;}
+.color-list .color-header .color-title a {
+    text-decoration: none;
+    font-size: 22px;
+    color: #636363;
+}
+
+
+
+.color-list .color-header .color-title {
+    margin: 0px;
+    padding: 10px 0;
+    float:left;
+}
+
+
+.color-list .hidden {display:none;}
+
+
+.color-view .color-bottom {margin-top:30px;}
+
+.color-view .color-nextprev-hld  {margin-bottom: 30px;}
+.color-view .color-nextprev-hld .nextprev-link {font-weight: 700;}
+.color-view .color-nextprev-hld .prev-link {float:left}
+.color-view .color-nextprev-hld .next-link {float:right}
+
+.color-view .color-gallery {margin:15px 0 15px 0}
+.color-view .color-gallery .gallery-image-hld {margin: 0 14px 14px 0; border:1px solid #ccc; display: block; float:left}
+.color-view .color-gallery .gallery-image{padding: 0px; margin:0px; display:block}
+
+.color-view .block {margin-bottom: 30px;}
+
+.widget.block-recent-colors .block-content .item {
+        padding: 8px 0 0px 0px;
+}
+
+.widget.block-categories ul {
+    list-style: initial;
+    padding-left:0px;
+}
+
+.widget.block-categories ul ul {
+    margin-left:20px;
+}
+
+.widget.block-categories ul,
+.widget.block-categories li {
+    margin: 5px 0 5px 9px;
+    padding: 0px;
+}
+
+.widget.block-rss .rss-icon {float: left; width: 23px; padding-right: 10px;}
+
+
+.widget.color-search {
+    width:100%;
+    margin-bottom: 40px;
+    position: relative;
+    float: right;
+    padding-left: 15px;
+    z-index: 4;
+}
+
+.widget.color-search .block-content {
+    margin-bottom: 0;
+}
+
+.widget.color-search  label {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    text-decoration: none;
+    display: inline-block;
+    float: right;
+}
+
+.widget.color-search .control {
+    border-top: 0;
+    margin: 0;
+    padding: 0;
+    clear: both;
+}
+
+.widget.color-search input {
+    position: static;
+    padding-right: 35px;
+    margin: 0;
+    left: -300%;
+}
+
+.widget.color-search .action.search {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    z-index: 1;
+    display: inline-block;
+    background-image: none;
+    background: none;
+    -moz-box-sizing: content-box;
+    border: 0;
+    box-shadow: none;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    text-shadow: none;
+    font-weight: 400;
+}
+
+.widget.color-search .action.search:before {
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 32px;
+    color: #8f8f8f;
+    content: '\e615';
+    font-family: 'luma-icons';
+    margin: 0;
+    vertical-align: top;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}
+
+.widget.color-search .action.search > span {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* Tag claud widget */
+.widget.block-tagclaud .smallest{font-size: 0.75em}
+.widget.block-tagclaud .small{font-size:1em}
+.widget.block-tagclaud .medium{font-size:1.25em}
+.widget.block-tagclaud .large{font-size:1.5em}
+.widget.block-tagclaud .largest{font-size:2em}
+
+.color-widget-recent .color-list {
+    padding: 0px;
+    margin: 0px;
+}
+
+.color-widget-recent .color-holder {
+    width: 29%;
+    float: left;
+    margin: 5px;
+}
+
+.color-widget-recent .color-description .color-text-hld {
+    max-height: 150px;
+    min-height: 150px;
+    overflow-y: auto;
+}
+
+.color-widget-recent-masonry .color-description .color-text-hld {
+    max-height: none;
+    min-height: 0;
+}
+.color-widget-recent-masonry .color-description .color-ftimg-hld {
+    width: 100%;
+    margin: 0px;
+}
+
+.dnbcolor-autoloader {text-align: center;}
+.dnbcolor-autoloader .dnbcolor-show-onload {display: none;}
+
+
+@media (max-width: 420px) {
+  #dnbcolor_gcomments {max-width:345px; overflow-y: scroll;}
+}

@@ -1,0 +1,19 @@
+<?php if ($block->displayTemplates()) { ?>
+    
+    <?php 
+        $_product = $block->getProduct();
+        $_templateCollection = $block->getTemplateCollection();
+        if ($_templateCollection->count()) {
+    ?>
+    <?php $url = $block->getBaseUrl().'canvas/product/browsetemplates';  ?>
+    
+    <button type="button" title="Browse Templates" class="action primary browse-templates" id="product-browse-templates-button" data-mage-init='{ "Designnbuy_Canvas/js/customize": { "action": "<?php echo $block->escapeUrl($url) ?>" } }'>
+        <span>Browse Templates</span>
+    </button>
+    
+    <?php
+        }
+    ?>
+<?php 
+    } 
+?>

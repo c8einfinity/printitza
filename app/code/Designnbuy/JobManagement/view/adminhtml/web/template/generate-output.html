@@ -1,0 +1,17 @@
+<!-- ko if: value-->
+<a id="generate_output" class="generate_output" data-bind="href: generate_output,
+	attr: {
+    	href:value
+    }">Generate Output</a>
+<!-- /ko -->
+<!-- ko ifnot: value -->
+<a id="generate_output" class="generate_output" data-bind="href: generate_output,
+	attr: {
+    	href:value
+    }">Access Denied</a>
+<!-- /ko -->
+<style type="text/css">
+.generate_output{padding-top: 6px;
+    font-weight: bold;
+    float: left;}
+</style>

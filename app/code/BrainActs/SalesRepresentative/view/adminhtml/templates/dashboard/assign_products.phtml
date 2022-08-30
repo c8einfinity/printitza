@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © BrainActs Commerce OÜ. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var \BrainActs\SalesRepresentative\Block\Adminhtml\Member\AssignProducts $block */
+
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+
+<?php  echo $block->getGridHtml();?>
+<input type="hidden" name="member_products" id="in_member_products" data-form-part="salesrep_member_form" value="" />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "BrainActs_SalesRepresentative/assign-products": {
+                "selectedProducts": <?php /* @escapeNotVerified */ echo $block->getProductsJson(); ?>,
+                "gridJsObjectName": <?php /* @escapeNotVerified */ echo '"' . $gridJsObjectName . '"' ?: '{}'; ?>
+            }
+        }
+    }
+</script>

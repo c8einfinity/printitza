@@ -1,0 +1,27 @@
+<!--@subject Reseller Request @-->
+<!--@vars {
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">Reseller Request</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            <table class="message-info">
+                <tr>
+                    <td>
+                        <p><strong>{{trans "Name:"}}</strong>&nbsp;{{var first_name}} &nbsp;{{var last_name}}</p>
+                        <p><strong>{{trans "Email:"}}</strong>&nbsp;{{var email}}</p>
+                        <p><strong>{{trans "Store Code:"}}</strong>&nbsp;{{var store_code}}</p>
+                        <p><strong>{{trans "Status:"}}</strong>&nbsp;{{var status}}</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,172 @@
+Add New Category,Adauga Categorie Noua
+Are you sure you want to do this?,Esti sigur ca frei sa faci asta?
+Start Import,Porneste Import
+NOTICE,NOTIFICARE
+Database Name,Numele Bazei de Date
+User Name,Numele User-ului
+Database Host,Host-ul Bazei de Date
+Table Prefix,Prefixul Tabelului
+ConfigArea,ConfigAreaare
+Add New Design Area,Adauga ConfigAreaare Noua
+ConfigArea,ConfigArea
+Go to ConfigArea Home Page,Mergi la Prima Pagina a ConfigArea-ului
+Monthly Archives: %s %s,Arhive Lunare: %s %s
+"Search ""%1""","Cauta ""%1"""
+Recent ConfigArea Design Areas,ConfigAreaari Recente in ConfigArea
+Manage %1,Administreaza %1
+Edit %1,Editeaza %1
+New %1,Nou %1
+Create %1,Creaza %1
+%1 has been saved.,%1 a fost salvat.
+Something went wrong while saving this %1. %2,Ceva nu a functionat si nu a fost salvat %1. %2
+We can't delete %1 right now. %2,Nu se poate sterge %1 deocamdata. %2
+%1 have been deleted.,%1 a fost sters.
+"Parameter ""Status"" missing in request data.","Parametrul ""Status"" lipseste din datele cerute."
+Status Field Name is not specified.,Status-ul Nume Camp nu e specificat.
+We can't change status of %1 right now. %2,Nu putem schimba statusul pentru %1 deocamdata. %2
+%1 status have been changed.,Statusul %1 a fost modificat.
+ConfigArea Import,Importa ConfigArea-ul.
+ConfigArea import type is not specified.,Tipul de import in ConfigArea nu e specificat.
+The import process was completed successfully. %1 configareas and %2 categories where imported.,Importul a fost finalizat cu succes. %1 configareaari si %2 categorii au fost importate.
+The import process completed. %1 configareas and %2 categories where imported. Some configareas or categories where skipped.<br/> %3 %4,Importul a fost finalizat cu succes. %1 configareaari si %2 categorii au fost importate. Unele configareaari si categorii au fost omise.<br/> %3 %4
+Nothing to import.,Nu e nimic de importat.
+Can not make import.,Nu pot realiza importul.
+Something went wrong:,Ceva nu e in regula:
+ConfigArea Import from WordPress (beta),Importa ConfigArea din WordPress (beta)
+Please select,Va rugam alegeti
+Use Facebook Comments,Foloseste Comentararii Facebook
+Use Disqus Comments,Foloseste Comentarii Disqus
+Use Google Comments (beta),Foloseste Comentareii Google (beta)
+Yes (With auto trigger),Da (Cu declansare automata)
+Yes (Without auto trigger),Da (Fara declansare automata)
+Parameter %1 is required,E nevoie de parametrul %1
+AheadWorks ConfigArea Extension not detected.,Extensia pentru ConfigArea AheadWorks nu a fost gasita
+The category URL key contains capital letters or disallowed symbols.,URL-ul categoriei contine litere mai sau simboluri nepermise.
+The category URL key cannot be made of only numbers.,URL-ul nu poate fi compus doar din numere.
+The configarea URL key contains capital letters or disallowed symbols.,URL-il configareaarii contine litere mari sau simboluri nepermise.
+The configarea URL key cannot be made of only numbers.,URL-ul configareaarii nu poate fi compus doar din numere.
+The tag is already exist.,Tag-ul is exista deja.
+The tag URL key contains capital letters or disallowed symbols.,Tag-ul URL contine litere mari sau simboluri nepermise.
+The tag URL key cannot be made of only numbers.,Tag-ul URL nu poate fi compus doar din numere.
+Related configareas,ConfigAreaari pe aceeasi tema
+ConfigAreaed:,ConfigAreaat:
+Categories:,Categorii:
+Tags:,Tag-uri:
+Author:,Autor:
+We can't find configareas matching the selection.,Nu gasesc configareaari pe baza termenilor alesi.
+Read more &#187;,Citeste mai departe &#187;
+See more,Vezi tot
+Read %1,Citeste %1
+&larr; Previous,&larr; Anterior
+Next &rarr;,Urmatorul &rarr;
+Related Design Areas,ConfigAreaari pe aceeasi tema
+Archive,Arhiva
+Archive %s,Arhiva %s
+Recent Design Areas,ConfigAreaari Recente
+RSS Feed,RSS Feed
+Search configareas here...,Cauta configareaari...
+Tags,Tag-uri
+designnbuy Extensions,Extensii designnbuy
+ConfigArea Information,Informatii ConfigArea
+ConfigArea Index Page,Prima Pagina ConfigArea
+ConfigArea View,Vizualizare ConfigAreaare
+Display Related Design Areas,Arata ConfigAreaari pe aceeasi tema
+Number of Design Areas,Numar de ConfigAreaari
+Display Related Products,Arata produse asemanatoare
+Number of Products,Numar de Produse
+Comments,Comentarii
+Number of Comments,Numar de Comantarii
+Facebook Application ID,Aplicatia ID Facebook
+Preview and Next ConfigArea,Previzualizeaza ConfigAreaarea si Urmatoarea
+Display Prev. & Next ConfigArea Links,Arata Link-urile pentru Preview si urmatorul
+ConfigArea List,Lista ConfigAreaari
+Design Areas Per Page,ConfigAreaari pe Pagina
+Use Lazy Loading,Foloseste Incarcarea Lazy
+Automatically load more configareas on page.,Incarca Automat mai multe configareaari pe pagina
+Auto Triger Padding (px),Distantare declansata Automat (px)
+Author,Author
+Display Author Information,Arata Informatii despre Autor
+Display ConfigArea List By Author,Arata Lista ConfigAreaarilor dupa Autor
+Sidebar,Bara Laterala
+Search Form Widget,Widget pt Cautare
+Categories Widget,Widget Categorii
+Recent Design Areas Widget,Widget ConfigAreaari Recente
+Design Areas Number,Numarul de ConfigAreaari
+Archive Widget,Widget Arhiva
+Tag Claud Widget,Widget Tag Cloud
+Rss Feed,Informatii RSS
+Feed Title,Titlu Informatii
+Feed Description,Descriere Informatii
+Product Page,Pagina Produs
+Permalink Settings,Setari Permalink
+ConfigArea Route,Calea URL ConfigArea
+Permalink Type,Tipul Permalink
+ConfigArea Route,Calea URL ConfigAreaare
+Category Route,Calea URL Categorie
+Archive Route,Calea URL Arhiva
+Tag Route,Calea URL Tag
+Author Route,Calea URL Autor
+Search Route,Calea URL Cautare
+Social,Social
+AddThis Enabled,AdaugaAsta Activat
+AddThis ID,AdaugaAsta ID
+AddThis Language,AdaugaAsta Limba
+Category Top Navigation,Navigare Categorii Top
+Display ConfigArea Link,Arata Link-ul ConfigArea-ului
+ConfigArea Category,Categorie ConfigArea
+Leave blank to display configareas from all categories.,Nu completa pentru a afisa configareaari din toate categoriile.
+Custom Template,Template Personalizat
+Published,Publicat
+Category Information,Informatii Categorie
+Enable Category,Activeaza Categoria
+Category Title,Titlu Categorie
+Category in Websites,Categorii in Website
+-- Please Select --,-- Alege --
+Tag Title,Titlu Tag
+ConfigArea Information,Informatii ConfigAreaare
+Enable ConfigArea,Activeaza ConfigAreaarea
+ConfigArea Title,Titlu ConfigAreaare
+New Category,Categorie Noua
+Additional Options,Optiuni Suplimentare
+Featured Image,Imagini Promovate
+Publish Date,Data Publicarii
+New Tag,Tag Nou
+Open Graph Metadata,Open Graph Metadata
+OG Title,OG Title
+Leave blank to use Meta Title by default.,Leave blank to use Meta Title by default.
+OG Description,OG Description
+Leave blank to use Meta Description by default.,Leave blank to use Meta Description by default.
+OG Image,OG Image
+"Leave blank to use Featured Image by default. Allow image type: jpg, jpeg, gif, png.","Leave blank to use Featured Image by default. Allow image type: jpg, jpeg, gif, png."
+OG Type,OG Type
+"Leave blank to use ""article"" type by default.","Leave blank to use ""article"" type by default."
+ConfigArea in Websites,ConfigArea in Websites
+Related Design Areas and Products,Related Design Areas and Products
+Related configareas are shown to customers in addition to the item the customer is looking at.,Related configareas are shown to customers in addition to the item the customer is looking at.
+Add Related ConfigArea,Adauga ConfigAreaare Similara
+Add Related Design Areas,Adauga ConfigAreaari Similare
+Add Selected Design Areas,Adauga ConfigAreaarile Selectate
+"January","Ianuarie"
+"February","Februarie"
+"March","Martie"
+"April","Aprilie"
+"May","Mai"
+"June","Iunie"
+"July","Iulie"
+"August","August"
+"September","Septembrie"
+"October","Octombrie"
+"November","Noiembrie"
+"December","Decembrie"
+"Jan","Ian"
+"Feb","Feb"
+"Mar","Mar"
+"Apr","Apr"
+"May","Mai"
+"Jun","Iun"
+"Jul","Iul"
+"Aug","Aug"
+"Sep","Sep"
+"Oct","Oct"
+"Nov","Noi"
+"Dec","Dec"

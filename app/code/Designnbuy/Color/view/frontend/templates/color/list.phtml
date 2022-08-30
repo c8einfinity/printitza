@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Color color list template
+ *
+ * @var $block \Designnbuy\Color\Block\Color\ColorList
+ */
+?>
+<?php
+$_colorCollection = $block->getColorCollection();
+?>
+<?php if (!$_colorCollection->count()): ?>
+    <div class="message info empty"><div><?php echo __('We can\'t find colors matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <div class="color-list-wrapper">
+        <?php $iterator = 1; ?>
+        <ol class="color-list">
+            <?php foreach ($_colorCollection as $_color): ?>
+                <?php echo $block->getColorHtml($_color) ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+
+    <?php echo $block->getToolbarHtml() ?>
+<?php endif; ?>

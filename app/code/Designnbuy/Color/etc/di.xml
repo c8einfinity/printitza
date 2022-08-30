@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Designnbuy\Color\Api\ColorManagementInterface" type="Designnbuy\Color\Model\ColorManagement" />
+    <preference for="Designnbuy\Color\Api\CategoryManagementInterface" type="Designnbuy\Color\Model\CategoryManagement" />
+    <virtualType name="Designnbuy\Color\ImageUpload" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/color/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/color</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+                <item name="svg" xsi:type="string">svg</item>
+                <item name="pdf" xsi:type="string">pdf</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Color\Controller\Adminhtml\Color\Upload\Image">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Color\ImageUpload</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Color\Controller\Adminhtml\Color\Upload\Gallery">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Color\ImageUpload</argument>
+        </arguments>
+    </type>
+</config>

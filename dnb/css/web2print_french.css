@@ -1,0 +1,14 @@
+#vdpRecordLabel {line-height: 33px;width:152px; display:block; text-align:center;}
+.file-upload{overflow:hidden;position:relative;background:#31A4E3;padding:5px 20px!important;color:#ffffff;width:45%;font-size:15px}
+.new-heading {font-size: 20px;}
+.prcadcart {margin: 5px;}
+.upload {width: 46%;}
+.vdp_right button:last-child{margin:0px;}
+.vdp_right button{margin:0 7px 0 0;}
+div.download_data_csv_btn{font-size: 13px;}
+ #upload_info_hd_window .global_popup_box {font-size: 12px;}
+ #uploadZipBtn { width: 200px;}
+ .upload-mathod ul li{font-size: 10px;width: 80px;}
+ #addNewNameNumber{
+    margin-right: 12px;
+  }

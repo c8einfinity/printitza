@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+
+        <referenceContainer name="product.info.extrahint.qtyincrements" remove="true"/>
+        <!-- for config products -->
+        <!--<referenceBlock name="product.info.form.options">
+            <block class="Magento\Catalog\Block\Product\View"
+                   name="product.view.customize"
+                   template="Designnbuy_Canvas::catalog/product/view/customize.phtml"
+                   after="product.info.options.wrapper.bottom"></block>
+        </referenceBlock>-->
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Framework\View\Element\Template" name="pretemplate.quickedit"
+                   after="product.info.price" before="product.info.form.content"/>
+        </referenceContainer>
+        <!--<referenceContainer name="product.info.form.content">
+            <block class="Magento\Catalog\Block\Product\View"
+                   name="product.view.customize1"
+                   template="Designnbuy_Canvas::catalog/product/view/customize.phtml"
+                   after="product.info.addtocart"></block>
+        </referenceContainer>-->
+        <!--<referenceBlock name="product.info.addtocart.additional">
+            <block class="Magento\Catalog\Block\Product\View"
+                   name="product.view.customize" as="customize" after="product.info.addtoquote2"
+                   template="Designnbuy_Canvas::catalog/product/view/customize.phtml"/>
+        </referenceBlock>-->
+
+        <move element="pretemplate.quickedit" destination="product.info.main" after="product.info.price"/>
+
+
+    </body>
+</page>

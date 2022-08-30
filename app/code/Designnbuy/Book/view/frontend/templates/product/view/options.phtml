@@ -1,0 +1,582 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\View\Options */
+?>
+<div class="overlay" style="display:none;"></div>
+<a href="javascript:void(0)" class="close-btn" style="display:none;">X</a>
+<iframe src="<?php echo $block->getBaseUrl(); ?>jq-3d-flip-book/index.php?base_url=<?php echo $block->getBaseUrl(); ?>" id="container-file-pp" style="display:none;">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+<?php $_options = $block->decorateArray($block->getOptions()) ?>
+<?php $_productId = $block->getProduct()->getId() ?>
+<?php if (count($_options)):?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "priceOptions": {
+                "optionConfig": <?= /* @escapeNotVerified */ $block->getJsonConfig() ?>,
+                "controlContainer": ".field",
+                "priceHolderSelector": "[data-product-id='<?= $block->escapeHtml($_productId) ?>'][data-role=priceBox]"
+            }
+        }
+    }
+</script>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager  = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$mediaUrl = $storeManager->getStore()->getBaseUrl(
+    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+    );
+if($block->getProduct()->getId() == 911){
+?>
+<div class="book-module">
+	<div class="main-bg">
+		<div class="main-menu">
+			<ul>
+				<li class="item-title job_type active">
+					<a href="#"><span class="no">1</span> Job Type</a>
+				</li>
+				<li class="item-title binding_style">
+					<a href="#"><span class="no">2</span> Binding Style</a>
+				</li>
+				<li class="item-title page_stock">
+					<a href="#"><span class="no">3</span> Page & Stock</a>
+				</li>
+				<li class="item-title size">
+					<a href="#"><span class="no">4</span> Size</a>
+				</li>
+				<li class="item-title proofs_files">
+					<a href="#"><span class="no">5</span> Proofs & Files</a>
+				</li>
+				<li class="item-title summary">
+					<a href="#"><span class="no">6</span> Summary</a>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="module-bg">
+			<div class="steps">
+				<!-- <h1 class="title"><span class="title_no">1</span> <span>Select your <strong>Job Type</strong></span></h1> -->
+				
+				<div>
+					<ul class="step_select">
+    <?php 
+    /* foreach ($_options as $_option): ?>
+        <?= $block->getOptionHtml($_option) ?>
+    <?php endforeach; */ ?>
+<?php
+    
+    $customOptions = $objectManager->get('Magento\Catalog\Model\Product\Option')->getProductOptionCollection($block->getProduct());
+    
+    $i = 1;
+    //echo"<pre>"; print_r($customOptions->getData()); exit;
+    foreach($customOptions as $optionKey => $optionVal){
+    $step_details = explode("|",$optionVal->getDescription());
+    if(count($step_details) >= 2){
+        if($step_details[0] == 'job_type' && $step_details[1] == 'first')  {
+            
+            echo"<li class='main-section-li' section-data='job_type'>";
+            echo"<ul class='job_type_section'>";
+        }
+        if($step_details[0] == 'binding_style' && $step_details[1] == 'first')  {
+            
+            echo"<li class='main-section-li' section-data='binding_style'>";
+            echo"<ul class='binding_style_section'>";
+        }
+        if($step_details[0] == 'page_stock' && $step_details[1] == 'first')  {
+            
+            echo"<li class='main-section-li' section-data='page_stock'>";
+            echo"<ul class='page_stock_section'>";
+        }
+        if($step_details[0] == 'size' && $step_details[1] == 'first')  {
+            
+            echo"<li class='main-section-li' section-data='size'>";
+            echo"<ul class='size_section'>";
+        }
+        if($step_details[0] == 'proofs_files' && $step_details[1] == 'first')  {
+            
+            echo"<li class='main-section-li' section-data='proofs_files'>";
+            echo"<ul class='proofs_files_section'>";
+        }
+        
+    }
+?>
+    
+    <li class="field <?php if($optionVal->getTitle() == 'button'){  echo "hide-section-data";  } ?>" option_id="<?php echo $optionVal->getMageworxOptionId(); ?>" <?php if($i !=1){?> style="display:none;" <?php } ?>>
+    <?php if($optionVal->getTitle() == 'button') { ?>
+        <?php  
+            if (!empty($optionVal->getValues())) {
+                $ii = 1;
+            foreach($optionVal->getValues() as $valuesKey => $valuesVal) {
+                //echo"<pre>"; print_r($valuesVal->getData()); exit;
+                $ii++;
+            ?>
+        <div class="field choice admin__field admin__field-option" option_type_id="<?php echo $valuesVal->getMageworxOptionTypeId(); ?>">
+            <input type="<?php echo $optionVal->getType(); ?>" class="<?php echo $optionVal->getType(); ?> button-radio admin__control-<?php echo $optionVal->getType(); ?>  product-custom-option " name="options[<?php echo $optionVal->getOptionId(); ?>]" id="options_<?php echo $optionVal->getOptionId().'_'.$ii; ?>" value="<?php echo $valuesVal->getOptionTypeId(); ?>" data-selector="options[<?php echo $optionVal->getOptionId(); ?>]" price="5">
+            <a href="javascript:void(0)" class="perv-btn" <?php if(!empty($step_details)){ if($step_details[0] == 'job_type'){ ?>style="display:none;"<?php } } ?>>Previous Button</a>
+            <a href="javascript:void(0)" class="next-btn" section-data="<?php if(!empty($step_details)){ echo $step_details[0]; } ?>">Next Button</a>
+        </div>
+        <?php } } ?>
+        
+    <?php } else { ?>
+        <?php if($optionVal->getType() != 'area'){ ?>
+        <h1 class="label title" for="select_<?php echo $optionVal->getOptionId(); ?>">
+            <!--span>Select Your</span--><?php echo $optionVal->getTitle(); ?>
+        </h1>
+        <?php } ?>
+        <div class="control diff-step <?php if($optionVal->getType() == 'file') { echo "file-data"; }?>">
+            <?php if($optionVal->getType() == 'drop_down'){ ?>
+                <select name="options[<?php echo $optionVal->getOptionId(); ?>]" id="select_<?php echo $optionVal->getOptionId(); ?>" class="product-custom-option admin__control-select" title="" data-selector="options[<?php echo $optionVal->getOptionId(); ?>]">
+                    <option value="">-- Please Select --</option>
+                    <?php foreach($optionVal->getValues() as $valuesKey => $valuesVal) { ?>
+                    <option value="<?php echo $valuesVal->getOptionTypeId(); ?>" price="5" option_type_id="<?php echo $valuesVal->getMageworxOptionTypeId(); ?>"><?php echo $valuesVal->getTitle(); ?></option>
+                    <?php } ?>
+                </select>
+            <?php } else if($optionVal->getType() == 'file') { ?>
+                <span>Choose file</span>
+                <input type="file" name="options_<?php echo $optionVal->getOptionId(); ?>_file" id="options_<?php echo $optionVal->getOptionId(); ?>_file" filesupport="<?php echo $optionVal->getFileExtension(); ?>" class="product-custom-option proof-file" />
+                <input type="hidden" name="options_<?php echo $optionVal->getOptionId(); ?>_file_action" value="save_new" class="" />
+                <div class="preview_image"></div>
+                <div class="title-preview-image" style="display:none;">Please click above image to view the preview</div>
+            <?php } else if($optionVal->getType() == 'area') { ?>
+                <textarea id="options_<?php echo $optionVal->getOptionId(); ?>_text" class="product-custom-option" name="options[<?php echo $optionVal->getOptionId(); ?>]" data-selector="options[<?php echo $optionVal->getOptionId(); ?>]" rows="5" cols="25" placeholder="Add Description for your file."></textarea>
+            <?php 
+                } else if($optionVal->getType() == 'field') { 
+                $min_max_char = explode("-",$optionVal->getMaxCharacters());
+            ?>  
+                <?php
+                    if(count($min_max_char) == 2){ echo"<p>Please enter minimum ".$min_max_char[0]." and maximum ".$min_max_char[1]." pages.</p>"; }
+                    if($optionVal->getTitle() != "Specify your Colour Pages (Refer to PDF Pages)"){
+                ?>
+                <input type="text" id="options_<?php echo $optionVal->getOptionId(); ?>_text" class="input-text product-custom-option <?php if(count($min_max_char) == 2){ ?>validate-digits-range digits-range-<?php echo $optionVal->getMaxCharacters(); } ?> <?php echo $optionVal->getUniqueFieldSku(); ?>" name="options[<?php echo $optionVal->getOptionId(); ?>]" data-selector="options[<?php echo $optionVal->getOptionId(); ?>]" value="">
+                <?php
+                    } else {
+                ?>
+                    <div class="mono-with-color-main"></div>
+                    <div class="mage-error mono-with-color-main-validate" generated="true"></div>
+                    <input type="text" id="options_<?php echo $optionVal->getOptionId(); ?>_text" class="input-text mono-with-multi-color-input product-custom-option <?php if(count($min_max_char) == 2){ ?>validate-digits-range digits-range-<?php echo $optionVal->getMaxCharacters(); } ?> <?php echo $optionVal->getUniqueFieldSku(); ?>" name="options[<?php echo $optionVal->getOptionId(); ?>]" data-selector="options[<?php echo $optionVal->getOptionId(); ?>]" value="">
+                <?php
+                    }
+                ?>
+            <?php } else { ?>
+            <div class="options-list nested" id="options-<?php echo $optionVal->getOptionId(); ?>-list">
+            
+                <?php  
+                    if (!empty($optionVal->getValues())) {
+                        $ii = 1;
+                    foreach($optionVal->getValues() as $valuesKey => $valuesVal) {
+                        //echo"<pre>"; print_r($valuesVal->getData()); exit;
+                        $ii++;
+                    ?>
+                <div class="field choice admin__field admin__field-option" option_type_id="<?php echo $valuesVal->getMageworxOptionTypeId(); ?>">
+                
+
+                    <span class="tip-top <?php echo $optionVal->getUniqueFieldSku(); ?>"></span>
+                    <input type="<?php echo $optionVal->getType(); ?>" class="<?php echo $optionVal->getUniqueFieldSku().' '.$optionVal->getType(); ?> admin__control-<?php echo $optionVal->getType(); if($valuesVal->getTitle() != "Book"){ echo" product-custom-option"; } ?>" name="options[<?php echo $optionVal->getOptionId(); ?>]" id="options_<?php echo $optionVal->getOptionId().'_'.$ii; ?>" value="<?php echo $valuesVal->getOptionTypeId(); ?>" data-validate="{'validate-one-required-by-name':true}" data-selector="options[<?php echo $optionVal->getOptionId(); ?>]" price="<?php echo $valuesVal->getPrice(); ?>">
+                    <label class="label admin__field-label" for="options_<?php echo $optionVal->getOptionId().'_'.$ii; ?>"><?php echo $valuesVal->getTitle(); ?></label>
+                    <?php if($valuesVal->getTitle() == "Book"){ ?>
+                        <?php
+                        $img_dt_book = json_decode($valuesVal->getImagesData());
+                        $img_db_book_array = (array)$img_dt_book[0];
+                        ?>
+                        <div class="option_images_gallery"><div class="mageworx-optionswatches-option-gallery mageworx-optionswatches-option-gallery-type_radio"><img src="<?php echo $mediaUrl; ?>mageworx/optionfeatures/product/option/value<?php echo $img_db_book_array['value']; ?>" alt="" class="mageworx-optionswatches-option-gallery_image"></div></div>
+                    <?php } ?>
+                </div>
+                <?php } } ?>
+            </div>
+            <span id="options-<?php echo $optionVal->getOptionId(); ?>-container"></span>
+			<span class=""></span>
+            <?php } ?>
+        </div>
+    <?php } ?>
+    </li>
+    
+<?php
+    if(count($step_details) >= 2){
+        if($step_details[0] == 'job_type' && $step_details[1] == 'last')  {
+            echo"</ul>";
+            echo"</li>";
+        }
+        if($step_details[0] == 'binding_style' && $step_details[1] == 'last')  {
+            echo"</ul>";
+            echo"</li>";
+        }
+        if($step_details[0] == 'page_stock' && $step_details[1] == 'last')  {
+            echo"</ul>";
+            echo"</li>";
+        }
+        if($step_details[0] == 'size' && $step_details[1] == 'last')  {
+            echo"</ul>";
+            echo"</li>";
+        }
+        if($step_details[0] == 'proofs_files' && $step_details[1] == 'last')  {
+            echo"</ul>";
+            echo"</li>";
+        ?>
+            <li class='main-section-li' section-data='summary' style="display:none;">
+            <ul class='summary_section'>
+                <h1 class="title">Summary and Quantity</h1>
+                <div class="book_specifications">
+                    <h1 class="specification_title title">Book Specification</h1>
+                    <ul class="specification_list">
+                        <li>
+                            <table class="cellsVerticalAlign">
+                                <tr>
+                                    <td class="list_td">Job Type</td>
+                                    <td class="list_td">Book</td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="temp-li-numer-copy">
+                            <h1 class="title"><span>How many <strong>copies</strong> would you like a quote for?</span></h1>
+                            <input type="number" name="custom_qty" class="custom_qty required required-entry" />
+                            <span class="update_price_span" style="display:none;">
+                                <a href="javascript:void(0)" class="action update_price_btn primary" title="Subscribe" >
+                                    <span>Update Price</span>
+                                </a>
+                            </span>
+                        </li>
+                        <li class="temp-li">
+                            <input type="checkbox" name="receive_email_reminder" class="receive_email_reminder" />
+                            <h1 class="title">Receive Email Reminders</h1>
+                        </li>
+                        <li class="temp-li">
+                            <h1 class="title"><span>Please enter your</span> phone number</h1>
+                            <input type="text" name="phone_number" class="phone_number required required-entry" />
+                        </li>
+                        <li class="temp-li">
+                            <h1 class="title"><span>Please enter your</span> email address</h1>
+                            <p>To see your instant quote on screen, please enter a valid email address below.</p>
+                            <input type="text" name="email_custom" class="email_custom required required-entry validate-email" />
+                        </li>
+                        <li class="temp-li">
+                            <a href="javascript:void(0)" class="perv-btn">Previous Button</a>
+                            <a href="javascript:void(0)" class="next_btn_last" section-data="proofs_files">Next Button</a>
+                        </li>
+                        <li class="perm-li" style="display:none;">
+                            <h1 class="title">Quote Subtotal</h1>
+                            <div class="sub-price"></div>
+                        </li>
+                        <li class="perm-li" style="display:none;">
+                            <h1 class="title">Delivery Offer!</h1>
+                            <div class="delevary">FREE</div>
+                        </li>
+                        <li class="perm-li" style="display:none;">
+                            <a href="javascript:void(0)" class="place_order_btn">Place Your Order for this Quote</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </ul>
+            </li>
+        <?php
+        } 
+        
+    }
+$i++;
+    }
+?>
+                    </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+} else {
+?>
+<?php foreach ($_options as $_option): ?>
+        <?= $block->getOptionHtml($_option) ?>
+<?php endforeach; ?>
+<?php 
+}
+?>
+
+<?php endif; ?>
+<script>
+require(['jquery', 'jquery/ui', 'mage/loader'], function($){
+    
+    jQuery(document).ready(function(){ 
+        //jQuery(".custom-loader-cl").show();
+        jQuery("body").on("click",".diff-step .options-list .field.admin__field",function(){
+            jQuery(this).find(".option_images_gallery .mageworx-optionswatches-option-gallery_image").removeClass("active");
+            jQuery(this).find(".option_images_gallery .mageworx-optionswatches-option-gallery_image").addClass("active");
+            jQuery(this).parents("li.field").find(".tip-top").removeClass("active");
+            jQuery(this).find(".tip-top").addClass("active");
+            jQuery(".radio.product-custom-option").each(function(){
+                if(jQuery(this).is(':checked')) { 
+                    jQuery(this).prev().removeClass("active");
+                    jQuery(this).prev().addClass("active");
+                 }else{
+                    jQuery(this).prev().removeClass("active");
+                 }
+            });
+			jQuery(this).parents("li.field").find(".field.admin__field").removeClass("active");
+			jQuery(this).addClass("active");
+            jQuery(this).parents("li.field").removeClass("active");
+            jQuery(this).parents("li.field").addClass("active");
+            jQuery(this).find(".admin__control-radio")[0].click(); 
+ 
+        });
+
+
+        require([
+        'jquery',
+        'mage/validation'
+        ], function($){
+
+            var dataForm = jQuery('#product_addtocart_form');
+            var ignore = null;
+
+            dataForm.mage('validation', {
+                ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+            }).find('input:text').attr('autocomplete', 'off');
+            
+            
+            
+            jQuery("body").on("click",".next-btn",function(){
+                if(dataForm.validation('isValid') == true){
+                
+                    jQuery(this).prev().prev().trigger("click");
+                    jQuery(this).parents(".main-section-li").hide();
+                    jQuery(this).parents(".main-section-li").next().show();
+                    
+                    var my_top_section = jQuery(".main-section-li:visible").attr("section-data");
+                    jQuery(".main-menu li.item-title").removeClass("active");
+                    jQuery(".main-menu li.item-title."+my_top_section).addClass("active");
+                    
+                    /************* Start last setp summary details *************/
+
+                    if(jQuery(this).attr("section-data") == "proofs_files"){
+                        jQuery(".cellsVerticalAlign tbody").html("<tr><td class='list_td'>Job Type</td><td class='list_td'>Book</td></tr>");
+                        jQuery(".product-options-wrapper li.field").each(function(){
+                            var title = jQuery(this).find("h1.label.title").html();
+                            if(jQuery(this).find(".product-custom-option").attr("type") == "radio")
+                            {
+                                var data = jQuery(this).find(".product-custom-option:checked").next().text();
+                            }
+                            if(jQuery(this).find(".product-custom-option").is('select'))
+                            {
+                                var data = jQuery(this).find(".product-custom-option option:selected").text();
+                            }
+                            if(jQuery(this).find(".product-custom-option").attr("type") == "text")
+                            {
+                                var data = jQuery(this).find(".product-custom-option").val();
+                            }
+                            if(title !== undefined && data !== undefined && data != ""){
+                                var final_html = "<tr><td class='list_td'>"+title+"</td><td class='list_td'>"+data+"</td></tr>";
+                            }
+                            jQuery(".cellsVerticalAlign tbody").append(final_html);
+                        });
+                    }
+
+                    /************* End last setp summary details *************/
+                    
+                    jQuery('html, body').animate({
+                        scrollTop: jQuery(".item-title.job_type").offset().top
+                    }, 1000);
+                    jQuery('.module-bg').animate({
+                            scrollTop: 0
+                        }, 1000);
+                    }
+            });
+            jQuery("body").on("click",".next_btn_last, .update_price_btn",function(){
+                if(dataForm.validation('isValid') == true){
+                    if (jQuery('input.receive_email_reminder').is(':checked')) {
+                        var email_data = jQuery(".specification_list li").html();
+                    }else{
+                        var email_data = null;
+                    }
+                jQuery.post("<?php echo $this->getBaseUrl(); ?>book/book/quote",
+                {
+                    type_of_book_you_want : jQuery(".type_of_book_you_want.active").next().next().text(),
+                    black_and_white_page_count : jQuery(".black_and_white_page_count").val(),
+                    color_page_count : jQuery(".color_page_count").val(),
+                    custom_qty : jQuery(".custom_qty").val(),
+                    email : jQuery(".specification_list .temp-li .email_custom").val(),
+                    product_id : <?php echo $_productId; ?>,
+                    binding_style : jQuery(".field.choice.active input.binding_style").attr("price"),
+                    cover_stock : jQuery(".field.choice.active input.cover_stock").attr("price"),
+                    lamination_cost : jQuery(".field.choice.active input.lamination_cost").attr("price"),
+                    type_of_book_you_want_price : jQuery(".field.choice.active input.type_of_book_you_want").attr("price"),
+                    black_and_white_paper_stock : jQuery(".field.choice.active input.black_and_white_paper_stock").attr("price"),
+                    color_paper_stock : jQuery(".field.choice.active input.color_paper_stock").attr("price"),
+                    email_data : email_data
+                },
+                function(data, status){
+                    if(status == 'success'){
+                        jQuery(".perm-li").show();
+                        jQuery(".update_price_span").show();
+                        jQuery(".temp-li").hide();
+                        jQuery(".perm-li .sub-price").text(data);
+                        jQuery(".temp-li-numer-copy .title span").html("Number of <strong>copies</strong>");
+                    }
+                });
+                }
+            });
+            jQuery("body").on("click",".perm-li .place_order_btn",function(){
+                if(dataForm.validation('isValid') == true){
+                    jQuery(".box-tocart .actions #product-addtocart-button").click();
+                    jQuery(".box-tocart .actions #product-updatecart-button").click();
+                }
+            });
+        });
+
+
+        jQuery("body").on("click",".perv-btn",function(){
+            jQuery(this).parents(".main-section-li").hide();
+            jQuery(this).parents(".main-section-li").prev().show();
+
+            var my_top_section = jQuery(".main-section-li:visible").attr("section-data");
+            jQuery(".main-menu li.item-title").removeClass("active");
+            jQuery(".main-menu li.item-title."+my_top_section).addClass("active");
+            jQuery('html, body').animate({
+                scrollTop: jQuery(".item-title.job_type").offset().top
+            }, 1000);
+            jQuery('.module-bg').animate({
+                    scrollTop: 0
+                }, 1000);
+            
+        });
+        
+        jQuery(".input-text.product-custom-option.validate-digits-range").blur(function(){
+            var total_pages = null;
+            jQuery(".input-text.product-custom-option.validate-digits-range").each(function(){
+                total_pages += parseInt(jQuery(this).val());
+            });
+            var multi_element_html = '';
+            for(var ttl_page = 1; ttl_page < total_pages; ttl_page++){
+                var ttl_amount = ttl_page +'-'+ (parseInt(ttl_page) + 1);
+                ttl_page = parseInt(ttl_page) + 1;
+                multi_element_html += '<div class="element" data-val="'+ttl_amount+'">'+ttl_amount+'</div>';
+            }
+            jQuery(".mono-with-color-main").html(multi_element_html);
+        });
+        jQuery(".book_specifications .custom_qty").blur(function(){
+            jQuery("#qty").val(jQuery(this).val());
+        });
+        /* jQuery("body").on("click",".hide-section-data",function(){
+            
+            var hide_section = jQuery(this).attr("section-data");
+            jQuery("li[section-data='" + hide_section +"']").hide();
+        }); */
+        jQuery("body").on("click",".mono-with-color-main .element.active",function(ev){
+            ev.stopPropagation();
+            jQuery(this).removeClass("active");
+            var current_ele = jQuery(this).attr("data-val");
+                var total_selected = '';
+                var count_selected = 0;
+                jQuery(".mono-with-color-main .element.active").each(function(){
+                    total_selected += jQuery(this).attr('data-val') +',';
+                    count_selected = count_selected + 2;
+                });
+                if(count_selected != jQuery(".color_page_count").val()){
+                    jQuery(".mage-error.mono-with-color-main-validate").text("Please select specified color page count.");
+                    jQuery(".mage-error.mono-with-color-main-validate").show();
+                    jQuery(".mono-with-multi-color-input").val("");
+                }else{
+                    jQuery(".mage-error.mono-with-color-main-validate").text("");
+                    jQuery(".mage-error.mono-with-color-main-validate").hide();
+                    jQuery(".mono-with-multi-color-input").val(total_selected.slice(0,-1));
+                }
+               
+            return false;
+        });
+        jQuery("body").on("click",".mono-with-color-main .element",function(event){
+            if(event.isPropagationStopped() != true){
+                jQuery(this).addClass("active");
+                var current_ele = jQuery(this).attr("data-val");
+                var total_selected = '';
+                var count_selected = 0;
+                jQuery(".mono-with-color-main .element.active").each(function(){
+                    total_selected += jQuery(this).attr('data-val') +',';
+                    count_selected = count_selected + 2;
+                });
+                if(count_selected != jQuery(".color_page_count").val()){
+                    jQuery(".mage-error.mono-with-color-main-validate").text("Please select specified color page count.");
+                    jQuery(".mage-error.mono-with-color-main-validate").show();
+                    jQuery(".mono-with-multi-color-input").val("");
+                }else{
+                    jQuery(".mage-error.mono-with-color-main-validate").text("");
+                    jQuery(".mage-error.mono-with-color-main-validate").hide();
+                    jQuery(".mono-with-multi-color-input").val(total_selected.slice(0,-1));
+                }
+               
+            }
+        })
+        jQuery("body").on("click",".close-btn",function(){
+            jQuery("#container-file-pp").hide();
+            jQuery(this).hide();
+            jQuery(".overlay").hide();
+        });
+        
+    });
+    jQuery(window).load(function(){
+        setTimeout(function(){ jQuery(".product-custom-option.proof-file").addClass("now-loadded"); }, 3000);
+    });
+    
+});
+</script>
+<style>
+.box-tocart .field.qty{ display:none; }
+</style>
+<?php
+      $media_path =  $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+?>
+<!--<div class="custom-loader-cl">
+<img id="custom-loader" src="<?php /*echo $media_path; */?>designnbuy/book_module/loader-2.gif" />
+</div>-->
+
+<script>
+
+
+
+require([
+        'jquery',
+        'jquery/ui',
+        'jquery/validate',
+        'mage/translate'
+    ], function ($) {
+    
+    //Validate Image Extensions
+
+    var dataForm = jQuery('#product_addtocart_form');
+            var ignore = null;
+
+            dataForm.mage('validation', {
+                ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+            }).find('input:text').attr('autocomplete', 'off');
+
+            $.validator.addMethod(
+                'proof-file', function (v, elm) {
+
+                    var extensions = ['pdf','doc'];
+                    if (!v) {
+                        return true;
+                    }
+                    with (elm) {
+                        var ext = value.substring(value.lastIndexOf('.') + 1);
+                        for (i = 0; i < extensions.length; i++) {
+                            if (ext == extensions[i]) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+            }, $.mage.__('Disallowed file type.'));
+
+    jQuery("body").on("change",".product-custom-option.proof-file.now-loadded",function(){
+        if(dataForm.validation('isValid') == true){
+            return true;
+        }else{
+            return false;
+        }
+    });
+});
+</script>

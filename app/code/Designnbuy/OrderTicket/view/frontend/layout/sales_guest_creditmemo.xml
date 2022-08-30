@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sales.order.info.links">
+            <block class="Designnbuy\OrderTicket\Block\Order\Link" name="sales.order.info.links.returns">
+                <arguments>
+                    <argument name="path" xsi:type="string">orderticket/guest/returns</argument>
+                    <argument name="label" xsi:type="string">Order Tickets</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="sales.order.info.buttons">
+            <block class="Designnbuy\OrderTicket\Block\Order\Button" name="magento.orderticket.info.button" template="order/button.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

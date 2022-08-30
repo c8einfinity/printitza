@@ -1,0 +1,20 @@
+<div class="designer-redemption">
+	<div class="fieldset">
+		<div class="col2-set">
+			<div class="redemptin-earning-info">
+				<?= $block->getChildHtml('designer_commission_information') ?>
+			</div>
+			<div class="redemptin-form">
+				<?= $block->getChildHtml('designer_redemption_form') ?>
+			</div>		
+		</div>
+	</div>
+</div>
+<div class="redemptin-history">
+	<?= $block->getChildHtml('designer_redemption_history') ?>	
+</div>
+<style type="text/css">
+.redemptin-earning-info { float: left; width: 42%; display: block; border: 1px solid #ccc; padding: 0px 0px 0 15px; border-radius: 10px; }
+.redemptin-form{margin-left: 20px; width: 44%; padding: 0 15px 15px 15px; float: left; display: block; border: 1px solid #ccc; border-radius: 10px;}
+.redemptin-history{float: left; width: 100%; display: block;}
+</style>

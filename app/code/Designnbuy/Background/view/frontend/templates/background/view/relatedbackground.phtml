@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background related backgrounds template
+ *
+ * @var $block \Designnbuy\Background\Block\Background\View\RelatedBackgrounds
+ */
+?>
+
+<?php if ($block->displayBackgrounds()) { ?>
+    <?php $_backgroundCollection = $block->getBackgroundCollection(); ?>
+    <?php if ($_backgroundCollection->count()) { ?>
+    <div class="block related">
+        <div class="block-title title">
+            <strong id="block-relatedbackgrounds-heading" role="heading" aria-level="2">
+                <?php echo __('Related Backgrounds') ?>
+            </strong>
+        </div>
+        <ol class="block-content">
+            <?php foreach ($_backgroundCollection as $_background) { ?>
+                <li class="item">
+                    <a class="background-item-link"
+                       href="<?php echo $_background->getBackgroundUrl() ?>">
+                        <?php echo $block->escapeHtml($_background->getTitle()); ?>
+                    </a>
+                </li>
+            <?php } ?>
+        </ol>
+    </div>
+    <?php } ?>
+<?php } ?>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="color.colors.list">
+            <block class="Designnbuy\Color\Block\Color\ColorList\Item" name="color.colors.list.item" template="color/list/item.phtml">
+                <block class="Designnbuy\Color\Block\Color\Info" name="color.color.info" template="color/info.phtml" />
+                <action method="setColorInfoBlockName">
+                    <argument name="name" xsi:type="string">color.color.info</argument>
+                </action>
+            </block>
+            <block class="Designnbuy\Color\Block\Color\ColorList\Toolbar" name="color_list_toolbar" template="color/list/toolbar.phtml">
+                <block class="Designnbuy\Color\Block\Color\ColorList\Toolbar\Pager" name="color_list_toolbar_pager">
+                    <action ifconfig="dnbcolor/color_list/lazyload_enabled" method="setTemplate">
+                        <argument name="template" xsi:type="string">Designnbuy_Color::color/list/toolbar/lazyload.phtml</argument>
+                    </action>
+                    <arguments>
+                        <argument name="lazyload_js" xsi:type="string">Designnbuy_Color/js/lazyload</argument>
+                        <argument name="list_wrapper" xsi:type="string">.color-list-wrapper .color-list, .color-list-wrapper .color-list</argument>
+                    </arguments>
+                </block>
+            </block>
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">color_list_toolbar</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

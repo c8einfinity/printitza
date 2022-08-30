@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <!--<update handle="designnbuy_orderticket_returns_view_handle"/>-->
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <action method="setActive">
+                <argument name="path" xsi:type="string">orderticket/returns/history/</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="page.main.title">
+            <block class="Designnbuy\OrderTicket\Block\Returns\View" name="return.status" template="return/return_status.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Designnbuy\OrderTicket\Block\Returns\View" name="orderticket.returns.history" cacheable="false">
+                <container name="orderticket.returns.history.info" as="info" label="Customer My Account Order Ticket View"/>
+            </block>
+            <block class="Designnbuy\OrderTicket\Block\Returns\View" name="customer.account.link.back" template="Magento_Customer::account/link/back.phtml" cacheable="false"/>
+        </referenceContainer>
+        <!--<block class="Designnbuy\OrderTicket\Block\Returns\Tracking" name="orderticket.returns.tracking" as="tracking" cacheable="false"/>-->
+    </body>
+</page>

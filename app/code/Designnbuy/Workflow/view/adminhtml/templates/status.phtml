@@ -1,0 +1,64 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/** @var \Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn $block */
+$_item = $block->getItem();
+$itemStatuses = $block->getWorkFlowItemStatuses();
+
+$updateStatuses = $block->getUpdateStatuses();
+
+?>
+<?php if($itemStatuses->count() > 0):?>
+<div class="admin__field-control">
+    <select class="admin__control-select" id="item_status_<?php echo $_item->getId()?>" name="item_status_<?php echo $_item->getId()?>">
+        <option value=""><?php echo __('--Select Status--');?></option>
+        <?php foreach($itemStatuses as $status): ?>
+            <?php if($block->getCurrentWorkFlowUser()): ?>
+                <?php if((in_array($status->getId(), $updateStatuses))): ?>
+                    <?php if($_item->getWorkflowStatus() == $status->getStatusId()): ?>
+                        <?php $select = 'selected="selected"'; ?>
+                    <?php else: ?>
+                        <?php $select = ''; ?>
+                    <?php endif; ?>
+                    <option value="<?php echo $status->getStatusId();?>" <?php echo $select;?> ><?php echo __($status->getTitle());?></option>
+                <?php endif; ?>
+            <?php else: ?>
+                <?php if($_item->getWorkflowStatus() == $status->getStatusId()): ?>
+                    <?php $select = 'selected="selected"'; ?>
+                <?php else: ?>
+                    <?php $select = ''; ?>
+                <?php endif; ?>
+                <option value="<?php echo $status->getStatusId();?>" <?php echo $select;?> ><?php echo __($status->getTitle());?></option>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </select>
+</div>
+<div class="order-history-comments-actions">
+    <button id="submit_status_button<?php echo $_item->getId()?>" title="<?php echo __('Update Status');?>" type="button" class="action-default scalable action-save action-secondary"  data-ui-id="widget-button-0">
+        <span><?php echo __('Update Status');?></span>
+    </button>
+</div>
+
+<script>
+    require(['prototype'], function(){
+
+        submitStatus = function() {
+            submitAndReloadArea($('sales_order_view_tabs_order_info_content').parentNode, '<?php /* @escapeNotVerified */ echo $block->getSubmitUrl() ?>')
+        }
+
+        if ($('submit_status_button<?php echo $_item->getId()?>')) {
+            $('submit_status_button<?php echo $_item->getId()?>').observe('click', submitStatus);
+        }
+
+    });
+</script>
+<?php else: ?>
+<?php echo __('N/A');?>
+<?php endif; ?>

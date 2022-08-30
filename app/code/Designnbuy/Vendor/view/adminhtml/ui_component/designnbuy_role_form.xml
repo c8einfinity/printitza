@@ -1,0 +1,140 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">designnbuy_role_form.role_form_data_source</item>
+			<item name="deps" xsi:type="string">designnbuy_role_form.role_form_data_source</item>
+		</item>
+		<item name="label" translate="true" xsi:type="string">General Information</item>
+		<item name="config" xsi:type="array">
+			<item name="dataScope" xsi:type="string">data</item>
+			<item name="namespace" xsi:type="string">designnbuy_role_form</item>
+		</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+		<item name="buttons" xsi:type="array">
+			<item name="back" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\Role\Edit\BackButton</item>
+			<item name="delete" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\Role\Edit\DeleteButton</item>
+			<item name="reset" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\Role\Edit\ResetButton</item>
+			<item name="save" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\Role\Edit\SaveButton</item>
+			<item name="save_and_continue" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\Role\Edit\SaveAndContinueButton</item>
+		</item>
+	</argument>
+	<dataSource name="role_form_data_source">
+		<argument name="dataProvider" xsi:type="configurableObject">
+			<argument name="class" xsi:type="string">Designnbuy\Vendor\Model\Role\DataProvider</argument>
+			<argument name="name" xsi:type="string">role_form_data_source</argument>
+			<argument name="primaryFieldName" xsi:type="string">id</argument>
+			<argument name="requestFieldName" xsi:type="string">id</argument>
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="submit_url" path="*/*/save" xsi:type="url"/>
+				</item>
+			</argument>
+		</argument>
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+	</dataSource>
+	<fieldset name="General">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="label" xsi:type="string"/>
+			</item>
+		</argument>
+		<field name="Title">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Title</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">Role</item>
+					<item name="sortOrder" xsi:type="number">10</item>
+					<item name="dataScope" xsi:type="string">title</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">false</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="view_status">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Designnbuy\Vendor\Ui\Component\Listing\Column\ViewStatus\Options</item>
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">int</item>
+					<item name="label" xsi:type="string" translate="true">View Status</item>
+					<item name="formElement" xsi:type="string">multiselect</item>
+					<item name="source" xsi:type="string">Role</item>
+					<item name="dataScope" xsi:type="string">view_status</item>
+					<item name="sortOrder" xsi:type="number">20</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+					<item name="tooltip" xsi:type="array">
+						<item name="description" xsi:type="string" translate="true">Permission to view orders with these status</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="update_status">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Designnbuy\Vendor\Ui\Component\Listing\Column\ViewStatus\Options</item>
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">int</item>
+					<item name="label" xsi:type="string" translate="true">Update Status</item>
+					<item name="formElement" xsi:type="string">multiselect</item>
+					<item name="source" xsi:type="string">Role</item>
+					<item name="dataScope" xsi:type="string">update_status</item>
+					<item name="sortOrder" xsi:type="number">30</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+					<item name="tooltip" xsi:type="array">
+						<item name="description" xsi:type="string" translate="true">Allowable Next Status</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="access">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Designnbuy\Vendor\Ui\Component\Listing\Column\Access\Options</item>
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">int</item>
+					<item name="label" xsi:type="string" translate="true">Access</item>
+					<item name="formElement" xsi:type="string">multiselect</item>
+					<item name="source" xsi:type="string">Role</item>
+					<item name="dataScope" xsi:type="string">access</item>
+					<item name="sortOrder" xsi:type="number">40</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="position">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Position</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">Role</item>
+					<item name="sortOrder" xsi:type="number">50</item>
+					<item name="dataScope" xsi:type="string">position</item>
+				</item>
+			</argument>
+		</field>
+		<!--<field name="content">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="label" xsi:type="string" translate="true">Status Update</item>
+					<item name="formElement" xsi:type="string">wysiwyg</item>
+					<item name="source" xsi:type="string">category</item>
+					<item name="wysiwyg" xsi:type="boolean">true</item>
+					<item name="dataScope" xsi:type="string">content</item>
+					<item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+				</item>
+			</argument>
+		</field>-->
+	</fieldset>
+</form>

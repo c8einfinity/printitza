@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2019 Design 'N' Buy. All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ * ALWAYS DO BETTER @a
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<!-- <add id="Designnbuy_JobManagement::jobmanagement" title="Job Management" module="Designnbuy_JobManagement" sortOrder="80" resource="Designnbuy_JobManagement::jobmanagement" parent="Designnbuy_Base::network" /> -->
+        <add id="Designnbuy_JobManagement::managejob" title="Jobs" module="Designnbuy_JobManagement" sortOrder="10" resource="Designnbuy_JobManagement::managejob" parent="Magento_Sales::sales_operation" action="jobmanagement/jobmanagement"/>
+        
+    </menu>
+</config>

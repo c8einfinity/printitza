@@ -1,0 +1,76 @@
+
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product namenumber data template
+ *
+ * @var $block \Designnbuy\Merchandise\Block\Cart\Item\Renderer\Actions\NameNumber
+ */
+
+?>
+
+
+<?php $nameNumbers = $block->getNameNumber() ?>
+<?php $itemId = $block->getItemId(); ?>
+<?php if(isset($nameNumbers) && count($nameNumbers) > 0): ?>
+
+    <a href="#" class="action action-namenumber namenumber-action<?php echo $block->getItemId()?>" title="Name / Number"><span><?php /* @escapeNotVerified */ echo __('Name') ?> / <?php /* @escapeNotVerified */ echo __('Number') ?></span></a>
+
+<div class="popup-namenumber<?php echo $block->getItemId()?>" style="display:none;">
+    <div class="cart table-wrapper product media">
+        <br class="item-options">
+            <?php /* @escapeNotVerified */ echo __('Name') ?> / <?php /* @escapeNotVerified */ echo __('Number') ?> </br>
+            <?php foreach ($nameNumbers as $nameNumber): ?>
+                <?php echo $nameNumber['name']; ?> / <?php echo $nameNumber['number']; ?> </br>
+            <?php endforeach; ?>
+        </dl>
+    </div>
+</div>
+
+<script>
+    /*Disable Quantity Box When Name number with cart item - Start*/
+    require(['jquery'],function($) {
+            var itemId = <?php echo $itemId; ?>;
+            $("#cart-"+itemId+"-qty").prop('disabled', true);
+        }
+    );
+    /*Disable Quantity Box When Name number with cart item - End*/
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: false,
+                innerScroll: false,
+                title: $.mage.__('Name / Number List'),
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $(".popup-namenumber<?php echo $block->getItemId()?>"));
+            $(".namenumber-action<?php echo $block->getItemId()?>").on('click',function(){
+                $(".popup-namenumber<?php echo $block->getItemId()?>").modal("openModal");
+            });
+
+        }
+    );
+</script>
+<?php endif;?>

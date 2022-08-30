@@ -1,0 +1,615 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">designnbuy_vendor_user_form.user_form_data_source</item>
+			<item name="deps" xsi:type="string">designnbuy_vendor_user_form.user_form_data_source</item>
+			<item name="namespace" xsi:type="string">designnbuy_vendor_user_form</item>
+		</item>
+		<item name="label" translate="true" xsi:type="string">General Information</item>
+		<item name="config" xsi:type="array">
+			<item name="dataScope" xsi:type="string">data</item>
+			<item name="namespace" xsi:type="string">designnbuy_vendor_user_form</item>
+		</item>
+
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+		<item name="buttons" xsi:type="array">
+			<item name="back" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\BackButton</item>
+			<item name="delete" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\DeleteButton</item>
+			<item name="reset" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\ResetButton</item>
+			<item name="save" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\SaveButton</item>
+			<item name="save_and_continue" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\SaveAndContinueButton</item>
+			<item name="in_active_user" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\InActiveUser</item>
+			<item name="balance_sheet" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\Balance</item>
+			<item name="product" xsi:type="string">Designnbuy\Vendor\Block\Adminhtml\User\Edit\Product</item>
+		</item>
+		<item name="childrenFromMeta" xsi:type="boolean">true</item>
+	</argument>
+	<dataSource name="user_form_data_source">
+		<argument name="dataProvider" xsi:type="configurableObject">
+			<argument name="class" xsi:type="string">Designnbuy\Vendor\Model\User\DataProvider</argument>
+			<!--<argument name="class" xsi:type="string">Designnbuy\Vendor\Ui\DataProvider\User\Form\UserDataProvider</argument>-->
+			<argument name="name" xsi:type="string">user_form_data_source</argument>
+			<argument name="primaryFieldName" xsi:type="string">id</argument>
+			<argument name="requestFieldName" xsi:type="string">id</argument>
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="submit_url" path="*/*/save" xsi:type="url"/>
+				</item>
+			</argument>
+		</argument>
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+	</dataSource>
+
+
+	<fieldset name="general">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="label" xsi:type="string" translate="true">User Information</item>
+				<item name="collapsible" xsi:type="boolean">false</item>
+				<item name="sortOrder" xsi:type="number">10</item>
+			</item>
+		</argument>
+		<field name="id">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="visible" xsi:type="boolean">false</item>
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="dataScope" xsi:type="string">id</item>
+				</item>
+			</argument>
+		</field>
+		<field name="user_id">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="visible" xsi:type="boolean">false</item>
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="dataScope" xsi:type="string">user_id</item>
+				</item>
+			</argument>
+		</field>
+		<!--<field name="is_active">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">boolean</item>
+					<item name="label" xsi:type="string" translate="true">Enable User</item>
+					<item name="formElement" xsi:type="string">checkbox</item>
+					<item name="prefer" xsi:type="string">toggle</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">10</item>
+					<item name="dataScope" xsi:type="string">is_active</item>
+					<item name="valueMap" xsi:type="array">
+						<item name="true" xsi:type="number">1</item>
+						<item name="false" xsi:type="number">0</item>
+					</item>
+					<item name="default" xsi:type="number">1</item>
+					<item name="imports" xsi:type="array">
+						<item name="disabled" xsi:type="string">${ $.provider }:data.is_vendor</item>
+					</item>
+				</item>
+			</argument>
+		</field>-->
+		<field name="username">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">User Name</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">20</item>
+					<item name="dataScope" xsi:type="string">username</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="firstname">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">First Name</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">30</item>
+					<item name="dataScope" xsi:type="string">firstname</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="lastname">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Last Name</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">40</item>
+					<item name="dataScope" xsi:type="string">lastname</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="email">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">email</item>
+					<item name="label" xsi:type="string" translate="true">Email</item>
+					<item name="formElement" xsi:type="string">email</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">50</item>
+					<item name="dataScope" xsi:type="string">email</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-email" xsi:type="boolean">true</item>
+					</item>
+					<!--<item name="disabled" xsi:type="string">${ $.provider }:data.do_we_hide_it</item>-->
+				</item>
+			</argument>
+		</field>
+		<field name="commission_percentage">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Commission (%)</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">60</item>
+					<item name="dataScope" xsi:type="string">commission_percentage</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-number" xsi:type="boolean">true</item>
+						<item name="validate-zero-or-greater" xsi:type="boolean">true</item>
+					</item>
+					<item name="imports" xsi:type="array">
+						<item name="disabled" xsi:type="string">${ $.provider }:data.is_vendor</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="balance_amount">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Balance Amount</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">65</item>
+					<item name="dataScope" xsi:type="string">balance_amount</item>
+					<item name="disabled" xsi:type="string">true</item>
+				</item>
+			</argument>
+		</field>
+		<field name="password">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="component" xsi:type="string">Designnbuy_Vendor/js/components/text</item>
+					<item name="elementTmpl" xsi:type="string">Designnbuy_Vendor/form/element/password</item>
+					<item name="dataType" xsi:type="string">password</item>
+					<item name="label" xsi:type="string" translate="true">New Password</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">70</item>
+					<item name="dataScope" xsi:type="string">password</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-admin-password" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<field name="password_confirmation">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="component" xsi:type="string">Designnbuy_Vendor/js/components/text</item>
+					<item name="elementTmpl" xsi:type="string">Designnbuy_Vendor/form/element/password</item>
+					<item name="dataType" xsi:type="string">password</item>
+					<item name="label" xsi:type="string" translate="true">Password Confirmation</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">80</item>
+					<item name="dataScope" xsi:type="string">password_confirmation</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-cpassword" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+		<!-- <field name="role_id">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Designnbuy\Vendor\Ui\Component\Listing\Column\Role\Options</item>
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">int</item>
+					<item name="label" xsi:type="string" translate="true">Vendor Role</item>
+					<item name="formElement" xsi:type="string">select</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="dataScope" xsi:type="string">role_id</item>
+					<item name="sortOrder" xsi:type="number">90</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+					<item name="disabled" xsi:type="string">${ $.provider }:data.is_vendor</item>
+					<item name="disabled" xsi:type="string">0</item>
+					<item name="imports" xsi:type="array">
+						<item name="disabled" xsi:type="string">${ $.provider }:data.is_vendor</item>
+					</item>
+				</item>
+			</argument>
+		</field> -->
+		<field name="notify_user">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">boolean</item>
+					<item name="label" xsi:type="string" translate="true">Notify User by Mail</item>
+					<item name="formElement" xsi:type="string">checkbox</item>
+					<item name="prefer" xsi:type="string">toggle</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">60</item>
+					<item name="dataScope" xsi:type="string">notify_user</item>
+					<item name="valueMap" xsi:type="array">
+						<item name="true" xsi:type="number">1</item>
+						<item name="false" xsi:type="number">0</item>
+					</item>
+					<item name="default" xsi:type="number">1</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+					</item>
+					<item name="imports" xsi:type="array">
+						<item name="disabled" xsi:type="string">${ $.provider }:data.is_vendor</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+	</fieldset>
+	<fieldset name="ftp_information">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="label" xsi:type="string" translate="true">FTP Information</item>
+				<item name="collapsible" xsi:type="boolean">true</item>
+				<item name="sortOrder" xsi:type="number">20</item>
+			</item>
+		</argument>
+		<field name="folder_name">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Output Folder Name</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">10</item>
+					<item name="dataScope" xsi:type="string">folder_name</item>
+				</item>
+			</argument>
+		</field>
+		<field name="remote_host">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Remote Host</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">20</item>
+					<item name="dataScope" xsi:type="string">remote_host</item>
+				</item>
+			</argument>
+		</field>
+		<field name="ftp_port">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">FTP Port</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">30</item>
+					<item name="dataScope" xsi:type="string">ftp_port</item>
+				</item>
+			</argument>
+		</field>
+		<field name="ftp_username">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">FTP Username</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">40</item>
+					<item name="dataScope" xsi:type="string">ftp_username</item>
+				</item>
+			</argument>
+		</field>
+		<field name="ftp_password">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="elementTmpl" xsi:type="string">Designnbuy_Vendor/form/element/password</item>
+					<item name="dataType" xsi:type="string">password</item>
+					<item name="label" xsi:type="string" translate="true">FTP Password</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">50</item>
+					<item name="dataScope" xsi:type="string">ftp_password</item>
+				</item>
+			</argument>
+		</field>
+		<field name="ftp_path">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">FTP Path</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">60</item>
+					<item name="dataScope" xsi:type="string">ftp_path</item>
+				</item>
+			</argument>
+		</field>
+		<field name="connection_timeout">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" xsi:type="string" translate="true">Connection Timeout</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">70</item>
+					<item name="dataScope" xsi:type="string">connection_timeout</item>
+				</item>
+			</argument>
+		</field>
+		<field name="passive_ftp">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">boolean</item>
+					<item name="label" xsi:type="string" translate="true">Passive FTP</item>
+					<item name="formElement" xsi:type="string">checkbox</item>
+					<item name="prefer" xsi:type="string">toggle</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">80</item>
+					<item name="dataScope" xsi:type="string">passive_ftp</item>
+					<item name="valueMap" xsi:type="array">
+						<item name="true" xsi:type="number">1</item>
+						<item name="false" xsi:type="number">0</item>
+					</item>
+					<item name="default" xsi:type="number">0</item>
+				</item>
+			</argument>
+		</field>
+	</fieldset>
+	<!--- Vendor Product Assignment -->
+	<!--<fieldset name="vendor">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="collapsible" xsi:type="boolean">true</item>
+				<item name="label" xsi:type="string" translate="true">Assign Products to Vendor</item>
+				<item name="sortOrder" xsi:type="number">60</item>
+			</item>
+		</argument>
+
+		<fieldset name="product">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="collapsible" xsi:type="boolean">false</item>
+					<item name="label" xsi:type="string" translate="true">Assign Products</item>
+					<item name="additionalClasses" xsi:type="string">admin__fieldset-section</item>
+					<item name="sortOrder" xsi:type="number">20</item>
+				</item>
+			</argument>
+			<container name="button_set">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="label" xsi:type="boolean">false</item>
+						<item name="content" xsi:type="string" translate="true">Assigned Products to Vendor User.</item>
+						<item name="template" xsi:type="string">ui/form/components/complex</item>
+					</item>
+				</argument>
+				<container name="button_product">
+					<argument name="data" xsi:type="array">
+						<item name="config" xsi:type="array">
+							<item name="title" xsi:type="string" translate="true">Assign Product</item>
+							<item name="component" xsi:type="string">Magento_Ui/js/form/components/button</item>
+							<item name="actions" xsi:type="array">
+								<item name="0" xsi:type="array">
+									<item name="targetName" xsi:type="string">designnbuy_vendor_user_form.designnbuy_vendor_user_form.vendor.product.modal</item>
+									<item name="actionName" xsi:type="string">toggleModal</item>
+								</item>
+								<item name="1" xsi:type="array">
+									<item name="targetName" xsi:type="string">designnbuy_vendor_user_form.designnbuy_vendor_user_form.vendor.product.modal.designnbuy_vendor_product_listing</item>
+									<item name="actionName" xsi:type="string">render</item>
+								</item>
+							</item>
+							<item name="provider" xsi:type="boolean">false</item>
+						</item>
+					</argument>
+				</container>
+			</container>
+
+			<modal name="modal">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="dataScope" xsi:type="string"></item>
+						<item name="component" xsi:type="string">Magento_Ui/js/modal/modal-component</item>
+						<item name="options" xsi:type="array">
+							<item name="title" xsi:type="string" translate="true">Assign Product</item>
+							<item name="buttons" xsi:type="array">
+								<item name="0" xsi:type="array">
+									<item name="text" xsi:type="string" translate="true">Cancel</item>
+									<item name="actions" xsi:type="array">
+										<item name="0" xsi:type="string">closeModal</item>
+									</item>
+								</item>
+								<item name="1" xsi:type="array">
+									<item name="text" xsi:type="string" translate="true">Add Selected Products</item>
+									<item name="class" xsi:type="string">action-primary</item>
+									<item name="actions" xsi:type="array">
+										<item name="0" xsi:type="array">
+											<item name="targetName" xsi:type="string">index=designnbuy_vendor_product_listing</item>
+											<item name="actionName" xsi:type="string">save</item>
+										</item>
+										<item name="1" xsi:type="string">closeModal</item>
+									</item>
+								</item>
+							</item>
+						</item>
+					</item>
+				</argument>
+				<insertListing name="designnbuy_vendor_product_listing">
+					<argument name="data" xsi:type="array">
+						<item name="config" xsi:type="array">
+							<item name="autoRender" xsi:type="boolean">false</item>
+							<item name="dataScope" xsi:type="string">data.designnbuy_vendor_product_listing</item>
+							<item name="externalProvider" xsi:type="string">designnbuy_vendor_product_listing.designnbuy_vendor_product_listing_data_source</item>
+							<item name="selectionsProvider" xsi:type="string">designnbuy_vendor_product_listing.designnbuy_vendor_product_listing.product_columns.ids</item>
+							<item name="ns" xsi:type="string">designnbuy_vendor_product_listing</item>
+							<item name="render_url" xsi:type="url" path="mui/index/render" />
+							<item name="realTimeLink" xsi:type="boolean">true</item>
+							<item name="dataLinks" xsi:type="array">
+								<item name="imports" xsi:type="boolean">false</item>
+								<item name="exports" xsi:type="boolean">true</item>
+							</item>
+							<item name="behaviourType" xsi:type="string">simple</item>
+							<item name="externalFilterMode" xsi:type="boolean">false</item>
+							<item name="imports" xsi:type="array">
+								<item name="vendorId" xsi:type="string">${ $.provider }:data.vendor.current_vendor_id</item>
+							</item>
+							<item name="exports" xsi:type="array">
+								<item name="vendorId" xsi:type="string">${ $.externalProvider }:data.vendor.current_vendor_id</item>
+							</item>
+							<item name="component" xsi:type="string">Magento_Ui/js/form/components/insert-listing</item>
+						</item>
+					</argument>
+				</insertListing>
+			</modal>
+
+			<dynamicRows name="product">
+				<argument name="data" xsi:type="array">
+					<item name="config" xsi:type="array">
+						<item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+						<item name="componentType" xsi:type="string">dynamicRows</item>
+						<item name="label" xsi:type="boolean">false</item>
+						<item name="columnsHeader" xsi:type="boolean">false</item>
+						<item name="columnsHeaderAfterRender" xsi:type="boolean">true</item>
+						<item name="renderDefaultRecord" xsi:type="boolean">true</item>
+						<item name="template" xsi:type="string">ui/dynamic-rows/templates/grid</item>
+						<item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows-grid</item>
+						<item name="addButton" xsi:type="boolean">false</item>
+						<item name="recordTemplate" xsi:type="string">record</item>
+						<item name="dataScope" xsi:type="string">data.links</item>
+						<item name="deleteButtonLabel" xsi:type="string" translate="true">Remove</item>
+						<item name="dataProvider" xsi:type="string">data.designnbuy_vendor_product_listing</item>
+						<item name="map" xsi:type="array">
+							<item name="id" xsi:type="string">entity_id</item>
+							<item name="name" xsi:type="string">name</item>
+							<item name="status" xsi:type="string">status</item>
+						</item>
+						<item name="links" xsi:type="array">
+							<item name="insertData" xsi:type="string">${ $.provider }:${ $.dataProvider }</item>
+						</item>
+						<item name="sortOrder" xsi:type="string">2</item>
+					</item>
+				</argument>
+				<container name="record">
+					<argument name="data" xsi:type="array">
+						<item name="config" xsi:type="array">
+							<item name="isTemplate" xsi:type="boolean">true</item>
+							<item name="is_collection" xsi:type="boolean">true</item>
+							<item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/record</item>
+							<item name="componentType" xsi:type="string">container</item>
+							<item name="dataScope" xsi:type="string"></item>
+						</item>
+					</argument>
+					<field name="id">
+						<argument name="data" xsi:type="array">
+							<item name="config" xsi:type="array">
+								<item name="formElement" xsi:type="string">input</item>
+								<item name="elementTmpl" xsi:type="string">ui/dynamic-rows/cells/text</item>
+								<item name="component" xsi:type="string">Magento_Ui/js/form/element/text</item>
+								<item name="dataType" xsi:type="string">text</item>
+								<item name="dataScope" xsi:type="string">id</item>
+								<item name="fit" xsi:type="boolean">false</item>
+								<item name="label" xsi:type="string" translate="true">ID</item>
+								<item name="sortOrder" xsi:type="string">10</item>
+							</item>
+						</argument>
+					</field>
+					<field name="name">
+						<argument name="data" xsi:type="array">
+							<item name="config" xsi:type="array">
+								<item name="formElement" xsi:type="string">input</item>
+								<item name="elementTmpl" xsi:type="string">ui/dynamic-rows/cells/text</item>
+								<item name="component" xsi:type="string">Magento_Ui/js/form/element/text</item>
+								<item name="dataType" xsi:type="string">text</item>
+								<item name="dataScope" xsi:type="string">name</item>
+								<item name="fit" xsi:type="boolean">false</item>
+								<item name="label" xsi:type="string" translate="true">Name</item>
+								<item name="sortOrder" xsi:type="string">30</item>
+							</item>
+						</argument>
+					</field>
+					<actionDelete name="actionDelete">
+						<argument name="data" xsi:type="array">
+							<item name="config" xsi:type="array">
+								<item name="actionDelete" xsi:type="string">data-grid-actions-cell</item>
+								<item name="dataType" xsi:type="string">text</item>
+								<item name="label" xsi:type="string" translate="true">Actions</item>
+								<item name="fit" xsi:type="boolean">true</item>
+								<item name="sortOrder" xsi:type="string">80</item>
+							</item>
+						</argument>
+					</actionDelete>
+					<field name="position">
+						<argument name="data" xsi:type="array">
+							<item name="config" xsi:type="array">
+								<item name="formElement" xsi:type="string">input</item>
+								<item name="dataType" xsi:type="string">number</item>
+								<item name="dataScope" xsi:type="string">position</item>
+								<item name="fit" xsi:type="boolean">true</item>
+								<item name="label" xsi:type="string" translate="true">Thumbnail</item>
+								<item name="sortOrder" xsi:type="string">90</item>
+								<item name="visible" xsi:type="boolean">false</item>
+							</item>
+						</argument>
+					</field>
+				</container>
+			</dynamicRows>
+		</fieldset>
+	</fieldset>-->
+	<!-- End Vendor Products-->
+	<fieldset name="current_user_verification_fieldset">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="collapsible" xsi:type="boolean">false</item>
+				<item name="label" xsi:type="string" translate="true">Current User Identity Verification</item>
+				<item name="sortOrder" xsi:type="number">30</item>
+			</item>
+		</argument>
+		<field name="current_password">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="elementTmpl" xsi:type="string">Designnbuy_Vendor/form/element/password</item>
+					<item name="dataType" xsi:type="string">password</item>
+					<item name="label" xsi:type="string" translate="true">Your Password</item>
+					<item name="formElement" xsi:type="string">input</item>
+					<item name="source" xsi:type="string">User</item>
+					<item name="sortOrder" xsi:type="number">10</item>
+					<item name="dataScope" xsi:type="string">current_password</item>
+					<item name="validation" xsi:type="array">
+						<item name="required-entry" xsi:type="boolean">true</item>
+						<item name="validate-admin-password" xsi:type="boolean">true</item>
+					</item>
+				</item>
+			</argument>
+		</field>
+
+	</fieldset>
+</form>

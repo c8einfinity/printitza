@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="BrainActs\SalesRepresentative\Api\Data\MemberSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="BrainActs\SalesRepresentative\Api\Data\MemberInterface" type="BrainActs\SalesRepresentative\Model\Member" />
+
+    <preference for="BrainActs\SalesRepresentative\Api\Data\WithdrawalsSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="BrainActs\SalesRepresentative\Api\Data\WithdrawalsInterface" type="BrainActs\SalesRepresentative\Model\Withdrawals" />
+
+    <preference for="BrainActs\SalesRepresentative\Api\MemberRepositoryInterface" type="BrainActs\SalesRepresentative\Model\MemberRepository" />
+    <preference for="BrainActs\SalesRepresentative\Api\WithdrawalsRepositoryInterface" type="BrainActs\SalesRepresentative\Model\WithdrawalsRepository" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="salesrep_member_listing_data_source" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Member\Grid\Collection</item>
+                <item name="salesrep_order_view_representative_grid_data_source" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Member\Grid\Collection</item>
+                <item name="salesrep_customer_listing_data_source" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Request\Grid\Collection</item>
+                <item name="salesrep_withdrawals_listing_data_source" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Withdrawals\Grid\Collection</item>
+            </argument>
+        </arguments>
+
+        <plugin name="sales_order_salesrep_columns" type="BrainActs\SalesRepresentative\Plugin\AdditionalFields\CollectionFactory" sortOrder="100" disabled="false" />
+        <plugin name="sales_order_salesrep_restrict" type="BrainActs\SalesRepresentative\Plugin\Restriction\SalesOrderCollectionFactory" sortOrder="90" disabled="false" />
+        <plugin name="sales_invoice_salesrep_restrict" type="BrainActs\SalesRepresentative\Plugin\Restriction\SalesInvoiceCollectionFactory" sortOrder="100" disabled="false" />
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Model\ResourceModel\Member\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">brainacts_salesrep_member</argument>
+            <argument name="eventPrefix" xsi:type="string">salesrep_member_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">member_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Member</argument>
+        </arguments>
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Model\ResourceModel\Withdrawals\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">brainacts_salesrep_withdrawals</argument>
+            <argument name="eventPrefix" xsi:type="string">salesrep_withdrawals_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">withdrawals_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Withdrawals</argument>
+        </arguments>
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Model\ResourceModel\Request\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">brainacts_salesrep_confirm</argument>
+            <argument name="eventPrefix" xsi:type="string">salesrep_request_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">request_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Request</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="BrainActs\SalesRepresentative\Api\Data\MemberInterface" xsi:type="string">BrainActs\SalesRepresentative\Api\MemberRepositoryInterface</item>
+                <item name="BrainActs\SalesRepresentative\Api\Data\WithdrawalsInterface" xsi:type="string">BrainActs\SalesRepresentative\Api\WithdrawalsRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="BrainActs\SalesRepresentative\Api\Data\MemberInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">brainacts_salesrep_member</item>
+                    <item name="identifierField" xsi:type="string">member_id</item>
+                </item>
+
+                <item name="BrainActs\SalesRepresentative\Api\Data\WithdrawalsInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">brainacts_salesrep_withdrawals</item>
+                    <item name="identifierField" xsi:type="string">withdrawal_id</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="BrainActs\SalesRepresentative\Api\Data\MemberInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="storeReader" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Member\Relation\Product\ReadHandler</item>
+                    </item>
+                    <item name="create" xsi:type="array">
+                        <item name="storeCreator" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Member\Relation\Product\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="storeUpdater" xsi:type="string">BrainActs\SalesRepresentative\Model\ResourceModel\Member\Relation\Product\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\HydratorPool">
+        <arguments>
+            <argument name="hydrators" xsi:type="array">
+                <item name="BrainActs\SalesRepresentative\Api\Data\MemberInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+                <item name="BrainActs\SalesRepresentative\Api\Data\WithdrawalsInterface" xsi:type="string">Magento\Framework\EntityManager\AbstractModelHydrator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="BrainActs\SalesRepresentative\Model\Config\ConfigProvider">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
+</config>

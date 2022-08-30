@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Widget/etc/widget.xsd">
+    <widget id="designnbuy_font_recent" class="Designnbuy\Font\Block\Widget\Recent">
+        <label translate="true">Recent Font Fonts</label>
+        <description>Display recent font fonts</description>
+        <parameters>
+            <parameter name="title" xsi:type="text"  visible="true" sort_order="10" >
+                <label translate="true">Title</label>
+                <description translate="true">Please specify title you want to display on the frontend. You can leave it blank if necessary.</description>
+            </parameter>
+            <parameter name="number_of_fonts" xsi:type="text"  visible="true" sort_order="20" >
+                <label translate="true">Number of Fonts</label>
+                <description translate="true">Please indicate number of recent fonts you want to display. Leave blank to use predefined "Fonts Per Page" value.</description>
+            </parameter>
+            <parameter name="category_id" xsi:type="select" source_model="Designnbuy\Font\Model\Config\Source\Category" visible="true" sort_order="30" >
+                <label translate="true">Font Category</label>
+                <description translate="true">Leave blank to display fonts from all categories.</description>
+            </parameter>
+            <parameter name="custom_template" xsi:type="text" visible="true" sort_order="40" >
+                <label translate="true">Custom Template</label>
+                <description translate="true"><![CDATA[
+                    Leave blank to use default template <em>Designnbuy_Font::widget/recent.phtml</em>.<br/>
+                    <em>Designnbuy_Font::widget/recent_masonry.phtml</em> template is also available out of the box.
+                ]]></description>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

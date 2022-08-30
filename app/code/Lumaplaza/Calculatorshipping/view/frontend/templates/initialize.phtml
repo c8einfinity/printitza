@@ -1,0 +1,51 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$request = $objectManager->get('Magento\Framework\App\Action\Context')->getRequest();
+?>
+
+<?php if($block->_EnableModule()) : ?>
+
+<!-- For please wait -->
+<div id="lumaplaza-estshipping-cost-loading" class="blockestshipping-cost-popup-none" style="display: none;"></div>
+
+<!-- For show product options -->
+<div id="estshippingcost_content_option_product" class="blockestshipping-cost-popup-none" style="display: none;" >
+	<div class="est_option_title">
+		<p><?php echo $block->_getPopupTitle(); ?></p>
+		<!-- <a class="close_x" href="#" >x</a> -->
+	</div>
+	<div class="est_option_content"></div>
+</div>
+
+<div class="estshipping-cost-popup-none" id="estshipping-cost-shadow" style="z-index:9998;"></div>
+
+<?php
+
+if($block->_getShowOnCategory()) : 
+	if ($request->getFullActionName() != 'cms_index_index') {
+?>
+
+	<script type="text/javascript">
+	var estimasteUrl = '<?php echo $this->getUrl('calculatorshipping/index/rate', ['ajax' => true]) ?>';
+	var currencyCode = '<?php echo $block->_getCurrencySymbol(); ?>';
+		
+	require([
+		'jquery',
+		 'estshipping'
+	], function ($) {
+		'use strict';
+		/* show estimaste shipping button when hover image items product list */
+		$(document).ready(function() {
+			//$(".page-products .product-item-details").after('<span class="btn-calculate-shipping-wrapper"><input type="button" class="btn-calculate-shipping" value="<?php echo $block->_getButtonTitle(); ?>"></span>');
+			//$(".product-item-info .product-image-container").after('<span class="btn-calculate-shipping-wrapper"><input type="button" class="btn-calculate-shipping" value="<?php echo $block->_getButtonTitle(); ?>"></span>');
+			//$(".btn-calculate-shipping").val("<?php echo $block->_getButtonTitle(); ?>");
+		});
+	});
+	</script>
+
+<?php
+	}
+endif; 
+?>
+
+<?php endif; ?>

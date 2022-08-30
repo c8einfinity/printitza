@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Background background list template
+ *
+ * @var $block \Designnbuy\Background\Block\Background\BackgroundList
+ */
+?>
+<?php
+$_backgroundCollection = $block->getBackgroundCollection();
+?>
+<?php if (!$_backgroundCollection->count()): ?>
+    <div class="message info empty"><div><?php echo __('We can\'t find backgrounds matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <div class="background-list-wrapper">
+        <?php $iterator = 1; ?>
+        <ol class="background-list">
+            <?php foreach ($_backgroundCollection as $_background): ?>
+                <?php echo $block->getBackgroundHtml($_background) ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+
+    <?php echo $block->getToolbarHtml() ?>
+<?php endif; ?>

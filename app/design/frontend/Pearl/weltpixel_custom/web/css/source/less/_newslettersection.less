@@ -1,0 +1,48 @@
+.footer-top-newsletter{
+	padding: 30px 0;
+    position: relative;
+    &:after,&:before{
+    	content: "";
+	    display: inline-block;
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    top: 0;
+    }
+    &:before{
+    	left: -100%;
+    }
+    &:after{
+    	right: -100%;
+    }
+	h2 {
+	    margin: 0;
+	}
+	p{
+		margin-bottom: 1.1rem;
+		&:last-child{
+			margin-bottom: 1.1rem;
+		}
+	}
+	.form-group{
+		display: -webkit-box;
+	    display: -moz-box;
+	    display: -ms-flexbox;
+	    display: -webkit-flex;
+	    display: flex;
+	    -webkit-flex-wrap: nowrap;
+    	-ms-flex-wrap: nowrap;
+    	input{
+    		margin-right: 30px;
+    		height: 40px;
+    	}
+    	.button{
+    		min-width: 116px;
+    		height: 40px;
+    	}
+	}
+	.d-flex{
+	    margin-left: -15px;
+		margin-right: -15px;
+	}
+}

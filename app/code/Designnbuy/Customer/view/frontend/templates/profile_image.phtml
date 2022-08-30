@@ -1,0 +1,50 @@
+
+<form action="<?php echo $this->getUrl('customer/profile/save');  ?>" enctype="multipart/form-data" method="POST">
+<div class="block block-dashboard-info">
+    <div class="block-title"><strong><?php echo __('Profile Image');  ?></strong></div>
+    <div class="field admin__field">
+        <label class="admin__field-label"
+               for="file"><?php /* @escapeNotVerified */ //echo __('Upload File') ?></label>
+               <?php
+                    if($block->getCustomer()->getProfileImage() != false) {
+                        $imageData = $block->getProfileImage();
+                    } else {
+                        $imageData = json_encode([]);
+                    }
+                ?>
+        <div class="upload-wrapper" data-bind="scope: 'uploader'" data-mage-init='{
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "uploader": {
+                            "value" : <?php echo $block->getProfileImage(); ?>,
+                            "formElement" : "imageUploader",
+                            "allowedExtensions": "jpg jpeg png",
+                           "componentType" : "fileUploader",
+                           "isLoading" : "true",
+                            "component": "Magento_Ui/js/form/element/file-uploader",
+                             "template": "Designnbuy_Customer/components/file-uploader",
+
+                            "fileInputName": "customer[profile_image]",
+                            "dataScope": "customer[profile_image]",
+                            "isMultipleFiles": false,
+                            "uploaderConfig": {
+                                    "url": "<?php echo $block->getUrl('customer/profile/upload'); ?>"
+                            }
+                        }
+                    }
+                    }
+                }
+            '>
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+    </div>
+    <br />
+    <div class="actions">
+        <div class="primary">
+            <button class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>" type="submit">
+                <span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+        </div>
+    </div>
+</div>
+</form>

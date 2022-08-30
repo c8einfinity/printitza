@@ -1,0 +1,31 @@
+<?php $collection = $block->getCollection(); ?>
+<h4><?php echo __('Earning Detail For ') . '<b>' . $block->getDesignName() . '</b>'; ?></h4>
+<?php if (count($collection) == 0): ?>
+    	<div class="message info empty"><div><?php echo __('We can\'t find matching the selection.') ?></div></div>
+<?php else: ?>
+	<div class="table-wrapper designer-list-wrapper">		
+		<table class="items data table">
+			<thead>
+			<tr>
+				<th class="col" scope="col"><span><?php echo __('Order #'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Created At'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Commission Earned'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Order Status'); ?></span></th>				
+			</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($collection as $order): ?>
+					<tr>
+		            	<td class="col" data-th="Order #"><span><?php echo $order->getOrderId(); ?></span></td>
+						<td class="col" data-th="Created At"><span><?php echo $order->getCreatedAt(); ?></span></td>
+						<td class="col" data-th="Commission Earned"><span><?php echo $block->setFormatedAmount($order->getCommissionAmount()); ?></span></td>
+						<td class="col" data-th="Order Status"><span><?php echo $order->getStatus(); ?></span></td>
+					</tr>
+		            <?php endforeach; ?>
+			</tbody>
+		</table>
+    </div>
+    <?php if($block->getPagerHtml()): ?>
+	    	<div class="design-detail-toolbar toolbar"><?php echo $block->getPagerHtml(); ?></div>
+	<?php endif; ?>
+<?php endif; ?>

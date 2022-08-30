@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Designnbuy_Workflow::workflow" module="Designnbuy_Workflow" parent="Designnbuy_Base::DNB" resource="Designnbuy_Workflow::workflow" sortOrder="30" title="Workflow"/>
+		<add id="Designnbuy_Workflow::User" action="designnbuy_workflow/user/index" module="Designnbuy_Workflow" parent="Designnbuy_Workflow::workflow" resource="Designnbuy_Workflow::User" sortOrder="10" title="Users"/>
+		<add id="Designnbuy_Workflow::Role" action="designnbuy_workflow/role/index" module="Designnbuy_Workflow" parent="Designnbuy_Workflow::workflow" resource="Designnbuy_Workflow::Role" sortOrder="20" title="Roles"/>
+		<add id="Designnbuy_Workflow::Group" action="designnbuy_workflow/group/index" module="Designnbuy_Workflow" parent="Designnbuy_Workflow::workflow" resource="Designnbuy_Workflow::Group" sortOrder="30" title="Groups"/>
+		<add id="Designnbuy_Workflow::Status" action="designnbuy_workflow/status/index" module="Designnbuy_Workflow" parent="Designnbuy_Workflow::workflow" resource="Designnbuy_Workflow::Status" sortOrder="40" title="Statuses"/>
+		<!--<add action="designnbuy_workflow/order/index" id="Designnbuy::designnbuy_order" module="Designnbuy_Workflow" parent="Designnbuy_Workflow::workflow" resource="Magento_Backend::content" sortOrder="9999" title="Order"/>-->
+		<add id="Designnbuy_Workflow::Config" title="Configuration" module="Designnbuy_Workflow" parent="Designnbuy_Workflow::workflow" sortOrder="60" action="adminhtml/system_config/edit/section/dnbworkflow/" resource="Designnbuy_Workflow::Config"/>
+		<add id="Designnbuy_Workflow::Reports" action="designnbuy_workflow/report/index" module="Designnbuy_Workflow" parent="Magento_Sales::sales_operation" resource="Designnbuy_Workflow::Reports" sortOrder="100" title="Workflow Report"/>
+	</menu>
+</config>

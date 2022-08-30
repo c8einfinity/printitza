@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="page-products"/>
+        <referenceContainer name="sidebar.additional">
+            <block class="Designnbuy\Designidea\Block\Sidebar" name="designidea.sidebar" template="sidebar.phtml">
+                <!--<block class="Designnbuy\Designidea\Block\Sidebar\Search" name="designidea.sidebar.search" template="sidebar/search.phtml" />-->
+                <block class="Designnbuy\Designidea\Block\Sidebar\Categories" name="designidea.sidebar.category" template="sidebar/categories.phtml" />
+                <!-- <block class="Designnbuy\Designidea\Block\Sidebar\Recent" name="designidea.sidebar.recent" template="sidebar/recent.phtml">
+                    <action method="setCacheLifetime">
+                        <argument name="time" xsi:type="string">86400</argument>
+                    </action>
+                </block> -->
+            </block>
+        </referenceContainer>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="wishlist_sidebar" remove="true"/>
+    </body>
+</page>

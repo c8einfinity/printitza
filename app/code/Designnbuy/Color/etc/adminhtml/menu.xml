@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Color::elements" title="Color" module="Designnbuy_Color" parent="Designnbuy_Base::DNB" sortOrder="60"  resource="Designnbuy_Color::elements"/>
+        <add id="Designnbuy_Color::color" title="Colors" module="Designnbuy_Color" parent="Designnbuy_Color::elements" sortOrder="10" action="color/color/" resource="Designnbuy_Color::color"/>
+        <add id="Designnbuy_Color::category" title="Categories" module="Designnbuy_Color" parent="Designnbuy_Color::elements" sortOrder="20" action="color/category/" resource="Designnbuy_Color::category"/>
+        <!--<add id="Designnbuy_Color::import" title="Import" module="Designnbuy_Color" parent="Designnbuy_Color::elements" sortOrder="30" action="color/import/" resource="Designnbuy_Color::import"/>-->
+        <!--<add id="Designnbuy_Color::config_color" title="Configuration" module="Designnbuy_Color" parent="Designnbuy_Color::elements" sortOrder="40" action="adminhtml/system_config/edit/section/dnbcolor/" resource="Designnbuy_Color::config_color"/>-->
+        <add id="Designnbuy_Color::import_export" title="Import/Export Color" module="Designnbuy_Color" parent="Designnbuy_Color::elements" sortOrder="50" action="color/color/importExport" resource="Designnbuy_Color::import_export"/>
+    </menu>
+</config>

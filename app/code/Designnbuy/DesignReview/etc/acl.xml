@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Designnbuy_Base::network" title="Network">
+                    <resource id="Designnbuy_DesignReview::design_reviews_ratings"  title="Design Reviews/Ratings" sortOrder="50">
+                        <resource id="Designnbuy_DesignReview::design_reviews_ratings_reviews_all" title="Design Reviews" sortOrder="10" />
+                        <resource id="Designnbuy_DesignReview::design_reviews_ratings_ratings" title="Rating" sortOrder="20" />                        
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

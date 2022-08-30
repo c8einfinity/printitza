@@ -1,0 +1,24 @@
+<?php $_item = $block->getItem(); ?>
+<?php $jobStatus = $block->getJobItemCollection(); ?>
+<?php $startButtonLable = 'Start Job'; ?>
+<?php $viewButtonLable = 'View Job'; ?>
+
+<?php $itemStatuses = $block->getWorkFlowItemStatuses(); ?>
+<div class="order-history-jobstart-actions">
+    <?php if(count($jobStatus) > 0) : ?>
+            <a target="_blank" title="<?php echo $viewButtonLable; ?>" class="view_job" href="<?php echo $block->getJobViewUrl() ?>"><?php echo $viewButtonLable; ?></a>
+    <?php else: ?>
+    		<?php if($itemStatuses->count() <= 0):?>
+					<?php echo "N/A"; ?>
+				<?php else:?>
+					<a class="send_job" title="<?php echo $viewButtonLable; ?>" href="<?php echo $block->getSubmitUrl() ?>"><?php echo $startButtonLable; ?>
+					</a>
+				<?php endif;?>
+    <?php endif;?>
+</div>
+<style type="text/css">
+	.order-history-jobstart-actions{width: 120px; padding: 0px; margin: 0px;}
+    .send_job{background: #2db519; padding: 8px;width: 75px; font-weight: bold; text-align: center; color: #fff; display: block;}
+    .view_job{background: #191616; padding: 8px; width: 75px; text-align: center; color: #fff; font-weight: bold; display: block;}
+    .send_job:hover,.view_job:hover{color: #fff}
+</style>

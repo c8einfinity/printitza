@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Unific_Connector::config" title="Unific Connector" sortOrder="10">
+                        <resource id="Unific_Connector::log" title="Connector Logs" sortOrder="10" />
+                    </resource>
+                </resource>
+                <resource id="Unific_Connector::report" title="Unific Reports" sortOrder="998" />
+                <resource id="Unific_Connector::historical" title="Unific Historical" sortOrder="999" />
+            </resource>
+        </resources>
+    </acl>
+</config>

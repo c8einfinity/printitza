@@ -1,0 +1,23 @@
+{
+    "designnbuy_customer_album": {
+        "column": {
+            "album_id": true,
+            "title": true,
+            "customer_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "designnbuy_customer_album_photos": {
+        "column": {
+            "photo_id": true,
+            "album_id": true,
+            "path": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_0087C548DC962971A575FD99B569ECDE": true
+        }
+    }
+}

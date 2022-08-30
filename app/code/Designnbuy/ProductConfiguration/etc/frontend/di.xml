@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Pricing\Render\FinalPriceBox">
+        <plugin name="hide_price_productconfiguration" type="Designnbuy\ProductConfiguration\Pricing\Render\FinalPriceBox" />
+    </type>
+<!--     <type name="Magento\Catalog\Pricing\Render\ConfiguredPriceBox">
+        <plugin name="cataloghideprice_Configured_finalpricebox" type="Designnbuy\CorporateUser\Pricing\Render\FinalPriceBox"/>
+    </type> -->
+</config>

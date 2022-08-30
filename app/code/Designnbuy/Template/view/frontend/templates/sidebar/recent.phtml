@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Template sidebar recent templates template
+ *
+ * @var $block \Designnbuy\Template\Block\Sidebar\Recent
+ */
+?>
+
+<?php
+    $_templateCollection = $block->getTemplateCollection();
+?>
+<?php if ($_templateCollection->count()) { ?>
+<div class="widget block block-recent-templates" data-bind="scope: 'recemt-templates'">
+    <div class="block-title">
+        <strong><?php echo __('Recent Templates') ?></strong>
+    </div>
+    <div class="block-content">
+        <?php foreach ($_templateCollection as $_template) { ?>
+            <div class="item">
+                <a class="template-item-link"
+                   href="<?php echo $_template->getTemplateUrl() ?>">
+                    <?php echo $block->escapeHtml($_template->getTitle()) ?>
+                </a>
+            </div>
+
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">jobmanagement_jobmanagement_form.jobmanagement_form_data_source</item>
+            <item name="deps" xsi:type="string">jobmanagement_jobmanagement_form.jobmanagement_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Writer Level Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">jobmanagement_jobmanagement_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Designnbuy\JobManagement\Block\Adminhtml\Edit\BackButton</item>
+            <item name="save" xsi:type="string">Designnbuy\JobManagement\Block\Adminhtml\Edit\SaveButton</item>
+            <item name="save_and_continue" xsi:type="string">Designnbuy\JobManagement\Block\Adminhtml\Edit\SaveAndContinueButton</item>
+            <item name="order_ticket_button" xsi:type="string">Designnbuy\JobManagement\Block\Adminhtml\Edit\CreateOrderTicketButton</item>
+            <item name="download_job_sheet" xsi:type="string">Designnbuy\JobManagement\Block\Adminhtml\Edit\DownloadJobSheetButton</item>
+        </item>
+    </argument>
+    <dataSource name="jobmanagement_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Designnbuy\JobManagement\Ui\DataProvider\Jobmanagement\Form\JobDataProvider</argument>
+            <argument name="name" xsi:type="string">jobmanagement_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="jobmanagement/jobmanagement/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">General</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+            </item>
+        </argument>
+
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Job Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="sortOrder" xsi:type="number">2</item>
+                    <item name="dataScope" xsi:type="string">title</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="order_id_edit">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Order Id</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="sortOrder" xsi:type="number">2</item>
+                    <item name="dataScope" xsi:type="string">order_id_edit</item>
+                    <item name="readonly" xsi:type="boolean">true</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        
+        <field name="product_id_edit">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Product Name</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                    <item name="dataScope" xsi:type="string">product_id_edit</item>
+                    <item name="readonly" xsi:type="boolean">true</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="workflow_status_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Designnbuy\JobManagement\Model\Jobmanagement\Config\Source\WorkflowStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Workflow Status</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>                    
+                    <item name="dataScope" xsi:type="string">workflow_status_id</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="created_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Created Date</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="sortOrder" xsi:type="number">4</item>
+                    <item name="dataScope" xsi:type="string">created_date</item>
+                    <item name="readonly" xsi:type="boolean">true</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="start_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Start Date</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="sortOrder" xsi:type="number">5</item>
+                    <item name="dataScope" xsi:type="string">start_date</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-date-range" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="due_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Due Date</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="sortOrder" xsi:type="number">6</item>
+                    <item name="dataScope" xsi:type="string">due_date</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="download_output_hidden">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/element/hidden</item>                    
+                    <item name="label" xsi:type="string">Hidden Output field</item>                    
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>                    
+                </item>
+            </argument>
+        </field>
+
+        <field name="download_output">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <!-- <item name="component" xsi:type="string">Designnbuy_JobManagement/js/form/element/output-job</item> -->
+                    <item name="elementTmpl" xsi:type="string">Designnbuy_JobManagement/download-output</item>
+                    <item name="label" xsi:type="string">Download Output</item>
+                    <item name="dataType" xsi:type="string">link</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                </item>
+            </argument>
+        </field>
+        
+        <field name="generate_output">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <!-- <item name="component" xsi:type="string">Designnbuy_JobManagement/js/form/element/output-job</item> -->
+                    <item name="elementTmpl" xsi:type="string">Designnbuy_JobManagement/generate-output</item>
+                    <item name="label" xsi:type="string">Generate Output</item>
+                    <item name="dataType" xsi:type="string">link</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="vdp_output">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="elementTmpl" xsi:type="string">Designnbuy_JobManagement/vdp-output</item>
+                    <item name="label" xsi:type="string">VDP Output</item>
+                    <item name="dataType" xsi:type="string">link</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="attachment">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">jobmanagement</item>
+                    <item name="label" xsi:type="string" translate="true">Attachment</item>                    
+                    <item name="formElement" xsi:type="string">fileUploader</item>                    
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">Designnbuy_JobManagement/attachment</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+        </field>
+
+    </fieldset>
+</form>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+
+        <css src="Designnbuy_Canvas/css/custom.css" />
+
+    </head>
+<body>
+
+    <referenceContainer name="product.info.extrahint.qtyincrements" remove="true"/>
+    <referenceContainer name="product.info.main">
+        <block class="Magento\Framework\View\Element\Template" name="pretemplate.quickedit" after="product.info.social"/>
+    </referenceContainer>
+    <move element="pretemplate.quickedit" destination="product.info.main" after="product.info.social"/>
+    <!-- custom product detail layout start -->
+    <referenceContainer name="product.info.form.content">
+        <container name="product-extra-info-box3" htmlTag="div" htmlClass="product-actions-info-box box-3"/>
+    </referenceContainer>
+    <referenceBlock name="product.info.form.options">
+        <container name="product-extra-info-box1" htmlTag="div" htmlClass="product-actions-info-box box-1"/>
+        <container name="product-extra-info-box2" htmlTag="div" htmlClass="product-actions-info-box box-2"/>
+        <container name="product-extra-info-box4" htmlTag="div" htmlClass="product-actions-info-box box-3"/>
+        <container name="product-extra-info-box5" htmlTag="div" htmlClass="product-actions-info-box box-4"/>
+    </referenceBlock>
+
+    <referenceBlock name="product.info.options.wrapper">
+        <action method="setTemplate">
+            <argument name="template" xsi:type="string">Designnbuy_Canvas::catalog/product/view/options/wrapper.phtml</argument>
+        </action>
+    </referenceBlock>
+
+    <move element="product.info" destination="content" after="product.info.media"/>
+
+    <move element="product.info.addtocart" destination="product-extra-info-box3" before="-"/>
+    <move element="product.info.options.wrapper.bottom" destination="product-extra-info-box4" before="-"/>
+
+    <move element="product.info.options.wrapper" destination="product-extra-info-box1" before="-"/>
+    <referenceBlock name="productattach.info" remove="true"/>
+
+    <move element="productattach.info1" destination="product-extra-info-box2" before="-"/>
+    <block class="Magento\Framework\View\Element\Text" name="pro_action_box2.label">
+        <arguments>
+            <argument translate="true" name="text" xsi:type="string"><![CDATA[<div class="heading-box"><h4>Summary</h4></div>]]></argument>
+        </arguments>
+    </block>
+    <block class="Magento\Framework\View\Element\Text" name="pro_action_box2.label2">
+        <arguments>
+            <argument translate="true" name="text" xsi:type="string"><![CDATA[<div class="heading-box"><h4>Summary</h4></div>]]></argument>
+        </arguments>
+    </block>
+    <move element="pro_action_box2.label" destination="product-extra-info-box3" before="-"/>
+    <move element="pro_action_box2.label2" destination="product-extra-info-box4" before="-"/>
+    <referenceBlock name="product.price.final" remove="true" />
+    <container name="product.info.price1" htmlTag="div" htmlClass="product-info-price">
+        <block class="Magento\Catalog\Pricing\Render" name="product.price.final1">
+            <arguments>
+                <argument name="price_render" xsi:type="string">product.price.render.default</argument>
+                <argument name="price_type_code" xsi:type="string">final_price</argument>
+                <argument name="zone" xsi:type="string">item_view</argument>
+            </arguments>
+        </block>
+    </container>
+    <container name="product.info.price2" htmlTag="div" htmlClass="product-info-price">
+        <block class="Magento\Catalog\Pricing\Render" name="product.price.final2">
+            <arguments>
+                <argument name="price_render" xsi:type="string">product.price.render.default</argument>
+                <argument name="price_type_code" xsi:type="string">final_price</argument>
+                <argument name="zone" xsi:type="string">item_view</argument>
+            </arguments>
+        </block>
+    </container>
+
+    <move element="product.info.price1" destination="product-extra-info-box3" before="product.info.addtocart"/>
+    <move element="product.info.price2" destination="product-extra-info-box4" before="product.info.options.wrapper.bottom"/>
+    <move element="product.info.social" destination="product.info.main" after="product.info.overview"/>
+
+    <!--<referenceBlock name="product.info.calculatorshipping" remove="true"/>-->
+    <move element="product.info.calculatorshipping" destination="product-extra-info-box5" after="product-extra-info-box4"/>
+    <!-- custom product detail layout end -->
+
+
+</body>
+</page>

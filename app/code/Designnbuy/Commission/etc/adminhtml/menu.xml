@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Designer::marketplace_redimption" title="Redemption" module="Designnbuy_Commission" parent="Designnbuy_Base::network" sortOrder="30" resource="Designnbuy_Designer::marketplace_redimption" />
+        
+        <add id="Designnbuy_Commission::redemption" title="Commission Redemption" module="Designnbuy_Commission" action="commission/redemption" sortOrder="10" parent="Designnbuy_Designer::marketplace_redimption" resource="Designnbuy_Commission::redemption" />
+    </menu>
+</config>

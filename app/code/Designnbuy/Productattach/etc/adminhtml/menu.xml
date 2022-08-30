@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Productattach::top_level" title="Product Attachments" module="Designnbuy_Productattach" sortOrder="30" resource="Designnbuy_Productattach::manage" parent="Magento_Catalog::catalog"/>
+        <add id="Designnbuy_Productattach::productattach_manage" title="Manage Attachments" module="Designnbuy_Productattach" sortOrder="10" parent="Designnbuy_Productattach::top_level" action="productattach/index/" resource="Designnbuy_Productattach::manage"/>
+        <add id="Designnbuy_Productattach::designnbuy_productattach_fileicon" action="productattach/fileicon/index" module="Designnbuy_Productattach" parent="Designnbuy_Productattach::top_level" resource="Designnbuy_Productattach::manage" sortOrder="20" title="Manage Icons"/>
+    </menu>
+</config>

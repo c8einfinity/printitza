@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="designnbuy_customer_album" resource="default" engine="innodb" comment="Designnbuy Photo Album Table">
+        <column xsi:type="int" name="album_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Album Id"/>
+        <column xsi:type="text" name="title" nullable="true" comment="Album Title"/>
+        <column xsi:type="int" name="customer_id" padding="6" unsigned="false" nullable="false" identity="false" comment="Customer Id"/>
+        <column xsi:type="int" name="status" padding="2" default="1" unsigned="false" nullable="false" identity="false" comment="Status"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="album_id"/>
+        </constraint>
+    </table>
+    <table name="designnbuy_customer_album_store" resource="default" engine="innodb" comment="Designnbuy Photo Album Store Table">
+        <column xsi:type="int" name="album_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Album Id"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store ID"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="album_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="DESIGNNBUY_PHOTO_ALBUM_ALBUM_ID_FK"
+                    table="designnbuy_customer_album_store" column="album_id"
+                    referenceTable="designnbuy_customer_album" referenceColumn="album_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="DESIGNNBUY_PHOTO_ALBUM_STORE_STORE_ID_FK"
+                    table="designnbuy_customer_album_store" column="store_id"
+                    referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+        <index referenceId="DESIGNNBUY_PHOTO_ALBUM_STORE_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+        
+    </table>
+    <table name="designnbuy_customer_album_photos" resource="default" engine="innodb" comment="Designnbuy Customer Album Photos Table">
+        <column xsi:type="int" name="photo_id" padding="6" unsigned="false" nullable="false" identity="true" comment="Photo ID"/>
+        <column xsi:type="int" name="album_id" padding="6" unsigned="false" nullable="false" identity="false" comment="Album Id"/>
+        <column xsi:type="text" name="path" nullable="true" comment="Photo Path"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="photo_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="designnbuy_customer_album_photos"
+                    table="designnbuy_customer_album_photos" column="album_id"
+                    referenceTable="designnbuy_customer_album" referenceColumn="album_id" onDelete="CASCADE"/>
+    </table>
+</schema>

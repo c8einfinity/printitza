@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.addtocart">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.enquiry1" as="enquiry" template="Designnbuy_Enquiry::enquiry.phtml" after="-" />
+        </referenceBlock>
+         <referenceBlock name="product.info.addtocart.additional">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.enquiry" as="enquiry" template="Designnbuy_Enquiry::enquiry.phtml" after="-" />
+        </referenceBlock>
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.enquiry_form" template="Designnbuy_Enquiry::enquiry_form.phtml">
+                <block class="Magento\Contact\Block\ContactForm" name="contactForm_enquiry" as="enquiry_contact_form" template="Magento_Contact::form.phtml">
+                    <container name="form.additional.info" label="Form Additional Info"/>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

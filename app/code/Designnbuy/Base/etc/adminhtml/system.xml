@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="designnbuy" translate="label" sortOrder="110" class="dnb-tab">
+            <label>Design 'N' Buy</label>
+        </tab>
+        <section id="base" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>General</label>
+            <tab>designnbuy</tab>
+            <resource>Designnbuy_Base::general</resource>
+            <group id="watermark" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Download Preview Watermark Configuration</label>
+                <field id="status" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Status</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="type" type="select" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Type</label>
+                    <source_model>Designnbuy\Base\Model\Config\Source\Watermark</source_model>
+                    <depends>
+                        <field id="status">1</field>
+                    </depends>
+                </field>
+                <field id="image" translate="label" type="image" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Watermark Image</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">designnbuy/watermark</upload_dir>
+                    <base_url type="media" scope_info="1">designnbuy/watermark</base_url>
+                    <comment><![CDATA[Allowed file types: jpeg, jpg, png.]]></comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="status">1</field>
+                        <field id="type">image</field>
+                    </depends>
+                </field>
+                <field id="text" type="text" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Watermark Text</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="status">1</field>
+                        <field id="type">text</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="output" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>PDF Output Color Profile</label>
+                <field id="type" type="select" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Type</label>
+                    <source_model>Designnbuy\Base\Model\Config\Source\Output</source_model>
+                </field>
+            </group>
+            <group id="social" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Import Photo Configuration for Social Media</label>
+                <field id="flickr" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Flickr API Key</label>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <field id="instagram" type="text" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Instagram Client ID</label>
+                    <!--<validate>required-entry</validate>-->
+                </field>
+                <!--<field id="google_drive" type="text" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Drive Key/Secret</label>
+                    <validate>required-entry</validate>
+                </field>-->
+            </group>
+            <group id="studio_color_scheme" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Studio Color Scheme</label>
+                <field id="primary" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Primary</label>
+                    <validate>color {required:false, hash:true}</validate>
+                    <comment>Header, Primary Button Background Color, Toolbar Button Hover, Left Panel Icon Hover Color, Checkbox, Toggle Switch, Hide Panel Switch</comment>
+                    <tooltip></tooltip>
+                    <!--<frontend_model>Designnbuy\Base\Block\Adminhtml\System\Config\ColorScheme</frontend_model>-->
+                </field>
+                <field id="secondary" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secondary</label>
+                    <validate>color {required:false, hash:true}</validate>
+                    <comment> Toolbar Button Color, Major Text Color, Navigational Arrows, Layer text and Hover Background Color, </comment>
+                    <tooltip></tooltip>
+                </field>
+                <field id="tertiary" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tertiary</label>
+                    <validate>color {required:false, hash:true}</validate>
+                    <comment>Left Panel Button, Major Button Color, Input Text-Selectbox-Number Background Color,Small Header Background, </comment>
+                    <tooltip></tooltip>
+                </field>
+                <field id="quaternary" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Quaternary</label>
+                    <validate>color {required:false, hash:true}</validate>
+                    <comment>Left Panel Background Color, Left Panel Button Hover </comment>
+                    <tooltip></tooltip>
+                </field>
+                <field id="quinary" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Quinary</label>
+                    <validate>color {required:false, hash:true}</validate>
+                    <comment>Major White elements of header like text color and buttons background Color  </comment>
+                    <tooltip></tooltip>
+                </field>
+                <!--
+                <field id="senary" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Senary</label>
+                    <validate>color {required:false, hash:true}</validate>
+                    <comment></comment>
+                    <tooltip></tooltip>
+                </field>-->
+            </group>
+            <group id="studio_button_label" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Personalize Button Label</label>
+                <field id="personolize_button" type="text" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Personalize Button Text</label>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

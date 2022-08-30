@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="BrainActs\SalesRepresentative\Block\Account\Dashboard\Representative" name="customer_account_dashboard_representative" as="sales_representative" before="info" template="BrainActs_SalesRepresentative::account/dashboard/managers.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

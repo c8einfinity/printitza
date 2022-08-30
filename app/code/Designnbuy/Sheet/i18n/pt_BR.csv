@@ -1,0 +1,184 @@
+Add New Category,Adicionar Nova Categoria
+Are you sure you want to do this?,Tem certeza disso?
+Start Import,Começar Importação
+NOTICE,AVISO
+Database Name,Nome do Banco de Dados
+User Name,Nome do Usuário
+Database Host,Host do Banco de Dados
+Table Prefix,Prefixo da Tabela
+Size,Size
+Add New Size,Adicionar Novo Size
+Sheet,Sheet
+Go to Sheet Home Page,Ir Para Home Page do Sheet
+Monthly Archives: %s %s,Arquivo Mensal: %s %s
+"Search ""%1""","Procurar ""%1"""
+Recent Sheet Sizes,Sizes Recentes
+Manage %1,Gerenciar %1
+Edit %1,Editar %1
+New %1,Novo %1
+Create %1,Criar %1
+%1 has been saved.,%1 foi salvo.
+Something went wrong while saving this %1. %2,Ocorreu um erro ao salvar isso %1. %2
+We can't delete %1 right now. %2,Não é possível deletar %1 no momento. %2
+%1 have been deleted.,%1 foi deletado.
+"Parameter ""Status"" missing in request data.","Parameter ""Status"" missing in request data."
+Status Field Name is not specified.,O nome do campo status não foi especificado.
+We can't change status of %1 right now. %2,Não é possível alterar o status de %1 nesse momento. %2
+%1 status have been changed.,%1 status foi alterado.
+Sheet Import,Importar Sheet
+Sheet import type is not specified.,O tipo de sheet a importar não foi especificado.
+The import process was completed successfully. %1 sizes and %2 categories where imported.,O processo de importação foi conluído com êxito. %1 sizes e %2 categorias foram importados.
+The import process completed. %1 sizes and %2 categories where imported. Some sizes or categories where skipped.<br/> %3 %4,O processo de importação foi conluído. %1 sizes e %2 categorias foram importados. Alguns sizes ou categorias faltaram.<br/> %3 %4
+Nothing to import.,Nada para importar.
+Can not make import.,Não foi possível importar.
+Something went wrong: ,Ocorreu um erro: 
+Sheet Import from WordPress,Importar Sheet do Wordpress
+Please select,Selecione
+Use Facebook Comments,Usar Comentários do Facebook
+Use Disqus Comments,Usar Comentários do Disqus
+Use Google Comments,Usar Comentários do Google
+Yes (With auto trigger),Sim (Automaticamente)
+Yes (Without auto trigger),Yes (Manualmente)
+Parameter %1 is required,O parâmetro %1 é requerido
+AheadWorks Sheet Extension not detected.,A extensão Sheet da AheadWorks não foi detectada.
+The category URL key contains disallowed symbols.,A URL key da categoria contém letras maiúsculas ou símbolos não permitidos.
+The category URL key cannot be made of only numbers.,A URL key da categoria não pode ser contituida apenas de números.
+The size URL key contains disallowed symbols.,A URL key do size contém letras maiúsculas ou símbolos não permitidos.
+The size URL key cannot be made of only numbers.,A URL key do size não pode ser contituida apenas de números.
+The tag is already exist.,A tag já existe.
+The tag URL key contains disallowed symbols.,A URL key da tag contém letras maiúsculas ou símbolos não permitidos.
+The tag URL key cannot be made of only numbers.,A URL key da tag não pode ser contituida apenas de números.
+Related sizes,Sizes relacionados
+Sizeed:,Publicado:
+Categories:,Categorias:
+Tags:,Tags:
+Author:,Autor:
+We can't find sizes matching the selection.,Não foi possível encontrar sizes que se enquadrem na seleção.
+Read more &#187;,Leia mais &#187;
+See more,Veja mais
+Read %1,Ler %1
+&larr; Previous,&larr; Anterior
+Next &rarr;,Próximo &rarr;
+Related Sizes,Sizes Relacionados
+Archive,Arquivo
+Archive %s,Arquivo %s
+Recent Sizes,Sizes Recentes
+RSS Feed,Feed RSS
+Search sizes here...,Procure sizes aqui…
+Tags,Tags
+Designnbuy Extensions,Extensões da Designnbuy
+Sheet Information,Informações do Sheet
+Sheet Index Page,Página Index do Sheet
+Size View,Visualização do Size
+Display Related Sizes,Mostrar Sizes Relacionados
+Number of Sizes,Número de Sizes
+Display Related Products,Mostrar Produtos Relacionados
+Number of Products,Número de Produtos
+Comments,Comentários
+Number of Comments,Número de Comentários
+Facebook Application ID,ID da Aplicação Facebook
+Preview and Next Size,Size Anterior e Próximo
+Display Prev. & Next Size Links,Mostrar Links Ant. & Próx. Nos Sizes
+Size List,Lista de Sizes
+Sizes Per Page,Sizes Por Página
+Use Lazy Loading,Usar Lazy Loading
+Automatically load more sizes on page.,Carrega mais sizes na página automaticamente.
+Auto Triger Padding (px),Ativar Padding Automaticamente (px)
+Author,Autor
+Display Author Information,Mostras Informações do Autor
+Display Size List By Author,Mostrar a Lista de Sizes por Autor
+Sidebar,Barra Lateral
+Search Form Widget,Widget Formulário de Busca
+Categories Widget,Widget Categorias
+Recent Sizes Widget,Widget Sizes Recentes
+Sizes Number,Número dos Sizes
+Archive Widget,Widget Arquivo
+Tag Claud Widget,Widget Nuvem de Tags
+Rss Feed,Feed RSS
+Feed Title,Título do Feed
+Feed Description,Descrição do Feed
+Product Page,Página do Produto
+Permalink Settings,Configurações do Permalink
+Sheet Route,Rota do Sheet
+Permalink Type,Tipo do Permalink
+Size Route,Rota do Size
+Category Route,Rota da Categoria
+Archive Route,Rota do Arquivo
+Tag Route,Rota da Tag
+Author Route,Rota do Autor
+Search Route,Rota da Busca
+Social,Social
+AddThis Enabled,Ativar AddThis
+AddThis ID,ID do AddThis
+AddThis Language,Idioma do AddThis
+Category Top Navigation,Navegação Superior da Categoria
+Display Sheet Link,Mostrar Link do Sheet
+Sheet Category,Categoria do Sheet
+Leave blank to display sizes from all categories.,Deixe em branco para mostrar sizes de todas as categorias.
+Custom Template,Template Personalizado
+Published,Publicado
+Category Information,Informações da Categoria
+Enable Category,Ativar Categoria
+Category Title,Título da Categoria
+Category in Websites,Categoria em Websites
+-- Please Select --,-- Selecione --
+Tag Title,Título da Tag
+Size Information,Informações do Size
+Enable Size,Ativar Size
+Size Title,Título do Size
+New Category,Nova Categoria
+Additional Options,Opções Adicionais
+Featured Image,Imagem Destaque
+Publish Date,Data de Publicação
+New Tag,Nova Tag
+Open Graph Metadata,Metadata do Open Graph
+OG Title,Título do OG
+Leave blank to use Meta Title by default.,Deixa em branco para usar os metadados por padrão.
+OG Description,Descrição do OG
+Leave blank to use Meta Description by default.,Deixa em branco para usar os metadados por padrão.
+OG Image,Imagem do OG
+"Leave blank to use Featured Image by default. Allow image type: jpg, jpeg, gif, png.","Deixe em branco para usar a Imagem Destaque por padrão. Formatos permitidos de imagem: jpg, jpeg, gif, png."
+OG Type,Tipo do OG
+"Leave blank to use ""article"" type by default.",Deixe em branco para usar “artigo” como tipo padrão.
+Size in Websites,Size em Websites
+Related Sizes and Products,Sizes e Produtos Relacionados
+Related sizes are shown to customers in addition to the item the customer is looking at.,"Sizes relacionados são mostrados ao consumidor, além do produto que ele está visualizando."
+Add Related Size,Adicionar Size Relacionado
+Add Related Sizes,Adicionar Sizes Relacionados
+Add Selected Sizes,Adicionar Sizes Selecionados
+January,Janeiro
+February,Fevereiro
+March,Março
+April,Abril
+May,Maio
+June,Junho
+July,Julho
+August,Agosto
+September,Setembro
+October,Outubro
+November,Novembro
+December,Dezembro
+Jan,Jan
+Feb,Fev
+Mar,Mar
+Apr,Abr
+May,Mai
+Jun,Jun
+Jul,Jul
+Aug,Ago
+Sep,Set
+Oct,Out
+Nov,Nov
+Dec,Dez
+Read more >,Leia mais >
+"Import Categories","Import Categories"
+"Import Comments","Import Comments"
+"Import Sizes","Import Sizes"
+"Import from aheadWorks Sheet Extension","Import from aheadWorks Sheet Extension"
+"Import from Joomla","Import from Joomla"
+"Import from Sheetger.com","Import from Sheetger.com"
+"Import from Drupal","Import from Drupal"
+"Import from CSV","Import from CSV"
+"Import from XML","Import from XML"
+"Yes, I have read the %1 and agree to the processing of my personal data.","Yes, I have read the %1 and agree to the processing of my personal data."
+"privacy policy","privacy policy"

@@ -1,0 +1,51 @@
+<?php
+$option = $block->getFixquantityOption();
+?>
+<script type="text/javascript">
+    require(['jquery'
+        ],
+        function ($) {
+            var fixedoption = <?php echo json_encode($option); ?>;
+            var fixedId = fixedoption.id;
+            $('#select_'+fixedId).ready(function () {
+
+                /* 
+                    if($('#select_'+ fixedId +' option:selected').val()){
+                        var selectedQtyOptionId = $('#select_'+ fixedId +' option:selected').val();
+                        var qty = fixedoption.fixquantity[selectedQtyOptionId][0];
+                        $('input[name="qty"]').val(qty);
+                    } else {
+                        $('#select_'+ fixedId +' option:eq(1)').prop('selected', true);
+                    } 
+                */
+
+            })
+            $(document).ready(function () {
+                var fixedoption = <?php echo json_encode($option); ?>;
+                //var qty=;
+                var fixedId = fixedoption.id;
+                jQuery("#select_"+fixedId).change(function() {
+
+                    $('body').trigger('processStart');
+                    var qtyOptionId = jQuery('option:selected', this).val();
+                    if(qtyOptionId != "")
+                    {
+                        var qty=fixedoption.fixquantity[qtyOptionId][0];
+                        $('.box-tocart .qty').hide()
+                        $('#qty').hide();
+                        /*if($('#fixed_qty').length == 0)
+                        {
+                            $( "#qty" ).after( "<input type=\"number\" name=\"fixed_qty\" id=\"fixed_qty\" value=\"1\" title=\"Qty\" class=\"input-text qty\">" );
+                        }*/
+                        //$('input[name="fixed_qty"]').prop('disabled', true);
+                        $('input[name="qty"]').val(qty);
+                       // $('input[name="fixed_qty"]').val(qty);
+                    }else
+                    {
+                        $('#select_'+fixedId+'option:eq(1)').prop('selected', true);
+                    }
+                    $('body').trigger('processStop');
+                });
+            });
+        });
+</script>

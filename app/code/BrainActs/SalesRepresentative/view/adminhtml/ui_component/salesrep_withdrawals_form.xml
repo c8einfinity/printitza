@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">salesrep_withdrawals_form.withdrawals_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Withdrawals Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save_and_continue" class="BrainActs\SalesRepresentative\Block\Adminhtml\Withdrawals\Edit\SaveAndContinueButton"/>
+            <button name="save" class="BrainActs\SalesRepresentative\Block\Adminhtml\Withdrawals\Edit\SaveButton"/>
+            <button name="reset" class="BrainActs\SalesRepresentative\Block\Adminhtml\Withdrawals\Edit\ResetButton"/>
+            <button name="delete" class="BrainActs\SalesRepresentative\Block\Adminhtml\Withdrawals\Edit\DeleteButton"/>
+            <button name="back" class="BrainActs\SalesRepresentative\Block\Adminhtml\Withdrawals\Edit\BackButton"/>
+        </buttons>
+        <namespace>salesrep_withdrawals_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>salesrep_withdrawals_form.withdrawals_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="withdrawals_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="salesrep/withdrawals/save"/>
+        </settings>
+        <dataProvider class="BrainActs\SalesRepresentative\Model\Withdrawals\DataProvider" name="withdrawals_form_data_source">
+            <settings>
+                <requestFieldName>withdrawal_id</requestFieldName>
+                <primaryFieldName>withdrawal_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="withdrawal_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">withdrawals</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>withdrawal_id</dataScope>
+            </settings>
+        </field>
+
+        <field name="member_id"  sortOrder="5" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">withdrawals</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Member</label>
+                <dataScope>member_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="BrainActs\SalesRepresentative\Model\Source\Member"/>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="amount" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">withdrawals</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Amount</label>
+                <dataScope>amount</dataScope>
+            </settings>
+        </field>
+
+
+        <field name="comment" sortOrder="20" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">withdrawals</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Comment</label>
+                <dataScope>comment</dataScope>
+            </settings>
+        </field>
+
+        <field name="status"  sortOrder="30" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">withdrawals</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Status</label>
+                <dataScope>status</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="BrainActs\SalesRepresentative\Model\Source\WithdrawalStatus"/>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+    </fieldset>
+</form>

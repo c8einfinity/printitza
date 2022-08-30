@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Template template next and prev template links
+ *
+ * @var $block \Designnbuy\Template\Block\Template\View\NextPrev
+ */
+?>
+
+<?php if ($block->displayLinks()) { ?>
+    <?php
+        $prevTemplate = $this->getPrevTemplate();
+        $nextTemplate = $this->getNextTemplate();
+    ?>
+    <?php if ($prevTemplate || $nextTemplate) { ?>
+        <div class="template-nextprev-hld clearfix">
+            <?php if ($prevTemplate) { ?>
+                <?php $title = $block->escapeHtml($prevTemplate->getTitle()) ?>
+                <a class="nextprev-link prev-link" href="<?php echo $prevTemplate->getTemplateUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('&larr; Previous') ?>
+                </a>
+            <?php } ?>
+            <?php if ($nextTemplate) { ?>
+                <?php $title = $block->escapeHtml($nextTemplate->getTitle()) ?>
+                <a class="nextprev-link next-link" href="<?php echo $nextTemplate->getTemplateUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('Next &rarr;') ?>
+                </a>
+            <?php } ?>
+        </div>
+    <?php } ?>
+<?php } ?>

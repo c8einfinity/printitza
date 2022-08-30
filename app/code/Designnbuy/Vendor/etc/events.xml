@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_quote_item_set_product">
+        <observer name="set_vendor_to_quote_item" instance="Designnbuy\Vendor\Observer\SetVendorToQuoteItem" />
+    </event>
+    <event name="view_block_abstract_to_html_before">
+        <observer name="vendor_access1" instance="Designnbuy\Vendor\Observer\VendorRemoveOrderBlock" />
+    </event>
+    <!--<event name="checkout_submit_all_after">
+        <observer name="set_vendor_to_order_item" instance="Designnbuy\Vendor\Observer\SetVendorToOrderItem"/>
+    </event>-->
+    <event name="checkout_submit_all_after">
+        <observer name="vendor_sent_order_mail" instance="Designnbuy\Vendor\Observer\AfterOrderPlace"/>
+    </event>
+</config>

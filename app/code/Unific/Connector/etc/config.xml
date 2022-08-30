@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+<default>
+    <unific>
+        <connector>
+            <enabled>1</enabled>
+            <log>1</log>
+            <log_severity>failed</log_severity>
+        </connector>
+        <webhook>
+            <cart_endpoint>https://api2.unific.com/webhooks/magento</cart_endpoint>
+            <customer_endpoint>https://api2.unific.com/webhooks/magento</customer_endpoint>
+            <order_endpoint>https://api2.unific.com/webhooks/magento</order_endpoint>
+            <category_endpoint>https://api2.unific.com/webhooks/magento</category_endpoint>
+            <product_endpoint>https://api2.unific.com/webhooks/magento</product_endpoint>
+            <message_batch_size>10</message_batch_size>
+            <message_task_limit>100</message_task_limit>
+            <historical_batch_size>10</historical_batch_size>
+            <historical_task_limit>100</historical_task_limit>
+        </webhook>
+    </unific>
+</default>
+</config>

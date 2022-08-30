@@ -1,0 +1,13 @@
+<script>
+    require(['jquery', 'mage/gallery/gallery', 'wpProductLabels'], function($, gallery){
+        $('[data-gallery-role=gallery-placeholder]').on('gallery:loaded', function () {
+            var requestUrl = '<?php echo $this->getUrl("wpproductlabels/product/labels/product_id/" . $this->getProduct()->getId()); ?>';
+            $.get({
+                url: requestUrl,
+                cache: false
+            }, function(result) {
+                $('.fotorama__stage').append(result);
+            });
+        });
+    });
+</script>

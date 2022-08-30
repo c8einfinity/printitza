@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsdd" layout="admin-2columns-left">
+    <body>
+        <referenceContainer name="left">
+            <block class="Unific\Connector\Block\Adminhtml\Log\Edit\Tabs" name="unific_connector_log.edit.tabs"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Unific\Connector\Block\Adminhtml\Log\Edit" name="unific_connector_log.edit" />
+        </referenceContainer>
+    </body>
+</page>

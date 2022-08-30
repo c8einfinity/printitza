@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Designnbuy_Canvas::css/browse-template-view.css" />
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Browse Templates</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceContainer name="content">
+            <!-- <block class="Designnbuy\Template\Block\Catalog\Product\RelatedTemplatesVersionTwo" name="product.v2.info.template.relatedtemplates.toolbar" template="Designnbuy_Template::catalog/product/customToolbar.phtml" /> -->
+            <block class="Designnbuy\Template\Block\Catalog\Product\RelatedTemplatesVersionTwo" name="product.v2.info.template.relatedtemplates" template="Designnbuy_Template::catalog/product/relatedtemplates_v2.phtml">
+                <!-- <block class="Designnbuy\Template\Block\Catalog\Product\RelatedTemplatesVersionTwo" name="product.v2.info.template.relatedtemplates.pagination" as="pagination" template="Designnbuy_Template::catalog/product/customPagination.phtml" /> -->
+            </block>
+        </referenceContainer>
+        <referenceContainer name="sidebar.additional">            
+            <block class="Designnbuy\Template\Block\Sidebar\CategoriesVersionTwo" name="template.sidebar.category.v2" template="sidebar/categories_v2.phtml" />            
+            <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+            <referenceBlock name="wishlist_sidebar" remove="true"/>
+        </referenceContainer>
+    </body>
+</page>

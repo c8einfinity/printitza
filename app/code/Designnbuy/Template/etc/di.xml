@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Template attribute.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Define provider class that was used in node dataSource/class -->
+    <virtualType name="TemplateGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="filterPool" xsi:type="object" shared="false">TemplateGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <!-- collection resolves to standard collection class and filerPool defines new element: -->
+    <!-- This is used for filtering and searching. Used default values for this -->
+    <virtualType name="TemplateGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Register data source. In this case node name must match the one used in <dataSource /> node 
+    in listing xml and it resolves not to collection but to GridCollection class.-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="template_template_attribute_listing_data_source" xsi:type="string">Designnbuy\Template\Model\ResourceModel\Template\Attribute\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Template\Model\ResourceModel\Template\Attribute\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">designnbuy_template_eav_attribute</argument>
+            <argument name="resourceModel" xsi:type="string">Designnbuy\Template\Model\ResourceModel\Attribute</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="template_category_attribute_listing_data_source" xsi:type="string">Designnbuy\Template\Model\ResourceModel\Category\Attribute\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Template\Model\ResourceModel\Category\Attribute\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">designnbuy_template_eav_attribute</argument>
+            <argument name="resourceModel" xsi:type="string">Designnbuy\Template\Model\ResourceModel\Attribute</argument>
+        </arguments>
+    </type>
+    <preference for="Designnbuy\Template\Api\Data\TemplateInterface" type="Designnbuy\Template\Model\Template" />
+    <preference for="Designnbuy\Template\Api\Data\TemplateAttributeInterface" type="Designnbuy\Template\Model\ResourceModel\Eav\Attribute" />
+    <preference for="Designnbuy\Template\Api\TemplateRepositoryInterface" type="Designnbuy\Template\Model\TemplateRepository" />
+    <preference for="Designnbuy\Template\Api\TemplateAttributeGroupRepositoryInterface" type="Designnbuy\Template\Model\TemplateAttributeGroupRepository" />
+    <preference for="Designnbuy\Template\Api\TemplateAttributeRepositoryInterface" type="Designnbuy\Template\Model\Template\Attribute\Repository" />
+    <virtualType name="Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="eav" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Eav</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="categories" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Categories</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+                <item name="system" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\System</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="websites" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Websites</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+                <item name="related" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Related</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                </item>
+                <item name="upsell" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Upsell</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                </item>
+                <item name="crosssell" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Crosssell</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Template\Ui\DataProvider\Template\Form\TemplateDataProvider">
+        <arguments>
+            <argument name="pool" xsi:type="object">Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Pool</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Template\Ui\DataProvider\Template\Form\Modifier\Related">
+        <arguments>
+            <argument name="scopeName" xsi:type="string">product_form.product_form</argument>
+        </arguments>
+    </type>
+
+
+    <!-- -->
+
+    <preference for="Designnbuy\Template\Api\Data\Category\CategoryInterface" type="Designnbuy\Template\Model\Category" />
+    <preference for="Designnbuy\Template\Api\Data\Category\CategoryAttributeInterface" type="Designnbuy\Template\Model\ResourceModel\Category\Eav\Attribute" />
+    <preference for="Designnbuy\Template\Api\Category\CategoryRepositoryInterface" type="Designnbuy\Template\Model\CategoryRepository" />
+    <preference for="Designnbuy\Template\Api\Category\CategoryAttributeGroupRepositoryInterface" type="Designnbuy\Template\Model\CategoryAttributeGroupRepository" />
+    <preference for="Designnbuy\Template\Api\Category\CategoryAttributeRepositoryInterface" type="Designnbuy\Template\Model\Category\Attribute\Repository" />
+    <virtualType name="Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="eav" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\Eav</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="categories" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\Categories</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+                <item name="system" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\System</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="websites" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\Websites</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+                <item name="related" xsi:type="array">
+                    <item name="class" xsi:type="string">Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\Related</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Template\Ui\DataProvider\Category\Form\CategoryDataProvider">
+        <arguments>
+            <argument name="pool" xsi:type="object">Designnbuy\Template\Ui\DataProvider\Category\Form\Modifier\Pool</argument>
+        </arguments>
+    </type>
+
+
+    <!-- -->
+    <preference for="Designnbuy\Template\Model\Locator\LocatorInterface" type="Designnbuy\Template\Model\Locator\RegistryLocator"/>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Designnbuy\Template\Api\Data\TemplateInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">designnbuy_template_entity</item>
+                    <item name="eavEntityType" xsi:type="string">designnbuy_template</item>
+                    <item name="identifierField" xsi:type="string">entity_id</item>
+                    <item name="entityContext" xsi:type="array">
+                        <item name="store" xsi:type="string">Magento\Store\Model\StoreScopeProvider</item>
+                    </item>
+                </item>
+                <item name="Designnbuy\Template\Api\Data\Category\CategoryInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">designnbuy_template_category_entity</item>
+                    <item name="eavEntityType" xsi:type="string">designnbuy_template_category</item>
+                    <item name="identifierField" xsi:type="string">entity_id</item>
+                    <item name="entityContext" xsi:type="array">
+                        <item name="store" xsi:type="string">Magento\Store\Model\StoreScopeProvider</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

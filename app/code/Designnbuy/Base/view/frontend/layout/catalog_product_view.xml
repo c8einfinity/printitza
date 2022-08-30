@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Designnbuy_Base/css/jPicker-1.1.6.min.css" />
+        <css src="Designnbuy_Base/css/font-awesome.css" />
+        <css src="Designnbuy_Base/css/jquery.jscrollpane.css" />
+        <css src="Designnbuy_Base/css/productPage.css" />
+        <css src="Designnbuy_Base/css/cropper.css" />
+        <!--   <script src="Designnbuy_Design/js/html5/quickedit/raphael.js"/>
+          <script src="Designnbuy_Design/js/html5/quickedit/jpicker-1.1.6.js"/>
+          <script src="Designnbuy_Design/js/html5/quickedit/jquery.simple-color.min.js"/>  -->
+    </head>
+    <body>
+        <!--<referenceBlock name="product.info.options.wrapper">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Designnbuy_Base::product/view/options/wrapper.phtml</argument>
+            </action>
+        </referenceBlock>
+-->
+    <move element="product.info.social" destination="product.info.main" after="product.info.price"/>
+    </body>
+
+</page>

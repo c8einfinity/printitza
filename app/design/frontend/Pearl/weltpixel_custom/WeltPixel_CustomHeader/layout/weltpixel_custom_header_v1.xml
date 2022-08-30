@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="header.links" destination="header-wrapper" after="top.search"/>
+        <move element="fastorder-link" destination="header.links" after="header"/>
+        <referenceBlock name="register-link" remove="true"/>
+        <referenceContainer name="after.body.start">
+            <container name="mobile_global_notices" htmlTag="div" htmlClass="mobile global-notice">
+                <block class="Magento\Theme\Block\Html\Notices" name="global_notices" template="Magento_Theme::html/notices.phtml"/>
+            </container>
+        </referenceContainer>
+        <container name="desktop_global_notices" htmlTag="div" htmlClass="desktop global-notice">
+            <block class="Magento\Theme\Block\Html\Notices" name="global_notices2" template="Magento_Theme::html/notices.phtml"/>
+        </container>
+        <move element="desktop_global_notices" destination="header.panel" before="-" />
+        <referenceBlock name="authorization-link" remove="true" />
+        <move element="catalog.compare.link" destination="header.links" after="authorization-link" />
+        <move element="wish-list-link" destination="header.links" after="catalog.compare.link"/>
+    </body>
+</page>

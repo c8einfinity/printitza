@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+		<css src="Lumaplaza_Calculatorshipping/css/modal.css"/>
+		<css src="Lumaplaza_Calculatorshipping/css/popup.css"/>
+		<css src="Lumaplaza_Calculatorshipping/css/button_style_calculate.css"/>
+		<css src="Lumaplaza_Calculatorshipping/css/button_style_loading-img.css"/>
+		<css src="Lumaplaza_Calculatorshipping/css/select2.css"/>
+    </head>
+	
+	<body>
+		<referenceContainer name="before.body.end">
+            <block class="Lumaplaza\Calculatorshipping\Block\Calculatorshipping" name="Lumaplaza.calculatorshipping.initialize" template="Lumaplaza_Calculatorshipping::initialize.phtml" />
+			<!-- <block class="Magento\Framework\View\Element\Template" template="Lumaplaza_Calculatorshipping::popup_options.phtml" /> -->
+		</referenceContainer>
+    </body>
+</page>

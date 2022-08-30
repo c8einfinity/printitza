@@ -1,0 +1,2586 @@
+<?php
+/**
+ * Product related templates template
+ *
+ * @var $block \Designnbuy\Canvas\Block\Tool
+ */
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+//$currentStore = Mage::app()->getStore()->getCode();
+$facebook = $this->helper('Designnbuy\Base\Helper\Data')->getFacebookAPIKey();
+$flickr = $this->helper('Designnbuy\Base\Helper\Data')->getFlickrAPIKey();
+$instagram = $this->helper('Designnbuy\Base\Helper\Data')->getInstagramAPIKey();
+$imageDPI = $this->helper('Designnbuy\Base\Helper\Data')->getCanvasImageDPI();
+
+/*Color Scheme*/
+$primaryColor = $this->helper('Designnbuy\Base\Helper\Data')->getPrimaryColor();
+$secondaryColor = $this->helper('Designnbuy\Base\Helper\Data')->getSecondaryColor();
+$tertiaryColor = $this->helper('Designnbuy\Base\Helper\Data')->getTertiaryColor();
+$quaternaryColor = $this->helper('Designnbuy\Base\Helper\Data')->getQuaternaryColor();
+$quinaryColor = $this->helper('Designnbuy\Base\Helper\Data')->getQuinaryColor();
+$senaryColor = $this->helper('Designnbuy\Base\Helper\Data')->getSenaryColor();
+
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$webpath = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+$storeLogo = $objectManager->get('Magento\Theme\Block\Html\Header\Logo')->getLogoSrc();
+$helpPageCode = $this->helper('Designnbuy\Base\Helper\Data')->getCanvasHelpPage();
+$helpPageUrl = $objectManager->create('Magento\Cms\Helper\Page')->getPageUrl($helpPageCode);
+
+$keyObject = $objectManager->get('Magento\Framework\Data\Form\FormKey');
+$formKey = $keyObject->getFormKey();
+$appState = $objectManager->get('\Magento\Framework\App\State');
+$areaCode = $appState->getAreaCode();
+
+
+    $productId = $block->getProductId();
+    $productData = $block->getProductData();
+    $designData = array('design_id' => NULL, 'design_name' => NULL);
+    $cart_id = '';
+    $QTY = $this->getQty();
+    
+    $jspath = $webpath.'dnb/';
+    $pageDataAry = array();
+    $savedVdpData = array();
+    $savedVdpData['csv_file_data'] = '';
+    $savedVdpData['csv_file_header_data'] = '';
+    $from_quickedit = '';
+    if($this->getRequest()->getParam('mode') == '') {
+        if ($this->getRequest()->getParam('template_id') != '') {
+          $pageDataAry = $block->getCurrentTemplateSVG();
+          $from_quickedit = $this->getRequest()->getParam('from_quickedit');
+        } else if($this->getRequest()->getParam('design_id') != '') {
+            $design = $block->getCurrentCustomerDesignSVG();
+            $designData['design_id'] = $design['design_id'];
+            $designData['design_name'] = $design['design_name'];
+
+            if(isset($design['svg']) && !empty($design['svg'])) {
+                $pageDataAry = $design['svg'];
+            }
+
+            if(isset($design['options'])) {
+                $savedOptions = $design['options'];
+                if (isset($design['options']['customOptions']) && !empty($design['options']['customOptions'])) {
+                    $productData['selectedOptions'] = $design['options']['customOptions'];
+                    $productData['postedOptions'] = $design['options']['customOptions'];
+                }
+                if (isset($savedOptions['qty']) && !empty($savedOptions['qty'])) {
+                    $productData['qty'] = $savedOptions['qty'];
+                }
+                /* VDP Start */
+                $savedVdpData['csv_file_data'] = '';
+                $savedVdpData['csv_file_header_data'] = '';
+                $designDir = $this->helper('Designnbuy\Base\Helper\Output')->getCustomerDesignsDir();
+                $vdpFile = $savedOptions['vdp_file'];
+                $svgFile = $savedOptions['svg_file'];
+                $vdpFileData = file_get_contents($designDir . $vdpFile);
+                if ($savedOptions && isset($savedOptions['vdp_file']) && !empty($savedOptions['vdp_file'])){
+                    if ($vdpFileData != '' && $vdpFileData != 'undefined') {
+                        $savedVdpData['csv_file_data'] = json_decode($vdpFileData, true);
+                    }
+                }
+
+                $svgFileData = file_get_contents($designDir.$svgFile);
+                if ($savedOptions && isset($savedOptions['svg_file']) && !empty($savedOptions['svg_file'])) {
+                    $svgData = array();
+                    if ($svgFileData != '' && $svgFileData != 'undefined') {
+                        $savedVdpData['csv_file_header_data'] = json_decode($svgFileData, true);
+                    }
+                }
+                /* VDP End */
+            }
+
+        } else if($this->getRequest()->getParam('item_id') != '') {
+            $cart_id = $this->getRequest()->getParam('item_id');
+            $design = $block->getQuoteItemDesign();
+            $savedOptions = $design;
+            if(isset($design['svg']) && !empty($design['svg'])) {
+                $pageDataAry = $design['svg'];
+            }
+            if (isset($design['qty']) && !empty($design['qty'])) {
+                $productData['qty'] = $design['qty'];
+            }
+            if(isset($design['options'])) {
+
+                if (isset($savedOptions['options']) && !empty($savedOptions['options'])) {
+                    $productData['selectedOptions'] = $savedOptions['options'];
+                    $productData['postedOptions'] = $savedOptions['options'];
+                }
+            }
+            /* VDP Start */
+            $savedVdpData['csv_file_data'] = '';
+            $savedVdpData['csv_file_header_data'] = '';
+            $designDir = $this->helper('Designnbuy\Base\Helper\Output')->getCartDesignsDir();
+
+            if ($savedOptions && isset($savedOptions['vdp_file']) && !empty($savedOptions['vdp_file'])){
+                $vdpFile = $savedOptions['vdp_file'];
+                $vdpFileData = file_get_contents($designDir . $vdpFile);
+                if ($vdpFileData != '' && $vdpFileData != 'undefined') {
+                    $savedVdpData['csv_file_data'] = json_decode($vdpFileData, true);
+                }
+            }
+
+            if ($savedOptions && isset($savedOptions['svg_file']) && !empty($savedOptions['svg_file'])) {
+                $svgFile = $savedOptions['svg_file'];
+                $svgFileData = file_get_contents($designDir.$svgFile);
+                $svgData = array();
+                if ($svgFileData != '' && $svgFileData != 'undefined') {
+                    $savedVdpData['csv_file_header_data'] = json_decode($svgFileData, true);
+                }
+            }
+            /* VDP End */
+        }
+    } else if ($this->getRequest()->getParam('template_id') != ''  && $this->getRequest()->getParam('mode') == 'designer') {
+        $productData = array();
+        $productOptions = array();
+        $selectedOptions = array();
+        $savedVdpData = array();
+        $savedVdpData['csv_file_data'] = '';
+        $savedVdpData['csv_file_header_data'] = '';
+        $designerMode = true;
+        $productQty = 0;
+        $designerDesignId = $this->getRequest()->getParam('template_id');
+
+        $designData['design_id'] = $this->getRequest()->getParam('template_id');
+        $pageDataAry = $block->getCurrentTemplateSVG();
+
+        $design = $block->getCurrentTemplate();
+        if(count($pageDataAry) > $design->getNoOfPages()){
+            $pageDataAry = array_splice($pageDataAry, $design->getNoOfPages());
+        }
+
+        $designerId = $design->getDesignerId();
+        $productData['baseUnit'] = $baseUnit = $design->getUnit();
+        $productData['noOfSides'] = $noOfSides = $design->getNoOfPages();
+        $productWidth = $design->getWidth();
+        $productHeight = $design->getHeight();
+        $productData['size'] = $productWidth.'x'.$productHeight;
+
+        $bleedMargin = array(
+            $design->getTopBleedMargin() ? $design->getTopBleedMargin() : 0,
+            $design->getRightBleedMargin() ? $design->getRightBleedMargin() : 0,
+            $design->getBottomBleedMargin() ? $design->getBottomBleedMargin() : 0,
+            $design->getLeftBleedMargin() ? $design->getLeftBleedMargin() : 0
+        );
+        $productData['bleedMargin'] = $bleedMargin;
+        $safeMargin = array(
+            $design->getTopSafeMargin() ? $design->getTopSafeMargin() : 0,
+            $design->getRightSafeMargin() ? $design->getRightSafeMargin() : 0,
+            $design->getBottomSafeMargin() ? $design->getBottomSafeMargin() : 0,
+            $design->getLeftSafeMargin() ? $design->getLeftSafeMargin() : 0
+        );
+        $productData['safeMargin'] = $safeMargin;
+        $productData['colorPickerMode'] = 'full';
+        $productData['bgcolorPickerMode'] = 'full';
+        $productData['allow_background_image'] = 1;
+        $productData['allow_background_color'] = 1;
+        $productData['allow_border'] = 1;
+        $productData['allow_text'] = 1;
+        $productData['allow_clipart'] = 1;
+        $productData['allow_qr_code'] = 1;
+        $productData['allow_image_upload'] = 1;
+        $productData['allowed_to_quotemode'] = 0;
+        $productData['allowed_to_ordermode'] = 0;
+        $productName = $design->getName();
+        $productShortDescription = $design->getDescription();
+        $productDescription = $design->getDescription();
+        $pickerMode = 'full';
+        $bgpickerMode = 'full';
+        $bgId = '';
+        $bgcolor = 'FFFFFF';
+    } else if($this->getRequest()->getParam('jobId') != '' && $this->getRequest()->getParam('mode') != '') {
+      
+      $designFactory = $objectManager->create('\Designnbuy\CorporateJobRequest\Model\Corporatejob')->load($this->getRequest()->getParam('jobId'));
+      $options = $designFactory->getOptions();
+      $designDt['options'] = $optionArray = json_decode($options, true);
+      if (isset($designDt['options'])) {
+        $savedOptions = $designDt;
+        if (isset($savedOptions['options']) && !empty($savedOptions['options'])) {
+            $productData['selectedOptions'] = $savedOptions['options']['customOptions'];
+        }
+      }
+    }
+    
+   
+    $jobId = '';
+    
+    $baseUnit = $productData['baseUnit'];
+
+    $productName = $productData['name'];
+    $productShortDescription = $productData['shortDescription'];
+    $productDescription = $productData['description'];
+
+    $productData['name'] = '';
+    $productData['shortDescription'] = '';
+    $productData['description'] = '';
+
+    $productOptions = $productData;
+
+    $selectedOptions = $productOptions['selectedOptions'];
+    $productSize = strtolower($productOptions['size']);
+    $productQty = $productOptions['qty'];
+    $dimension = explode('x',$productSize);
+    $productWidth = $dimension[0];
+    $productHeight = $dimension[1];
+    $noOfSides = $productOptions['noOfSides'];
+    $bgColorArray = $productOptions['bgcolor'];
+    $bgId = $productOptions['BgId'];
+    $bgColorArray = explode('#',$productOptions['bgcolor']);
+    $bgcolor = $bgColorArray[1];
+
+    /*$colorCollection = Mage::helper('designnbuy_printcolormanagement')->getPrintableColorData($productId,$front=1);
+    $clipartCategoryArray = Mage::helper('clipartmanagement')->getClipartCategoryData($front=1);
+    $backgroundCategoryCollection = Mage::helper('w2phtml5background/w2phtml5backgroundcategory')->getBackgroundCategory($productId,$front=1);
+    $backgroundImagesCollection = Mage::helper('w2phtml5background/w2phtml5background')->backgroundImages($productId);*/
+
+    $colorCollection = [];
+    $clipartCategoryArray = [];
+    $backgroundCategoryCollection = '';
+    $backgroundImagesCollection = '';
+
+    $firstclipartcatid = '';
+
+    $pickcolor_multi = '';
+
+    $uniqueid = $_SESSION['uniqueid'] = md5(rand());
+    $locale = 'en_US';
+    $store = $objectManager->get('Magento\Framework\Locale\Resolver');
+    $locale =  $store->getLocale();
+    $lang_id =  'en_US';
+    if($locale == 'de_CH')	$lang_id = 'lang=de';
+    else if($locale == 'fr_FR')	$lang_id = 'lang=fr';
+    else if($locale == 'en_US')	$lang_id = 'lang=en';
+    else	$lang_id = '';
+
+    $customer = $objectManager->create('Magento\Customer\Model\Session')->getCustomer();
+    $customer_id = $customer->getId();
+
+    $isDefaultWebsite = 0;
+    $customerTypeId = '';
+    $customerTypeOptions = '';
+
+    if ($objectManager->create('\Magento\Framework\Module\Manager')->isEnabled('Designnbuy_Corporate')) {
+        $isDefaultWebsite = $objectManager->create('Designnbuy\Corporate\Helper\Data')->isB2CWebsite();
+        $customerTypeOptions = json_encode(\Designnbuy\CorporateUser\Model\Customer\Attribute\Source\Usertype::getOptionArray());
+        $customerTypeId = $customer->getCustomerUserType();
+    }
+
+    $designerMode = false;
+    if($this->getRequest()->getParam('mode') == 'designer'){
+        $designerMode = true;
+    }
+    $designerId = '';
+    $designerDesignId = '';
+    $from_quickedit = '';
+    if($this->getRequest()->getParam('template_id')){
+        $designerDesignId = $this->getRequest()->getParam('template_id');
+        $design = $objectManager->create('Designnbuy\Template\Model\Template')->load($designerDesignId);
+        $designerId = $design->getDesignerId();
+    }
+
+    /*************    Template count     ***************/
+      $sizeOptionId = null;
+      $sizeOptionOptionId = null;
+      $urlOptions = $this->getRequest()->getParam('options');
+      if (isset($productData['option_sizes_dt']) && !empty($urlOptions)) {
+        if (array_key_exists($productData['option_sizes_dt']['id'],$urlOptions))
+        {
+          $sizeOptionId = $productData['option_sizes_dt']['id'];
+          $sizeOptionOptionId = $urlOptions[$productData['option_sizes_dt']['id']];
+        }
+      } else if (isset($productData['option_sizes_dt']) && empty($urlOptions) ) {
+        if(isset($productData['option_sizes_dt']['values'][0])){
+          $sizeOptionId = $productData['option_sizes_dt']['id'];
+          $sizeOptionOptionId = $productData['option_sizes_dt']['values'][0]['option_type_id'];
+        }
+      }
+      
+      
+      $relatedTemplateData = array();
+      $relatedTemplateData['pid'] = $productId;
+      $relatedTemplateData['sizeOptionId'] = $sizeOptionId;
+      $relatedTemplateData['sizeOptionOptionId'] = $sizeOptionOptionId;
+      $productData['productTemplateCount'] = count($this->helper('Designnbuy\Template\Helper\Data')->getProductRelatedTemplates($relatedTemplateData));
+
+    /*************  End Template count     ***************/
+?>
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+
+<script type="text/javascript" src="<?php echo $jspath.'jquery.js'; ?>"></script>
+<?php if($_SERVER['HTTP_HOST'] != "192.168.0.222" && $_SERVER['HTTP_HOST'] != "127.0.0.1" && $_SERVER['HTTP_HOST'] != "192.168.0.46" && $_SERVER['HTTP_HOST'] != "192.168.0.75") { ?>
+  <script type="text/javascript" src="<?php echo $jspath.'lib.studio.min.js'; ?>"></script>
+<?php } ?>
+<script>
+    var $j = jQuery.noConflict();
+    var isFront = 1;
+    var user = '';
+    var mobile_device = "1";
+    function trace(str){
+        //console.log(str);
+    }
+    var storeId = '0';
+    var pageDataAry = [];
+    var currentStore = '<?php echo $locale;?>';
+    var facebookAppId = '<?php echo $facebook;?>';
+    var flickrAppId = '<?php echo $flickr;?>';
+    var instagramAppId = '<?php echo $instagram;?>';
+    var imageDPI = '<?php echo $imageDPI;?>';
+    var basepath = '<?php echo $webpath; ?>';
+    var jspath = '<?php echo $jspath;?>';
+    var mediapath = '<?php echo $this->helper('Designnbuy\Base\Helper\Data')->getCustomerImageUrl(); ?>';
+    var qrCodePath = '<?php echo $this->helper('Designnbuy\Base\Helper\Data')->getCustomerImageUrl(); ?>';
+    var qrCodeLib = '<?php echo $webpath.'dnb/phpqrcode/index.php' ?>';
+    var deleteQrCodeUrl = '<?php echo $block->getUrl('web2print/index/deleteqrcode');?>';
+    var relatedSubCategoryUrl = '<?php echo $block->getUrl('design/index/getrelatedproducttype');?>';
+    var relatedProductUrl = '<?php echo $block->getUrl('design/index/getrelatedproduct');?>';
+    var clipartCategoryUrl = '<?php echo $block->getUrl('clipart/category/categorylist');?>';
+    var clipartCategoryUrl = '<?php echo $block->getUrl('clipart/category/categorylist');?>';
+    var relatedClipartUrl = '<?php echo $block->getUrl('clipart/clipart/clipartlist');?>';
+    var relatedDesignIdeaUrl = '<?php echo $block->getUrl('design/index/getrelateddesignidea');?>';
+    var productPriceUrl = '<?php echo $block->getUrl('canvas/product/price');?>';
+    var crossOriginalUploadUrl = '<?php echo $block->getUrl('base/image/download');?>';
+    var instagramChannelUrl = '<?php echo $webpath.'dnb/instagram-channel.html';?>';
+    var loginUrl = '<?php echo $block->getUrl('customer/account/LoginFromTool');?>';
+    var logoutUrl = '<?php echo $block->getUrl('customer/account/logout');?>';
+    var registrationUrl = '<?php echo $block->getUrl('customer/account/createFromTool');?>';
+    var loginCheckUrl = '<?php echo $block->getUrl('customer/account/loginCheck');?>';
+    var saveBase64Url = '<?php echo $block->getUrl('base/index/SaveStringOnServer');?>';
+    var saveDesignUrl = '<?php echo $block->getUrl('customer/design/save');?>';
+    var shareDesignUrl = '<?php echo $block->getUrl('web2print/index/sharemydesign');?>';
+    var generatePreviewPngUrl = '<?php echo $block->getUrl('base/index/generatePng');?>';
+    var generateRootPngUrl = '<?php echo $block->getUrl('base/index/generatePng');?>';//for 3d preivew
+    var previewPdfUrl = '<?php echo $block->getUrl('canvas/preview/pdf');?>';
+    var backgroundCategoryUrl = '<?php echo $block->getUrl('background/category/index/');?>';
+    var backgroundImageUrl = '<?php echo $block->getUrl('background/background/backgroundlist/');?>';
+    var printableColorUrl = '<?php echo $block->getUrl('color/color/index/');?>';
+    var relatedLayoutUrl = '<?php echo $block->getUrl('template/layout/layoutlist');?>';
+    var relatedTemplateUrl = '<?php echo $block->getUrl('template/template/templatelist');?>';
+    var addToCartUrl = '<?php echo $block->getUrl('checkout/cart/add');?>';
+    var cartUrl = '<?php echo $block->getUrl('checkout/cart');?>';
+    var userImagesUrl = '<?php echo $block->getUrl('customer/image/imagelist');?>';
+    var welcomeMessageUrl = '<?php echo $block->getUrl('web2print/index/welcomeMessage');?>';
+    var updateTopLinksUrl = '<?php echo $block->getUrl('web2print/index/updateTopLinks');?>';
+    var topCartsUrl = '<?php echo $block->getUrl('web2print/index/topCarts');?>';
+    var FBredirectURI = '<?php echo $webpath.'dnb/FBredirectURI.html';?>';
+    // var removeuserImagesUrl = '<?php //echo $block->getUrl('web2print/index/removeUserImages');?>';
+    var removeuserImagesUrl = '<?php echo $block->getUrl('customer/image/remove');?>';
+    var uploadImageURL = '<?php echo $block->getUrl('base/image/upload/');?>';
+    var removeWhiteUrl = '<?php echo $block->getUrl('base/image/removewhite/');?>';
+    var uniqueid = '<?php echo $uniqueid;?>';
+    var productData = <?php echo json_encode($productData);?>;
+    //var jsonProductData =  $j.parseJSON(productData);
+    var jsonProductData =  productData;
+    var productId = jsonProductData.id;
+    var bleedMargin = jsonProductData.bleedMargin;
+    var safeMargin = jsonProductData.safeMargin;
+    var baseUnit = jsonProductData.baseUnit;
+    customColorList = jsonProductData.backgroundColor;
+    var productWidth = '<?php echo $productWidth;?>';
+    var productHeight = '<?php echo $productHeight;?>';
+    // var productOptions = new Array();
+    var productOptions = <?php echo json_encode($productOptions);?>;
+
+    // var selectedOptions = new Array();
+    var selectedOptions = <?php echo json_encode($selectedOptions);?>;
+    var fontUrl = '<?php echo $block->getUrl('font/font/fontlist');?>';
+    var clipartCategorylist = <?php echo json_encode($clipartCategoryArray);?>;
+    var mydesignUrl = '<?php echo $block->getUrl('customer/design');?>';
+    //jsonclipartCategoryList = $j.parseJSON(clipartCategorylist);
+    jsonclipartCategoryList = clipartCategorylist;
+    // var fontlist = <?php //echo $fontArray;?>;
+    //jsonfontList = $.parseJSON(fontlist);
+    // jsonfontList = fontlist;
+    var colorlist = '{}';
+    //printableColorList = $j.parseJSON(colorlist);
+    printableColorList = productOptions.colors || [];
+    backgroundPrintableColorList = productOptions.background_colors || [];
+    var backgroundCategorylist = '{}';
+    jsonbackgroundCategorylist = $j.parseJSON(backgroundCategorylist);
+    var backgroundImageslist = '{}';
+    jsonbackgroundImageslist = $j.parseJSON(backgroundImageslist);
+    var BgId = [];
+    /*if($j.parseJSON('<?php echo $bgId; ?>')){
+        BgId = $j.parseJSON('<?php echo $bgId; ?>');
+        for(var bgIndex = 0; bgIndex < BgId.length; bgIndex++){
+            if(BgId[bgIndex] == "undefined"){
+                BgId[bgIndex] = "";
+            }
+        }
+    }*/
+    var no_of_side = '<?php echo $noOfSides;?>';
+    var helpPageUrl = '<?php echo $helpPageUrl;?>';
+    var first_font;
+    var png_data;
+    var filearray = new Array();
+    var customer_id = '<?php echo $customer_id;?>';
+    var productid = '<?php echo $productId;?>';
+    var added_images = '';
+    var fonts_used = '';
+    var clipartsloaded = 0;
+    var designIdeasloaded = 0;
+    var curr_side_id = 1;
+    var datauri;
+    var productImageCan;
+    var customizationCan;
+    var priceInterval;
+    var action;
+    var shareType;
+    var sideNameAry = ['Front','Back','Left','Right'];
+    var toolType = "web2print"; //possible values: "producttool", "web2print"
+    var colorPicker = jsonProductData.colorPickerMode;
+    var pickerMode = colorPicker.toLowerCase();  //possible values: "Full Color Picker", "Printable Colors",
+    var bgcolorPicker = jsonProductData.bgcolorPickerMode;
+    var bgpickerMode = bgcolorPicker.toLowerCase(); //possible values: "Full Color Picker", "Custom Options", "Printable Colors"
+    var qty = '<?php echo $productQty; ?>';
+    var bgColor;
+    var borderColor;
+    if(pickerMode=="printable" && printableColorList.length > 0){
+        firstColor = printableColorList[0].colorCode;
+        borderColor = firstColor.substring(1);
+    }else{
+        firstColor = "#000";
+        borderColor = "000";
+    }
+    if(bgpickerMode=="custom"){
+        bgColor = "<?php echo $bgcolor; ?>";
+    }else if(bgpickerMode=="printable" && backgroundPrintableColorList.length > 0){
+        firstColor = backgroundPrintableColorList[backgroundPrintableColorList.length - 1].colorCode;
+        bgColor = firstColor.substring(1);
+    }else{
+        bgColor = "FFF";
+    }
+
+    if(<?php echo count($pageDataAry) ?>){
+        var pageDataAry = <?php echo json_encode($pageDataAry);?>;
+    }else{
+        for(var i = 0; i<no_of_side; i++){
+            pageDataAry[i] = "";
+        }
+    }
+
+    var is_photo_product = jsonProductData.is_photobook;
+    if(is_photo_product && pageDataAry[0] == ""){
+      no_of_side = parseInt(no_of_side) + 1;
+    }
+    var add_coverpage_width = productData.cover_extra_width;
+    var add_coverpage_height = productData.cover_extra_height;
+    var cartId = '<?php echo $cart_id; ?>';
+    var designData = {};
+    designData = $j.parseJSON('<?php echo json_encode($designData); ?>');
+    /*VDP Start*/
+    var savedVdpData = {};
+    savedVdpData = $j.parseJSON('<?php echo json_encode($savedVdpData); ?>');
+    /*VDP End*/
+    var extensionArray = [ '../DO_NOT_UPLOAD/extensions/ext-grid.js','../DO_NOT_UPLOAD/extensions/ext-multiColor.js',/*'../DO_NOT_UPLOAD/extensions/ext-curveText.js',*/'../DO_NOT_UPLOAD/extensions/ext-objectPanel.js','../DO_NOT_UPLOAD/extensions/ext-objectLock.js','../DO_NOT_UPLOAD/extensions/ext-LayerPanel.js'/*,'../DO_NOT_UPLOAD/extensions/ext-photoCollage.js'*/,'../DO_NOT_UPLOAD/extensions/ext-textArea.js','../DO_NOT_UPLOAD/extensions/ext-TextQuickEdit.js','../DO_NOT_UPLOAD/extensions/ext-textShape.js','../DO_NOT_UPLOAD/extensions/ext-recentColors.js','../DO_NOT_UPLOAD/extensions/ext-pickDesignColor.js','../DO_NOT_UPLOAD/extensions/ext-fliptools.js','../DO_NOT_UPLOAD/extensions/ext-distribute.js','../DO_NOT_UPLOAD/extensions/ext-imageEffect.js','../DO_NOT_UPLOAD/extensions/ext-dropbox.js','../DO_NOT_UPLOAD/extensions/ext-vdp.js','../DO_NOT_UPLOAD/extensions/ext-undoRedo.js','../DO_NOT_UPLOAD/extensions/ext-corporate.js','../DO_NOT_UPLOAD/extensions/ext-ShowObjectSize.js','../DO_NOT_UPLOAD/extensions/ext-guidelines.js','../DO_NOT_UPLOAD/extensions/ext-getquote.js','../DO_NOT_UPLOAD/extensions/ext-threedpreview.js','../DO_NOT_UPLOAD/extensions/ext-mobileapp.js','../DO_NOT_UPLOAD/extensions/ext-pages.js','../DO_NOT_UPLOAD/extensions/ext-smartfields.js','../DO_NOT_UPLOAD/extensions/ext-marketPlace.js','../DO_NOT_UPLOAD/extensions/ext-photoBook.js','../DO_NOT_UPLOAD/extensions/ext-multiStyleText.js','../DO_NOT_UPLOAD/extensions/ext-specialChar.js'];
+    /*For Corporate*/
+    var formkey = "<?php echo $formKey; ?>";
+    var formKey = "<?php echo $formKey; ?>";
+    var jobId = '<?php echo $jobId;?>';
+    var customerTypeOptions = '<?php echo $customerTypeOptions;?>';
+    customerTypeOptions = $j.parseJSON(customerTypeOptions);
+    var customerTypeId = '<?php echo $customerTypeId; ?>';
+    var isDefaultWebsite = '<?php echo $isDefaultWebsite; ?>';
+    var sendJobRequestUrl = '<?php echo $block->getUrl('designnbuy_corporatejob/corporatejob/sendJobRequest');?>';
+    var getQuoteUrl = '<?php echo $block->getUrl('quotations/index/addItem');?>';
+    var quoteCartUrl = '<?php echo $block->getUrl('quotations/index');?>';
+    var quoteId = '';
+    var allowaddtextflag        = true;
+    var allowaddartflag         = true;
+    var allowqrCodeflag         = true;
+    var allowphotosflag         = true;
+    var designerMode = "<?php echo $designerMode; ?>";
+    var designerId = "<?php echo $designerId; ?>";
+    var designerDesignId = "<?php echo $designerDesignId; ?>";
+    var saveDesignerDesignUrl = '<?php echo $block->getUrl('designer/design/savetemplate');?>';
+    var customerDetailUrl = '<?php echo $block->getUrl('customer/account/details/');?>';
+    var from_quickedit = "<?php echo $from_quickedit; ?>";
+</script>
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<?php if($_SERVER['HTTP_HOST'] == "192.168.0.222" || $_SERVER['HTTP_HOST'] == "127.0.0.1" || $_SERVER['HTTP_HOST'] == "192.168.0.46" || $_SERVER['HTTP_HOST'] == "192.168.0.75") { ?>
+<link rel="stylesheet" href="<?php echo $jspath.'picasa/gallery.css'; ?>">
+<link rel="stylesheet" href="<?php echo $jspath.'css/jquery.jscrollpane.css'; ?>">
+<link rel="stylesheet" href="<?php echo $jspath.'css/jquery.mCustomScrollbar.css'; ?>">
+<link rel="stylesheet" href="<?php echo $jspath.'css/pick-a-color-1.1.8.min.css'; ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $jspath; ?>fancybox/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo $jspath; ?>fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<link rel="stylesheet" href="<?php echo $jspath.'plupload/jquery.plupload.queue.css'; ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo $jspath.'css/font-awesome.css'; ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo $jspath.'css/plugins.css'; ?>" type="text/css" />
+<?php } else  { ?>
+<link rel="stylesheet" href="<?php echo $jspath.'css/studio.min.css'; ?>" type="text/css" />
+<?php } ?>
+<link rel="stylesheet" href="<?php echo $jspath.'css/normalize.css'; ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo $jspath.'css/web2print_mobile.css'; ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo $jspath.'css/animate.css'; ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo $jspath.'css/dnbicon.css'; ?>" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:500,600,700,800" rel="stylesheet">
+
+
+
+<?php
+$langCss='';
+if($locale == "de_DE"){
+    $langCss = 'css/web2print_german.css';
+}
+if($locale == "fr_FR"){
+    $langCss = 'css/web2print_french.css';
+}
+if($langCss != ""){
+    ?>
+<link rel="stylesheet" href="<?php echo $jspath.$langCss; ?>">
+<?php
+}
+?>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/prototype.js'; ?>"></script>
+<?php if($_SERVER['HTTP_HOST'] == "192.168.0.222" || $_SERVER['HTTP_HOST'] == "127.0.0.1" || $_SERVER['HTTP_HOST'] == "192.168.0.46" || $_SERVER['HTTP_HOST'] == "192.168.0.75") { ?>
+<script type="text/javascript" src="<?php echo $jspath.'js-hotkeys/jquery.hotkeys.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'jquerybbq/jquery.bbq.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'svgicons/jquery.svgicons.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'jquery-ui/jquery-ui.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'jgraduate/jpicker.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'jgraduate/jquery.jgraduate.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'spinbtn/JQuerySpinBtn.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'contextmenu/jquery.contextMenu.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/pathseg.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/touch.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/browser.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/svgtransformlist.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/math.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/units.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/svgutils.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/sanitize.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/select.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/history.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/draw.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/path.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/md5-min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/dnb/DNBBaseObject.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/helper.js?t='.$uniqueid; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/Margin.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/web2print-src.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/svgcanvas.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/svg-editor.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/locale/locale.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/contextmenu.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/extensions/ext-navigation.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/extensions/ext-web2print.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/font_jsapi.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/font-selector.js';?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/raphael.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/plupload/moxie.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/plupload/plupload.dev.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/plupload/jquery.ui.plupload.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/plupload/imageuploader.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/jquery.jscrollpane.js'; ?>"></script>
+
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/jquery.mCustomScrollbar.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/jquery.simple-color.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/quill.js'; ?>"></script>
+<!-- For custom options Start-->
+<script type="text/javascript" src="<?php echo $jspath.'DO_NOT_UPLOAD/dependentoptions.js'; ?>"></script>
+<!-- For custom options End -->
+
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/three.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/OBJLoader.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/OrbitControls.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/Detector.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/Projector.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/CanvasRenderer.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $jspath.'threejs/build/stats.min.js'; ?>"></script>
+<script type='text/javascript' src='<?php echo $jspath.'picasa/picasa.js'; ?>' ></script>
+<script type="text/javascript" src="<?php echo $jspath.'flickr/jquery.flickr.js'; ?>"></script>
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="<?php echo $jspath; ?>fancybox/jquery.fancybox.js"></script>
+
+<!-- Add Button helper (this is optional) -->
+<script type="text/javascript" src="<?php echo $jspath; ?>fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="<?php echo $jspath ?>jquery-ui/jquery.ui.touch-punch.js"></script>
+<?php } else { ?>
+<script type="text/javascript" src="<?php echo $jspath.'built.canvas.min.js?v=3.3.4'; ?>"></script>
+<script type="text/javascript">
+        extensionArray = [];
+    </script>
+<?php } ?>
+<script type="text/javascript" src="<?php echo $jspath.'plupload/i18n/'.$locale.'.js'; ?>"></script>
+<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="htmt7ortdui7qp1"></script>
+
+<?php
+
+echo "  <style> ";
+echo '  /* Primary */
+        .db-container .top-header, .dbtn.checkoutbtn, .ui-slider-handle, .ui-slider-horizontal .ui-slider-range-min,         
+        .toolbar-list button:hover, #rightPageLbl.active, #leftPageLbl.active { background:'.$primaryColor.'}
+        .inside-caution-image .tag i,.inside-caution .tag i,.previewZoomButton .active { border: 1px solid '.$primaryColor.'; background: '.$primaryColor.'; color:'.$quaternaryColor.'}
+        .round input[type="checkbox"]:checked + label     { background-color: '.$primaryColor.';border-color: '.$primaryColor.';}
+        .onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {border-color: '.$primaryColor.';}
+        .onoffswitch-checkbox:checked + .onoffswitch-label { background-color:'.$primaryColor.'}          
+        .db-container .top-header .right-part .priceTag .rate, .left-navigation .nav-trigger button.active, .left-navigation .nav-trigger button:hover,
+        .tabset > label:hover, .tabset > input:focus + label,.previewZoomButton {color:'.$primaryColor.'}
+        #inst_image_format{background: '.$primaryColor.'; color:'.$quinaryColor.'}
+        .loader {border-top: 15px solid '.$primaryColor.'}
+        
+        
+        .uploadVdpButton, #imageEffect_window .update_effect {background-color: '.$primaryColor.'}
+        .left-navigation .nav-trigger-small button.active { box-shadow: inset 0px 3px 3px '.$primaryColor.';    text-shadow: 1px 1px 1px '.$quinaryColor.';}
+
+        .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary { background-color: '.$secondaryColor.'; border-color: '.$secondaryColor.'}
+        .btn-primary{ border-color: '.$primaryColor.'}
+        .btn-primary:hover {background-color: '.$primaryColor.';border-color: '.$primaryColor.';}        
+        .btn-primary:active:hover, .btn-primary.active:hover, .open > .dropdown-toggle.btn-primary:hover, .btn-primary:active:focus, .btn-primary.active:focus, .open > .dropdown-toggle.btn-primary:focus, .btn-primary:active.focus, .btn-primary.active.focus, .open > .dropdown-toggle.btn-primary.focus {background-color: '.$primaryColor.'; border-color: '.$primaryColor.';}
+
+        .round input[type="radio"]:checked + label {background-color: '.$primaryColor.';border-color: '.$primaryColor.';}
+        
+        .tabCon a.active, #btn_ok_dig {background:'.$primaryColor.'; color: '.$quinaryColor.'}
+
+        /*Secendary*/       
+         body, .caption-section .caption, div#tool_font_family,#sizeSlider .caption {color:'.$secondaryColor.'}
+         .left-navigation .nav-trigger button {border-right:1px solid '.$tertiaryColor.'}
+         .left-navigation .nav-trigger button,.toolbar-list button,.rp-header-panel,.tabset > label, .layer_row,.caption-section.gray-section .caption,
+        .navigational-header .zoomnpreview button:nth-child(1), .navigational-header .zoomnpreview button:nth-child(2),
+        .navigational-header div.pagination #pageNav span:hover,#rightPageLbl, #leftPageLbl {color:'.$secondaryColor.' fill:'.$secondaryColor.'}
+        #pickcolor-panel #prevColor, #pickcolor-pane  l #nextColor,
+        .joystic-button button, .inside-caution-image, .inside-caution, .sliderValue, #qrcodeform .inputfield .caption-small {color:'.$secondaryColor.'}
+        .range-blocks {background:'.$quaternaryColor.'}
+        
+        /*Tertiary*/
+        .left-navigation .nav-trigger { border-right:1px solid '.$quaternaryColor.';background: '.$tertiaryColor.'}
+        .left-navigation .nav-trigger button,#rightPageLbl, #leftPageLbl { background:'.$tertiaryColor.'}
+        
+        .db-container .left-navigation                      { border-right  :1px solid '.$tertiaryColor.'; box-shadow:3px 3px 3px 3px '.$tertiaryColor.' }          
+        .navigational-header .zoomnpreview #zoomOptions     { border-top: 5px solid '.$secondaryColor.'}
+        .db-container .top-header, .rp-header-panel, .customOptionContainer .optionRow input[type="text"],.optionRow input[type="number"], 
+        .pop-heading-line1, .layer_row {border-bottom: 1px solid '.$tertiaryColor.'}
+        
+        .ui-slider { background-color:'.$tertiaryColor.'}
+        .align_icons #align_relative_to,  .quickPanel textarea {border: 1px solid '.$tertiaryColor.'}
+        .color_tool input, .addnote, #text { border: 1px solid '.$tertiaryColor.'}
+        
+        .bgcolor-tab select, .tabset .tab-panel, #tools_left .tool_button,#tools_left .tool_button_current,
+        .hide-left, .caption-section.gray-section, .sliderValue, .range-blocks select, .joystic-button button, .dialog_content, 
+        .flextextbtn input[type="text"], .flextextbtn button, #qrcodeform .inputfield textarea, .wrapper-dropdown-1,  .wrapper-dropdown-1.active,
+        .wrapper-dropdown-1 .dropdown, .wrapper-dropdown-2, 
+        .wrapper-dropdown-2 .dropdown, #imageLabel   {background:'.$tertiaryColor.'} .size-bold-italic .push_button_pressed {background-color: '.$tertiaryColor.'}
+        
+        .global_popup_box {border:4px solid '.$tertiaryColor.'}
+        .tabCon { border-top: 1px solid '.$tertiaryColor.'}
+        #ie_filters .filter_button span.svg_img {border: 1px solid '.$tertiaryColor.'}
+        .gallery-caption-ii{padding-top: 10px;background: '.$tertiaryColor.'}
+        .onoffswitch-label { border: 2px solid '.$tertiaryColor.'}
+        #qrcodeform .inputfield select, #qrcodeform .inputfield input[type="email"], #qrcodeform .inputfield input[type="url"], 
+        #qrcodeform .inputfield input[type="text"], #qrcodeform .inputfield input[type="tel"],  #qrcodeform .inputfield textarea {background:'.$tertiaryColor.'}
+        .pagination #pageNav_gallery .prevPage,
+        .pagination #pageNav_gallery .nextPage,
+        .pagination #pageNav_gallery{
+            background: '.$tertiaryColor.';
+        }
+        .album-title{
+          color:'.$quinaryColor.'
+        }
+        #flickerresult .album-title{
+          background:'.$primaryColor.';
+        }
+        #images_loaded .tabcntent #album_con .imgloader:before,
+        #album_con .imgloader .display-flex:before,
+        #images_loaded .tabcntent #album_con .imgloader .imageclass:before{
+          background-color:'.$primaryColor.';
+        }
+        #album_con .imgloader .display-flex:after,
+        #images_loaded .tabcntent #album_con .imgloader .imageclass:after{
+          border-bottom-color:'.$primaryColor.';
+        }
+        /* Quaternary */
+        .cbp-spmenu-left.cbp-spmenu-open, 
+        .left-navigation .nav-trigger button:hover  {background:'.$quaternaryColor.';}
+
+
+        /* Multiple Colors in single line */
+
+        
+        .dialog_content                 {background:'.$tertiaryColor.';color:'.$secondaryColor.';}
+        .dialog_content p               {color:'.$secondaryColor.'}
+        .message#addtocartmessage .clr  {color:'.$secondaryColor.'}
+        .message#addtocartmessage .clr label {color:'.$secondaryColor.'}
+        #sizeSlider input[type="number"], input[type="number"]:disabled {background:'.$tertiaryColor.';color:'.$secondaryColor.'}
+        .t-shirt-list li a span {background:'.$tertiaryColor.';color:'.$secondaryColor.'}
+        .dbtn {background:'.$tertiaryColor.'}
+        .dbtn.btn-primary{background:'.$primaryColor.'; color:'.$quinaryColor.'}
+        .hide-left {background:'.$tertiaryColor.';color:'.$secondaryColor.'}
+
+        .tabset > input:checked + label, .imgpnlbtn, .imgpnlbtn:hover, .imgpnlbtn:focus, 
+        .imgpnlbtn.focus,  .pagepnlbtn, .pagepnlbtn:hover, .pagepnlbtn:focus, 
+        .pagepnlbtn.focus  {background-color:'.$primaryColor.';color:'.$quinaryColor.'}
+
+        .product-name #info {background:'.$quinaryColor.'; color:'.$secondaryColor.'}
+        .db-container .top-header .right-part ul li button, .db-container .top-header .fa-home, .product-name, .share-caption,
+        .checkoutbtn, .disignerDisclaimerLabel a, #rightPageLbl.active, #leftPageLbl.active  {color:'.$quinaryColor.'}
+        .checkoutbtn:hover {color:'.$quinaryColor.'}
+
+        .db-container .top-header .right-part .priceTag {border: 3px solid '.$quinaryColor.'}
+        .db-container .top-header .right-part .priceTag .rate {background:'.$quinaryColor.';}        
+        .inside-caution-image, .inside-caution {border: 3px dashed '.$quinaryColor.'}
+
+        /* press buttons */
+        .vertical-align-text .tool_button, .vertical-align-text .push_button, .text-align .tool_button, .text-align .push_button, .size-bold-italic .tool_button, .size-bold-italic .push_button {
+        color:'.$secondaryColor.';
+        background-color:'.$tertiaryColor.';
+        }  
+        .vertical-align-text .tool_button_current, .vertical-align-text .push_button_pressed, .text-align .tool_button_current, .text-align .push_button_pressed, .size-bold-italic .tool_button_current, .size-bold-italic .push_button_pressed,.tool_button:hover, .push_button:hover, .buttonup:hover, .buttondown, .tool_button_current{
+        color:'.$secondaryColor.';
+        background: '.$tertiaryColor.';
+        }
+        .size-bold-italic .ql-active{
+          color:'.$secondaryColor.'!important;
+        background: '.$tertiaryColor.'!important;
+        }
+        
+
+
+
+';
+
+echo "</style>";
+?>
+
+<div id="container_dt">
+      <div class="loader-section" style="display:none;">
+        <div id="loaderImage-overlay" ></div>
+        <div id="loaderImage" class="loader"></div>
+      </div>
+
+      <div class="instructionsDiv" id="instructions_single_color" style="display:none;">
+    <div id="triangle-up-control" class="triangle-up"></div>
+    <div class="toolbar_button">
+      <div>
+        <button onClick="closeMe(this);" class="dbtn btn-primary">Ok</button>
+      </div>
+    </div>
+    <span id="chooseDesignPanelCaption">Choose Your Design Color From Here.</span>
+</div>
+<div class="db-container"> 
+  <!-- Header -->
+
+  <header class="top-header">
+    <section class="left-part show_at_front" style="display:none;">
+      <div class="admin-logo-home display-flex">
+        <i class="tool-logo fa fa-arrow-circle-o-left" aria-hidden="true"></i>        
+        <!-- <img src=" <?php //echo $storeLogo;?>" /> -->
+      </div>
+      
+      <div id="productName" class="product-name"><?php if(isset($productName)) { echo $productName; } ?>
+        <button id="info" title="Product Info" class="no-display"> <i class="fa fa-info"></i></button>
+      </div>
+    </section>
+    <section class="right-part">      
+      <ul>
+      <li class="show_at_front accnt-links" style="display:none;">
+          <button id="btn_login_tool" title="Login" style="display:none;"><span class="fa fa-user-o"></span> </button>
+          <button id="btn_user_accnt" title="My Account" style="display:none;" ><span class="fa fa-user-o"></span> </button>
+          <ul class="accnt-dropdown" style="display:none;" >
+              <li id="btn_open_mydeisgn"><a href="#">My designs</a></li>
+              <li id="btn_logout_tool"><a href="#">logout</a></li>
+            </ul>
+        </li>
+        <li class="show_at_front" style="display:none;">
+          <button id="twitter_share" title="Tweet on Twitter" > <span id="twitterShareCaption" class="caption"><i class="fa fa-twitter" aria-hidden="true"></i></span> </button>
+        </li>
+        <li class="divider no-margin show_at_front" style="display:none;">
+          <button id="pinterest_share" title="Pin design on Pinterest" ><span id="pinitShareCaption" class="caption"><i class="fa fa-pinterest-p" aria-hidden="true"></i></span> </button>
+        </li>
+        <li class="divider">
+          <button id="save_image" title="Save Design" ><span class="dnbsave"></span> </button>
+        </li>        
+      </ul>
+      <div class="priceTag show_at_front" style="display:none;">
+        <div class="rate" id="price"></div>
+        
+        <div id="priceAjaxLoader" class="ajax-loader"> 
+            <svg width="40px" height="40px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-eclipse" style="background: none;"><path ng-attr-d="{{config.pathCmd}}" ng-attr-fill="{{config.color}}" stroke="none" d="M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50" fill="#ffffff" transform="rotate(354 49.9999 52.4999)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 52.5;360 50 52.5" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></path>  </svg>
+        </div>
+
+        <button id="addtocart_btn" title="Add To Cart" class="dbtn checkoutbtn"> <span class="dnbcart"></span> </button>
+      </div>
+    </section>
+  </header>
+  
+  <!-- Enb Header --> 
+
+  <div id="objectLock" class="dragablePanel" align="center" style="display:none;">
+      <div class="move-object-panel">
+          <div class="mop-heading">Lock / Unlock</div>
+          <div class="lock-unlock-range" align="center"></div>
+      </div>
+  </div>
+  <div id="color_picker"></div>
+      
+  <!-- End Left Navigation --> 
+  
+  <!-- Workarea-Canvas -->
+  
+  <section class="right-canvas">
+      <div class="navigational-header">
+        <div class="zoomnpreview no-display">
+          <button id="preview" class="preview" title="Preview"> <span class="dnbtool-preview"></span> </button>
+          <button id="zoomButton" title="Set Zoom level"> <span class="zoomvalue">40%</span><i class="fa fa-caret-down" aria-hidden="true"></i> </button>
+          <div id="zoomOptions" style="display:none">
+            <input class="inputBoxMedium" id="zoom" size="3" value="100" type="text" style="display:none" />
+            <ul>
+              <li>400%</li>
+              <li>200%</li>
+              <li>100%</li>
+              <li>50%</li>
+              <li>25%</li>
+              <li id="fit_to_canvas" data-val="canvas">Fit to canvas</li>
+              <li id="fit_to_sel" data-val="selection">Fit to selection</li>
+              <li id="fit_to_all" data-val="content">Fit to screen</li>
+            </ul>
+          </div>
+        </div>
+        <div class="toolbar-list button-area">
+          <ul id="quick_toolbar" class="row-flex">
+            <li>
+              <div id="global_picker_con" style="display:none;" title="Change all element colors"></div>
+            </li>
+            <li class="position-relative">
+              <button id="alignPanel" class="toolbar-item disabled" title="Align Panel"><span class="dnbtool-ob_align_right-1"></span></button>
+              <div class="align_icons" style="display:none;">
+                <ul  class="optcols3">
+                  <li class="push_button" id="tool_posleft" title="Align Left"></li>
+                  <li class="push_button" id="tool_poscenter" title="Align Center"></li>
+                  <li class="push_button" id="tool_posright" title="Align Right"></li>
+                  <li class="push_button" id="tool_postop" title="Align Top"></li>
+                  <li class="push_button" id="tool_posmiddle" title="Align Middle"></li>
+                  <li class="push_button" id="tool_posbottom" title="Align Bottom"></li>
+                </ul>
+                <span id="tool_align_relative"> <span id="relativeToLabel">Object relative to</span>
+                <select title="Align relative to ..." id="align_relative_to" autocomplete="off">
+                  <option value="selected" id="selected_objects">Selected objects</option>
+                  <option value="largest" id="largest_object">Largest object</option>
+                  <option value="smallest" id="smallest_object">Smallest object</option>
+                  <option value="page" id="page">Page</option>
+                  <option value="page_cutMargin" id="page_cutMargin">Cut Margin</option>
+                  <option value="page_safeMargin" id="page_safeMargin">Safe Margin</option>
+                </select>
+                </span> 
+                <div id="distribute_icons">
+
+                </div>
+              </div>
+            </li>
+            <li>
+              <button id="tool_group" class="disabled" title="Group"><span class="dnbtool-group"></span></button>
+              <button id="tool_ungroup" title="Ungroup" class="disabled" style="display:none"><span class="dnbtool-ungroup"></span></button>
+            </li>
+            <li>
+              <button id="tool_undo_custom" title="Undo"> <span class="dnbtool-undo"></span> </button>
+            </li>
+            <li>
+              <button id="tool_redo_custom" title="Redo"> <span class="dnbtool-redo"></span> </button>
+            </li>
+            <li style="display:none;">
+              <button id="tool_flipHoriz" title="Flip Horizontal" class="disabled"> <span class="dnbtool-flip-vert"></span> </button>
+            </li>
+            <li style="display:none;">
+              <button id="tool_flipVert" title="Flip Vertical" class="disabled"> <span class="dnbtool-flip-hor"></span> </button>
+            </li>
+            <li>
+              <button id="tool_delete" class="disabled" title="Delete"> <i class="fa fa-times"></i> </button>
+            </li>
+            
+            <!--<li>
+                <button id="tool_clone" title="Duplicate" class="disabled"> <span class="dnbtool-duplicate"></span> </button>
+              </li>-->
+            <li>
+              <button id="tool_cut" title="Cut" class="disabled"><span class="fa fa-cut"></span></button>
+            </li>
+            <li>
+              <button id="tool_copy" title="Copy" class="disabled"> <span class="dnbtool-duplicate"></span> </button>
+            </li>
+            <li>
+              <button id="tool_paste" title="Paste" class="disabled"> <i class="dnbtool-paste"></i></button>
+            </li>
+            <li>
+              <button id="tool_clear" title="Delete All"><span class="dnbdelete"></span></button>
+            </li>
+            <li>
+              <button id="tool_clone_side" title="Duplicate Page" > <span class="dnb-tool-clone"></span> </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="pagination">
+          <div id="pageNav" class="row-flex">
+            <span class="firstPage" style="display:none;"><i class="fa fa-caret-left" aria-hidden="true"></i></span>
+            <span class="prevPage" style="display:none;"><i class="fa fa-angle-left" aria-hidden="true"></i></span> <span class="gotoPage">
+            <input type="text" id="gotoPageTxt" name="gotoPageTxt" maxlength="2" disabled /></span> 
+            <span class="nextPage" style="display:none;"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+            <span class="lastPage" style="display:none;"><i class="fa fa-caret-right" aria-hidden="true"></i></span> </div>
+            <div class="prev" >
+              <i class="fa fa-caret-left"></i>
+            </div>
+            <div class="next" >
+              <i class="fa fa-caret-right"></i>
+            </div>
+        </div>      
+      <div class="product-area"> <!-- SVG Editor -->
+        <form id="manage_side" method="post">
+          <input type="hidden" value="2" id="number_of_pages" name="number_of_pages" autocomplete="off">
+          <input type="hidden" value="1" id="current_page" name="current_page" autocomplete="off">
+          <textarea id="svg_source_textarea" style="display:none;" spellcheck="false"></textarea>
+        </form>
+        <div id="svg_editor">
+          <div class="moveable-arrows" id="scrollArrows" style="display:none;">
+            <div class="movesvg-up"><i class="fa fa-caret-up"></i></div>
+            <div class="movesvg-right"><i class="fa fa-caret-right"></i></div>
+            <div class="movesvg-down"><i class="fa fa-caret-down"></i></div>
+            <div class="movesvg-left"><i class="fa fa-caret-left"></i></div>
+          </div>
+          <div id="rulers" style="display:none"><!-- Ruler will display if showRulers is true in svgEditor.setConfig   -->
+            <div id="ruler_corner"></div>
+            <div id="ruler_x">
+              <div>
+                <canvas height="15"></canvas>
+              </div>
+            </div>
+            <div id="ruler_y">
+              <div>
+                <canvas width="15"></canvas>
+              </div>
+            </div>
+          </div>
+          <div id="workarea">
+            <style id="styleoverrides" type="text/css" media="screen" scoped>
+    </style>
+            <div id="svgcanvas" style="position:relative"> </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Left Navigation -->  
+
+
+<nav class="left-navigation">
+
+
+
+
+<div class="nav-trigger">
+    <div class="row-flex">
+      <button id="productSettingTab"><span class="dnbsettings"></span> <span class="caption" id="productsettingCaption">Settings</span></button>
+      <button id="addtext" style="display:none">   <span class="dnbtext"></span> <span class="caption" id="addTextCaption">Text</span></button>
+      <button id="addart" style="display:none">    <span class="dnb-shape-ii"></span> <span class="caption" id="chooseArtCaption">Art</span></button>      
+      <button id="addtimage" style="display:none"> <span class="dnbimgadd"></span><span class="caption" id="addImageCaption">Photos</span></button>
+      <button id="qrCode" style="display:none">    <i class="fa fa-qrcode" aria-hidden="true" style="position:relative;top:-5px;"></i><span class="caption" id="">Codes</span> </button> 
+      <button id="showMore">   <i class="fa fa-bars" aria-hidden="true" style="position:relative;top:-5px;"></i> <span class="caption" id="">More</span> </button> 
+    </div>
+    <div id="showMoreMenu" style="display:none">
+      <button id="addTemplate" class="show_at_front" style="display:none;"><span class="dnblayout"></span><span class="caption" id="">Templates</span> </button>
+      <button id="addLayout"> <span class="dnbr-ico-layout"></span> <span class="caption" id="addShapesCaption">Layouts</span></button>
+      <!--<button id="layerPanel"><span class="dnblayers"></span><span class="caption" id="">Layer</span> </button>-->
+      <!--<button title="Studio Help" id="help"><span class="dnbhelp"></span><span class="caption" id="">Help</button>-->
+      <!--<button id="addtimage"> <span class="dnbpicture_1"></span> <span class="caption" id="addImageCaption">Upload</span></button>--> 
+      <button id="tab_pages" style="display:none"> <span class="dnb"><span class="fa fa-file-text-o"></span></span> <span class="caption" id="pagesCaption">Pages</span></button> 
+      <button id="addbackground"> <span class="dnbimgadd"></span><span class="caption" id="addImageCaption">BG</span></button>
+    </div>
+  </div>
+  </nav>
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="addart-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> <span class="dnbshape rp-icn"></span>
+          <label class="label" id="addArtCaption">Art</label>
+          <button id="tool_add_art_close"></button>
+        </div>
+        <nav class="left-navigation">
+          <div objecttype="clipart" class="nav-trigger-small">
+              <div class="row-flex">
+                <button id="" panel="clipart_panel_rb"> <span class="caption" id="">Clipart</span></button>             
+                <button id="clipart_shape" panel="draw_shape_rb"> <span class="caption" id="">Shape</span></button>
+              </div>
+          </div>
+        </nav>
+        <div class="range-blocks first-child" id="draw_shape_rb" style="display:none;">
+          <div class="input-area"> 
+            <!--adding shape glyout-->
+            <div id="tools_left" class="tools_panel">
+              <div class="tool_button" id="tool_fhpath" title="Pencil Tool"><span class="dnbshape-brush"></span></div>
+              <div class="tool_button" id="tool_line" title="Line Tool"><span class="dnbshape-line"></span></div>
+              <div class="tool_button flyout_current" id="tools_rect_show" title="Square/Rect Tool">
+                <div class="flyout_arrow_horiz"></div>
+                <span class="dnbshape-rect"></span> </div>
+              <div class="tool_button flyout_current" id="tools_ellipse_show" title="Ellipse/Circle Tool">
+                <div class="flyout_arrow_horiz"></div>
+                <span class="dnbshape-round"></span> </div>
+              <div style="display: none; position:relative; border:1px solid">
+                <div id="tool_rect" title="Rectangle"></div>
+                <div id="tool_square" title="Square"></div>
+                <div id="tool_fhrect" title="Free-Hand Rectangle"></div>
+                <div id="tool_ellipse" title="Ellipse"></div>
+                <div id="tool_circle" title="Circle"></div>
+                <div id="tool_fhellipse" title="Free-Hand Ellipse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="range-blocks first-child" id="clipart_panel_rb" style="display:none;">
+          <!--adding clipart panel-->
+          <div class="display-flex">
+          
+          <div class="field-raw">
+            <select name="clipart" id="clipartopt" class="select-main">
+            </select>
+            <input type="hidden" id="firstclipartcat" name="firstclipartcat" value="<?php echo $firstclipartcatid; ?> " />
+          </div>
+          <div class="flextextbtn" style="padding-left:10px;">
+            <input type="text" name="input_clipart_search" id="input_clipart_search" />
+            <button id="btn_clipart_search" class="dbtn"><span class="dnbsearch"></span></button>
+          </div>
+          </div>
+          <div class="scroll-area-chooseart">
+            <div class="add-art-product">
+              <ul id="clipartcontainer" class="art-list">
+              </ul>
+            </div>
+            <div id="container_panel">
+              <div class="tool_sep"></div>
+              <label id="group_title" title="Group identification label" style="display:none;"> <span>label:</span>
+                <input id="g_title" data-attr="title" size="10" type="text" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="addtimage-panel">
+        <div class="box-outer">
+            
+
+            <button id="tool_add_image_close" class="no-display"></button>
+            <div class="upload-permission no-display">
+                <div class="round">
+                    <input type="checkbox" id="ihavetheright" autocomplete="off">
+                    <label for="ihavetheright"></label>
+                </div>
+                <div class="error_msg" style="display: none;">Please select 'I have the rights'</div>
+                <label id="rightsCaption">I have the rights to use these images.</label>
+                <div class="no-display">
+                    <div class="inst_image" id="inst_image">i</div>
+                </div>
+            </div>
+            <div class="buttons">
+            <div class="social-media-import-section display-flex">
+
+              <button id="upload_img_show" type="button"><span class="dnb-upload"></span><span id="uploadImageCaption" class="uploadImageCaption">Upload</span></button>
+              <button class="import_flickr"><span class="dnb-flickr"></span><span class="uploadImageCaption">Flickr</span></button> 
+              <button class="import_picasa" style="display:none;"><span class="dnb-picasa"></span><span class="uploadImageCaption">Picasa</span></button> 
+              <button class="import_instagram"><span class="dnb-insta"></span><span class="uploadImageCaption">Instagram</span></button>               
+              <button id="dropbox" class="add_dropbox"><i class="fa fa-dropbox" aria-hidden="true"></i><span class="uploadImageCaption">Dropbox</span></button> 
+              <button id="upload_img_show_gallery" class="add_dropbox"><span class="dnbpicture_1"></span><span class="uploadImageCaption">Gallery</span></button>               
+              
+            </div>
+                
+
+            </div>
+            <div id="image_panel">
+                <div class="toolset_image" style="display:none;">
+                    <label>
+                        <span id="iwidthLabel" class="icon_label"></span>
+                        <input id="image_width" class="attr_changer" title="Change image width" size="3" data-attr="width" />
+                    </label>
+                    <label>
+                        <span id="iheightLabel" class="icon_label"></span>
+                        <input id="image_height" class="attr_changer" title="Change image height" size="3" data-attr="height" />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="qrcode-panel">
+      <div class="rp-header-panel"> <span class="fa fa-qrcode rp-icn"></span>
+        <label class="label">Qr Code</label>
+        <button id="tool_pick_color_close"></button>
+      </div>
+      <div class="box-outer">
+        <label class="label"></label>
+        <div class="inst no-display" id="inst_qrcode">i</div>
+        <div style="display:none;" id="inst_qrcode_tooltip" class="tooltip"> To place QR Code on your design, choose the type of information you wish to input. Fill in the information and then click the 'Generate' button. To place it on canvas, simply click on the generated QR Code image.
+          <button onclick="$('#inst_qrcode_tooltip').hide();" class="closebuttonclass">x</button>
+        </div>
+        <div class="range-blocks first-child">
+          <div class="scroll-area">
+            <div class="qrcode-section">
+            <form id="qrcodeform" name="qrcodeform" method="POST" >
+              <ul id="qrcodecontainer" class="qrcodecontainer">
+                  <div class="inputfield">
+                      <label id="qrcodeDataTypeCaption" class="caption-small">Select Data Type</label>
+                      <select id="qrdatatype" name="qrdatatype">
+                          <option id="websiteUrl" selected="selected" value="1">Website URL</option>
+                          <option id="youtubeVideo" value="2">YouTube Video</option>
+                          <option id="plaintext" value="3">Plain Text</option>
+                          <option id="emailAdd" value="4">Email Address</option>
+                          <!--<option value="5">Contatct Details (Vcard)</option>-->
+                          <option id="telephone" value="6">Telephone Number</option>
+                          <option id="emailMsg" value="7">Email Message</option>
+                          <option id="socialMedia" value="8">Social Media</option>
+                          <option id="gmap" value="9">Google Maps Location</option>
+                      </select>
+                  </div>
+                  <div id="qr1">
+                      <div class="inputfield">
+                          <label id="websiteCaption" class="caption-small">Website URL:</label>
+                          <input class="required-entry validate-url" type="url" name="" id="websiteurl"/>
+                      </div>
+                  </div>
+                  <div id="qr2">
+                      <!-- <div class="inputfield">
+                          <label id="videoIdCaption" class="caption-small">Video ID:</label>
+                          <input class="validate-group  validate-number" type="text" name="" id="youtube_video_id"/>
+                      </div> -->
+                      <div class="inputfield">
+                          <label id="videoUrlCaption" class="caption-small">Video URL:</label>
+                          <input class="validate-group validate-url" type="url" name="" id="youtube_video_url"/>
+                      </div>
+                  </div>
+                  <div id="qr3">
+                      <div class="inputfield">
+                          <label id="textCaption" class="caption-small">TEXT:</label>
+                          <textarea class="required-entry" type="text" name="" id="plaintextdata"></textarea>
+                      </div>
+                  </div>
+                  <div id="qr4">
+                      <div class="inputfield">
+                          <label id="emailaddreCaption" class="caption-small">Email:</label>
+                          <input class="required-entry validate-email" type="email" name="mailto:" id="emailaddress4"/>
+                      </div>
+                  </div>
+                  <div id="qr6">
+                      <div class="inputfield">
+                          <label id="telephoneCaption" class="caption-small">Telephone:</label>
+                          <input class="required-entry validate-phoneStrict" pattern="^[0-9?=.*{}!@#$%^&*()_+|:; '<>?/.,-\]\\[]+$" type="tel" name="tel:" id="telephoneno6"/>
+                      </div>
+                  </div>
+                  <div id="qr7">
+                      <div class="inputfield">
+                          <label id="emailaddreCaption" class="caption-small">Email:</label>
+                          <input class="required-entry validate-email" type="email" name="mailto:" id="emailaddress5"/>
+                      </div>
+                      <div class="inputfield">
+                          <label id="subjectCaption" class="caption-small">Subject:</label>
+                          <input class="required-entry" type="text" name="?subject=" id="subject7"/>
+                      </div>
+                      <div class="inputfield">
+                          <label id="bodyCaption" class="caption-small">Body:</label>
+                          <textarea class="required-entry" name="&body=" type="text" id="body7" ></textarea>
+                      </div>
+                  </div>
+                  <div id="qr8">
+                      <div class="inputfield">
+                          <label id="socialMediaCaption" class="caption-small">Social Media:</label>
+                          <select  name="socialmedia8" id="socialmedia8">
+                              <option id="twitterProfileCaption" value="sm1">Twitter Profile</option>
+                              <option id="facebookProfileCaption" value="sm2">Facebook Profile</option>
+                              <option id="myspaceProfileCaption" value="sm3">Myspace Profile</option>
+                              <option id="linkedlinProfileCaption" value="sm4">LinkedIn Profile</option>
+                          </select>
+                      </div>
+                      <div class="inputfield">
+                          <label id="profileCaption" class="caption-small">Profile:</label>
+                          <input class="required-entry" type="text" name="" id="profile8"/>
+                      </div>
+                  </div>
+                  <div id="qr9">
+                      <div class="inputfield">
+                          <label id="gmaplocationCaption" class="caption-small">Google Maps Location:</label>
+                          <input type="text" class="required-entry" name="" id="googlemaplocation9"/>
+                      </div>
+                  </div>
+              </ul>
+              <div class="inputfield">
+                  <label id="rqcodeColorCaption" class="caption-small">Color Code:</label>
+                  <input type="text" name="qrcolorcode" id="qrcolorcode" class="color" value="#000000" />
+                  <div class="color_tool" id="tool_qr_color">
+                      <div class="color_block">
+                          <div id="qr_stroke_bg"></div>
+                          <div id="qr_color" class="color_block" title="Change Qr color"></div>
+                      </div>
+                  </div>
+              </div>
+              <button id="tool_qrCode" type="submit" class="dbtn generalbutton">Generate</button>
+          </form>
+              <ul id="QRcodeImage">
+                <!--data will come from ajax-->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="panel_pages" style="overflow:auto">
+      <div class="rp-header-panel"> <span class="fa fa-file-text-o rp-icn"></span>
+        <label class="label">Pages</label>
+        <div id="addPageDiv" class="photo-opration">
+          <div class="phop-flex display-flex">
+            <div class="flex_1" id="dnbpageadd">
+                <button class='dbtn pagepnlbtn' >
+                    <span class="display-flex"><span class="dnbimgadd"></span><span id="addPageCaption">Add</span></span>
+                </button>
+            </div>
+          </div>
+        </div>
+        <button id="tool_pages_close"></button>
+      </div>
+      <div class="box-outer">
+        <div id="Page_loaded" class="image-placeholder-parent">
+            <div class="listing scroll-area-uploadimage">
+                <div class="tabcntent">
+                    <ul id="thumbnail" style="height:auto;overflow: auto;" class="image-placeholder"></ul>
+                </div>
+            </div>
+        </div>
+      </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="addLayout-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> <span class="dnbr-ico-layout rp-icn"></span>
+          <label class="label" id="layoutTitleCaption">Choose Layout</label>
+          <button id="tool_add_layout_close"></button>
+        </div>
+        <div class="range-blocks first-child">
+          <div class="scroll-area">
+            <div class="addLayout-panel">
+              <ul id="layoutcontainer">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="addTemplate-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> <span class="dnblayout rp-icn"></span>
+          <label class="label">Choose Template</label>
+          <button id="tool_add_template_close"></button>
+        </div>
+        <div class="range-blocks first-child">
+          <div class="scroll-area">
+            <div class="addLayout-panel">
+              <ul id="templatecontainer">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <nav id="shape-panel">
+      <div class="box-outer">
+          <div class="rp-header-panel"> <span class="dnblayout rp-icn"></span>
+          <label class="label">Choose Shape</label>
+          </div>
+          <div class="range-blocks first-child">
+          <div class="scroll-area">
+              <div class="chooseshape-panel">
+              
+              </div>
+          </div>
+          </div>
+          <button class="closeFontList dbtn" type="button">Close</button>
+      </div>
+    </nav>
+
+    <nav id="font-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> <span class="dnblayout rp-icn"></span>
+          <label class="label">Choose Font</label>
+        </div>
+        <div class="range-blocks first-child">
+          <div class="scroll-area">
+            <div class="choosefont-panel">
+              
+            </div>
+          </div>
+        </div>
+        <button class="closeFontList dbtn" type="button">Close</button>
+      </div>
+    </nav>
+    
+
+    
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="addtocart-panel">
+      <div>
+        <div class="rp-header-panel"> <span id="addtocartcaption" class="dnbcart rp-icn"></span>
+          <div class="caption">Add to Cart</div>
+          <button id="tool_add_cart_close"></button>
+        </div>
+        <div class="search">
+          <!-- Added for custom options start -->
+          <div class="range-blocks first-child">
+            <div id="customOptionContainer"></div>
+          </div>
+          <!-- Added for custom options start -->
+          <div class="caption-section gray-section">
+            <div class="caption" id="addNoteCaption">Add Note</div>
+          </div>
+          <div class="range-blocks">
+            <div class="clear">
+              <textarea id="addnote" class="addnote" name="addnote"></textarea>
+            </div>
+            <div class="costing">
+              <div class="errornotinstock" id="errornotinstock"></div>
+              <div class="buttons">
+                <button class="dbtn cobutton btn-primary proceedto prcadcart" style="display:none;" type="button" id="addcart" onclick="insertaddtocartmessage();">Proceed</button>
+                <button class="dbtn cobutton btn-primary proceedto prcadcart" style="display:none;" type="button" id="getquote">Get Quote</button>
+                <button class="dbtn cobutton btn-primary proceedto prcadcart" style="display:none;" type="button" id="sendJob">Submit Request</button>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="addtext-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> <span class="dnbtext rp-icn"></span>
+          <label class="label" id="yourTextCaption">Text</label>
+          <button id="tool_place_text_close"></button>
+        </div>
+        <div id="text_panel" class="text_panel">
+          <div class="range-blocks first-child">
+            <textarea id="text"></textarea>
+            <button id="btnAddText" class="dbtn btnAddTextArea" title="Add Text">Add Text</button>
+            <button id="updateText" class="dbtn btnAddTextArea" title="Add Text">Update</button>
+            <input type="hidden" id="hbtnAddTextArea" name="hbtnAddTextArea" value="Add Text Area" title="Add Text Area" />
+          </div>
+        </div>
+      </div>
+    </nav>
+  <aside class="nav-rightpanel-property" style="display:none;">
+    
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-spmenu-open " id="layer-panel">
+      <div>
+        <div class="rp-header-panel"> <span class="dnblayers rp-icn"></span>
+          <label class="label"  id="manageLayersCaption">Manage Layers</label>
+        </div>
+        <div class="input-area">
+          <div class="scroll-area">
+            <div id="sortableLayerPanel" class="layer-object"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="productSettingPanel">
+      <div class="box-outer">
+        <div class="aproduct-data">
+          <div class="rp-header-panel"> <span class="dnbsettings_1 rp-icn"></span>
+            <label class="label">Settings</label>
+            <button id="tool_choose_prod_close"></button>
+          </div>
+          <!--
+          <div class="caption-section gray-section">
+            <div id="borderCaption" class="caption">BORDER</div>
+          </div>
+          
+         
+          <div class="caption-section gray-section">
+            <div id="pageSettingsCaption" class="caption">page settings</div>
+          </div>
+          
+          <div class="caption-section gray-section">
+            <div id="" class="caption">BACKGROUND</div>
+          </div>
+          -->    
+        </div>
+      </div>
+    </nav>
+    
+    
+    
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="addshape-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> <span class="dnbshape rp-icn"></span>
+          <label class="label" id="shapesTileCaption">Shapes</label>
+          
+        </div>
+        <button id="tool_add_shape_close"></button>
+        <div class="note-background"> </div>
+        <br class="clear" />
+        <br class="clear" />
+      </div>
+    </nav>
+    
+    
+    <!-- common property panel -->
+    <nav class="cbp-spmenu-vertical cbp-spmenu-left" id="edit-panel">
+      <div class="box-outer">
+        <div class="rp-header-panel"> 
+          <span class="dnb-tools rp-icn"> </span>
+          <label id="editTitleCaption" class="label">Edit Panel</label>
+          <button id="tool_edit_close"></button>
+        </div>
+      </div>
+    </nav>
+    <!-- /common property panel --> 
+    <!-- common property -->
+    
+    <nav class="ranger-panel cbp-spmenu-left" id="common-panel">
+      <div class="box-outer">
+        <div id="font_block" class="range-blocks textgrp1">
+          <div class="display-flex">
+            <div class="toolset_fontfamily" id="tool_font_family"><!-- Font family -->
+              <!-- <label id="chooseFontCaption">Font, Color, Style and Alignment</label> -->
+              <div tabindex="1" class="wrapper-dropdown-1" id="dd"> <span id="selectedFont">CHOOSE <strong>FONT</strong></span> </div>
+            </div>
+          </div>
+          <div class="border-box" id="text_size_box">
+            <div class="display-flex">
+              <div class="size-bold-italic">
+                <div>
+                  <div class="tool_button" id="tool_bold" title="Bold Text"><span class="dnb-font-bold"></span></div>
+                </div>
+                <div>
+                  <div class="tool_button" id="tool_italic" title="Italic Text"><span class="dnb-font-italic"></span></div>
+                </div>
+              </div>
+              <div class="text-align">
+                <div>
+                  <div class="tool_button" id="text_align_left" title="Align Left"> <span class="dnbalign-left"></span> </div>
+                </div>
+                <div>
+                  <div class="tool_button" id="text_align_center" title="Align Center"> <span class=" dnbalign_center"></span> </div>
+                </div>
+                <div>
+                  <div class="tool_button" id="text_align_right" title="Align Right"> <span class="dnbalign-right"></span> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="fontsize_block" class="range-blocks textgrp2">
+          <div id="fontsizeDiv" class="fontsizeDiv display-flex">
+            <div class="caption-section row-flex">
+              <div id="fontSizeCaption" class="caption fontSizeCaption">SIZE</div>
+            </div>
+            <div class="font-size">
+              <input name="textsizehidden" id="textsizehidden" type="hidden">
+              <select id="font_size_dropdown"> </select>
+              <input type="text" id="textsizeinput" name="textsizeinput">
+            </div>
+            <div class="vertical-align-text">
+              <div>
+                <div class="tool_button" id="text_align_top" title="Align top"> <span class="dnbalignment-top"></span> </div>
+              </div>
+              <div>
+                <div class="tool_button" id="text_align_middle" title="Align middle"> <span class="dnbalignment-center"></span> </div>
+              </div>
+              <div>
+                <div class="tool_button" id="text_align_bottom" title="Align bottom"> <span class="dnbalignment-bottom"></span> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="all_color_block" class="range-blocks colorwala">
+          <div class="co-tw-dl">
+            <ul>
+              <li id="tool_fill" > <span id="objectColorCaption" class="label">color</span>
+                <div class="color_tool" >
+                  <div class="color_block singleColor">
+                    <div id="fill_bg"></div>
+                    <div id="fill_color" class="color_block" title="Change fill color"></div>
+                  </div>
+                  <div class="multiColorBlock"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="image_quality_block" class="range-blocks image_quality">
+          <div class="caption-section">
+            <div id="inst_image_format" class="inst_image">i</div>
+            <div id="printQualityCaption" class="caption">Print Quality</div>
+          </div>
+          <div class="upload-mathod">
+            <ul class="active">
+              <li id="printQualityPoorCaption" class="not-reco active"><i></i> Poor</li>
+              <li id="printQualityFairCaption" class="fair"><i></i> Fair</li>
+              <li id="printQualityGoodCaption" class="luk-gud"><i></i> Good</li>
+            </ul>
+          </div>
+        </div>
+        <div id="image_effect" class="range-blocks image_effect">
+          <div class="caption-section display-flex">
+            <!--<div id="imageEffectCaption" class="caption">Image Effect</div>-->
+                <div class="flex2" id="imgpncrop">
+                    <button class="dbtn imgpnlbtn" style="margin-bottom:15px"><span class="fa fa-crop"></span><span id="crop_float_button_caption">Crop</span></button>
+                </div>
+            <div class="flex2" id="imgpnedit" ><!--class="pull-left" -->
+                  <button class='dbtn imgpnlbtn'>
+                      <span class="display-flex"><span class="fa fa-edit"></span>
+                      <span id="edit_float_button_caption">Edit</span></span>
+                  </button>
+              </div>
+                <div class="flex2" id="imgpneffect">
+                    <button class="dbtn imgpnlbtn" style="margin-bottom:15px"><span class="dnbmagic"></span><span id="image_effect_float_button_caption">Effect</span></button>
+                </div>
+          </div>
+        </div>
+        <div id="sizeDiv" class="range-blocks no-margin">
+          <div class="caption-section"> 
+            <!--<div id="objectSizeCaption" class="caption">POSITION / SIZE</div>--> 
+          </div>
+          <div id="sizeSlider"></div>
+        </div>
+        <div id="sizeDivPc" style="display:none;" class="range-blocks">
+          <div class="caption-section">
+            <div class="caption">SIZE</div>
+            <!-- <input id="scaleValuePc" class="sliderValue" size="3" value="100" type="text" disabled="disabled"/>--> 
+          </div>
+          <div class="ranger-area">
+            <div id="sizeSliderPc"></div>
+          </div>
+        </div>
+        <div class="range-blocks" id="border_box">
+          <div class="caption-section row-flex">
+            <div id="objectborderCaption" class="caption">Border</div>
+            <div class="psright margin-b-10">
+              <div class="left">
+                <label class="stroke_tool no-padding" >
+                  <select id="stroke_style" title="Change stroke dash style">
+                    <option selected="selected" value="none">&mdash;</option>
+                    <option value="2,2">...</option>
+                    <option value="5,5">- -</option>
+                    <option value="5,2,2,2">- .</option>
+                    <option value="5,2,2,2,2,2">- ..</option>
+                  </select>
+                </label>
+              </div>
+              <div class="color_tool" id="tool_stroke">
+                <div class="color_block">
+                  <div id="stroke_bg"></div>
+                  <div id="stroke_color" class="color_block" title="Change stroke color"></div>
+                </div>
+                <div id="toggle_stroke_tools" title="Show/hide more stroke tools" style="display:none;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="ranger-area">
+            <div id="stroke_slider"></div>
+          </div>
+          <input id="stroke_width" class="sliderValue" size="2" value="5" type="text" data-attr="Stroke Width" disabled="disabled"/>
+        </div>
+        <div id="rotationDiv" class="range-blocks display-flex">
+          <div class="caption-section row-flex">
+            <div id="objectRotateCaption" class="caption">Rotate</div>
+          </div>
+          <div class="ranger-area">
+            <div id="rotationSlider"></div>
+          </div>
+          <input id="rotateAngle" class="sliderValue" size="3" value="100" type="text" disabled="disabled"/>
+        </div>
+        <div id="rotationDivPc" style="display:none;" class="range-blocks">
+          <div class="caption-section row-flex">
+            <div class="caption">ROTATE</div>
+          </div>
+          <div class="ranger-area">
+            <div id="rotationSliderPc"></div>
+          </div>
+          <input id="rotateAnglePc" class="sliderValue" size="3" value="100" type="text" disabled="disabled"/>
+        </div>
+        <div class="range-blocks no-display" id="tool_curve">
+          <div class="caption-section row-flex">
+            <div id="objectCurveCaption" class="caption">Curve</div>
+            <div id="objectCurveReverseCaption" class="caption">REVERSE</div>
+            <input id="curveInvert" class="" size="2" value="0" type="checkbox" />
+          </div>
+          <div class="ranger-area">
+            <div id="curve_slider"></div>
+          </div>
+          <input id="curveAngle" class="sliderValue" size="2" value="0" type="text" disabled="disabled"/>
+        </div>
+        <div id="textShapeDiv" class="range-blocks" style="overflow:none;">
+          <div class="caption-section row-flex">
+            <div class="caption" id="objectTextShapeCaption">Shapes</div>
+            <div class="curve-division">
+              <div class="curve-property"></div>
+              <div id="textShapeDD" class="wrapper-dropdown-2" style="clear: left;position:relative;width: 100%;float:left; height: 34px;"> <span id="textShapeSelected"><img src="<?php echo $jspath.'images/shape-none.jpg'; ?> " /></span> </div>
+            </div>
+          </div>
+          <div class="ranger-area">
+            <div id="textShapeSlider"></div>
+          </div>
+          <input type="text" disabled="disabled" value="100" size="3" class="sliderValue" id="shapeValue" autocomplete="off">
+        </div>
+        <div id="lineSpaceDiv" class="range-blocks display-flex">
+          <div class="caption-section row-flex">
+            <div id="objectLineSpaceCaptioon" class="caption">Line Height</div>
+          </div>
+          <div class="ranger-area">
+            <div id="lineSpaceSlider"></div>
+          </div>
+          <input id="lineHeight" class="sliderValue" size="3" value="100" type="text" disabled="disabled"/>
+        </div>
+        <div id="charSpaceDiv" class="range-blocks display-flex">
+            <div class="caption-section row-flex">
+                <div id="objectCharSpaceCaptioon" class="caption">Char Space</div>
+            </div>
+            <div class="ranger-area">
+              <div id="charSpaceSlider"></div>
+            </div>
+            <input id="charSpace" class="sliderValue" size="3" value="0" type="text" disabled="disabled"/>
+        </div>
+        <div class="range-blocks display-flex no-display" id="tool_Move">
+          <div class="caption-section row-flex">
+            <div id="objectMoveCaption" class="caption">Move</div>
+          </div>
+          <div class="border-box opacity-ranger">
+            <div class="size-global-area">
+              <div class="joystic-button">
+                <div class="toward-up">
+                  <button id="upMove"><span class="dnbmv-top"> </span></button>
+                </div>
+                <div class="toward-down">
+                  <button id="downMove"><span class="dnbmv-bottom"> </span></button>
+                </div>
+                <div class="toward-left">
+                  <button id="leftMove"><span class="dnbmv-left"> </span></button>
+                </div>
+                <div class="toward-right">
+                  <button id="rightMove"><span class="dnbmv-right"> </span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="VDPProp" class="range-blocks VDPProp" style="display:none;">
+          <div class="caption-section">
+            <div class="caption">VDP</div>
+          </div>
+          <div class="content">
+            <div class="status">status:</div>
+          </div>
+        </div>
+
+        <div id="gridruler_panel" class="showhidegridnruler range-blocks">
+          <div class="row-flex">
+            <div class="block-grid">
+              <label class="sgrid_icon"> <span class="dnb-grid"></span> </label>
+              <div class="onoffswitch" id="grid-switch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="grid_switch">
+                <label class="onoffswitch-label" for="grid_switch">
+                <div class="onoffswitch-inner"></div>
+                <div class="onoffswitch-switch"></div>
+                </label>
+              </div>
+            </div>
+            <div class="block-ruler">
+              <label class="sgrid_icon"> <span class="dnbruler"></span> </label>
+              <div class="onoffswitch" id="ruler-switchs">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="show_rulers" >
+                <label class="onoffswitch-label" for="show_rulers">
+                <div class="onoffswitch-inner"></div>
+                <div class="onoffswitch-switch"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="border_panel" class="range-blocks">
+          <div class="caption-section row-flex margin-b-5">
+            <div id="sizeCaption" class="caption">Size</div>
+            <span class="unitSpan inch"> <?php echo $baseUnit; ?> </span>
+            <div class="psright margin-b-10">
+              <div class="left">
+                <label class="stroke_tool no-padding no-margin">
+                  <select id="border_stroke_style" title="Change border dash style" onchange="updateBorder();">
+                    <option selected="selected" value="none">&mdash;</option>
+                    <option value="2,2">...</option>
+                    <option value="5,5">- -</option>
+                    <option value="5,2,2,2">- .</option>
+                    <option value="5,2,2,2,2,2">- ..</option>
+                  </select>
+                </label>
+              </div>
+              <div class="color_tool" id="tool_border_color">
+                <div class="color_block">
+                  <div id="border_stroke_bg"></div>
+                  <div id="border_color" class="color_block" title="Change Border color"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ranger-area">
+            <div id="borderWidthSlider"></div>
+          </div>
+          <input id="borderWidthValueLabel" class="sliderValue" size="2" type="text" data-attr="Border Width" disabled="disabled" />
+          <div class="range-blockse display-flex margin-t-5">
+            <div class="caption-section row-flex">
+              <div id="marginCaption" class="caption">Margin</div>
+              <span class="unitSpan inch"> <?php echo $baseUnit; ?> </span> </div>
+              <div class="ranger-area">
+                <div id="borderMarginSlider"></div>
+              </div>
+              <input id="borderMarginValueLabel" class="sliderValue" size="3" value="100" type="text" disabled="disabled" />
+          </div>
+        </div>
+
+        <div id="settings_panel" class="range-blocks">
+          <div id="prodOptions" class="caption-section">
+            <div class="customOptionDiv"> 
+              <!--<form name="customOptionFormProdSettings" id="customOptionFormProdSettings" name="customOptionForm" action="" method="POST">-->
+              <form name="customOptionFormProdSettings" id="customOptionFormProdSettings" action="" method="POST">
+                <div id="customOptioonConatinerProdSettings"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="background_panel" class="range-blocks bg-height">
+          <div class="bgcolor-tab display-flex">
+            <div class="display-flex" style="padding-right: 20px;">
+                <div class="display-flex clrnbg-section">
+                    
+                    <div id="colorCaption" class="caption">COLOR</div>
+                    <span class="dnbcolor"></span>
+                    <div class="left">
+                        <div class="color_tool" id="tool_bgcolor_color">
+                            <div class="color_block">
+                                <div id="bgcolor_stroke_bg"></div>
+                                <div id="bgcolor_color" class="color_block" title="Change Background color"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="display-flex">                
+                <div id="imageCaption" class="caption">IMAGE</div>
+                <span class="dnbpicture_1" id="bgImageBtn"></span>
+                <button id="removeImageBtn" name="bgImageBtn" value="Bg" title="Remove Background"><span class="dnbdelete"></span></button>
+            </div>
+          </div>
+        </div>   
+
+      </div>
+    </nav>
+    
+  </aside>
+
+<div id="property_icons" style="display:none;">
+      <nav class="left-navigation">
+        <div objecttype="settings" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="s_gridruler" panel="gridruler_panel"> <span class="caption" id="">Grid/Ruler</span></button>
+              <button id="s_border" panel="border_panel"> <span class="caption" id="">Border</span></button>
+              <button id="s_settings" panel="settings_panel"> <span class="caption" id="">Settings</span></button>
+              <!-- <button id="s_background" panel="background_panel" class="active"> <span class="caption" id="">Background</span></button> -->
+            </div>
+        </div>        
+        <div objecttype="text" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="m_text" panel="text_panel"> <span class="caption" id="">Edit</span></button>
+              <button id="m_fonts" panel="font_block,all_color_block"> <span class="caption" id="">fonts</span></button>
+              <button id="m_fontsize" panel="fontsize_block"> <span class="caption" id="">font size</span></button>
+              <button id="m_border" panel="border_box"> <span class="caption" id="">Border</span></button>
+              <button id="m_rotate" panel="rotationDiv" class="active"> <span class="caption" id="">Rotate</span></button>
+              <button id="m_shape" panel="textShapeDiv"> <span class="caption" id="">Shape</span></button>
+              <button id="m_linespace" panel="lineSpaceDiv,charSpaceDiv"> <span class="caption" id="">Space</span></button>
+            </div>
+        </div>        
+        <div objecttype="textarea" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="textArea_text" panel="text_panel"> <span class="caption" id="">Edit</span></button>
+              <button id="textArea_fonts" panel="font_block,all_color_block"> <span class="caption" id="">fonts</span></button>
+              <button id="textArea_fontsize" panel="fontsize_block,sizeDiv"> <span class="caption" id="">font size</span></button>
+              <button id="textArea_border" panel="border_box"> <span class="caption" id="">Border</span></button>
+              <button id="textArea_rotate" panel="rotationDiv" class="active"> <span class="caption" id="">Rotate</span></button>
+              <button id="textArea_linespace" panel="lineSpaceDiv,charSpaceDiv"> <span class="caption" id="">Space</span></button>
+            </div>
+        </div>        
+        <div objecttype="advance" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="multistyle_text" panel=""> <span class="caption" id="">Edit</span></button>
+              <button id="multistyle_border" panel="border_box"> <span class="caption" id="">Border</span></button>
+              <button id="multistyle_rotate" panel="rotationDiv" class="active"> <span class="caption" id="">Rotate</span></button>
+            </div>
+        </div>        
+        <div objecttype="shape" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="shape_color" panel="all_color_block"> <span class="caption" id="">color</span></button>
+              <button id="shape_border" panel="border_box"> <span class="caption" id="">Border</span></button>
+              <button id="shape_rotate" panel="rotationDiv" class="active"> <span class="caption" id="">Rotate</span></button>
+            </div>
+        </div>        
+        <div objecttype="image" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="image_quality" panel="image_quality_block"> <span class="caption" id="">Quality</span></button>
+              <button id="image_effects" panel="image_effect"> <span class="caption" id="">Effects</span></button>
+              <button id="image_rotate" panel="rotationDiv" class="active"> <span class="caption" id="">Rotate</span></button>
+            </div>
+        </div>        
+        <div objecttype="photobox" class="nav-trigger-small">
+            <div class="row-flex">
+              <button id="image_quality" panel="image_quality_block"> <span class="caption" id="">Quality</span></button>
+              <button id="image_effects" panel="image_effect"> <span class="caption" id="">Effects</span></button>
+              <button id="image_rotate" panel="rotationDiv" class="active"> <span class="caption" id="">Rotate</span></button>
+              <button id="change_image" panel="" class="active"> <span class="caption" id="">Change</span></button>
+            </div>
+        </div>        
+      </nav>
+    </div>
+  
+  <!-- End Workarea-Canvas --> 
+  
+</div>
+<div class="wraper_dt"><!-- Control Panel & Canvas Area-->
+  <div>
+    <div class="main_dt">
+      <div class="align_heading_div"> </div>
+      <section id="white"> </section>
+    </div>
+  </div>
+  <!-- Slider Panel --> 
+  
+</div>
+
+<div id="use_panel" style="display:none">
+  <div class="push_button" id="tool_unlink_use" title="Break link to reference element (make unique)"></div>
+</div>
+
+  <div id="dialog_box">
+    <div class="global_overlay"></div>
+    <div id="dialog_container" class="global_popup_box dialog_container">
+        <div class="dialog_content">
+          <div class="save-icon"><i class="fa fa-hand-paper-o"></i></div>
+          <div id="dialog_content"  align="center"></div>
+        </div>
+      <div id="dialog_buttons" class="dialog_buttons" align="center"></div>
+    </div>
+  </div>
+
+  <nav id="bgImage_window">
+      <div id="bgImage_window_container" class="box-outer">
+        <div class="rp-header-panel"> <span class="dnblayout rp-icn"></span>
+          <label class="label">Background Image</label>
+          <button id="tool_bg_close"></button>
+        </div>
+        <div class="range-blocks first-child">
+          <div class="scroll-area">
+              <ul id="cmenu_background" class="contextMenu">
+                <li id="repeatEach">Repeat on each page</li>
+                <li id="onlyThis">Use only for this page</li>
+              </ul>
+              <div class="save-design-table">
+                <div id="bgImage_category"></div>
+                <div class="bgImage_container">
+                  <div class="bgImage_holder"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+<!--
+  <div id="bgImage_window">
+      <div id="bgImage_window_container" class="bgImage_window_container global_popup_box">
+        <div class="toolbar_button">
+          <button onclick="closeMe(this);" class="close-window-positoin"></button>
+        </div>
+        <div class="popup-indent">
+              <ul id="cmenu_background" class="contextMenu">
+                <li id="repeatEach">Repeat on each side</li>
+                <li id="onlyThis">Use only for this side</li>
+              </ul>
+
+          <p id="backgroundImageCaption" class="new-heading pop-heading-line">Background Image</p>
+          <div class="save-design-table">
+            <div>
+              <div id="bgImage_category"></div>
+              <div class="bgImage_holder"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+-->
+<div id="svg_docprops" style="display:none;">
+  <div class="global_overlay">&nbsp;</div>
+  <div id="svg_docprops_container" class="global_popup_box svg_docprops_container">
+    <div id="tool_docprops_back">
+      <button id="tool_docprops_cancel" class="close-window-positoin"></button>
+    </div>
+    <div class="dialog_content">
+        <div class="save-icon"> <i class="fa fa-info"></i> </div>
+        <p id="detailInfoCaption">Detail Information</p>
+    </div>
+    <div class="proimage">
+      <div align="center" style="margin:auto; overflow:hidden; width:260px;">
+        <ul class="colorpalet">
+          <?php echo $pickcolor_multi; ?>
+        </ul>
+      </div>
+    </div>
+    <textarea style="display:none;" name="addnote" id="tempTextArea"></textarea>
+    <div class="prodescription">
+      <p class="cotxt"><strong id="productNameCaption">Name :</strong> <span><?php if(isset($productName)) { echo $productName; } ?></span></p>
+      <p class="cotxt"><strong id="productShortDesc">Short Description :</strong><span  id="productShortDescSpan" ><?php if(isset($productShortDescription)) { echo $productShortDescription; } ?></span></p>
+      <p class="cotxt"><strong id="productDesc">Long Description :</strong><span  id="productDescSpan"><?php if(isset($productDescription)) { echo $productDescription; } ?></span></p>
+    </div>
+  </div>
+</div>
+<div id="add_page_window" style="display: none;">
+    <div class="global_overlay"></div>
+    <div class="global_popup_box svg_save_design_window" style="height:100px">
+        <div class="toolbar_button">
+            <button onclick="closeMe(this);" id="closeAddPage" class="close-window-positoin" style="width: 15px;top: -20px;"></button>
+        </div>
+
+        <div class="dialog_content">
+            <div id="addPageInfo" align="center"> <p>Where do you want to add the blank page?</p></div>
+        </div>
+        <div align="center">
+          <div class="buttons">
+              <button class="dbtn addPage" id="currentPage">Current Page</button>
+              <button class="dbtn addPage" id="endPage">At the end</button>
+          </div>
+        </div>
+    </div>
+</div>
+<div id="svg_beforeaddtocart" style="display:none;">
+        <div class="global_overlay"></div>
+        <div class="global_popup_box dialog_addtocart">
+            <div class="toolbar_button">
+                <button onClick="closeMe(this);" class="close-window-positoin"></button>
+            </div>
+            <div class="dialog_content">
+                <div class="save-icon">
+                    <i class="fa fa-cart-plus"></i>
+                </div>
+                <p id="addToCartCaption">Add to Cart</p>
+
+            </div>
+            <div class="dialog_buttons" align="center">
+                <div class="search">
+                    <div class="message" id="addtocartmessage"></div>
+                    <div class="message">
+                      <input type="checkbox" id="ihavereview">
+                      <label for="ihavereview">I have reviewed and confirm artwork details with price.</label>
+                    </div>
+                    <div class="proceedbtn addtocart-popup-footer">
+                      <div class="total-price-block"></div>
+                      <button class="btn-primary dbtn" type="button" id="addtocartPreview" ><span id="reviewBtnText">Review Artwork</span></button>  
+                      <button class="cobutton proceedto btn-primary dbtn disabled" type="button" id="cartProceed" onclick="jQuery('#svg_beforeaddtocart').hide();addtocart();"><span id="cartProceedSpan">Proceed</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="svg_image_upload" style="display:none;">
+  <div class="global_overlay"></div>
+  <div class="svg_image_upload_container global_popup_box"  style="width:90%; height:406px;">
+   
+        <div class="rp-header-panel no-margin"> <span class="dnbimgadd rp-icn"></span>
+            <label id="addImagePopupcaption" class="label">ADD IMAGE</label>
+            <button onclick="closeMe(this);" class="close-window-positoin"></button>
+        </div>  
+    
+    
+    <div id="uploader">
+      <div id="filelist" class="panel">No runtime found.</div>
+      <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+    </div>
+  </div>
+</div>
+
+
+<div id="svg_image_uploaded" style="display:none;">
+  <div class="global_overlay"></div>
+  <div class="svg_image_upload_container global_popup_box"  style="width:90%; height:406px;">
+   
+        <div class="rp-header-panel"> <span class="dnbimgadd rp-icn"></span>
+            <label id="" class="label">IMAGE</label>
+            <button onclick="closeMe(this);" class="close-window-positoin"></button>
+        </div>  
+        <div class="inside-caution"> <span class="dnb-upload"></span> <span id="addImageInstruction" class="tag">Please click on <i>add</i> button to add photos.</span> </div>
+        <div class="inside-caution-image"> <span class="dnb-upload"></span> <span id="addImageInstruction" class="tag">Please click on <i>add</i> button to add photos.</span> </div>
+              <div class="flex_1" id="show_album" >
+                  <button class='dbtn imgpnlbtn w-100'>
+                      <span class="display-flex"><span class="dnbimgadd"></span><span id="albumCaption">My Albums</span></span>
+                  </button>
+              </div>
+              <div id="images_loaded" class="image-placeholder-parent" style="display:none;">
+                <div class="label" id="albumName"></div>
+                <div class="listing scroll-area-uploadimage">
+                    <div class="tabcntent">
+                        <ul id="album_con" class="image-placeholder"></ul>
+                    </div>
+                </div>
+                <div class="listing scroll-area-uploadimage" style="display:none;">
+                    <div class="tabcntent">
+                        <ul id="flickerresult" class="image-placeholder"></ul>
+                    </div>
+                </div>
+                <div class="horLine"></div>
+                <div class="pagination">
+                    <div id="pageNav_gallery" class="row-flex"> 
+                        <span class="prevPage"><i class="fa fa-angle-left" aria-hidden="true"></i></span> 
+                        <input type="text" class="gotoPage" /> 
+                        <span class="nextPage"><i class="fa fa-angle-right" aria-hidden="true"></i></span> 
+                    </div>
+                </div> 
+        </div>   
+  </div>
+</div>
+
+
+  <div id="duplicate_side_window" style="display:none;">
+    <div class="global_overlay"></div>
+    <div class="global_popup_box duplicate_side_window" >
+          <div class="toolbar_button" >
+            <button onclick="closeMe(this);" class="close-window-positoin"></button>
+          </div>
+      
+          <div class="dialog_content">
+            <div class="save-icon"><i class="fa fa-files-o" aria-hidden="true"></i></div>
+            <div id="duplicateSideCaption" align="center">Duplicate Current Page To</div>
+          </div>
+
+      <div>
+        <div id="sideCloneOptions"> 
+          <!--content goes here--> 
+        </div>
+      </div>
+    </div>
+  </div>
+<div id="imageEffect_window" style="display:none;">  
+  <div class="global_popup_box">
+
+      <div class="buttonHolder"></div>
+
+      <div id="ie_preview"></div>
+      <div class="filters-button">
+          <div class="image-filter-tab">
+          <div id="ie_edit" class="photo_filters_option">
+                <div class="caption margin-b-10">Remove White</div>
+                <div class="range-blocks margin-b-10">
+                  <select autocomplete="off" id="remove_white_options">
+                      <option value="">None</option>
+                      <option selected="selected" value="all">All</option>
+                      <option value="edges">Edges</option>
+                  </select>
+                </div>
+                <button id="remove_white_btn" class="dbtn btn-primary">Update</button>
+              </div>
+              <div id="ie_shapes" class="photo_filters_option"></div>
+              <div id="ie_filters" class="photo_filters_option" style="display:none;padding-top: 10px;padding-bottom: 10px;"></div>
+              <div id="ie_colorChanger" class="photo_filters_option" style="display:none;">
+                  <div class="colorCon"> </div>
+              </div>
+          </div>
+      </div>
+      
+      <div class="tabCon">
+          <div class="btn-group btn-group-justified">
+            <a href="#" id="tabEdit" class="dbtn">Edit</a>
+            <a href="#" id="tabShapes" class="dbtn">Mask</a>
+            <a href="#" id="tabFilters" class="dbtn">Effects</a>
+            <a href="#" id="tabColors" class="dbtn">Custom Effects</a>
+          </div>
+      </div>
+  </div>
+</div>
+<div id="pickDesignColor_window" style="display:none;">
+  <div class="global_overlay" style="z-index:21;"></div>
+  <div class="global_popup_box pickDesignColor_window">
+    <div class="toolbar_button" >
+      <button onClick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <div class="popup-indent">
+    <p class="new-heading pop-heading-line" id="pickDesignColorCaption">Pick Color From Design</p>
+    <div>
+      <div style="text-align:center;" class="mob-canvas-area">
+        <canvas id="pickDesignColorCanvas" width="90%" height="90%"></canvas>
+      </div>
+      <div class="pickDesignColorContainer">
+        <div><span id="colorUnderCursor">Color Under Cursor:</span><span class="colorSwatchMouseMove"></span></div>
+        <div><span id="selectedColor">Selected Color:</span><span class="colorSwatch"></span></div>
+        <div>
+          <input id="pickDesignColorButton" type="button" class="dbtn" value="Pick Color"/>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div id="image_quality_window" style="display:none;">
+    <div class="global_overlay"></div>
+    <div class="global_popup_box image_quality_window">
+        <div class="toolbar_button">
+            <button onclick="closeMe(this);" class="close-window-positoin"></button>
+        </div>        
+
+        <div class="dialog_content">
+          <div class="save-icon"><i class="fa fa-picture-o"></i></div>
+          <div align="center" id="imageQualityInfoCaption">About Your Image Print Quality</div>
+        </div>
+
+        <p class="new-heading pop-heading-line" </p>
+            <div class="window_content">
+                <div id="imageQualityInfoContent">
+                    <!--content goes here-->
+                    The image quality indicator lets you know if the image you have loaded has the right resolution for printing. If your image
+                    quality is poor we recommend that you upload a new image with higher resolution. Our graphics team checks
+                    every image submitted for resolution and quality requirements. </div>
+            </div>
+    </div>
+</div>
+<div id="upload_info_hd_window" style="display:none;">
+  <div class="global_overlay"></div>
+  <div class="global_popup_box" style="width: 550px;height: 435px;">
+    <div class="toolbar_button">
+      <button class="close-window-positoin" onclick="closeMe(this);"></button>
+    </div>
+    <div class="save-icon"> <i class="fa fa-info"></i> </div>
+    <p class="new-heading pop-heading-line" id="imageGalleryPopupInfoCaption">Shows images uploaded by user</p>
+    <div class="window_content">
+      <div id="imageGalleryPopupInfoContent"> 
+        <!--content goes here--> 
+        <B>For anonymous users:</B> The list is maintained for current session of design studio only.<br />
+        <br />
+        <B>For registered users after login:</B> It maintains the list of all images uploaded by user in several logged-in sessions. User can also attach a high resolution vector source file in allowed formats CDR/PSD/AI/PDF/EPS along with the raster image by clicking on “HD” button. You can see a right symbol with “Upload image” button to indicate images who already have the high resolution image uploaded, which can be further replaced is needed. The high resolution source file is sent to the admin once an order is placed for reference.<br />
+        <br />
+        PLEASE LOG-IN TO MAINTAIN YOUR IMAGE GALLERY AND ATTACH HIGH RESOLUTION SOURCE FILES WITH UPLOADED IMAGES. </div>
+    </div>
+  </div>
+</div>
+<div id="upload_info_window" style="display:none;">
+  <div class="global_overlay"></div>
+  <div class="global_popup_box" style="width:520px; height:335px;">
+    <div class="image-upload-image" align="left"></div>
+    <div class="toolbar_button" >
+      <button onClick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <p class="new-heading pop-heading-line a-left" id="uploadImageInfoPopupCaption">Upload Info</p>
+    <div class="window_content">
+      <div> 
+        <!--content goes here-->
+        <div class="buttons">
+          <div class="image-upload-section" align="left">
+            <div class="image-upload-block">
+              <div id="supportedFormatCaption"> <b class="image-instruction-heading">Supported formats</b> 1) jpeg 2) jpg 3) png </div>
+            </div>
+            <div class="image-upload-block">
+              <div id="optimalResolutionCaption"> <b class="image-instruction-heading">Optimal resolution</b> 1500 x 1500 Pixel </div>
+            </div>
+            <div class="image-upload-block">
+              <div id="recommendedSizeCaption"> <b class="image-instruction-heading">Recommended size</b> Less than 5 mb </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div id="svg_image_window" style="display:none;">
+    <div id="image_window_container_overlay" class="global_overlay"></div>
+    <div id="image_window_container" class="global_popup_box image_window_container" style="">
+          <div>
+            <button id="tool_image_window_cancel" class="close-window-positoin"></button>
+          </div>
+    <div class="display-flex" style="height:100%">      
+      <div class="uploadimagebg" > 
+        <div class="uploadimaghd">upload image</div>        
+      </div>
+      <div class="uploadimagesection"> 
+      <div class="box-outer">                    
+          <div class="upload-permission" >
+          <div class="round">
+            <input type="checkbox" id="ihavetheright">
+            <label for="ihavetheright"></label>
+          </div>
+          <div class="error_msg" style="display: none;">Please select 'I have the rights'</div>
+          <label id="rightsCaption">I have the rights to use these images.</label>            
+            <div class="no-display"><div class="inst_image" id="inst_image">i</div></div>
+          </div>
+          <div class="buttons"> 
+            
+            <div class="social-media-import-section">
+
+              <button id="upload_img_show" type="button" class="disabled"><span class="dnb-upload"></span><span id="uploadImageCaption" class="uploadImageCaption">Upload</span></button>
+              <button class="import_flickr"><span class="dnb-flickr"></span><span class="uploadImageCaption">Flickr</span></button> 
+              <button class="import_picasa" style="display:none;"><span class="dnb-picasa"></span><span class="uploadImageCaption">Picasa</span></button> 
+              <button class="import_instagram"><span class="dnb-insta"></span><span class="uploadImageCaption">Instagram</span></button>               
+              <button id="dropbox" class="add_dropbox"><i class="fa fa-dropbox" aria-hidden="true"></i><span class="uploadImageCaption">Dropbox</span></a> 
+              
+            </div>
+           
+          </div>
+          <div id="image_panel">
+            <div class="toolset_image" style="display:none;">
+              <label><span id="iwidthLabel" class="icon_label"></span>
+                <input id="image_width" class="attr_changer" title="Change image width" size="3" data-attr="width"/>
+              </label>
+              <label><span id="iheightLabel" class="icon_label"></span>
+                <input id="image_height" class="attr_changer" title="Change image height" size="3" data-attr="height"/>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    </div>
+</div>-->
+
+
+
+<div id="svg_login_window" style="display:none;">
+<div id="svg_login_global_overlay" class="global_overlay"></div>
+<div id="svg_login_window_container" class="global_popup_box" style="width:80%;height:460px;">
+    <div>
+      <button onclick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <div class="login-table">
+        <div class="empty-portion no-display">
+          <div class="padding">
+              <label id="loginCaption" class="table-hd-cap">Log <br>In</label>
+          </div>                       
+        </div>
+        <div class="form-portion">        
+            <div id="error_msg"></div>
+            <div class="login">                
+            <form>
+                <fieldset class="padding">
+                    <div class="div-table">
+                        <div class="div-table-row">                                
+                            <div class="div-table-cell">
+                                <input type="text" name="email_id" id="email_id" autocomplete="on" placeholder="EMAIL ADDRESS" />
+                            </div>
+                        </div>
+                        <div class="div-table-row">                                
+                            <div class="div-table-cell">
+                                <input type="password" name="password" id="password" placeholder="PASSWORD" />
+                            </div>
+                        </div>
+                        <?php
+                          if($this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaPublickey() != "" && $this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaFrontendEnable() == 1){
+                            if($this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaFrontendLogin()){
+                        ?>
+                          <div class="div-table-row login">
+                            <div class="g-recaptcha" data-sitekey="<?php echo $this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaPublickey(); ?>"></div>
+                          </div>
+                        <?php
+                            }
+                          }
+                        ?>
+                        <div class="div-table-row">
+                            <div class="div-table-cell">&nbsp;</div>
+                            <div class="div-table-cell">
+                                <div class="proceedbtn">
+                                    <input type="submit" class="cobutton login-button dbtn btn-primary" id="btn_login" name="btn_login" value="Login" />
+                                    <div class="no-display"><input type="button" class="cobutton login-button dbtn" id="btn_cancel" name="btn_cancel" value="Cancel" /></div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="display-flex login-forget-password"> </br></br>
+                            <a href="#" id="createaccount">Create an account ?</a>          
+                            <a id="forgetPasswordCaption" class="a-right" href="<?php echo $block->getUrl('customer/account/forgotpassword/'); ?>" target="_blank">Forget Password?</a>                        
+                          </div>                        
+                    </div>
+                </fieldset>
+            </form>
+            </div>
+          
+            <div class="register" style="display:none;">
+                <form>
+                <fieldset class="padding">
+                        <div class="div-table">
+                            <div class="div-table-row">                                
+                                <div class="div-table-cell">
+                                    <input type="text" name="first_name" id="first_name" autocomplete="on" placeholder="First Name" />
+                                </div>
+                            </div>
+                            <div class="div-table-row">                                
+                                <div class="div-table-cell">
+                                    <input type="text" name="last_name" id="last_name" autocomplete="on" placeholder="Last Name" />
+                                </div>
+                            </div>
+                            <div class="div-table-row">                                
+                                <div class="div-table-cell">
+                                    <input type="text" name="reg_email_id" id="reg_email_id" autocomplete="on" placeholder="E-mail Address" />
+                                </div>
+                            </div>
+                            <div class="div-table-row">
+                               
+                                <div class="div-table-cell">
+                                    <input type="password" name="reg_password" id="reg_password" placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="div-table-row">                                
+                                <div class="div-table-cell">
+                                    <input type="password" name="conf_password" id="conf_password" placeholder="Confirm Password" />
+                                </div>
+                            </div>
+                            <?php
+                              if($this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaPublickey() != "" && $this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaFrontendEnable() == 1){
+                                if($this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaFrontendRegistration()){
+                            ?>
+                              <div class="div-table-row registration">
+                                <div class="g-recaptcha" data-sitekey="<?php echo $this->helper('Designnbuy\Base\Helper\Data')->getGcaptchaPublickey(); ?>"></div>
+                              </div>
+                            <?php
+                                }
+                              }
+                            ?>
+                            <div class="div-table-row">
+                                <div class="div-table-cell">&nbsp;</div>
+                                <div class="div-table-cell">
+                                    <div class="proceedbtn">
+                                        <input type="submit" id="btn_submit" name="btn_submit" value="Submit" class="login-button dbtn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="display-flex login-forget-password"> 
+                              <a href="#" id="loginaccount">Login</a>                                             
+                            </div> 
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div id="svg_save_design_window">
+    <div class="global_overlay"></div>
+    <div class="global_popup_box svg_save_design_window">
+        <div class="toolbar_button">
+            <button onclick="closeMe(this);" class="close-window-positoin"></button>
+        </div>
+
+        <div class="dialog_content">
+            <div class="save-icon"> <i class="fa fa-heart-o"></i> </div>
+            <div id="saveDesignCaption" align="center"> <p>Save Your Design</p></div>
+
+        </div>
+        <div class="save-design-table" align="center">
+            <div class="save-design">
+                <form>
+                    <fieldset>
+                        <div class="div-table">
+                            <div class="div-table-row">
+                                <div class="div-table-cell">
+                                    <label id="designNameCaption">Design Name</label>
+                                </div>
+                                <div class="div-table-cell">
+                                    <input type="text" name="design_name" id="design_name" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-table-row">
+                            <div class="div-table-cell">
+                                <label style="color:#fff;width:118px;">&nbsp; </label>
+                            </div>
+                            <div class="div-table-cell">
+                                <div class="proceedbtn">
+                                    <button class="dbtn" name="btn_save_design" type="submit" id="btn_save_design">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="facebook_window">
+  <div id="facebook_global_overlay"></div>
+  <div id="facebook_window_container" class="">
+    <div class="toolbar_button">
+      <button onclick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <p id="facebookUploadCaption" class="headingtwo">Upload your facebook photos</p>
+    <div class="save-design-table">
+      <select id="facebook_select">
+      </select>
+      <div class="fb_holder"></div>
+    </div>
+  </div>
+</div>
+<div id="flickr_window">
+  <div class="global_overlay"></div>
+  <div id="flickr_window_container" class="global_popup_box flickr_window_container">
+    <div class="toolbar_button">
+      <button onclick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <div class="popup-indent">
+      <p id="flickrUploadCaption" class="new-heading pop-heading-line">Upload your flickr photos</p>
+      <div class="save-design-table">
+      <div class="global-inputs">      
+        <input type="text" size="25" id="flicker_import" autocomplete="on">
+        <input type="button" value="GO!" class="enter" id="flicker_go">
+      </div>
+        <div id="flickr_pager"></div>
+        <div class="flickr_holder"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="picasa_window">
+  <div class="global_overlay"></div>
+  <div id="picasa_window_container" class="global_popup_box picasa_window_container">
+    <div class="toolbar_button">
+      <button onclick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <div class="popup-indent">
+      <p id="picasaUploadCaption" class="new-heading pop-heading-line">Upload your picasa photos</p>
+      <div class="save-design-table">
+      <div class="global-inputs">
+        <input type="text" size="25" id="picasa_import" autocomplete="on">
+        <input type="button" value="GO!" class="enter" id="picasa_go">
+      </div> 
+        <div class="picasa_holder"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="instagram_window" style="display:none">
+  <div id="instagram_global_overlay"></div>
+  <div id="instagram_window_container" class="">
+    <div class="toolbar_button">
+      <button onclick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <p id="instagramUploadCaption" class="headingtwo">Upload your Instagram photos</p>
+    <div class="save-design-table"> 
+      <div class="pager"> <a class="prev start-page">&larr; prev</a> <a class="next end-page">next &rarr;</a> </div>
+      <div class="instagram_holder"></div>
+    </div>
+  </div>
+</div>
+<div id="preview_window">
+  <div id="preview_window_overlay" class="global_overlay"></div>
+  <div id="preview_window_container" class="global_popup_box" style="width:700px;height:640px;">
+    <div class="toolbar_button"> 
+      <button id="tool_preview_window_cancel" onclick="closeMe(this);" class="close-window-positoin"></button>
+    </div>
+    <p id="previewPopupCaption" class="new-heading pop-heading-line">Preview</p>
+    <div class="save-design-table">
+      <div class="preview_holder"></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="multiStyleText_window" style="display:none;">
+		<div class="global_overlay"></div>
+		<div class="global_popup_box" >
+      <div class="toolbar_button" >
+          <button onClick="closeMe(this);" class="close-window-positoin"></button>
+      </div>
+			<div class="popup-indent">
+			<p class="new-heading pop-heading-line" id="editMultiStyleTextPopupCaption">Edit Text</p>
+				<!--content goes here--> 
+				<div id="formatting-container" class="ql-toolbar">
+				  <select title="Font" class="ql-font"></select>
+          <select title="Size" class="ql-size"></select>
+          <select title="Font" class="ql-heading"></select>
+				  <div class="ql-color"></div>
+					
+					<div class="size-bold-italic">
+					  <div class="left">
+						  <div title="Bold Text" class="tool_button ql-bold">B</div>
+					  </div>
+					  <div class="right">
+						  <div title="Italic Text" class="tool_button ql-italic">i</div>
+					  </div>
+					</div>
+					<div class="text-align">
+					  <div class="left">
+						  <div title="Align Left" id="ql-align-left" class="push_button_pressed"><span class="fa fa-align-left"></span></div>
+					  </div>
+					  <div class="left">
+						  <div title="Align Center" id="ql-align-center" class="tool_button"><span class="fa fa-align-center"></span></div>
+					  </div>
+					  <div class="right">
+						  <div title="Align Right" id="ql-align-right" class="tool_button"><span class="fa fa-align-right"></span></div>
+					  </div>
+          </div>
+          <div class="ql-formats">
+            <div class="left" style="display:none;">
+						  <div title="Ordered List" id="ql-list-ordered" class="ql-list tool_button" value="ordered"><span class="fa fa-list-ol"></span></div>
+					  </div>
+					  <div class="left" style="display:none;">
+						  <div title="Bullet List" id="ql-list-bullet" class="ql-bullet tool_button" value="bullet"><span class="fa fa-list-ul"></span></div>
+					  </div>
+					  <div class="left">
+						  <div title="Special Character" id="ql-charmap" class="tool_button" ><span class="fa fa-venus"></span></div>
+					  </div>
+          </div>
+          <button id="btnAddUpdateText" class="dbtn btn-primary" title="Add Text">Add Text</button>
+				</div>
+			   <div id="multieditor-container"></div>
+			   <div id="editor_bg">
+          <div>
+					  <div class="left">
+              <label id="editor_bg_caption" class="">Editor Background Color:</label>
+					  </div>
+					  <div class="left">
+						  <div title="White" id="ql-bg-white" class="push_button_pressed"><span></span></div>
+					  </div>
+					  <div class="left">
+						  <div title="Gray" id="ql-bg-gray" class="tool_button"><span></span></div>
+					  </div>
+          </div>
+         </div>
+			</div>
+		</div>
+	</div>
+<div id="specialChar_window" style="display:none;">
+		<div class="global_overlay"></div>
+		<div class="global_popup_box" style="width:100%;height:350px;">
+      <div class="toolbar_button" >
+          <button onClick="closeMe(this);" class="close-window-positoin"></button>
+      </div>
+			<div class="popup-indent">
+			<p class="new-heading pop-heading-line" id="specialCharPopupCaption">Special Character</p>
+				<!--content goes here--> 
+				<div id="specialChar-container" class="">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+    
+
+<?php if($_SERVER['HTTP_HOST'] != "192.168.0.222" && $_SERVER['HTTP_HOST'] != "127.0.0.1" && $_SERVER['HTTP_HOST'] != "192.168.0.46" && $_SERVER['HTTP_HOST'] != "192.168.0.75") { ?>
+<script>
+  $j(document).ready(function(){
+    svgEditor.ready(function() {
+          init();
+      });
+  });
+</script>
+<?php } ?>
+<script>
+    Helper.showLoader(true);
+    
+    svgEditor.setConfig({
+        dimensions: [productWidth, productHeight],
+        //position: [parseFloat(pos_x[1]),parseFloat(pos_y[1])],
+        position: [0,0],
+        canvas_expansion: 1.1,
+        showRulers: false,
+        initFill: {color:'000000'},
+        initBg: {color:bgColor},
+        initBorder: {color:borderColor},
+        initStroke: {width: 0, color:'000000'},
+        bkgd_color:'none',
+        baseUnit: baseUnit,
+        no_save_warning:true,
+        //comment following js if you use built.min.js
+        extensions:extensionArray,
+        show_outside_canvas:0,
+        lang:currentStore,
+    });
+</script> 

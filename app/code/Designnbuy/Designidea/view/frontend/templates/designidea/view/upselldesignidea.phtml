@@ -1,0 +1,80 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Product related templates template
+ *
+ * @var $block \Designnbuy\Template\Block\Catalog\Product\RelatedTemplates
+ */
+?>
+<?php
+$activeDesigner = $this->helper('Designnbuy\Merchandise\Helper\Data')->isModuleEnabled('Designnbuy_Designer');
+$designerName = '';
+$designerUrl = '';
+?>
+<?php $templates = []; ?>
+<?php if ($block->displayTemplates()) { ?>
+    <?php $_product = $block->getProduct(); ?>
+    <?php $_designideaCollection = $block->getDesignideaCollection(); ?>
+    <?php if ($_designideaCollection->count()) { ?>
+        <?php //$templates = $_designideaCollection->getData(); ?>
+        <div class="page-products designidea-lists" style="clear: both">
+            <div class="block related upsell-designidea-container">
+                <div class="block-title title">
+                    <h3 class="block-title title">
+                        <span id="block-related-heading" role="heading"
+                              aria-level="2"><?php echo __('Other designs you may be interested in') ?></span>
+                    </h3>
+                </div>
+                <div class="products page-products wrapper grid products-grid designidea-list-wrapper">
+                    <ul class="designidea-list products list items product-items">
+                        <?php foreach ($_designideaCollection as $_designidea): $templates[] = $_designidea->getData();?><?php if (!$_designidea->getSvg()): continue; endif; ?>
+
+                            <?php $_designideaUrl = ''//$this->helper('Designnbuy\Canvas\Helper\Data')->getTemplatePersonalisePageUrl($_product, $_designidea); ?>
+                            <?php if ($activeDesigner == 1): ?>
+                                <?php $identifier = $_designidea->getIdentifier(); ?>
+                                <?php $designerId = $_designidea->getDesignerId(); ?>
+                                <?php if ($designerId): ?>
+                                    <?php $designerName = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerName($designerId); ?>
+                                    <?php $designerIdentifier = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerUrl($designerId); ?>
+                                    <?php $designerUrl = $this->helper('Designnbuy\Designer\Helper\Data')->getDesignerInfoUrl($designerIdentifier); ?>
+                                <?php endif; ?>
+                                <?php $_designideaUrl = $this->helper('Designnbuy\Merchandise\Helper\Data')->getDesignUrl($identifier); ?>
+                            <?php else: ?>
+                                <?php $_designideaUrl = $this->helper('Designnbuy\Merchandise\Helper\Data')->getTemplatePersonalisePageUrl($_designidea); ?>
+                            <?php endif; ?>
+                        <li class="item product product-item designidea-item designidea-holder-<?php echo $_designidea->getId() ?>"><div class="product-item-info" data-container="product-grid"><?php if ($featuredImage = $_designidea->getImage()): ?><a class="product photo product-item-photo" href="#" title="<?php echo $block->escapeHtml($_designidea->getTitle()); ?>"><span class="product-image-container" style="width: 240px"><span class="product-image-wrapper" style="padding-bottom: 125%" ><img src="<?php echo $featuredImage ?>" alt="<?php echo $block->escapeHtml($_designidea->getTitle()); ?>" style="<?php echo ($_designidea->getHeight() > $_designidea->getWidth()) ? "height:100%;width:auto" : "height:auto;width:100%" ?>" class="product-image-photo"/></span></span></a><?php endif; ?>
+                                <div class="product details product-item-details"><strong class="product name product-item-name"><a class="product-item-link" href="<?php /* @escapeNotVerified */
+                                        echo $_designideaUrl ?>"><?php echo $block->escapeHtml($_designidea->getTitle()); ?></a></strong>
+                                    <div class="price-box"><div class="product actions"><div class="actions-primary">
+                                                <?php if ($designerName): ?>
+                                                    <strong class="designer-name"><a
+                                                                href="<?php echo $designerUrl; ?>"><?php echo 'By ' . $designerName; ?></a></strong>
+                                                <?php endif; ?>
+                                                <button class="design-View button" type="button" title="<?php echo __('View'); ?>"
+                                                        onclick="window.location.href='<?php /* @escapeNotVerified */
+                                                        echo $_designideaUrl ?>';"><?php echo __('View'); ?></button>
+                                            </div></div></div></div></div></li><?php endforeach; ?></ul></div>
+            </div>
+        </div>
+        <div class="message-error error message template-error-message" style="display: none;" data-ui-id="message-error">
+            <div><?php echo __('No Templates Found.') ?></div>
+        </div>
+    <?php } else { ?>
+        <!--<div class="message-error error message no-template-error-message" data-ui-id="message-error">
+            <div><?php /*echo __('No Templates Found') */?></div>
+        </div>-->
+    <?php } ?>
+<?php } ?>
+
+<style type="text/css">
+    .template-container   .product-image-photo {box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.3); border: 1px solid #bbbbbb;}
+</style>
+
+

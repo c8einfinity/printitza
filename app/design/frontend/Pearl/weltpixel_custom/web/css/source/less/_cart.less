@@ -1,0 +1,82 @@
+.checkout-cart-index {
+    .modal-popup {
+        .modal-content {
+            .product.media{
+                display: block;
+                float: none;
+                margin: 0 auto;
+            }
+            div[class*="popup-attachment"] .product.media {
+                width: 100%;
+            }
+        }
+    }
+}
+.checkout-cart-index {
+    .cart-container {
+        .form-cart {
+            .actions.main {
+                .clear{
+                    &:extend(button);
+                    display: inline-block;
+                    height: auto;
+                    float: right;
+                    margin-left: 12px;
+                    &:hover{
+                        &:extend(button:hover);
+                    }
+                    @media only screen and (max-width: 767px){
+                        float: none;
+                        margin-right: 6px;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+    .cart.item .item-actions a[href*=""] {
+        display: none !important;
+    }
+    .cart.item .item-actions a.action-edit {
+        display: inline-block !important;
+    }
+}
+.cart{
+    &.table-wrapper {
+        .actions-toolbar {
+            > .action-preview{
+                &::before{
+                    content: "\e724";
+                    font-family: 'font-icons';
+                    color: #363636;
+                }
+                &:hover{
+                    &:before{
+                        color: #757575;
+                    }
+                }
+            }
+            > .action-attachment{
+                &::before{
+                    content: "\e76a";
+                    font-family: 'font-icons';
+                    color: #363636;
+                }
+                &:hover{
+                    &:before{
+                        color: #757575;
+                    }
+                }
+            }
+        }
+    }
+}
+.quotation-quote-index {
+    .modal-popup {
+        .modal-content {
+            div[class*="popup-attachment"] .product.media {
+                width: 100%;
+            }
+        }
+    }
+}

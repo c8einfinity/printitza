@@ -1,0 +1,406 @@
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+
+.clearfix:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+
+.designidea-holder {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    designidea: #F5F5F5;
+    padding: 20px;
+}
+
+.designidea-holder:hover {
+    box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.designidea-holder .designidea-header {position:relative;}
+
+.designidea-holder .designidea-header .designidea-info {padding: 0 0 10px 0;}
+.designidea-holder .designidea-header .designidea-info .item,
+.designidea-holder .designidea-header .designidea-info .dash {display: inline-block;}
+.designidea-holder .designidea-header .designidea-info .label {font-weight: 700;}
+.designidea-holder .designidea-header .designidea-info .value {font-style: italic;}
+
+
+.designidea-list {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    list-style: none;
+}
+
+.designidea-list .designidea-content .designidea-read-more {padding-top:10px; float:right;}
+
+.designidea-category-view .category-content {padding-left: 40px;}
+
+.designidea-content .designidea-description img {margin:0 15px 0 15px;}
+.designidea-content .designidea-description ul,
+.designidea-content .designidea-description ol {list-style-position: inside;}
+
+.designidea-content .designidea-description .designidea-ftimg-hld {float: left; margin: 0 15px 0 15px; width: 33%}
+.designidea-content .designidea-description .designidea-ftimg-hld img {width:100%; padding:0px; margin:0px;}
+@media (max-width: 496px) {
+  .designidea-content .designidea-description .designidea-ftimg-hld {width: 100%; margin:0px;}
+}
+
+.designidea-list .designidea-header .designidea-title {max-width:80%;}
+.designidea-list .designidea-header .designidea-title a {
+    text-decoration: none;
+    font-size: 22px;
+    color: #636363;
+}
+
+
+
+.designidea-list .designidea-header .designidea-title {
+    margin: 0px;
+    padding: 10px 0;
+    float:left;
+}
+
+
+.designidea-list .hidden {display:none;}
+
+
+.designidea-view .designidea-bottom {margin-top:30px;}
+
+.designidea-view .designidea-nextprev-hld  {margin-bottom: 30px;}
+.designidea-view .designidea-nextprev-hld .nextprev-link {font-weight: 700;}
+.designidea-view .designidea-nextprev-hld .prev-link {float:left}
+.designidea-view .designidea-nextprev-hld .next-link {float:right}
+
+.designidea-view .designidea-gallery {margin:15px 0 15px 0}
+.designidea-view .designidea-gallery .gallery-image-hld {margin: 0 14px 14px 0; border:1px solid #ccc; display: block; float:left}
+.designidea-view .designidea-gallery .gallery-image{padding: 0px; margin:0px; display:block}
+
+.designidea-view .block {margin-bottom: 30px;}
+
+.widget.block-recent-designideas .block-content .item {
+        padding: 8px 0 0px 0px;
+}
+
+.widget.block-categories ul {
+    list-style: initial;
+    padding-left:0px;
+}
+
+.widget.block-categories ul ul {
+    margin-left:20px;
+}
+
+.widget.block-categories ul,
+.widget.block-categories li {
+    margin: 5px 0 5px 9px;
+    padding: 0px;
+}
+
+.widget.block-rss .rss-icon {float: left; width: 23px; padding-right: 10px;}
+
+
+.widget.designidea-search {
+    width: 21%;
+    margin: 20px 0px 0px 0px !important;
+    position: relative;
+    float: right;
+    /*fpadding-left: 15px;*/
+    z-index: 0;
+}
+
+.widget.designidea-search .block-content {
+    margin-bottom: 0;
+}
+
+.widget.designidea-search  label {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    text-decoration: none;
+    display: inline-block;
+    float: right;
+}
+
+.widget.designidea-search .control {
+    border-top: 0;
+    margin: 0;
+    padding: 0;
+    clear: both;
+}
+
+.widget.designidea-search input {
+    position: static;
+    padding-right: 35px;
+    margin: 0;
+    left: -300%;
+}
+
+.widget.designidea-search .action.search {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    z-index: 1;
+    display: inline-block;
+    designidea-image: none;
+    designidea: none;
+    -moz-box-sizing: content-box;
+    border: 0;
+    box-shadow: none;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    text-shadow: none;
+    font-weight: 400;
+}
+
+.theme-pearl.store-view-default .sidebar button.search:hover { background: #000; }
+
+.widget.designidea-search .action.search:before {
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 32px;
+    color: #8f8f8f;
+    content: '\e615';
+    font-family: 'luma-icons';
+    margin: 0;
+    vertical-align: top;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}
+
+#designidea_search_mini_form .action.search:before {
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 32px;
+    color: #8f8f8f;
+    content: '\e615';
+    font-family: 'luma-icons';
+    margin: 0;
+    vertical-align: top;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+    width: 35px;
+}
+
+.widget.designidea-search .action.search > span {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* Tag claud widget */
+.widget.block-tagclaud .smallest{font-size: 0.75em}
+.widget.block-tagclaud .small{font-size:1em}
+.widget.block-tagclaud .medium{font-size:1.25em}
+.widget.block-tagclaud .large{font-size:1.5em}
+.widget.block-tagclaud .largest{font-size:2em}
+
+.designidea-widget-recent .designidea-list {
+    padding: 0px;
+    margin: 0px;
+}
+
+.designidea-widget-recent .designidea-holder {
+    width: 29%;
+    float: left;
+    margin: 5px;
+}
+
+.designidea-widget-recent .designidea-description .designidea-text-hld {
+    max-height: 150px;
+    min-height: 150px;
+    overflow-y: auto;
+}
+
+.designidea-widget-recent-masonry .designidea-description .designidea-text-hld {
+    max-height: none;
+    min-height: 0;
+}
+.designidea-widget-recent-masonry .designidea-description .designidea-ftimg-hld {
+    width: 100%;
+    margin: 0px;
+}
+
+.dnbdesignidea-autoloader {text-align: center;}
+.dnbdesignidea-autoloader .dnbdesignidea-show-onload {display: none;}
+.column.main .products-grid .product-item .product-item-info{
+    box-sizing: border-box;
+    float: left;
+    display: inline-block;
+}
+
+.design-idea-lists{clear: both}
+/* category sidebar */
+.faicon{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 13px;
+    line-height: inherit;
+    color: inherit;
+    font-family: 'luma-icons';
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+    position: absolute;
+    right: 13px;
+    top: 10px;
+}
+.faicon-plus:after{
+    content: '\e622';
+}
+.faicon-minus:after{
+    content: '\e621';designer-info
+}
+.widget.block-categories .category-filter ul{
+    margin: 0;
+}
+.widget.block-categories .category-filter li{
+    margin: 0;
+    list-style: none;
+}
+.column.main .products-grid .template-list .product-item .product-item-info .product-item-details > *{
+    z-index: 1;
+}
+.column.main .products-grid .designidea-list .product-item .product-item-info .product-item-details > *{
+    z-index: 1;
+}
+.widget .block-title.sidebar-title strong{
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+.category-filter > ul > li{
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    word-break: break-all;
+    z-index: 1;
+    display: block;
+    text-decoration: none;
+}
+.category-filter > ul > li > a {
+    padding: 10px 40px 10px 0;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid #999999;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 12px;
+    cursor: pointer;
+}
+.widget.block-categories .category-filter > ul > li ul{
+    margin-left: 20px;
+}
+.widget.block-categories .category-filter > ul > li ul > li{
+    margin: 10px 0;
+}
+.category-filter > ul > li ul > li a{
+    text-transform: none;
+    font-weight: 400;
+    font-size: 12px;
+    cursor: pointer;
+}
+/* category listing */
+.products-grid .designidea-list .product-item-info{
+    border: 1px solid #bbbbbb;
+    border-radius: 0;
+}
+.products-grid .designidea-list .product-item-info .product-item-details{
+    text-align: center;
+}
+.designidea-list .product-image-photo{
+    width: auto;
+    max-height: 100%;
+}
+.toolbar.toolbar-products {
+    clear: both;
+}
+.designidea-list-wrapper .designer-name {
+    display: block;
+    margin-bottom: 10px;
+}
+.designidea-list-wrapper .product-image-container{
+    width: 100%;
+}
+@media (max-width: 420px) {
+  #dnbdesignidea_gcomments {max-width:345px; overflow-y: scroll;}
+}
+
+
+@media (min-width: 1024px), print{
+    .page-products .upsell-designidea-container .products-grid.designidea-list-wrapper .product-item {
+        /*width: 19.22%;*/
+        width: calc(19.22% - 15px);
+        clear: none;
+        float: left;
+        margin-left: 15px;
+    }
+    
+}
+@media (max-width: 1023px), print{
+    .page-products .products-grid.designidea-list-wrapper .product-item{
+        padding: 0 10px !important;
+        box-sizing: border-box;
+    }
+    .column.main .page-products .products-grid.designidea-list-wrapper .product-item:hover{
+        padding: 0 10px !important;
+    }
+    :root .theme-pearl .column.main .product-items.designidea-list,
+    .designidea-list{
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+}
+@media only screen and (max-width: 767px){
+    .theme-pearl.store-view-default h1,
+    h1.page-title{
+        display: inline-block;
+    }
+    .widget.designidea-search{
+        width: 30%;
+        margin-top: 0 !important;
+    }
+    .designidea-category-view .page-products .columns{
+        padding-top: 10px;
+    }
+}
+@media only screen and (max-width: 479px){
+    .theme-pearl.store-view-default h1,
+    h1.page-title{
+        width: 100%;
+    }
+    .widget.designidea-search{
+        clear: both;
+        min-width: 200px;
+        float: left;
+        margin-top: 10px !important;
+    }
+}

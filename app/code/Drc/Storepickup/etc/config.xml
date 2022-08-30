@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <storepickup>
+            	<enable_frontend>0</enable_frontend>
+                <sallowspecific>0</sallowspecific>
+                <price>0</price>
+                <model>Drc\Storepickup\Model\Carrier\Storepickup</model>
+                <name>Fixed</name>
+                <title>Store Pick Up</title>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>	
+                <format>yy-mm-dd</format>
+                <disabled>-1</disabled>
+                <hourMin>8</hourMin>
+                <hourMax>22</hourMax>
+                <zoom_level>15</zoom_level>
+                <production_time>3</production_time>
+            </storepickup>
+        </carriers>
+    </default>
+</config>

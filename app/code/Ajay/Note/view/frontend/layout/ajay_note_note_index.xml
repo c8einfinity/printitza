@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Ajay_UiGrid::css/backend.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <!--<block class="Magento\Framework\View\Element\Template" name="ajay_note_note_index.menu" template="Ajay_Note::index.phtml">
+                <uiComponent name="ajay_note_note_index"/>
+            </block>-->
+            <block class="Magento\Framework\View\Element\Template" name="ajay_note_note_index.menu" template="Ajay_Note::index.phtml"/>
+            <uiComponent name="ajay_note_note_index"/>
+        </referenceContainer>
+    </body>
+</page>

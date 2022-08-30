@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Designnbuy (support@designnbuy.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Sheet::elements" title="Imposition" module="Designnbuy_Sheet" parent="Designnbuy_Base::DNB" sortOrder="10"  resource="Designnbuy_Sheet::elements"/>
+        <add id="Designnbuy_Sheet::size" title="Sheet Sizes" module="Designnbuy_Sheet" parent="Designnbuy_Sheet::elements" sortOrder="10" action="sheet/size" resource="Designnbuy_Sheet::size"/>
+    </menu>
+</config>

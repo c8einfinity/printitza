@@ -1,0 +1,8 @@
+<?php $workflowStatus = $block->getWorkflowStatus(); ?>
+<?php if($workflowStatus != ''): ?>
+</br>
+<dl class="item-options">
+    <dt><?php echo __('Workflow Status');?></dt>
+    <dd><?php echo $workflowStatus; ?></dd>
+</dl>
+<?php endif; ?>

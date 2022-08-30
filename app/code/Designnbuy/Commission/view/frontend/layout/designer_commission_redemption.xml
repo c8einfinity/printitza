@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Designnbuy_Commission::css/local.css" />
+    </head>
+    <update handle="customer_account" />
+    <body>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="wishlist_sidebar" remove="true" />
+        
+        <referenceContainer name="content">
+            <block class="Designnbuy\Commission\Block\Commission\Redemption" name="designer_commission_redemption" template="Designnbuy_Commission::commission/redemption.phtml" cacheable="false">
+                <container name="designer.commission.information" as="designer_commission_information"/>
+                <container name="designer.redemption.form" as="designer_redemption_form"/>
+                <container name="designer.redemption.history" as="designer_redemption_history"/>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="designer.commission.information">
+            <block class="Designnbuy\Commission\Block\Commission\Redemption" name="designer_commission_information" template="Designnbuy_Commission::commission/redemption/info.phtml" cacheable="false"/>
+        </referenceContainer>
+
+        <referenceContainer name="designer.redemption.form">
+            <block class="Designnbuy\Commission\Block\Commission\Redemption" name="designer_redemption_form" template="Designnbuy_Commission::commission/redemption/form.phtml" cacheable="false"/>
+        </referenceContainer>
+
+        <referenceContainer name="designer.redemption.history">
+            <block class="Designnbuy\Commission\Block\Commission\Redemption" name="designer_redemption_history" template="Designnbuy_Commission::commission/redemption/history.phtml" cacheable="false"/>
+        </referenceContainer> 
+
+    </body>
+</page>

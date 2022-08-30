@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Designidea designidea next and prev designidea links
+ *
+ * @var $block \Designnbuy\Designidea\Block\Designidea\View\NextPrev
+ */
+?>
+
+<?php if ($block->displayLinks()) { ?>
+    <?php
+        $prevDesignidea = $this->getPrevDesignidea();
+        $nextDesignidea = $this->getNextDesignidea();
+    ?>
+    <?php if ($prevDesignidea || $nextDesignidea) { ?>
+        <div class="designidea-nextprev-hld clearfix">
+            <?php if ($prevDesignidea) { ?>
+                <?php $title = $block->escapeHtml($prevDesignidea->getTitle()) ?>
+                <a class="nextprev-link prev-link" href="<?php echo $prevDesignidea->getDesignideaUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('&larr; Previous') ?>
+                </a>
+            <?php } ?>
+            <?php if ($nextDesignidea) { ?>
+                <?php $title = $block->escapeHtml($nextDesignidea->getTitle()) ?>
+                <a class="nextprev-link next-link" href="<?php echo $nextDesignidea->getDesignideaUrl() ?>" title="<?php echo __('Read %1',$title) ?>">
+                    <?php echo __('Next &rarr;') ?>
+                </a>
+            <?php } ?>
+        </div>
+    <?php } ?>
+<?php } ?>

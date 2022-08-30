@@ -1,0 +1,36 @@
+<div class="admin__field-control">
+    <div class="file-uploader" data-role="drop-zone" css="_loading: isLoading">
+        <div class="file-uploader-area">
+            <input type="file" afterRender="onElementRender" attr="id: uid, name: fileInputName, multiple: false"/>
+            <label class="file-uploader-button action-secondary" attr="for: uid" translate="'Upload'"/>
+
+            <span class="file-uploader-spinner"/>
+        </div>
+        <each args="data: value, as: '$file'">
+            <div class="file-uploader-summary">
+                <div class="">
+                    <a attr="href: $file.url" target="_blank" text="$file.name">
+                        <!--<img
+                                class="preview-image"
+                                tabindex="0"
+                                data-bind="attr: {src: $file.url}">-->
+                    </a>
+
+                    <div class="actions">
+                        <button
+                                type="button"
+                                class="action-remove"
+                                data-role="delete-button"
+                                attr="title: $t('Delete image')"
+                                click="$parent.removeFile.bind($parent, $file)">
+                            <span translate="'Delete image'"/>
+                        </button>
+                    </div>
+                </div>
+                <input name="comment[file]" type="hidden" file="file" data-bind="value: $file.file"/>
+                <!--<div class="file-uploader-filename" text="$file.name"/>-->
+            </div>
+        </each>
+
+    </div>
+</div>

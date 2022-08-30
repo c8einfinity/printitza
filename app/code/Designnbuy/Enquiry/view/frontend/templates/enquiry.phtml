@@ -1,0 +1,20 @@
+<?php if($block->getProduct()->getProductEnquiry()){ ?>
+<?php $buttonTitle = __('Enquiry \ Custom Quote'); ?>
+    
+    <button type="button"
+            title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+            class="action primary enquiry"
+            id="product-enquiry-button"
+            data-mage-init='{"enquiry_popup": {}}'>
+        <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+    </button>
+    <script>
+        require(['jquery', 'jquery/ui'], function($){
+            jQuery("#product-enquiry-button").on("click",function(){
+                if(!jQuery("#enquiry_product_sku").length){
+                    jQuery("#contact-form").append('<input type="hidden" id="enquiry_product_sku" name="product_sku" value="<?php echo $block->getProduct()->getSku(); ?>" />');
+                }
+            });
+        });
+    </script>
+<?php } ?>

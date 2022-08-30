@@ -1,0 +1,91 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Template sidebar categories template
+ *
+ * @var $block \Designnbuy\Template\Block\Sidebar\Categories
+ */
+?>
+
+<?php $items = $block->getTemplateCategoriesCollection(); ?>
+
+<?php if (count($items)) { ?>
+
+    <div class="widget block block-categories" data-bind="scope: 'categories'">
+        <div class="block-title sidebar-title">
+            <strong><?php echo __('Categories') ?></strong>
+        </div>
+        <div class="category-filter">
+            <ul class="o-list"  id="accordion-2">
+                <li>
+                    <a href="javascript:void(0)" class="item" data-param="all">
+                        <?php echo __("All Templates") ?>
+                    </a>
+                </li>
+                <?php
+                foreach($items as $item) {
+               ?>
+                <li>
+                    <a href="javascript:void(0)" class="item" data-param="<?php echo $item->getId(); ?>">
+                        <?php echo $block->escapeHtml($item->getTitle()) ?>
+                    </a>
+                </li>
+                <?php
+                    }
+                ?>
+            </ul>
+        </div>
+    </div>
+<?php } ?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'ko'
+    ],function($,ko){
+        var resolution_timer;
+        $(document).ready(function(){
+            
+            jQuery(".category-filter li a.item").on("click",function(){
+                var page_category = 1;
+                jQuery("#template-size").val("");
+                jQuery("#template_search").val("");
+                $.ajax({
+                    url: "<?php echo $block->getBaseUrl().'canvas/product/browsetemplates/'; ?>",
+                    type: 'POST',
+                    dataType: 'json',
+                    showLoader:true,
+                    data: {
+                        category_id: jQuery(this).attr('data-param'),
+                        p: page_category,
+                        product_params : jQuery("#product_params").val(),
+                        product : "<?php echo $block->getRequest()->getParam('product'); ?>",
+                        ajax : true
+                    },
+                    complete: function(response) {
+                        if(response.responseJSON && response.responseJSON.category_templates){
+                            var relatedProd = jQuery(".canvas-product-browsetemplates .column.main .templates-grid.products-related");
+                            
+                            if(relatedProd.length){
+                                var prevElem = relatedProd.prev();
+                                relatedProd.remove();
+                                prevElem.after(response.responseJSON.category_templates).trigger('contentUpdated');
+                                
+                                
+                            }
+                        }
+                    },
+                    error: function (xhr, status, errorThrown) {
+                        console.log('Error happens. Try again.');
+                    }
+                });
+            });
+        });
+    });
+</script>

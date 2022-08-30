@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="review_design_form_component"/>
+    <body>
+        <referenceContainer name="product.info.review" remove="true"/>
+        <!--<referenceContainer name="content">
+            <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
+                <arguments>
+                    <argument name="triggers" xsi:type="array">
+                        <item name="submitReviewButton" xsi:type="string">.review .action.submit</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>-->
+        <referenceBlock name="product.info.details">
+            <block class="Designnbuy\DesignReview\Block\Product\Review" name="design.reviews.tab" as="design_reviews" template="Designnbuy_DesignReview::review.phtml" group="detailed_info">
+                <block class="Designnbuy\DesignReview\Block\Form" name="design.review.form" as="design_review_form">
+                    <container name="design.review.form.fields.before" as="design_form_fields_before" label="Review Form Fields Before"/>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

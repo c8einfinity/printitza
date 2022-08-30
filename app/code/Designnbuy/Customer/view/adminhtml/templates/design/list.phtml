@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php echo $block->getChildHtml('grid') ?>
+<?php if (count($block->getQueueAsOptions())>0 && $block->getShowQueueAdd()): ?>
+<div class="form-buttons">
+    <select id="queueList" name="queue">
+    <?php foreach ($block->getQueueAsOptions() as $_queue): ?>
+        <option value="<?php /* @escapeNotVerified */ echo $_queue['value'] ?>"><?php /* @escapeNotVerified */ echo $_queue['label'] ?> #<?php /* @escapeNotVerified */ echo $_queue['value'] ?></option>
+    <?php endforeach; ?>
+    </select>
+    <button type="button" class="scalable" onclick="designController.addToQueue();"><span><span><span><?php /* @escapeNotVerified */ echo __('Add to Queue'); ?></span></span></span></button>
+</div>
+<?php endif ?>
+<script>
+require(["prototype", "mage/adminhtml/events"], function(){
+    designController = {
+        checkCheckboxes: function(controlCheckbox) {
+            var elements = $('designGrid').getElementsByClassName('designCheckbox');
+            elements.each(function(obj){
+                obj.checked = controlCheckbox.checked;
+            });
+        },
+        rowClick: function (e) {
+            if(!Event.element(e).hasClassName('designCheckbox')) {
+                var elements = Event.findElement(e, 'tr').getElementsByClassName('designCheckbox');
+                if(elements.length != 1) {
+                    return;
+                }
+                elements[0].checked = !elements[0].checked;
+            }
+        },
+        addToQueue: function () {
+            var elements = $('designGrid').getElementsByClassName('designCheckbox');
+            elements.push($('queueList'));
+            var serializedElements = Form.serializeElements(elements, true);
+            serializedElements.add = 'designs';
+            serializedElements.form_key = FORM_KEY;
+            var url = designGridJsObject.url;
+
+            new Ajax.Updater('designGrid', url + '?ajax=1',
+                             {parameters:  serializedElements,
+                              evalScripts: true,
+                              onComplete:designGridJsObject.initGrid.bind(designGridJsObject)});
+        }
+    };
+
+    varienGlobalEvents.attachEventHandler('gridRowClick', designController.rowClick.bind(designController));
+});
+</script>

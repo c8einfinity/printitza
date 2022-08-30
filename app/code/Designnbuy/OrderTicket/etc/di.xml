@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--<preference for="Designnbuy\OrderTicket\Api\TrackRepositoryInterface" type="Designnbuy\OrderTicket\Api\Data\Track\Repository"/>-->
+    <preference for="Designnbuy\OrderTicket\Api\OrderTicketRepositoryInterface" type="Designnbuy\OrderTicket\Api\Data\OrderTicket\Repository"/>
+    <preference for="Designnbuy\OrderTicket\Api\CommentRepositoryInterface" type="Designnbuy\OrderTicket\Api\Data\Comment\Repository"/>
+    <preference for="Designnbuy\OrderTicket\Api\Data\OrderTicketInterface" type="Designnbuy\OrderTicket\Model\OrderTicket"/>
+    <preference for="Designnbuy\OrderTicket\Api\Data\CommentInterface" type="Designnbuy\OrderTicket\Model\OrderTicket\Status\History"/>
+    <preference for="Designnbuy\OrderTicket\Api\Data\TrackInterface" type="Designnbuy\OrderTicket\Model\Shipping"/>
+    <preference for="Designnbuy\OrderTicket\Api\Data\OrderTicketSearchResultInterface" type="Designnbuy\OrderTicket\Model\ResourceModel\OrderTicket\Collection"/>
+    <preference for="Designnbuy\OrderTicket\Api\Data\TrackSearchResultInterface" type="Designnbuy\OrderTicket\Model\ResourceModel\Shipping\Collection"/>
+    <preference for="Designnbuy\OrderTicket\Api\OrderTicketManagementInterface" type="Designnbuy\OrderTicket\Model\Service\OrderTicketManagement"/>
+
+    <preference for="Designnbuy\OrderTicket\Api\Data\CommentSearchResultInterface" type="Designnbuy\OrderTicket\Model\ResourceModel\OrderTicket\Status\History\Collection"/>
+    <preference for="Designnbuy\OrderTicket\Api\TrackManagementInterface" type="Designnbuy\OrderTicket\Model\Service\TrackManagement"/>
+    <preference for="Designnbuy\OrderTicket\Api\CommentManagementInterface" type="Designnbuy\OrderTicket\Model\Service\CommentManagement"/>
+    <preference for="Designnbuy\OrderTicket\Model\Spi\CommentResourceInterface" type="Designnbuy\OrderTicket\Model\ResourceModel\OrderTicket\Status\History"/>
+    <preference for="Designnbuy\OrderTicket\Model\Spi\OrderTicketResourceInterface" type="Designnbuy\OrderTicket\Model\ResourceModel\OrderTicket"/>
+    <type name="Designnbuy\OrderTicket\Helper\Data">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="authSession" xsi:type="object">Magento\Backend\Model\Auth\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\OrderTicket\Model\OrderTicket\Status\History">
+        <arguments>
+            <argument name="translate" xsi:type="object">Magento\Framework\Translate</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\OrderTicket\Model\OrderTicket">
+        <arguments>
+            <argument name="translate" xsi:type="object">Magento\Framework\Translate</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Eav\Model\Entity\Setup\PropertyMapper\Composite">
+        <arguments>
+            <argument name="propertyMappers" xsi:type="array">
+                <item name="orderticket" xsi:type="string">Designnbuy\OrderTicket\Model\ResourceModel\Setup\PropertyMapper</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Tab\History">
+        <plugin name="sales-order-history-orderticket-plugin" type="Designnbuy\OrderTicket\Block\Adminhtml\Order\View\Tab\HistoryPlugin"/>
+    </type>
+    <!--<virtualType name="Designnbuy\OrderTicket\Service\ResourceModel\Item\Form\Attribute\CollectionFactory" type="Designnbuy\Customer\Model\ResourceModel\Form\Attribute\CollectionFactory">
+        <arguments>
+            <argument name="instance" xsi:type="string">Designnbuy\OrderTicket\Model\ResourceModel\Item\Form\Attribute\Collection</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Designnbuy\OrderTicket\Model\Service\Eav\AttributeMetadataDataProvider" type="Designnbuy\Customer\Model\AttributeMetadataDataProvider">
+        <arguments>
+            <argument name="attrFormCollectionFactory" xsi:type="object">Designnbuy\OrderTicket\Service\ResourceModel\Item\Form\Attribute\CollectionFactory</argument>
+        </arguments>
+    </virtualType>-->
+    <!--<virtualType name="Designnbuy\OrderTicket\Model\Service\Eav\AttributeMetadataDataProvider" type="Magento\Customer\Model\AttributeMetadataDataProvider">
+        <arguments>
+            <argument name="attrFormCollectionFactory" xsi:type="object">Designnbuy\OrderTicket\Service\ResourceModel\Item\Form\Attribute\CollectionFactory</argument>
+        </arguments>
+    </virtualType>-->
+    <type name="Designnbuy\OrderTicket\Model\Service\OrderTicketAttributesManagement">
+        <arguments>
+            <argument name="metadataDataProvider" xsi:type="object">Designnbuy\OrderTicket\Model\Service\Eav\AttributeMetadataDataProvider</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\OrderTicket\Model\OrderTicketRepository">
+        <plugin name="authorization" type="\Designnbuy\OrderTicket\Model\OrderTicket\Plugin\Authorization" />
+    </type>
+    <type name="Magento\Config\Model\Config\Export\ExcludeList">
+        <arguments>
+            <argument name="configs" xsi:type="array">
+                <item name="sales/designnbuy_orderticket/store_name" xsi:type="string">1</item>
+                <item name="sales/designnbuy_orderticket/address" xsi:type="string">1</item>
+                <item name="sales/designnbuy_orderticket/address1" xsi:type="string">1</item>
+                <item name="sales/designnbuy_orderticket/city" xsi:type="string">1</item>
+                <item name="sales/designnbuy_orderticket/region_id" xsi:type="string">1</item>
+                <item name="sales/designnbuy_orderticket/zip" xsi:type="string">1</item>
+                <item name="sales/designnbuy_orderticket/country_id" xsi:type="string">1</item>
+                <item name="sales_email/designnbuy_orderticket/copy_to" xsi:type="string">1</item>
+                <item name="sales_email/designnbuy_orderticket_auth/copy_to" xsi:type="string">1</item>
+                <item name="sales_email/designnbuy_orderticket_comment/copy_to" xsi:type="string">1</item>
+                <item name="sales_email/designnbuy_orderticket_customer_comment/copy_to" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Designnbuy\OrderTicket\Api\Data\OrderTicketInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">designnbuy_orderticket</item>
+                    <item name="identifierField" xsi:type="string">entity_id</item>
+                    <item name="sequenceTable" xsi:type="string">sequence_order_ticket</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

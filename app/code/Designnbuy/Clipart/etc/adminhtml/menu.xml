@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Clipart::elements" title="Clipart" module="Designnbuy_Clipart" parent="Designnbuy_Base::DNB" sortOrder="50"  resource="Designnbuy_Clipart::elements"/>
+
+        <add id="Designnbuy_Clipart::clipart" title="Cliparts" module="Designnbuy_Clipart" parent="Designnbuy_Clipart::elements" sortOrder="10" action="clipart/clipart/" resource="Designnbuy_Clipart::clipart"/>
+
+        <add id="Designnbuy_Clipart::category" title="Categories" module="Designnbuy_Clipart" parent="Designnbuy_Clipart::elements" sortOrder="20" action="clipart/category/" resource="Designnbuy_Clipart::category"/>
+
+        <!--<add id="Designnbuy_Clipart::import" title="Import" module="Designnbuy_Clipart" parent="Designnbuy_Clipart::elements" sortOrder="30" action="clipart/import/" resource="Designnbuy_Clipart::import"/>-->
+
+        <!--<add id="Designnbuy_Clipart::config_clipart" title="Configuration" module="Designnbuy_Clipart" parent="Designnbuy_Clipart::elements" sortOrder="40" action="adminhtml/system_config/edit/section/dnbclipart/" resource="Designnbuy_Clipart::config_clipart"/>-->
+        <add id="Designnbuy_Clipart::import_export" title="Import/Export Clipart" module="Designnbuy_Clipart" parent="Designnbuy_Clipart::elements" sortOrder="50" action="clipart/clipart/importExport" resource="Designnbuy_Clipart::import_export"/>
+    </menu>
+</config>

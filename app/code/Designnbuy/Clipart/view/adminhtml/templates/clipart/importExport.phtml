@@ -1,0 +1,90 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="import-export-tax-rates">
+    <?php if (!$block->getIsReadonly()): ?>
+    <div class="import-tax-rates">
+        <?php if ($block->getUseContainer()): ?>
+        <form data-mage-init='{"validation":{}}'  data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>" id="import-form" class="admin__fieldset" action="<?php /* @escapeNotVerified */ echo $block->getUrl('clipart/clipart/importPost') ?>" method="post" enctype="multipart/form-data">
+        <?php endif; ?>
+            <?php echo $block->getBlockHtml('formkey')?>
+            <div class="fieldset admin__field">
+                <label for="import_clipart_file" class="admin__field-label"><span><?php /* @escapeNotVerified */ echo __('Import Clipart') ?></span></label>
+                <div class="admin__field-control">
+                    <input data-validate='{"required":true}' type="file" id="import_clipart_file" name="import_clipart_file" class="input-file required-entry"/>
+                    <br/>
+                    <br/>
+                    <?php echo $block->getButtonHtml(__('Import Clipart'), '', 'import-submit') ?>
+                </div>
+            </div>
+        <?php if ($block->getUseContainer()): ?>
+        </form>
+        <?php endif; ?>
+        <script type="text/x-magento-init">
+        {
+            "#import-form": {
+            "validation": {}
+            }
+        }
+        </script>
+        <script>
+require(['jquery', "mage/mage", "loadingPopup"], function(jQuery){
+
+    jQuery('#import-form').mage('form').mage('validation');
+    var dataForm = jQuery('#import-form');
+    dataForm.mage('validation', {});
+    (function ($) {
+        $('.import-submit').click(function(){
+            dataForm.validation('isValid');
+            if($(':input[name="import_clipart_file"]').val()) {
+                $('body').loadingPopup({
+                    timeout: false
+                });
+
+                $(this.form).submit();
+            }
+        });
+    })(jQuery);
+
+});
+</script>
+    </div>
+    <?php endif; ?>
+    <div class="export-tax-rates <?php if ($block->getIsReadonly()): ?>box-left<?php else: ?>box-right<?php endif; ?>">
+        <?php if ($block->getUseContainer()): ?>
+        <form id="export_form" class="admin__fieldset" action="<?php /* @escapeNotVerified */ echo $block->getUrl('clipart/clipart/exportPost') ?>" method="post" enctype="multipart/form-data">
+        <?php endif; ?>
+            <?php echo $block->getBlockHtml('formkey')?>
+            <div class="fieldset admin__field">
+                <span class="admin__field-label"><span><?php /* @escapeNotVerified */ echo __('Export Clipart') ?></span></span>
+                <div class="admin__field-control">
+                    <?php echo $block->getButtonHtml(__('Export Clipart'), "this.form.submit()") ?>
+                </div>
+            </div>
+        <?php if ($block->getUseContainer()): ?>
+        </form>
+        <?php endif; ?>
+    </div>
+
+<!--    <div class="export-tax-rates --><?php //if ($block->getIsReadonly()): ?><!--box-left--><?php //else: ?><!--box-right--><?php //endif; ?><!--">-->
+<!--        --><?php //if ($block->getUseContainer()): ?>
+<!--        <form id="export_form" class="admin__fieldset" action="--><?php ///* @escapeNotVerified */ echo $block->getUrl('clipart/category/exportPost') ?><!--" method="post" enctype="multipart/form-data">-->
+<!--            --><?php //endif; ?>
+<!--            --><?php //echo $block->getBlockHtml('formkey')?>
+<!--            <div class="fieldset admin__field">-->
+<!--                <span class="admin__field-label"><span>--><?php ///* @escapeNotVerified */ echo __('Export Category') ?><!--</span></span>-->
+<!--                <div class="admin__field-control">-->
+<!--                    --><?php //echo $block->getButtonHtml(__('Export Category'), "this.form.submit()") ?>
+<!--                </div>-->
+<!--            </div>-->
+<!--            --><?php //if ($block->getUseContainer()): ?>
+<!--        </form>-->
+<!--    --><?php //endif; ?>
+<!--    </div>-->
+</div>

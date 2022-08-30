@@ -1,0 +1,25 @@
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+
+<!--@subject {{trans "Request to change SR"}} @-->
+
+<p><strong>Hi!</strong><br />
+    We want to notify you that new Sales Representative is requested for {{var customerName|raw}} customer.
+</p>
+
+{{depend new}}
+<p><strong>{{var newMembers|raw}}</strong> will be assigned to customer.</p>
+{{/depend}}
+
+{{depend replace}}
+<p><strong>{{var oldMembers|raw}}</strong> will be replaced with <strong>{{var newMembers|raw}}</strong>.</p>
+{{/depend}}
+
+{{depend remove}}
+<p><strong>{{var oldMembers|raw}}</strong> will be removed from customer.</p>
+{{/depend}}
+
+
+<p>You can <b>approve</b> or <b>reject</b> these changes in <a href="{{var adminUrl|raw}}">admin panel</a>.</p>

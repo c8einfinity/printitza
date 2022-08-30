@@ -1,0 +1,106 @@
+.upload_area .box_upload,
+.proofing-flow-block {
+    width: 100%;
+    border: 2px solid #eee;
+    margin-bottom: 20px;
+}
+.upload_area .block-head,
+.proofing-flow-block .block-head {
+    font-size: 18px;
+    font-weight: 600;
+    background: #ebeef3;
+    color: #333333;
+    padding: 12px;
+}
+.upload-block-body,
+.proofarea_block_body {
+    background: #fff;
+    padding: 20px;
+    display: inline-block;
+    width: 100%;
+}
+.upload-block-body .action_area,
+.upload-block-body .upload_image_block,
+.proof_area,.upload_area{
+    float: left;
+    position: relative;
+}
+
+@media only screen and (min-width: 991px){
+  .upload-block-body .action_area{
+    width: 41.66666667%;
+    padding-right: 15px;
+  } 
+  .upload-block-body .upload_image_block{
+    width: 58.33333333%;
+    padding-left: 15px;
+  }
+  .proof_area{
+    width: 33.33333333%;
+    padding-left: 15px; 
+  }
+  .upload_area {
+    padding-right: 15px;
+    width: 66.66666667%;
+  }
+}
+.action_area .action_buttons .action, .proof_area .action {
+  width: 100%;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.upload_image_block .file-uploader-area .file-uploader-drop-area{
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  margin-bottom: 20px;
+  order: 1;
+}
+.upload_image_block .file-uploader-area{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-bottom: 27px
+}
+.upload_image_block .file-uploader-area .file-uploader-button.action {
+  display: block;
+  text-align: center;
+  width: 32%;
+  margin: 0 auto;
+  order: 2;
+}
+.proof_area .proof-content-wrapper{
+  display: table;
+  margin-top: 5px;
+}
+.proof_area .proof-content-wrapper label {
+    font-weight: normal;
+}
+.proof_area .rdo-wrapper, 
+.proof_area .content-wrapper {
+    display: table-cell;
+    vertical-align: top;
+}
+.proof_area .rdo-wrapper {
+    width: 25px;
+}
+.proof_area .content-wrapper {
+    padding-left: 10px;
+}
+.proof_area .content-wrapper .proof-option-title {
+    padding-top: 0;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 10px;
+}
+.proof_area .proof-content {
+    font-weight: 400;
+}

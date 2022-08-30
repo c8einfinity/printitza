@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Designnbuy_Font::elements" title="Font" module="Designnbuy_Font" parent="Designnbuy_Base::DNB" sortOrder="40"  resource="Designnbuy_Font::elements"/>
+
+        <add id="Designnbuy_Font::font" title="Fonts" module="Designnbuy_Font" parent="Designnbuy_Font::elements" sortOrder="10" action="font/font/" resource="Designnbuy_Font::font"/>
+
+        <!--<add id="Designnbuy_Font::category" title="Categories" module="Designnbuy_Font" parent="Designnbuy_Font::elements" sortOrder="20" action="font/category/" resource="Designnbuy_Font::category"/>-->
+
+        <!--<add id="Designnbuy_Font::import" title="Import" module="Designnbuy_Font" parent="Designnbuy_Font::elements" sortOrder="30" action="font/import/" resource="Designnbuy_Font::import"/>-->
+
+        <!--<add id="Designnbuy_Font::config_font" title="Configuration" module="Designnbuy_Font" parent="Designnbuy_Font::elements" sortOrder="40" action="adminhtml/system_config/edit/section/dnbfont/" resource="Designnbuy_Font::config_font"/>-->
+        <add id="Designnbuy_Font::import_export" title="Import/Export Font" module="Designnbuy_Font" parent="Designnbuy_Font::elements" sortOrder="50" action="font/font/importExport" resource="Designnbuy_Font::import_export"/>
+    </menu>
+</config>

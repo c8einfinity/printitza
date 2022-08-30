@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Designnbuy_Reseller extension
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category  Designnbuy
+ * @package   Designnbuy_Reseller
+ * @copyright Copyright (c) 2018
+ * @license   http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    
+    <preference for="Designnbuy\Reseller\Api\RequestRepositoryInterface" type="Designnbuy\Reseller\Model\RequestRepository"/>
+    <preference for="Designnbuy\Reseller\Api\Data\RequestInterface" type="Designnbuy\Reseller\Model\Request"/>
+    <type name="Designnbuy\Reseller\Model\ResourceModel\Request\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">designnbuy_reseller_request</argument>
+            <argument name="eventPrefix" xsi:type="string">designnbuy_reseller_request_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">request_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Designnbuy\Reseller\Model\ResourceModel\Request</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="designnbuy_reseller_request_listing_data_source" xsi:type="string">Designnbuy\Reseller\Model\ResourceModel\Request\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

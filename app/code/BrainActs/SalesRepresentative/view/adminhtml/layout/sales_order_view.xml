@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sales_order_tabs">
+
+            <block class="BrainActs\SalesRepresentative\Block\Adminhtml\Order\View\Tab\Representative" name="salesrep_order_representative.grid.container">
+                <arguments>
+                    <argument name="priority" xsi:type="string">1000</argument>
+                </arguments>
+            </block>
+            <action method="addTabAfter">
+                <argument name="name" xsi:type="string">order_representative</argument>
+                <argument name="block" xsi:type="string">salesrep_order_representative.grid.container</argument>
+                <argument name="after" xsi:type="string">order_info</argument>
+            </action>
+
+        </referenceBlock>
+
+    </body>
+</page>

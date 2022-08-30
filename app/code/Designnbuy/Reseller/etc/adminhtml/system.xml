@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <!-- add new tab in system configuration section -->
+        <tab id="designnbuy" translate="label" sortOrder="110">
+            <label>Designnbuy Extensions</label>
+        </tab>
+        <!-- create section -->
+        <section id="reseller_settings" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Reseller</label>
+            <!-- Assign section to tab -->
+            <tab>designnbuy</tab>
+            <resource>Designnbuy_Design::reseller_settings</resource>
+            <!-- create group for fields in section -->
+            <group id="reseller_email" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Reseller Emails Settings</label>
+                <field id="email_template" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>New Reseller Request</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+            <group id="reseller_role" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Reseller Settings</label>
+                <field id="role_reseller" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Reseller Role</label>
+                    <source_model>Designnbuy\Reseller\Model\Config\Source\Role</source_model>
+                </field>
+
+                <field id="default_website" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                   <label>Default Website</label>        
+                   <source_model>Magento\Config\Model\Config\Source\Website</source_model>
+                </field>
+            </group>
+			<!-- <group id="processing_charge" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Reseller Processing Charge</label>
+                <field id="processing_charge" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Processing Charge</label>
+                    <comment>This charge apply on reseller extra commision in %</comment>
+                </field>
+            </group> -->
+        </section>
+    </system>
+</config>

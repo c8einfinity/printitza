@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Designidea designidea media gallery images template
+ *
+ * @var $block \Designnbuy\Designidea\Block\Designidea\View\Gallery
+ */
+?>
+
+<?php
+    $designidea = $block->getDesignidea();
+    $galleryImages = $designidea->getGalleryImages();
+?>
+
+<?php if (count($galleryImages)) { ?>
+    <div class="designidea-gallery clearfix">
+        <?php foreach ($galleryImages as $image) { ?>
+            <a class="gallery-image-hld" data-fancybox="gallery" href="<?php echo $block->escapeHtml($image) ?>">
+                <img class="gallery-image" src="<?php echo $block->escapeHtml($image->resize(200)) ?>" alt="" />
+            </a>
+        <?php } ?>
+    </div>
+    <script>
+    require(['jquery', 'domReady!'], function($){
+        /* Deferer fancybox css loading */
+        $("head").append($("<link rel='stylesheet' href='<?php echo $block->getViewFileUrl("Designnbuy_Designidea::css/jquery.fancybox.min.css") ?>' type='text/css' media='screen' />"));
+        /* Deferer fancybox js loading */
+        require(['Designnbuy_Designidea/js/jquery.fancybox.min'], function(){});
+    });
+</script>
+<?php } ?>

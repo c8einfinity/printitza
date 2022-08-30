@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+ 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Designnbuy\Customer\Helper\Data">
+        <plugin name="Designnbuy-customer-image" type="Designnbuy\CustomerPhotoAlbum\Plugin\CustomerImage" sortOrder="1" />
+    </type>
+    <!-- <type name="Magento\Checkout\Block\Cart\Item\Renderer\Actions\Generic">
+        <plugin name="cart-edit-icon" type="Designnbuy\CustomerPhotoAlbum\Plugin\CartEdit" sortOrder="1" />
+    </type> -->
+    <type name="Magento\Catalog\Block\Product\View\Options\Type\Select">
+        <plugin name="aroundGetValuesHtmlDisable" type="Designnbuy\CustomerPhotoAlbum\Plugin\Product\View\Options\Type\Select" sortOrder="9" disabled="false"/>
+    </type>
+</config>

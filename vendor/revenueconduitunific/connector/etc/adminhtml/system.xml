@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="unific_settings" translate="label" sortOrder="1000">
+            <label>Unific</label>
+        </tab>
+
+        <section id="unific" translate="label" type="text" sortOrder="2000" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Connector Configuration</label>
+            <tab>unific_settings</tab>
+            <resource>Unific_Connector::config</resource>
+            <group id="connector" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Connector</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="integration" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Unific Integration Identifier</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                    <comment>This will be filled in by Unific API when the store is connected to Unific account.</comment>
+                </field>
+                <field id="log" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Connector Log</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="log_severity" translate="label" type="select" sortOrder="4" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Log Severity</label>
+                    <source_model>Unific\Connector\Model\Config\Source\Severity</source_model>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="hmac" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Security Settings</label>
+                <depends>
+                    <field id="unific/connector/enabled">1</field>
+                </depends>
+                <field id="hmacSecret" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>HMAC Secret Key</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="webhook" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Webhook Settings</label>
+                <depends>
+                    <field id="unific/connector/enabled">1</field>
+                </depends>
+                <field id="cart_endpoint" translate="label" type="text" sortOrder="2" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Unific Integration Endpoint - Checkouts</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="customer_endpoint" translate="label" type="text" sortOrder="2" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Unific Integration Endpoint - Customers</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="order_endpoint" translate="label" type="text" sortOrder="2" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Unific Integration Endpoint - Orders</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="category_endpoint" translate="label" type="text" sortOrder="2" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Unific Integration Endpoint - Categories</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="product_endpoint" translate="label" type="text" sortOrder="2" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Unific Integration Endpoint - Products</label>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="message_batch_size" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Message Batch Size</label>
+                    <source_model>Unific\Connector\Model\Config\Source\PageSize</source_model>
+                    <comment>Maximum number of messages that are loaded into the cron job process at any one time. It is
+                        recommended to keep this low for servers with low CPU and RAM to prevent cron jobs from using
+                        more memory than available and crashing the cron job. Lower values mean a slower sync.
+                    </comment>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="message_task_limit" translate="label comment" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Single Cron Run Message Limit</label>
+                    <source_model>Unific\Connector\Model\Config\Source\TaskLimit</source_model>
+                    <comment>Maximum number of message that can be sent during one cron job run. It is recommended to
+                        keep this low for smaller servers to prevent single cron jobs from running too long. Lower
+                        values mean a slower sync.
+                    </comment>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+
+
+                <field id="historical_batch_size" translate="label comment" type="select" sortOrder="50"
+                       showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Historical Message Batch Size</label>
+                    <source_model>Unific\Connector\Model\Config\Source\PageSize</source_model>
+                    <comment>Maximum number of message that can be sent during one cron job run. It is recommended to
+                        keep this low for smaller servers to prevent single cron jobs from running too long. Lower
+                        values mean a slower sync.
+                    </comment>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="historical_task_limit" translate="label comment" type="select" sortOrder="60"
+                       showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Single Cron Run Historical Message Limit</label>
+                    <source_model>Unific\Connector\Model\Config\Source\TaskLimit</source_model>
+                    <comment>Maximum number of message that can be sent during one cron job run. It is recommended to
+                        keep this low for smaller servers to prevent single cron jobs from running too long. Lower
+                        values mean a slower sync.
+                    </comment>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="historical_save_to_file" translate="label comment" type="select" sortOrder="70"
+                       showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Save Historical to File</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When set to true all historical messages will be saved to file instead of the queue and won't be sent to Unific directly. Directory location:  magento-root-directory/var/unific
+                    </comment>
+                    <depends>
+                        <field id="unific/connector/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="additional_data" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Collected Data Settings</label>
+                <depends>
+                    <field id="unific/connector/enabled">1</field>
+                </depends>
+                <group id="order_data" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Additional Order Data</label>
+                    <field id="order_payment_attributes" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1"
+                           showInStore="1">
+                        <label>Additional Order Payment Attributes</label>
+                        <comment>Include one per line additional field names for order payment you need to send to Unific</comment>
+                        <depends>
+                            <field id="unific/connector/enabled">1</field>
+                        </depends>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

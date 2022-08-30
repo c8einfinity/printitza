@@ -1,0 +1,168 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Product related templates template
+ *
+ * @var $block \Designnbuy\Template\Block\Catalog\Product\RelatedTemplates
+ */
+?>
+<?php 
+$lazyLoadHelper = $this->helper('WeltPixel\LazyLoading\Helper\Data');
+$lazyLodImgSrc = $lazyLoadHelper->getImageLoader();
+
+?>
+<?php $templates = []; ?>
+<?php if ($block->displayTemplates()) { ?>
+    <?php $_product = $block->getProduct(); ?>
+    <?php $_templateCollection = $block->getTemplateCollection(); ?>
+    <?php if ($_templateCollection->count()) { ?>
+        <?php //$templates = $_templateCollection->getData(); ?>
+        <div class="page-products wrapper grid products-grid templates-grid products-related" style="clear: both">
+            <div class="block related template-container">
+                <div class="block-title title">
+                    <h3>
+                        <span id="block-related-heading" role="heading"
+                              aria-level="2"><?php echo __('PLEASE CHOOSE A TEMPLATE TO CUSTOMIZE') ?></span>
+                    </h3>
+                </div>
+                <div class="products wrapper grid products-grid">
+                    <ul class="products list items product-items">
+                        <?php foreach ($_templateCollection as $_template): $templates[] = $_template->getData();?><?php if (!$_template->getSvg()): continue; endif; ?><?php $_templateUrl = $this->helper('Designnbuy\Canvas\Helper\Data')->getTemplatePersonalisePageUrl($_product, $_template); ?>
+                        <li class="item product product-item template-item template-holder-<?php echo $_template->getId() ?>">
+                            <div class="product-item-info" data-container="product-grid">
+                                <?php if ($featuredImage = $_template->getImage()): ?>
+                                <a class="product photo product-item-photo" href="#" title="<?php echo $block->escapeHtml($_template->getTitle()); ?>">
+                                    <span class="product-image-container" data-bind="style: {width: 240 + 'px'}">
+                                        <span class="product-image-wrapper" data-bind="style: {'padding-bottom': 298/240*100 + '%'}">
+                                            <img 
+                                                data-original="<?php echo $featuredImage ?>" 
+                                                data-src="<?php echo $featuredImage ?>" 
+                                                data-src-retina="<?php echo $featuredImage ?>" 
+                                                src="<?php /* @escapeNotVerified */ echo $lazyLodImgSrc; ?>"
+                                                alt="<?php echo $block->escapeHtml($_template->getTitle()); ?>" 
+                                                style="<?php echo ($_template->getHeight() > $_template->getWidth()) ? "height:100%;width:auto" : "height:auto;width:100%" ?>" 
+                                                class="product-image-photo lazy"
+                                            />
+                                        </span>
+                                    </span>
+                                </a>
+                                <?php endif; ?>
+                                <div class="product details product-item-details"><strong class="product name product-item-name"><a class="product-item-link" href="#"><?php echo $block->escapeHtml($_template->getTitle()); ?></a></strong>
+                                    <div class="price-box">
+                                        <div class="product actions">
+                                            <div class="actions-primary">
+                                                    <button type="submit" title="<?php /* @escapeNotVerified */ echo $block->escapeHtml($_template->getTitle()) ?>" id="template" class="action tocart primary template" data-mage-init='{ "Designnbuy_Canvas/js/customize": { "action": "<?php echo $block->escapeUrl($_templateUrl) ?>" } }'>
+                                                        <span><?php /* @escapeNotVerified */ echo __('Personalize') ?></span>
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="message-error error message template-error-message" style="display: none;" data-ui-id="message-error">
+            <div><?php echo __('No Templates Found.') ?></div>
+        </div>
+    <?php } else { ?>
+        <!--<div class="message-error error message no-template-error-message" data-ui-id="message-error">
+            <div><?php /*echo __('No Templates Found') */?></div>
+        </div>-->
+    <?php } ?>
+<?php } ?>
+<?php
+$option = $block->getSizeOption();
+?>
+<script type="text/javascript">
+    require([
+            'jquery',
+            'mage/mage',
+            'mage/validation',
+            'Magento_Catalog/js/catalog-add-to-cart'
+        ],
+        function ($,mage,validation,addtocart) {
+            'use strict';
+            var buttonpressed;
+            var dataForm = $('#product_addtocart_form');
+            var ignore = null;
+
+            dataForm.mage('validation', {
+                ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+            }).find('input:text').attr('autocomplete', 'off');
+
+            $('.related.template-container .product-items .product-image-photo').click(function() {
+                jQuery(this).parents(".product-item-info").find(".product-item-details .actions-primary button.tocart.template").click();
+            });
+            $('button[type=submit]').click(function() {
+                buttonpressed = $(this).attr('id')
+            });
+
+            dataForm.on("submit", function(evt){
+                evt.preventDefault();
+                if(dataForm.validation('isValid')){
+                    this.submit();
+                }
+            });
+
+            $(document).ready(function () {
+                var option = <?php echo json_encode($option); ?>;
+                var templates = <?php echo json_encode($templates); ?>;
+                console.log('templates',templates);
+                console.log('option',option);
+                //if(size){
+                var sizeId = option.id;
+                if($('#select_'+sizeId)){
+                    jQuery("#select_"+sizeId).change(function() {
+                        $('body').trigger('processStart');
+                        var sizeOptionId = jQuery('option:selected', this).val();
+                        console.log('sizeOptionId',sizeOptionId);
+                        if(sizeOptionId == undefined || sizeOptionId == ''){
+                            $('.template-error-message').show();
+                        }
+                        var isTemplate = false;
+                        $.each(templates, function(i, template) {
+                            var selectedSize = option.size[sizeOptionId];
+                            console.log('selectedSize',selectedSize);
+                            if(selectedSize !== undefined){
+                                var templatWidth = parseFloat(template.width).toFixed(4);
+                                var templatHeight = parseFloat(template.height).toFixed(4);
+                                var optionWidth = parseFloat(selectedSize[0]).toFixed(4);
+                                var optionHeight = parseFloat(selectedSize[1]).toFixed(4);
+                                if(templatWidth == optionWidth && templatHeight == optionHeight){
+                                    isTemplate = true;
+                                    $('.template-holder-'+template.entity_id).show();
+                                } else {
+                                    $('.template-holder-'+template.entity_id).hide();
+                                }
+                                $('.template-error-message').hide();
+                            } else {
+                                $('.template-holder-'+template.entity_id).hide();
+                            }
+                        });
+                        if(isTemplate == false){
+                            $('.template-error-message').show();
+                        }
+                        $('body').trigger('processStop');
+                    });
+                }
+
+                // }
+            });
+        });
+</script>
+<style type="text/css">
+    .template-container   .product-image-photo {box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.3); border: 1px solid #bbbbbb;}
+</style>
+
+

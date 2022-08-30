@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <canvas>
+            <configuration>
+                <base_unit>in</base_unit>
+                <output_format>both</output_format>
+                <order_information>xml</order_information>
+                <image_dpi>300</image_dpi>
+                <vdp>1</vdp>
+                <top_safe_margin>0</top_safe_margin>
+                <right_safe_margin>0</right_safe_margin>
+                <bottom_safe_margin>0</bottom_safe_margin>
+                <left_safe_margin>0</left_safe_margin>
+                <top_bleed_margin>0</top_bleed_margin>
+                <right_bleed_margin>0</right_bleed_margin>
+                <bottom_bleed_margin>0</bottom_bleed_margin>
+                <left_bleed_margin>0</left_bleed_margin>
+                <element_color_picker_type>1</element_color_picker_type>
+                <bg_color_picker_type>1</bg_color_picker_type>
+            </configuration>
+            <index_page>
+                <title>Designer Tool</title>
+            </index_page>
+        </canvas>
+    </default>
+</config>

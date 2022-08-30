@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="formkey"/>
+    <head>
+    	<title>Templates Manager</title>
+    </head>
+    <body>
+    	<referenceBlock name="menu">
+    	    <action method="setActive">
+    	        <argument name="itemId" xsi:type="string">Designnbuy_Template::Templates</argument>
+    	    </action>
+    	</referenceBlock>
+    	<referenceBlock name="page.title">
+    	    <action method="setPageTitle">
+    	        <argument name="pageTitle" xsi:type="string">Templates Manager</argument>
+    	    </action>
+    	</referenceBlock>
+		<referenceContainer name="page.main.actions">
+			<block class="Magento\Backend\Block\Store\Switcher" name="adminhtml.report.grid.store_switcher" as="store_switcher">
+				<arguments>
+					<argument name="use_confirm" xsi:type="string">0</argument>
+					<argument name="switch_websites" xsi:type="string">1</argument>
+					<argument name="switch_store_groups" xsi:type="string">1</argument>
+					<argument name="switch_store_views" xsi:type="string">1</argument>
+					<argument name="default_selection_name" xsi:type="string" translate="true">All Websites</argument>
+				</arguments>
+			</block>
+		</referenceContainer>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Template\Block\Adminhtml\Template" name="admin.block.template.grid.container"/>
+        </referenceContainer>
+    </body>
+</page>

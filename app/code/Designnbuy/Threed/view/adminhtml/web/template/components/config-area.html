@@ -1,0 +1,57 @@
+<div class="admin__field-control">
+    <fieldset class="admin__fieldset">
+        <div class="admin__field">
+            <div class="admin__field-control">
+                <div class="admin__control-table-wrapper">
+                    <form id="threed_configure_area" name="threed_configure_area">
+                        <table class="admin__dynamic-rows admin__control-table">
+                            <thead>
+                            <tr>
+                                <th>X</th>
+                                <th>Y</th>
+                                <th>Width</th>
+                                <th>Height</th>
+                                <th>Save</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="data-row">
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="pos_x" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="pos_y" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="width" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="admin__field-control">
+                                        <input class="admin__control-text" name="height" type="text">
+                                    </div>
+                                </td>
+                                <td>
+                                <div class="admin__field-control">
+                                    <button class="action-primary" type="button"><span>Save</span></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="modal-component">
+        <canvas  afterRender="onCanvasRender" style="box-shadow:rgba(0,0,0,0.5) 0 0 5px" id="threeddesign_canvas" width="500" height="500" ></canvas>
+    </div>
+
+
+</div>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Layout</title>
+        <css src="Designnbuy_Template::css/custom.css"/>
+    </head>
+    <!--<body>
+        <referenceBlock name="menu">
+            <action method="setActive">
+                <argument name="itemId" xsi:type="string">Designnbuy_Template::Templates</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Template\Block\Adminhtml\Template\Edit" name="banner_edit"/>
+        </referenceContainer>
+        <referenceContainer name="page.main.actions">
+            <block class="Magento\Backend\Block\Store\Switcher" name="store_switcher">
+                <action method="setUseConfirm">
+                    <argument name="params" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Designnbuy\Template\Block\Adminhtml\Template\Edit\Tabs" name="banner_edit_tabs">
+            </block>
+        </referenceContainer>
+    </body>-->
+    <update handle="template_template_new"/>
+    <update handle="styles"/>
+    <body>
+        <referenceBlock name="page.title">
+            <action method="setTitleClass">
+                <argument name="class" xsi:type="string">complex</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="page.main.actions">
+            <block class="Magento\Backend\Block\Store\Switcher" name="store_switcher">
+                <action method="setUseConfirm">
+                    <argument name="params" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <!--<referenceContainer name="content">
+            <uiComponent name="template_form"/>
+        </referenceContainer>
+        <referenceContainer name="template_form"></referenceContainer>-->
+    </body>
+</page>

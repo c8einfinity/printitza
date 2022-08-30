@@ -1,0 +1,43 @@
+<?php  $_report = $block->getOrderCommissionDashboard(); ?>
+<table class="data-grid">
+	<thead>
+        <tr>
+            <th class="data-grid-th" width="250px"><span><?php echo __('Report Dashboard');?></span></th>
+            <th></th>
+        </tr>
+    </thead>
+	<tbody>
+		<tr>
+			<td class="label"><?php echo __('Commission Report For');?></td>
+			<td class="value"><b><?php echo $_report['data_for']; ?></b></td>
+		</tr>				
+		<tr>
+			<td class="label"><?php echo __('Total Commission');?></td>
+			<td class="value"><?php echo $block->setFormatedAmount($_report['total_commission'])
+			; ?></td>
+		</tr>
+		<tr>
+			<td class="label"><?php echo __('Total Paid Commission');?></td>
+			<td class="value"><?php echo $block->setFormatedAmount($_report['total_commission_paid']); ?></td>
+		</tr>
+		<tr>
+			<td class="label"><?php echo __('Total Pending Commission');?></td>
+			<td class="value"><?php echo $block->setFormatedAmount($_report['total_commission_pending']); ?></td>
+		</tr>
+		<tr>
+			<td class="label"><?php echo __('Canceled Commission Amount');?> </td>
+			<td class="value"> <?php echo $block->setFormatedAmount($_report['canceled_commission']); ?></td>
+		</tr>
+		<tr>
+			<td class="label"><?php echo __('Last Payment Date');?></td>
+			<td class="value">
+				<?php if($_report['last_payment_date'] != ""): ?>
+					<?php //echo $block->setFormatedDate($_report['last_payment_date']);?>
+					<?php echo $_report['last_payment_date'];?>
+				<?php endif; ?>
+			</td>
+		</tr>	
+	</tbody>
+</table>
+<br />
+<br />

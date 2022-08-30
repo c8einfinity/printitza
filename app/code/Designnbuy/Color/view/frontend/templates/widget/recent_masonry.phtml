@@ -1,0 +1,101 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Color recent colors widget
+ *
+ * @var $block \Designnbuy\Color\Block\Widget\Recent
+ */
+?>
+
+<?php
+    $_colorCollection = $block->getColorCollection();
+?>
+<?php if ($_colorCollection->count()) { ?>
+<div class="color-list-wrapper color-widget-recent color-widget-recent-masonry">
+    <h3 class="title"><?php echo $block->escapeHtml($block->getTitle()) ?></h3>
+    <ul class="color-list clearfix">
+        <?php foreach ($_colorCollection as $_color) { ?>
+            <?php
+                $_colorUrl = $_color->getColorUrl();
+                $_colorName = $block->escapeHtml($_color->getTitle(), null, true);
+            ?>
+            <li class="color-holder color-holder-<?php echo $_color->getId() ?>">
+                <div class="color-header">
+
+                    <div class="color-title-holder clearfix">
+                        <div class="color-title">
+                            <a class="color-item-link"
+                               href="<?php echo $_colorUrl ?>">
+                                <?php echo $_colorName; ?>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="color-info clear">
+                        <div class="item color-posed-date">
+                            <span class="label"><?php echo __('Colored:') ?></span>
+                            <span class="value"><?php echo $_color->getPublishDate('F d, Y') ?></span>
+                        </div>
+                        <?php if ($_categoriesCount = $_color->getCategoriesCount()) { ?>
+                        <div class="dash">|</div>
+                        <div class="item color-categories">
+                            <span class="label"><?php echo __('Categories:') ?></span>
+                            <?php $n = 0; foreach($_color->getParentCategories() as $ct) { $n++; ?>
+                                <a title="<?php echo $block->escapeHtml($ct->getTitle()) ?>" href="<?php echo $ct->getCategoryUrl() ?>"><?php echo $block->escapeHtml($ct->getTitle()) ?></a>
+                                <?php if ($n != $_categoriesCount) { ?>, <?php } ?>
+                            <?php } ?>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="color-content">
+                    <div class="color-description clearfix">
+                        <?php if ($featuredImage = $_color->getImage()) { ?>
+                        <div class="color-ftimg-hld">
+                            <a href="<?php echo $_colorUrl ?>" title="<?php echo $_colorName ?>">
+                                <img src="<?php echo $featuredImage ?>" alt="<?php echo $_colorName ?>" />
+                            </a>
+                        </div>
+                        <?php } ?>
+                        <?php if ($content = $block->getShorContent($_color)) { ?>
+                            <div class="color-text-hld clearfix">
+                                <?php echo $content ?>
+                            </div>
+                        <?php } ?>
+                        <a class="color-read-more" href="<?php echo $_colorUrl ?>" title="<?php echo $_colorName ?>">
+                           <?php echo __('Read more &#187;') ?>
+                        </a>
+                    </div>
+                </div>
+                <div class="color-footer">
+
+                </div>
+            </li>
+
+        <?php } ?>
+    </ul>
+</div>
+<script>
+requirejs( [ 'require', 'jquery', 'Designnbuy_Color/js/lib/masonry.pkgd.min' ],
+function( require, $, Masonry ) {
+    require( [ 'jquery-bridget/jquery-bridget' ],
+    function( jQueryBridget ) {
+        jQueryBridget( 'masonry', Masonry, $ );
+        $('.color-list').masonry({
+            itemSelector: '.color-holder',
+            percentPosition: true
+        })
+    });
+});
+<?php /* more info http://masonry.desandro.com/extras.html */ ?>
+</script>
+
+<?php } ?>

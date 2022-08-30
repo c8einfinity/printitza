@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page_types xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_types.xsd">
+    <type id="designnbuy_orderticket_guest_create" label="Guest Order Create Return"/>
+    <type id="designnbuy_orderticket_guest_returns" label="Guest Order Order Ticket View"/>
+    <type id="designnbuy_orderticket_guest_view" label="Guest Order View Order Ticket"/>
+    <type id="designnbuy_orderticket_returns_create" label="Customer My Order Ticket Create"/>
+    <type id="designnbuy_orderticket_returns_history" label="Customer My Order Ticket History"/>
+    <type id="designnbuy_orderticket_returns_returns" label="Customer My Account Order Order Ticket View"/>
+    <type id="designnbuy_orderticket_returns_view" label="Customer My Account Order Ticket View"/>
+    <type id="designnbuy_orderticket_tracking_package" label="Shipment Package Popup"/>
+    <type id="designnbuy_orderticket_tracking_packageprint" label="Shipment Print Package Popup"/>
+    <type id="designnbuy_orderticket_tracking_popup" label="Shipment Tracking Popup"/>
+    <type id="designnbuy_orderticket_tracking_printlable" label="Shipment Print Label Popup"/>
+</page_types>

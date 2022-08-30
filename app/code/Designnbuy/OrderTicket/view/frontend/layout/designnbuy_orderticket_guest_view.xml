@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <update handle="designnbuy_orderticket_returns_view_handle"/>
+    <update handle="sales_order_info_orderticket_links_guest"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Sales\Block\Order\Info" as="info" name="sales.order.info">
+                <block class="Magento\Sales\Block\Order\Info\Buttons" as="buttons" name="sales.order.info.buttons" cacheable="false">
+                    <block class="Designnbuy\OrderTicket\Block\Order\Button" name="magento.orderticket.info.button" template="order/button.phtml"/>
+                </block>
+            </block>
+            <block class="Designnbuy\OrderTicket\Block\Returns\View" name="orderticket.returns.history" cacheable="false">
+                <container name="orderticket.returns.history.info" as="info" label="View Order Ticket"/>
+            </block>
+            <block class="Designnbuy\OrderTicket\Block\Returns\View" name="customer.account.link.back" template="Magento_Customer::account/link/back.phtml" cacheable="false"/>
+        </referenceContainer>
+        <block class="Designnbuy\OrderTicket\Block\Returns\Tracking" name="orderticket.returns.tracking" as="tracking" cacheable="false"/>
+    </body>
+</page>

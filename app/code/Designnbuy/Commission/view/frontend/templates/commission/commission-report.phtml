@@ -1,0 +1,169 @@
+<?php $collection = $block->getCollection(); ?>
+<div class="marketplace-search toolbar">
+    <div class="modes">
+        <div class="search-wrapper">
+            <!--<label><?php /*echo __('Design Id'); */?>:</label>-->
+            <?php $filterDesignId = $this->getRequest()->getParam('design_id');?>
+            <input  placeholder="<?php echo __('Design Id'); ?>" type="text" value="<?php if($filterDesignId): echo $filterDesignId; endif;?>" name="design_id" id="design_id" class="input-text">
+        </div>
+        <div class="search-wrapper">
+            <label><?php echo __('Status'); ?>:</label>
+            <?php $orderStatuses = $block->getOrderStatuses(); ?>
+            <?php $status = $this->getRequest()->getParam('status');?>
+            <select name="status" id="status" class="sorter-options">
+                <?php foreach($orderStatuses as $option):?>
+                    <option value="<?php echo $option['value'];?>" <?php if($status == $option['value']):?> selected="selected" <?php endif; ?>><?php echo $option['label'];?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
+        <div class="button-wrapper">
+            <button id="filter" class="filter-button" title="Filter">
+                <span><?php echo __('Filter'); ?></span>
+            </button>
+            <button id="resetForm" type="button" title="Reset Filter" class="button">
+                <span><?php echo __('Reset Filter'); ?></span>
+            </button>
+        </div>
+    </div>
+    <div class="toolbar-sorter sorter">
+        <label><?php echo __('Sort By'); ?></label>
+        <?php $shortingOptions = $block->designReportShortingOption(); ?>
+        <?php $shortBy = $this->getRequest()->getParam('report_list_order');?>
+        <select name="sort_by" id="sortBy" class="sorter-options">
+            <?php foreach($shortingOptions as $option):?>
+                <option value="<?php echo $option['value'];?>" <?php if($shortBy == $option['value']):?> selected="selected" <?php endif; ?>><?php echo $option['label'];?></option>
+            <?php endforeach;?>
+        </select>
+
+        <?php $shortingDir = $this->getRequest()->getParam('design_list_dir');?>
+        <?php if($shortingDir == 'desc'):?>
+            <a id="direction_shorting" title="Set Ascending Direction" href="#" data-value="asc"  class="action sorter-action sort-asc">
+                <span><?php echo __('Set Direction');?></span>
+            </a>
+        <?php else:?>
+            <a id="direction_shorting" title="Set Descending Direction" href="#" data-value="desc"  class="action sorter-action sort-desc">
+                <span><?php echo __('Set Direction');?></span>
+            </a>
+        <?php endif;?>
+    </div>
+</div>
+<?php if (count($collection) == 0): ?>
+    	<div class="message info empty"><div><?php echo __('We can\'t find report matching the selection.') ?></div></div>
+<?php else: ?>
+	<div class="table-wrapper designer-list-wrapper">		
+		<table class="items data table">
+			<thead>
+			<tr>
+				<th class="col" scope="col"><span><?php echo __('Order #'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Created At'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Design Id'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Commission Earned'); ?></span></th>
+				<th class="col" scope="col"><span><?php echo __('Order Status'); ?></span></th>				
+			</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($collection as $order): ?>
+					<tr>
+                        <td data-th="Order #" class="col"><span><?php echo $order->getOrderId(); ?></span></td>
+                        <td data-th="Created At" class="col"><span><?php echo $order->getCreatedAt(); ?></span></td>
+                        <td data-th="Design Id" class="col"><span><?php echo $order->getItemId(); ?></span></td>
+                        <td data-th="Commission Earned" class="col"><span><?php echo $block->setFormatedAmount($order->getCommissionAmount()); ?></span></td>
+                        <td data-th="Order Status" class="col"><span><?php echo $order->getStatus(); ?></span></td>
+					</tr>
+		            <?php endforeach; ?>
+			</tbody>
+		</table>
+    </div>
+    <?php if($block->getPagerHtml()): ?>
+	    	<div class="designer-commission-report-toolbar toolbar"><?php echo $block->getPagerHtml(); ?></div>
+	<?php endif; ?>
+<?php endif; ?>
+
+
+<script type="text/javascript">
+    require(['jquery'], function($){
+        var baseUrl = '<?php echo $this->helper('Designnbuy\Commission\Helper\Data')->getCommissionReportUrl();?>';
+
+        $('#resetForm').on('click', function () {
+            window.location.href = baseUrl;
+        });
+
+        var directionDefault = 'desc';
+        var statusDefault = '';
+
+        $('#filter').on('click', function () {
+            var designIdField = $('#design_id');
+            _processInput(designIdField, 'design_id', '');
+        });
+
+        $('#direction_shorting').on('click', function () {
+            _processLink(this, 'design_list_dir', '');
+        });
+
+        $('#status').on('change', function () {
+            _processSelect(this,'status', statusDefault);
+        });
+
+        /**
+         * @param {jQuery.Event} event
+         * @private
+         */
+        function _processInput(event, paramName, defaultValue) {
+            changeUrl(
+                paramName,
+                event.val(),
+                defaultValue
+            );
+        }
+
+        /**
+         * @param {jQuery.Event} event
+         * @private
+         */
+        function _processSelect(event, paramName, defaultValue) {
+            changeUrl(
+                paramName,
+                event.options[event.selectedIndex].value,
+                defaultValue
+            );
+        }
+
+        /**
+         * @param {jQuery.Event} event
+         * @private
+         */
+        function _processLink(event, paramName, defaultValue) {
+            //event.preventDefault();
+            changeUrl(
+                paramName,
+                $(event).data('value'),
+                defaultValue
+            );
+        }
+
+        function changeUrl(paramName, paramValue, defaultValue) {
+            var loc = window.location;
+            var url = $(loc).attr('href');
+            var decode = window.decodeURIComponent,
+                urlPaths = url.split('?'),
+                baseUrl = urlPaths[0],
+                urlParams = urlPaths[1] ? urlPaths[1].split('&') : [],
+                paramData = {},
+                parameters, i;
+
+            for (i = 0; i < urlParams.length; i++) {
+                parameters = urlParams[i].split('=');
+                paramData[decode(parameters[0])] = parameters[1] !== undefined ?
+                    decode(parameters[1].replace(/\+/g, '%20')) :
+                    '';
+            }
+            paramData[paramName] = paramValue;
+
+            if (paramValue == defaultValue) { //eslint-disable-line eqeqeq
+                delete paramData[paramName];
+            }
+            paramData = $.param(paramData);
+            location.href = baseUrl + (paramData.length ? '?' + paramData : '');
+        }
+    });
+</script>

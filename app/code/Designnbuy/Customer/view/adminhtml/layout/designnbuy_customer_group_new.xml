@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="jquery/fileUploader/css/jquery.fileupload-ui.css"/>
+        <link src="jquery/fileUploader/bootstrap.js"/>
+        <script src="Designnbuy_Customer::js/notLoginGroup.js"/>
+    </head>
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Designnbuy\Customer\Block\Adminhtml\Group\Edit" name="designnbuy_customer_group_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Designnbuy\Customer\Block\Adminhtml\Group\Edit\Tabs" name="designnbuy_customer_group_edit_tabs">
+                <block class="Designnbuy\Customer\Block\Adminhtml\Group\Edit\Tab\Main" name="designnbuy_customer_group_edit_tab_main"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">designnbuy_customer_group_edit_tab_main</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">attachment_products</argument>
+                    <argument name="block" xsi:type="array">
+                        <item name="label" xsi:type="string">Select Products</item>
+                        <item name="title" xsi:type="string">Select Products</item>
+                        <item name="url" xsi:type="helper" helper="Designnbuy\Customer\Helper\Data::getProductsGridUrl"></item>
+                        <item name="class" xsi:type="string">ajax</item>
+                    </argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">attachment_templates</argument>
+                    <argument name="block" xsi:type="array">
+                        <item name="label" xsi:type="string">Select Templates</item>
+                        <item name="title" xsi:type="string">Select Templates</item>
+                        <item name="url" xsi:type="helper" helper="Designnbuy\Customer\Helper\Data::getTemplateGridUrl"></item>
+                        <item name="class" xsi:type="string">ajax</item>
+                    </argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">attachment_designideas</argument>
+                    <argument name="block" xsi:type="array">
+                        <item name="label" xsi:type="string">Select Editable Artworks</item>
+                        <item name="title" xsi:type="string">Select Editable Artworks</item>
+                        <item name="url" xsi:type="helper" helper="Designnbuy\Customer\Helper\Data::getDesignideasGridUrl"></item>
+                        <item name="class" xsi:type="string">ajax</item>
+                    </argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

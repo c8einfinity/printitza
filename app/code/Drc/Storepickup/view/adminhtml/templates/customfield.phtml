@@ -1,0 +1,98 @@
+<?php
+/**
+ * @author Drc Systems India Pvt Ltd.
+*/
+?>
+<?php $apiKey           = $this->helper('Drc\Storepickup\Helper\Data')->
+getConfig('storepickup/general/google_api_key'); ?>
+<?php if (isset($apiKey)) {?>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=
+<?php echo $apiKey;?>&callback=initMap" async defer></script>
+<?php } else { ?>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false?" src_type="url"></script>
+<?php } ?>
+
+<div class="admin__field field">
+    <label class="label admin__field-label">
+        <span></span>
+    </label>
+    <div id="map_canvas"></div> 
+</div>	
+<?php
+$markerImage        = $this->helper('Drc\Storepickup\Helper\Data')->getConfig('carriers/storepickup/upload_image_id');
+$objectManager    = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager     = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currentStore     = $storeManager->getStore();
+if ($markerImage) {
+    $markerImageUrl   = $currentStore->
+    getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'marker/'.$markerImage;
+} else {
+    $markerImageUrl   = '';
+}
+?>
+
+<script>
+    var jq = jQuery.noConflict();
+    var map;
+    var marker;
+    var latitudeTextBox     = jq("#storelocator_latitude");
+    var longitudeTextBox    = jq("#storelocator_longitude");
+    var markerimage         = "<?php echo $markerImageUrl;?>";
+    
+    function initialize() {
+        if(latitudeTextBox.val() && longitudeTextBox.val()){
+            latitudeTextBox     = latitudeTextBox.val();
+            longitudeTextBox    = longitudeTextBox.val();
+        } else {
+            latitudeTextBox     = 23.0225;
+            longitudeTextBox    = 72.5714;
+        }
+        
+        var centerLatlng = new google.maps.LatLng(latitudeTextBox, longitudeTextBox);
+        var mapOptions = {
+            zoom: 15,
+            center: centerLatlng,
+            scrollwheel: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: true,
+            mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DEFAULT },
+            navigationControl: true,
+            navigationControlOptions: { style: google.maps.NavigationControlStyle.DEFAULT }
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        
+        var icon = {
+            url: markerimage, // url
+            scaledSize: new google.maps.Size(35, 35), // scaled size
+        };
+        
+        marker = new google.maps.Marker({
+            draggable: true,
+            map: map,
+            position: centerLatlng,
+            icon : icon
+        });
+        
+        google.maps.event.addListener(marker, 'dragend', function() {
+            var curLatLng = marker.getPosition();
+            jq("#storelocator_latitude").val(curLatLng.lat());
+            jq("#storelocator_longitude").val(curLatLng.lng());
+        });
+        
+        google.maps.event.trigger(marker, "click");
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+    jq("#storelocator_tabs_drc_storepickup_storelocator_edit_tab_storelocator").parent("li").click(function() {
+        var center = map.getCenter();
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(center);
+    });
+    
+</script>
+<style>
+#map_canvas {
+    width: 450px;
+    height: 400px;
+} 	
+</style>

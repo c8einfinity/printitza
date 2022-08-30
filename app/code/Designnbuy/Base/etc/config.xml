@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <base>
+            <watermark>
+                <status>1</status>
+                <type>image</type>
+                <image>default/logo.jpg</image>
+                <text>Design N Buy</text>
+            </watermark>
+            <output>
+                <type>rgbcmyk</type>
+            </output>
+            <social>
+                <flickr></flickr>
+                <instagram></instagram>
+                <google_drive></google_drive>
+            </social>
+            <studio_button_label>
+                <personolize_button>Customize Template</personolize_button>
+            </studio_button_label>
+        </base>
+        <!--<dev>
+            <js>
+                <minify_exclude>
+                    /js/
+                </minify_exclude>
+            </js>
+        </dev>-->
+    </default>
+</config>

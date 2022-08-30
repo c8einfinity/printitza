@@ -1,0 +1,50 @@
+<?php
+// @codingStandardsIgnoreFile
+?>
+<div>
+    <div>
+        <?php echo $this->getChildHtml('weltpixelContactPage'); ?>
+    </div>
+    <div>
+        <div>
+            <h3 style="margin-bottom: 0px;"><?php /* @escapeNotVerified */ echo __('Request a custom quote') ?></h3>
+        </div>
+        <form style="width:100%; max-width:400px; min-width:300px; margin-top:0px;"
+              action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
+              id="contact-form"
+              method="post"
+              data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+              data-mage-init='{"validation":{}}'>
+            <fieldset style="border-width: 0px; padding-left: 0px; margin-left: 0px;">
+                <div class="field name required">
+                    <label class="label" for="name"><span><?php /* @escapeNotVerified */ echo __('Name') ?></span></label>
+                    <div class="control">
+                        <input style="width:100%; max-width:400px; min-width:300px; height: 25px;" name="name" id="name" title="<?php /* @escapeNotVerified */ echo __('Names') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+                    </div>
+                </div>
+                <div class="field email required">
+                    <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+                    <div class="control">
+                        <input style="width:100%; max-width:400px; min-width:300px; height: 25px;" name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                    </div>
+                </div>
+          
+                <div class="field comment required">
+                    <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('Custom Quote Specifications') ?></span></label>
+                    <div class="control">
+                        <textarea style="width:100%; max-width:400px min-width:300px; height: 50px;" name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('Quote request details') ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
+                    </div>
+                </div>
+                <?php echo $block->getChildHtml('form.additional.info'); ?>
+            </fieldset>
+            <div>
+                <div>
+                    <input type="hidden" name="hideit" id="hideit" value="" />
+                    <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
+                        <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

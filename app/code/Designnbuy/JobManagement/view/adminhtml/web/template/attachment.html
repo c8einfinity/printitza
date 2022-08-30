@@ -1,0 +1,16 @@
+<div class="file-uploader-summary">
+    <div class="file-uploader-preview">
+        <a attr="href: $file.currentFile" target="_blank">
+            <img
+                class="preview-image"
+                tabindex="0"
+                event="load: $parent.onPreviewLoad.bind($parent)"
+                attr="
+                    src: $parent.getFilePreview($file),
+                    alt: $file.name">
+        </a>
+    </div>
+</div>
+<style type="text/css">
+    .file-uploader-button{display: none;}
+</style>

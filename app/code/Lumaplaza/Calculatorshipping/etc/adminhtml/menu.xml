@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Lumaplaza_Calculatorshipping::calculatorshipping" title="Shipping Calculator" module="Lumaplaza_Calculatorshipping" sortOrder="30" action="adminhtml/system_config/edit/section/calculatorshipping" resource="Lumaplaza_Calculatorshipping::config_calculatorshipping"/>
+	</menu>
+</config>

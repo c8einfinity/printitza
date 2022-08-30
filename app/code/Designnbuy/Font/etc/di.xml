@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Designnbuy\Font\Api\FontManagementInterface" type="Designnbuy\Font\Model\FontManagement" />
+    <preference for="Designnbuy\Font\Api\CategoryManagementInterface" type="Designnbuy\Font\Model\CategoryManagement" />
+    <!--<preference for="Magento\Sitemap\Model\Sitemap" type="Designnbuy\Font\Model\Sitemap" />-->
+    <virtualType name="Designnbuy\Font\ImageUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/font/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/font</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="woff" xsi:type="string">woff</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\Woff">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\ImageUpload</argument>
+        </arguments>
+    </type>
+    <virtualType name="Designnbuy\Font\JsUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/font/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/font</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="js" xsi:type="string">js</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\Js">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\JsUpload</argument>
+        </arguments>
+    </type>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\Gallery">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\ImageUpload</argument>
+        </arguments>
+    </type>
+    <virtualType name="Designnbuy\Font\TtfUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/font/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/font</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="ttf" xsi:type="string">ttf</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\Ttf">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\TtfUpload</argument>
+        </arguments>
+    </type>
+    <virtualType name="Designnbuy\Font\TtfBoldUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/font/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/font</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="ttf" xsi:type="string">ttfbold</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\TtfBold">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\TtfUpload</argument>
+        </arguments>
+    </type>
+    <virtualType name="Designnbuy\Font\TtfItalicUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/font/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/font</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="ttf" xsi:type="string">ttfitalic</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\TtfItalic">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\TtfUpload</argument>
+        </arguments>
+    </type>
+    <virtualType name="Designnbuy\Font\TtfBoldItalicUpload" type="Designnbuy\Base\Model\FileUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">designnbuy/font/tmp</argument>
+            <argument name="basePath" xsi:type="string">designnbuy/font</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="ttf" xsi:type="string">ttfbolditalic</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Designnbuy\Font\Controller\Adminhtml\Font\Upload\TtfBoldItalic">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Designnbuy\Font\TtfUpload</argument>
+        </arguments>
+    </type>
+</config>

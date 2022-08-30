@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright © 2017 Ajay Makwana (ajay.makwana@rightwaysolution.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Life is a code
+ */
+?>
+<?php
+/**
+ * Designidea designidea list template
+ *
+ * @var $block \Designnbuy\Designidea\Block\Designidea\DesignideaList
+ */
+?>
+<?php
+$_designideaCollection = $block->getDesignideaCollection();
+?>
+<?php if (!$_designideaCollection->count()): ?>
+    <div class="design-idea-lists message info empty"><div><?php echo __('We can\'t find editable artwork matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <div class="page-products design-idea-lists">
+        <div class="products page-products wrapper grid products-grid designidea-list-wrapper">
+            <?php $iterator = 1; ?>
+            <ol class="designidea-list products list items product-items">
+                <?php foreach ($_designideaCollection as $_designidea): ?>
+                <?php
+                $activeDesigner = $this->helper('Designnbuy\Merchandise\Helper\Data')->isModuleEnabled('Designnbuy_Designer');
+                
+                if($activeDesigner == 1):
+                    $designerId = $_designidea->getDesignerId();
+                    if($designerId):
+                        if($_designidea->getMarketplaceStatus() != 3){
+                            continue;
+                        }
+                    endif;
+                endif;
+                ?>
+                    <?php echo $block->getDesignideaHtml($_designidea); ?>
+                
+                <?php endforeach; ?>
+            </ol>
+        </div>
+        <?php echo $block->getToolbarHtml() ?>
+    </div>
+<?php endif; ?>

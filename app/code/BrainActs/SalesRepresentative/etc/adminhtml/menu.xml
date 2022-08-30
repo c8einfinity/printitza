@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © BrainActs Commerce OÜ. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <!-- <add id="BrainActs_SalesRepresentative::sales_representative_main_dashboard" title="Sales Dashboard" translate="title" module="BrainActs_SalesRepresentative" sortOrder="2" action="salesrep/dashboard" resource="BrainActs_SalesRepresentative::sales_representative_dashboard"/> -->
+
+        <add id="BrainActs_SalesRepresentative::sales_representative" title="Representative" translate="title" module="BrainActs_SalesRepresentative" sortOrder="20" parent="Magento_Sales::sales" resource="BrainActs_SalesRepresentative::sales_representative" />
+        <add id="BrainActs_SalesRepresentative::sales_representative_dashboard" title="Dashboard" translate="title" module="BrainActs_SalesRepresentative" sortOrder="10" parent="BrainActs_SalesRepresentative::sales_representative" action="salesrep/dashboard" resource="BrainActs_SalesRepresentative::sales_representative_dashboard"/>
+        <add id="BrainActs_SalesRepresentative::sales_representative_withdrawals" title="Withdrawals" translate="title" module="BrainActs_SalesRepresentative" sortOrder="20" parent="BrainActs_SalesRepresentative::sales_representative" action="salesrep/withdrawals" resource="BrainActs_SalesRepresentative::sales_representative_withdrawals"/>
+        <add id="BrainActs_SalesRepresentative::sales_representative_member" title="Members" translate="title" module="BrainActs_SalesRepresentative" sortOrder="30" parent="BrainActs_SalesRepresentative::sales_representative" action="salesrep/member" resource="BrainActs_SalesRepresentative::sales_representative_member"/>
+        <add id="BrainActs_SalesRepresentative::sales_representative_customers" title="Customer Requests" translate="title" module="BrainActs_SalesRepresentative" sortOrder="40" parent="BrainActs_SalesRepresentative::sales_representative" action="salesrep/customer" resource="BrainActs_SalesRepresentative::sales_representative_customers"/>
+
+        <add id="BrainActs_SalesRepresentative::report" title="Sales Representative" translate="title" module="BrainActs_SalesRepresentative" sortOrder="1" parent="Magento_Reports::report" resource="BrainActs_SalesRepresentative::report"/>
+        <add id="BrainActs_SalesRepresentative::report_products" title="By Products" translate="title" module="BrainActs_SalesRepresentative" sortOrder="10" parent="BrainActs_SalesRepresentative::report" action="salesrep/report/products" resource="BrainActs_SalesRepresentative::report_products"/>
+        <add id="BrainActs_SalesRepresentative::report_customers" title="By Customers" translate="title" module="BrainActs_SalesRepresentative" sortOrder="20" parent="BrainActs_SalesRepresentative::report" action="salesrep/report/customers" resource="BrainActs_SalesRepresentative::report_customers"/>
+        <add id="BrainActs_SalesRepresentative::report_orders" title="By Orders" translate="title" module="BrainActs_SalesRepresentative" sortOrder="30" parent="BrainActs_SalesRepresentative::report" action="salesrep/report/orders" resource="BrainActs_SalesRepresentative::report_orders"/>
+        <add id="BrainActs_SalesRepresentative::report_profit" title="By SR" translate="title" module="BrainActs_SalesRepresentative" sortOrder="40" parent="BrainActs_SalesRepresentative::report" action="salesrep/report/profit" resource="BrainActs_SalesRepresentative::report_profit"/>
+    </menu>
+</config>

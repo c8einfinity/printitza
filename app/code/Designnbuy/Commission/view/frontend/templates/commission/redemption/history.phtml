@@ -1,0 +1,35 @@
+<?php $redemptionCollection = $block->getCollection(); ?>
+<h4><?php echo __('Commission History'); ?></h4>
+<?php if (count($redemptionCollection) == 0): ?>
+    	<div class="message info empty"><div><?php echo __('We can\'t find report matching the selection.') ?></div></div>
+<?php else: ?>
+	<h3><?php echo __('Redeem History'); ?></h3>
+	<div class="table-wrapper">
+		<table class="data table" id="my-orders-table">
+			<thead>
+				<tr>
+					<th class="col" scope="col"><?php echo __('Transaction #'); ?></th>
+					<th class="col" scope="col"><?php echo __('Requested Amount'); ?></th>
+					<th class="col" scope="col"><?php echo __('Created At'); ?></th>
+					<th class="col" scope="col"><?php echo __('Updated At'); ?></th>
+					<th class="col" scope="col"><?php echo __('Status'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($redemptionCollection as $key => $item) { ?>
+					<?php $redemptionStatus = ($item->getIsActive() == 1) ? 'Paid' : 'Pending'; ?>
+					<tr>
+						<td class="col" data-th="Transaction #"><?php echo $item->getEntityId(); ?></td>
+						<td class="col" data-th="Requested Amount"><?php echo $block->setFormatedAmount($item->getCommissionAmount()); ?></td>
+						<td class="col" data-th="Created At"><?php echo $item->getCreationTime(); ?></td>
+						<td class="col" data-th="Updated At"><?php echo $item->getUpdateTime(); ?></td>
+						<td class="col" data-th="Status"><?php echo $redemptionStatus; ?></td>
+					</tr>
+				<?php } ?>
+			</tbody>	
+		</table>
+	</div>
+	<?php if($block->getPagerHtml()): ?>
+	    	<div class="designer-commission-report-toolbar toolbar"><?php echo $block->getPagerHtml(); ?></div>
+	<?php endif; ?>
+<?php endif; ?>

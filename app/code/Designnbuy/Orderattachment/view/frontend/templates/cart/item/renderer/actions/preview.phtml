@@ -1,0 +1,63 @@
+<?php $attachments = $block->getAttachments(); ?>
+<?php if(isset($attachments) && count($attachments) > 0 && $attachments != ''): ?>
+    <a href="#" class="action action-attachment attachment-action<?php echo $block->getItemId()?>" title="<?php /* @escapeNotVerified */ echo __('View Attachments') ?>" style="color: #1979c3; cursor: pointer; font-weight: 600;"><span><?php /* @escapeNotVerified */ echo __('View Attachments') ?></span></a>
+    <div class="popup-attachment<?php echo $block->getItemId()?>" style="display:none;">
+        <div class="product media">
+            <div class="file-uploader">
+                <?php if(isset($attachments) && isset($attachments['fileName'])): ?>
+                    <?php $cnt = 0; foreach ($attachments['fileName'] as $name):?>
+                        <div class="file-uploader-summary">
+
+                            <div class="file-uploader-preview">
+                                <a target="_blank"  href="<?php echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]?>">
+                                    <img class="preview-image" src="<?php echo $block->getImageUrlPath().$attachments['fileUrl'][$cnt]?>">
+                                </a>
+                            </div>
+                            <div class="file-uploader-filename">
+                                <a target="_blank" href="<?php echo $block->getImageUrlPath().$name?>"><?php echo $name; ?>
+                                </a>
+                            </div>
+
+
+                        </div>
+                        <?php $cnt++; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: false,
+                innerScroll: false,
+                content: '',
+                title: $.mage.__('Attachment'),
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+            var popup = modal(options, $(".popup-attachment<?php echo $block->getItemId()?>"));
+            $(".attachment-action<?php echo $block->getItemId()?>").on('click',function()
+            {
+                $(".popup-attachment<?php echo $block->getItemId()?>").modal("openModal");
+            });
+        }
+    );
+</script>
+<?php endif; ?>

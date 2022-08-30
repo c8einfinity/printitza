@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+<event name="checkout_submit_all_after">
+        <observer name="output" instance="Designnbuy\Base\Observer\Output"/>
+    </event>
+    <event name="catalog_product_load_after">
+        <observer name="set_additional_options" instance="Designnbuy\Base\Observer\SetAdditionalOptions"/>
+    </event>
+    <event name="layout_generate_blocks_after">
+        <observer name="set_quick_edit_media_template" instance="Designnbuy\Base\Observer\QuickEdit"/>
+    </event>
+    <event name="controller_action_predispatch_checkout_cart_add">
+        <observer name="quickedit" instance="Designnbuy\Base\Observer\SetVDPQuickEditParams"/>
+    </event>
+    <event name="controller_action_predispatch_base_cart_add">
+        <observer name="name_number" instance="Designnbuy\Base\Observer\SetVDPQuickEditParams"/>
+    </event>
+    <event name="controller_action_predispatch_checkout_cart_updateItemOptions">
+        <observer name="quickedit1" instance="Designnbuy\Base\Observer\SetVDPQuickEditParams"/>
+    </event>
+    <event name="customer_login">
+        <observer name="FlushFormKey" disabled="true" />
+    </event>
+    <event name="customer_logout">
+        <observer name="FlushFormKey" disabled="true" />
+    </event>
+</config>

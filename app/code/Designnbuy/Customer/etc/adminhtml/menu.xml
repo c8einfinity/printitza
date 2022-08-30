@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!--<add id="Designnbuy_Customer::customer_template" title="Customer Template" translate="title" module="Designnbuy_Customer" parent="Magento_Backend::marketing_communications" sortOrder="30" action="designnbuy_customer/template/" resource="Designnbuy_Customer::template"/>
+        <add id="Designnbuy_Customer::designnbuy_customer_queue" title="Customer Queue" translate="title" module="Designnbuy_Customer" sortOrder="40" parent="Magento_Backend::marketing_communications" action="designnbuy_customer/queue/" resource="Designnbuy_Customer::queue"/>-->
+        <add id="Designnbuy_Customer::customer_design" title="Customer Designs" translate="title" module="Designnbuy_Customer" sortOrder="50" parent="Magento_Backend::marketing_communications" action="designnbuy_customer/design/" resource="Designnbuy_Customer::design"/>
+        <!--<add id="Designnbuy_Customer::customer_problem" title="Customer Problem Reports" translate="title" module="Designnbuy_Customer" sortOrder="50" parent="Magento_Reports::report_marketing" action="designnbuy_customer/problem/" resource="Designnbuy_Customer::problem"/>-->
+    </menu>
+</config>
